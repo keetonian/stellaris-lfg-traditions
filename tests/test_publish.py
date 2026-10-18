@@ -93,6 +93,13 @@ class PublishDryRunTests(unittest.TestCase):
         self.assertNotIn('"workshopitem"', res.stdout)
         self.assertIn("unknown modifier country_scientist_cap_ad", res.stdout)
 
+    def test_refuses_description_over_steam_limit(self):
+        self.desc.write_text("x" * 8001, encoding="utf-8")
+        res = self.publish()
+        self.assertNotEqual(res.returncode, 0)
+        self.assertIn("8001 characters; Steam allows 8000", res.stderr)
+        self.assertNotIn('"workshopitem"', res.stdout)
+
     def test_requires_steam_user_for_real_upload(self):
         res = self.publish(DRY_RUN="0")
         self.assertNotEqual(res.returncode, 0)

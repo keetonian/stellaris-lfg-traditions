@@ -45,6 +45,12 @@ if [ "${ALLOW_DIRTY:-0}" != 1 ] && [ -n "$(git -C "$REPO_DIR" status --porcelain
 	die "mod/ has uncommitted changes; commit them first (or ALLOW_DIRTY=1)"
 fi
 
+# Steam rejects the whole update ("Invalid Parameter" at commit) if the description is over 8000 characters.
+desc_chars="$(python3 -I -c 'import sys; print(len(open(sys.argv[1], encoding="utf-8").read()))' "$DESCRIPTION_FILE")"
+if [ "$desc_chars" -gt "${STEAM_DESCRIPTION_LIMIT:-8000}" ]; then
+	die "$DESCRIPTION_FILE is $desc_chars characters; Steam allows ${STEAM_DESCRIPTION_LIMIT:-8000}"
+fi
+
 file_id="$(field remote_file_id)"
 version="$(field version)"
 commit="$(git -C "$REPO_DIR" rev-parse --short HEAD 2>/dev/null || echo uncommitted)"

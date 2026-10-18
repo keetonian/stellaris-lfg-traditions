@@ -155,7 +155,9 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
    - Make it public later with `VISIBILITY=0`.
 4. steamcmd's VDF parser has **no escape sequences**: `"` inside a value ends it, even written as `\"`. `publish.sh`'s `vdf_value`
    converts double quotes to “typographic quotes”, and `tests/test_publish.py` checks the dry-run VDF quote count. Keep it that way.
-5. Never put Steam credentials in the repo or CI. `PUBLISH_SKIP_TESTS=1` exists only so `test_publish.py` doesn't recurse.
+5. **Steam's description limit is 8000 characters.** Over it, steamcmd uploads everything and then fails at "Committing
+   update" with `Invalid Parameter`. publish.sh and `tests/test_workshop_description.py` check it; keep the page concise.
+6. Never put Steam credentials in the repo or CI. `PUBLISH_SKIP_TESTS=1` exists only so `test_publish.py` doesn't recurse.
 
 ## Species Experimentation edict - how it works and what's unverified
 
