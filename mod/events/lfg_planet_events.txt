@@ -24,6 +24,7 @@ planet_event = {
 		remove_modifier = lfg_penal_prison_industry_crafter
 		set_variable = { which = lfg_prison_districts value = 0 }
 		remove_modifier = lfg_penal_idle_hands
+		remove_modifier = lfg_penal_no_idle_hands
 		set_variable = { which = lfg_unemployed_hundreds value = 0 }
 		set_variable = { which = lfg_arc_neighbours value = 0 }
 	}

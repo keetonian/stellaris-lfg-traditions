@@ -157,6 +157,12 @@ lfg_penal_prison_industry_crafter = {
 
 # Idle Hands: added to the penal colony with multiplier = whole hundreds of unemployed pops there
 # (lfg_sync_penal_unemployed): every job on the planet produces +1% per 100 unemployed, and riots: crime +2 per 100.
+# Idle Hands: while the penal colony has fewer than 100 unemployed, its jobs slack off (lfg_sync_penal_unemployed).
+lfg_penal_no_idle_hands = {
+	planet_jobs_produces_mult = @lfg_idle_hands_empty_penalty
+	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
+	icon_frame = 3
+}
 lfg_penal_idle_hands = {
 	planet_jobs_produces_mult = 0.01
 	planet_crime_add = @lfg_idle_hands_crime_per_hundred

@@ -98,6 +98,21 @@ lfg_sync_penal_unemployed = {
 			limit = { check_variable = { which = lfg_unemployed_hundreds value > 0 } }
 			add_modifier = { modifier = lfg_penal_idle_hands days = -1 multiplier = lfg_unemployed_hundreds }
 		}
+	}	# Fewer than 100 unemployed while holding Idle Hands: -30% job output instead.
+	if = {
+		limit = {
+			has_modifier = penal_colony
+			owner = { has_tradition = tr_lfg_penal_idle_hands }
+			check_variable = { which = lfg_unemployed_hundreds_now value < 1 }
+		}
+		if = {
+			limit = { NOT = { has_modifier = lfg_penal_no_idle_hands } }
+			add_modifier = { modifier = lfg_penal_no_idle_hands days = -1 }
+		}
+	}
+	else_if = {
+		limit = { has_modifier = lfg_penal_no_idle_hands }
+		remove_modifier = lfg_penal_no_idle_hands
 	}
 }
 
