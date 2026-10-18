@@ -12,17 +12,6 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_megaforge_foundries" textureFile = "gfx/interface/icons/traditions/tradition_nanotech_3.dds" }
 	spriteType = { name = "GFX_tr_lfg_megaforge_monuments" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_public_works.dds" }
 
-	### LEISURE ###
-	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_leisure" textureFile = "gfx/interface/traditions/tradition_hex_bg_green.dds" }
-	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_leisure" textureFile = "gfx/interface/tiles/tradition_category_tile_harmony.dds" }
-	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_leisure" textureFile = "gfx/interface/tiles/tradition_category_tile_harmony.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
-	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_leisure" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_harmony.dds" }
-	spriteType = { name = "GFX_tr_lfg_leisure_arts" textureFile = "gfx/interface/icons/traditions/tradition_harmony_mind_and_body.dds" }
-	spriteType = { name = "GFX_tr_lfg_leisure_markets" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_commercial_enterprise.dds" }
-	spriteType = { name = "GFX_tr_lfg_leisure_shorter_shifts" textureFile = "gfx/interface/icons/traditions/tradition_harmony_utopian_dream.dds" }
-	spriteType = { name = "GFX_tr_lfg_leisure_citizen_dividend" textureFile = "gfx/interface/icons/traditions/tradition_politics_gravitas.dds" }
-	spriteType = { name = "GFX_tr_lfg_leisure_idle_rich" textureFile = "gfx/interface/icons/traditions/tradition_harmony_kinship.dds" }
-
 	### ATTENDANTS ###
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_attendants" textureFile = "gfx/interface/traditions/tradition_hex_bg_blue.dds" }
 	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_attendants" textureFile = "gfx/interface/tiles/tradition_category_tile_modularity.dds" }

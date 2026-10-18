@@ -42,49 +42,6 @@ tradition_lfg_megaforge = {
 	}
 }
 
-# Civilians over workers: a society that lives for leisure, not labour. Regular empires only (civilian job).
-tradition_lfg_leisure = {
-	desc = tradition_lfg_leisure_desc
-	potential = {
-		is_regular_empire = yes
-	}
-	tree_template = "tree_21_11"
-	adoption_bonus = "tr_lfg_leisure_adopt"
-	finish_bonus = "tr_lfg_leisure_finish"
-	traditions = {
-		"tr_lfg_leisure_arts"
-		"tr_lfg_leisure_markets"
-		"tr_lfg_leisure_shorter_shifts"
-		"tr_lfg_leisure_citizen_dividend"
-		"tr_lfg_leisure_idle_rich"
-	}
-	ai_weight = {
-		factor = 5
-		modifier = {
-			factor = 3
-			OR = {
-				has_ethic = ethic_egalitarian
-				has_ethic = ethic_fanatic_egalitarian
-			}
-		}
-		modifier = {
-			factor = 2
-			OR = {
-				has_valid_civic = civic_pleasure_seekers
-				has_valid_civic = civic_corporate_hedonism
-			}
-		}
-		modifier = {
-			factor = 5
-			has_valid_civic = civic_lfg_pampered_masters
-		}
-		modifier = {
-			factor = @ap_pending_tradition_suppress
-			has_ap_pending = yes
-		}
-	}
-}
-
 # Domestic robots that serve organics. Only for empires with the Pampered Masters civic.
 tradition_lfg_attendants = {
 	desc = tradition_lfg_attendants_desc
@@ -110,7 +67,7 @@ tradition_lfg_attendants = {
 	}
 }
 
-# Machine Intelligence mirror of Leisure: complex drones over simple drones.
+# Machine Intelligence: complex drones over simple drones.
 tradition_lfg_overclock = {
 	desc = tradition_lfg_overclock_desc
 	potential = {
@@ -182,7 +139,7 @@ tradition_lfg_shellworlders = {
 	}
 }
 
-# Research from everyone: civilians do science, diversity and rivalry drive it, and it's a little dangerous.
+# Research from everyone: diversity and rivalry drive it, and it's a little dangerous.
 tradition_lfg_polymath = {
 	desc = tradition_lfg_polymath_desc
 	tree_template = "tree_21_11"

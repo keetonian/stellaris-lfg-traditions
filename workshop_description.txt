@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Nine new tradition trees, eight council agendas, a new civic, a policy and a planet decision for [b]Gigastructural Engineering[/b] games. Every tree only appears for the empires it fits, and every tree has a [b]hook[/b]: bonuses that scale with or depend on your game state, so each one changes how you play rather than just adding percentages.
+Eight new tradition trees, seven council agendas, a new civic, a policy and a planet decision for [b]Gigastructural Engineering[/b] games. Every tree only appears for the empires it fits, and every tree has a [b]hook[/b]: bonuses that scale with or depend on your game state, so each one changes how you play rather than just adding percentages.
 
 [h2]Tradition trees[/h2]
 
@@ -12,14 +12,6 @@ Nine new tradition trees, eight council agendas, a new civic, a policy and a pla
 [*][b]Monument Economy:[/b] +10 monthly supertensiles and unlocks the [b]Monument Economy[/b] policy. For every megastructure you own, choose [i]Monuments First[/i] (+1% megastructure output, -0.5% job output) or [i]People First[/i] (+0.5% job output, -1% megastructure output), or stay [i]Balanced[/i].
 [*]Finisher: +1 Megaconstruction Logistics Hub (or +1 megastructure under construction at once without supertensiles).
 [*]Costs: minerals, alloys and infrastructure cost.
-[/list]
-
-[h3]Leisure Society[/h3]
-[i]Civilians over workers.[/i] Regular empires.
-[list]
-[*]Civilians produce unity and trade, gain happiness and political power; workers lose output, happiness and political power.
-[*][b]The Idle Rich:[/b] unity and trade grow as civilians make up 10% / 20% / 30% of your population.
-[*]Finisher, [b]Citizen Science:[/b] civilians produce physics, society and engineering research; organic pop upkeep +25%.
 [/list]
 
 [h3]Attendant Robotics[/h3]
@@ -80,10 +72,9 @@ Nine new tradition trees, eight council agendas, a new civic, a policy and a pla
 [/list]
 
 [h2]Council agendas[/h2]
-Eight new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
+Seven new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [list]
 [*][b]The Great Project[/b] (Megaforge): much faster, cheaper megastructures (and more supertensiles); workers produce less.
-[*][b]The Long Holiday[/b] (Leisure): happiness, amenities and unity; workers produce less.
 [*][b]Overclock Protocol[/b] (Overclocked Network): complex drones +20%; simple drones and job upkeep pay for it.
 [*][b]Eureka Season[/b] (Polymath): +20% research speed; -5 stability.
 [*][b]Feast of Plenty[/b] (Granary): doubles Bumper Crops' growth.

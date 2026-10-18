@@ -42,12 +42,12 @@ class RealModTests(unittest.TestCase):
 
     def test_mod_contents(self):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
-        self.assertEqual(len(mod.top("common/tradition_categories")), 9)
-        self.assertEqual(len(mod.top("common/traditions")), 9 * 7)
+        self.assertEqual(len(mod.top("common/tradition_categories")), 8)
+        self.assertEqual(len(mod.top("common/traditions")), 8 * 7)
         self.assertIn("civic_lfg_pampered_masters", mod.top("common/governments/civics"))
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3"})
-        self.assertEqual(len(mod.top("common/council_agendas")), 9)
+        self.assertEqual(len(mod.top("common/council_agendas")), 8)
 
 
 class MutationTests(unittest.TestCase):
@@ -74,7 +74,7 @@ class MutationTests(unittest.TestCase):
         self.assertFails("unknown modifier megastructure_build_cost_mult")
 
     def test_non_numeric_modifier(self):
-        self.edit(TRADITIONS, "pop_happiness = 0.05", "pop_happiness = yes")
+        self.edit(TRADITIONS, "country_scientist_cap_add = 1", "country_scientist_cap_add = yes")
         self.assertFails("non-numeric value")
 
     def test_parse_error(self):
@@ -82,20 +82,20 @@ class MutationTests(unittest.TestCase):
         self.assertFails("parse error")
 
     def test_missing_tradition_definition(self):
-        self.edit(CATEGORIES, '"tr_lfg_leisure_arts"', '"tr_lfg_leisure_artz"')
-        self.assertFails("tr_lfg_leisure_artz is not defined")
+        self.edit(CATEGORIES, '"tr_lfg_granary_tithe_barns"', '"tr_lfg_granary_tithe_barnz"')
+        self.assertFails("tr_lfg_granary_tithe_barnz is not defined")
 
     def test_tradition_not_in_any_tree(self):
-        self.edit(CATEGORIES, '\t\t"tr_lfg_leisure_arts"\n', "")
-        self.assertFails("tr_lfg_leisure_arts: defined but not part of any tradition category")
+        self.edit(CATEGORIES, '\t\t"tr_lfg_granary_tithe_barns"\n', "")
+        self.assertFails("tr_lfg_granary_tithe_barns: defined but not part of any tradition category")
         self.assertFails("expected 5 traditions, found 4")
 
     def test_prerequisite_outside_tree(self):
-        self.edit(TRADITIONS, "has_tradition = tr_lfg_megaforge_priority", "has_tradition = tr_lfg_leisure_arts")
-        self.assertFails("requires tr_lfg_leisure_arts, which is not in tradition_lfg_megaforge")
+        self.edit(TRADITIONS, "has_tradition = tr_lfg_megaforge_priority", "has_tradition = tr_lfg_granary_tithe_barns")
+        self.assertFails("requires tr_lfg_granary_tithe_barns, which is not in tradition_lfg_megaforge")
 
     def test_prerequisite_wrong_shape(self):
-        self.edit(TRADITIONS, "\t\thas_tradition = tr_lfg_leisure_markets\n", "")
+        self.edit(TRADITIONS, "\t\thas_tradition = tr_lfg_granary_seed_vaults\n", "")
         self.assertFails("should require slots [1, 2]")
 
     def test_unknown_tree_template(self):
@@ -103,12 +103,12 @@ class MutationTests(unittest.TestCase):
         self.assertFails("unknown tree_template")
 
     def test_missing_loc_key(self):
-        self.edit(TRAD_LOC, " tr_lfg_leisure_arts_delayed:", " tr_lfg_leisure_artsXX_delayed:")
-        self.assertFails("missing localisation: tr_lfg_leisure_arts_delayed")
+        self.edit(TRAD_LOC, " tr_lfg_granary_tithe_barns_delayed:", " tr_lfg_granary_tithe_barnsXX_delayed:")
+        self.assertFails("missing localisation: tr_lfg_granary_tithe_barns_delayed")
 
     def test_duplicate_loc_key(self):
-        self.edit(TRAD_LOC, " tr_lfg_leisure_arts_delayed:", " tr_lfg_leisure_arts_desc:")
-        self.assertFails("duplicate localisation key tr_lfg_leisure_arts_desc")
+        self.edit(TRAD_LOC, " tr_lfg_granary_tithe_barns_delayed:", " tr_lfg_granary_tithe_barns_desc:")
+        self.assertFails("duplicate localisation key tr_lfg_granary_tithe_barns_desc")
 
     def test_loc_without_bom(self):
         path = self.mod / TRAD_LOC
@@ -116,7 +116,7 @@ class MutationTests(unittest.TestCase):
         self.assertFails("missing UTF-8 BOM")
 
     def test_malformed_loc_line(self):
-        self.edit(TRAD_LOC, ' tradition_lfg_leisure:0 "Leisure Society"', ' tradition_lfg_leisure:0 Leisure Society')
+        self.edit(TRAD_LOC, ' tradition_lfg_granary:0 "Granary Kings"', ' tradition_lfg_granary:0 Granary Kings')
         self.assertFails("malformed localisation line")
 
     def test_unbalanced_colour_code(self):
@@ -129,8 +129,8 @@ class MutationTests(unittest.TestCase):
         self.assertFails("has no localisation")
 
     def test_missing_sprite(self):
-        self.edit(GFX, 'name = "GFX_tr_lfg_leisure_arts"', 'name = "GFX_tr_lfg_leisure_artz"')
-        self.assertFails("missing sprite GFX_tr_lfg_leisure_arts")
+        self.edit(GFX, 'name = "GFX_tr_lfg_granary_tithe_barns"', 'name = "GFX_tr_lfg_granary_tithe_barnz"')
+        self.assertFails("missing sprite GFX_tr_lfg_granary_tithe_barns")
 
     def test_missing_category_sprite(self):
         self.edit(GFX, 'name = "GFX_tradition_hex_bg_tradition_lfg_overclock"', 'name = "GFX_x"')
@@ -277,7 +277,7 @@ class MutationTests(unittest.TestCase):
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
     def test_missing_texture(self):
-        self.edit(GFX, "tradition_icon_harmony.dds", "tradition_icon_harmonyz.dds")
+        self.edit(GFX, "tradition_icon_nanotech.dds", "tradition_icon_nanotechz.dds")
         self.assertFails("texture not found", game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")

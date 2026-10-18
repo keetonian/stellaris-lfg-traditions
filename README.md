@@ -2,8 +2,8 @@
 
 A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games that adds:
 
-- **9 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
-- **9 council agendas** unlocked by the trees.
+- **8 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
+- **8 council agendas** unlocked by the trees.
 - **1 civic, Pampered Masters**: a "reverse Rogue Servitor", where biological masters are served by robots.
 - **1 edict, Species Experimentation** (Evolutionary Predators, after finishing Mutation): half of a secondary species dies, the rest splits into 50 random-trait subspecies.
 - **2 balance overrides**: the civic blocks Cybernetic/Synthetic ascension, and Synthetic Fertility's situation speeds up every year.
@@ -18,7 +18,7 @@ This is a gameplay mod (it adds `common/` files), so it **changes the game check
 - Stellaris 4.5.x
 - [Gigastructural Engineering & More (4.5)](https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237). Required: the Megaforge tree uses its supertensiles, techs and origins.
 - Recommended: [A Lot of Traditions - 24 Tradition Slots](https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981).
-  Vanilla allows 7 trees in total, and this mod adds 9 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
+  Vanilla allows 7 trees in total, and this mod adds 8 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
 
 Load order: after Gigastructural.
 
@@ -43,19 +43,6 @@ Supertensile bonuses need Gigastructural's job-based build mode (`giga_buildcap_
 | 4. Orbital Foundries | Supertensiles Technicians +0.25 supertensiles and +1 alloy upkeep each, Megaconstruction Directors +1.5 supertensiles and +3 alloy upkeep each (else megastructure cost −10%, alloys −5%) · minerals −10% |
 | 5. Monument Economy ⚙ | Unlocks the **Monument Economy** policy. Per megastructure owned (kilostructures count, ruins don't; no cap): *Balanced* (default) no effect, *Monuments First* megastructure output +1% · job output −0.5%, or *People First* job output +0.5% · megastructure output −1%. Monthly supertensiles +10 |
 | Finish | +1 Megaconstruction Logistics Hub limit (else +1 megastructure build limit) |
-
-### Leisure Society: civilians over workers
-**Who:** regular empires. **Hook:** rewards a large civilian class. **Agenda:** The Long Holiday.
-
-| Tradition | Effect |
-|---|---|
-| Adopt | Civilian happiness +10%, civilian unity +0.1 · worker happiness −5% |
-| 1. Patronage of the Arts | Civilian unity +0.25 |
-| 2. Leisure Markets | Civilian trade +0.25 |
-| 3. Shorter Shifts | Happiness +5% · worker output −10% |
-| 4. Citizen Dividend | Civilian political power +25% · worker political power −25% |
-| 5. The Idle Rich ⚙ | While 10% / 20% / 30% of pops are civilians: unity and trade +5% / +10% / +15% · at 30%, worker output −5% |
-| Finish ⚙ | **Citizen Science:** civilians produce +0.1 physics, society and engineering research (per 100 civilians) · organic pop upkeep +25% · unlocks agenda **The Long Holiday** |
 
 ### Attendant Robotics: fewer, better robots that serve organics
 **Who:** only empires with the **Pampered Masters** civic. **Adopt requires:** *Robotic Workers*. **Hook:** robots excel only while rare.
@@ -167,7 +154,6 @@ prepares an agenda over time; when launched, its effect lasts **10 years**.
 | Agenda | Tree | While preparing | Launch / 10-year effect |
 |---|---|---|---|
 | The Great Project | Megaforge (on adoption) | Megastructure build speed +5% | With supertensiles on: supertensile output +25%, megastructure build speed +33%, cost −10% · worker output −10%. With supertensiles off (separate version, same name): build speed +33%, cost −20% · worker output −10% |
-| The Long Holiday | Leisure | Civilian happiness +5% | Happiness +10%, amenities +15%, unity +10% · worker output −10% |
 | Overclock Protocol | Overclocked Network | Complex drone output +3% | Complex drone output +20% · simple drone output −10%, job upkeep +10% |
 | Eureka Season | Polymath | Research speed +3% | Research speed +20% · stability −5 |
 | Feast of Plenty | Granary (on adoption) | Farmer output +5% | For 10 years: doubles the finisher's Bumper Crops (another +1% organic growth per 1,000 monthly food income) |
@@ -274,7 +260,7 @@ CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't nee
 - Each tree appears only for the right empires.
 - The civic is blocked for cybernetic/machine/synthetic setups, and the two ascension perks show the new requirement.
 - Hooks: scaled bonuses (per species, rival, contact, decade, stored food/energy) and tiers (megastructures, artificial worlds,
-  civilian/robot share) apply as described; agendas appear after finishing their tree; Reckless Experimentation's lab accident fires.
+  robot share) apply as described; agendas appear after finishing their tree; Reckless Experimentation's lab accident fires.
 - Species Experimentation: only Evolutionary Predators who finished Mutation see it; your main species and its subspecies are never offered;
   under 100 pops it's greyed out; picking a species kills half of it, creates 50 subspecies and deducts 2000 society research.
 - A Synthetic Fertility empire's situation tooltip shows the yearly line and the rate grows each year.
@@ -310,6 +296,8 @@ into `mod/descriptor.mod`.
 Publishing to the Workshop is local-only on purpose: CI would need your Steam credentials, and the strict checks need the game installed.
 
 ## Ideas for later
+
+- **Leisure Society** (civilians over workers) was removed for a rework; the old version is in git history (before this change).
 
 - Custom icons and art instead of reused vanilla icons.
 - `tradition_swap` variants with gestalt- and nomad-specific names and text.

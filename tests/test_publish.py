@@ -87,11 +87,11 @@ class PublishDryRunTests(unittest.TestCase):
 
     def test_refuses_when_check_fails(self):
         path = self.mod / "common/traditions/lfg_traditions.txt"
-        path.write_text(path.read_text().replace("pop_happiness = 0.05", "pop_happyness = 0.05"))
+        path.write_text(path.read_text().replace("country_scientist_cap_add = 1", "country_scientist_cap_ad = 1"))
         res = self.publish()
         self.assertNotEqual(res.returncode, 0)
         self.assertNotIn('"workshopitem"', res.stdout)
-        self.assertIn("unknown modifier pop_happyness", res.stdout)
+        self.assertIn("unknown modifier country_scientist_cap_ad", res.stdout)
 
     def test_requires_steam_user_for_real_upload(self):
         res = self.publish(DRY_RUN="0")

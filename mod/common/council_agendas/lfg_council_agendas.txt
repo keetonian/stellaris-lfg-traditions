@@ -37,21 +37,6 @@ agenda_lfg_great_project_classic = {
 	finish_modifier = agenda_lfg_great_project_classic_finish
 }
 
-agenda_lfg_long_holiday = {
-	agenda_cost = @lfg_agenda_cost
-	allow = {
-		has_tradition = tr_lfg_leisure_finish
-	}
-	potential = {
-		has_paragon_dlc = yes
-		is_regular_empire = yes
-	}
-	modifier = {
-		pop_cat_civilian_happiness = 0.05
-	}
-	finish_modifier = agenda_lfg_long_holiday_finish
-}
-
 agenda_lfg_overclock_protocol = {
 	agenda_cost = @lfg_agenda_cost
 	allow = {

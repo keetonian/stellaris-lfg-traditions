@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 9 tradition trees, 9 council agendas, the civic
+Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 8 tradition trees, 8 council agendas, the civic
 `civic_lfg_pampered_masters`, the Evolutionary Predators edict `lfg_species_experimentation`, and generated overrides of
 2 ascension perks + 1 situation + 1 district (district_resort) + 3 buildings (holomuseums). User-facing docs and the
 full effect tables are in README.md. **Keep README's tables in sync when you change numbers.**
@@ -23,7 +23,7 @@ Python 3.9+ stdlib only. Always run with `-I`.
 
 ```
 mod/                                  # exactly what ships
-  common/tradition_categories/lfg_tradition_categories.txt   # 9 trees
+  common/tradition_categories/lfg_tradition_categories.txt   # 8 trees
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
   common/governments/civics/lfg_civics.txt                   # Pampered Masters
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
