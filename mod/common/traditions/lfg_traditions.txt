@@ -380,6 +380,94 @@ tr_lfg_evolution_every_shore = {
 }
 
 #####################################################################
+# HARD LABOUR - hook: the penal colony (one per empire) runs the economy; scales with its unemployed (per 100)
+# and its Prison Districts. Planet effects: lfg_penal_* static modifiers kept on the penal colony by
+# events/lfg_penal_events.txt (monthly + on_enabled), since tradition modifiers are empire-wide.
+#####################################################################
+
+# Downside: workers everywhere fear the camps (worker happiness -5%).
+tr_lfg_penal_adopt = {
+	possible = {
+		has_technology = tech_penal_colonies
+	}
+	custom_tooltip = tr_lfg_penal_adopt_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_penal.1 } }
+	}
+	modifier = {
+		pop_cat_worker_happiness = -0.05
+	}
+}
+
+# Penal Industries: Prison Districts on the penal colony get Penal Metallurgist / Artisan jobs (lfg_sync_prison_industry)
+# and, with supertensiles, the Penal Supertensile Works specialization (zone_lfg_penal_supertensiles).
+tr_lfg_penal_finish = {
+	custom_tooltip = tr_lfg_penal_finish_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_penal.1 } }
+	}
+	modifier = {
+		ascension_perks_add = 1
+	}
+}
+
+tr_lfg_penal_wardens_code = {
+	custom_tooltip = tr_lfg_penal_wardens_code_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_penal.1 } }
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Crime goes down everywhere; the unemployed are shipped to the penal colony.
+tr_lfg_penal_transportation = {
+	possible = {
+		has_tradition = tr_lfg_penal_wardens_code
+	}
+	custom_tooltip = tr_lfg_penal_transportation_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_penal.1 } }
+	}
+	modifier = {
+		planet_crime_mult = -0.10
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: every job on the penal colony +1% per 100 unemployed pops there (no cap): lfg_penal_idle_hands, re-added by
+# lfg_sync_penal_unemployed with multiplier = whole hundreds of unemployed. Pairs with Transportation.
+# Downsides: riots (crime +2 per 100 unemployed, in the same modifier) and attrition (3% of the unemployed die each
+# month, lfg_penal_idle_hands_attrition), so the unemployed settle at ~33x monthly arrivals.
+tr_lfg_penal_idle_hands = {
+	possible = {
+		has_tradition = tr_lfg_penal_transportation
+	}
+	custom_tooltip = tr_lfg_penal_idle_hands_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_penal.1 } }
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# +50% jobs from every district specialization on the penal colony (generated zone overrides + our own zone).
+tr_lfg_penal_prison_industry = {
+	custom_tooltip = tr_lfg_penal_prison_industry_tt
+	ai_weight = { factor = 1000 }
+}
+
+# Penal colony: workers +15% efficiency, pop upkeep -15%, but happiness -15% there.
+tr_lfg_penal_chain_gangs = {
+	possible = {
+		has_tradition = tr_lfg_penal_prison_industry
+	}
+	custom_tooltip = tr_lfg_penal_chain_gangs_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_penal.1 } }
+	}
+	ai_weight = { factor = 1000 }
+}
+
+#####################################################################
 # GRANARY KINGS - hook: the food stockpile is political power; agendas "Feast of Plenty" (adopt), "The Harvest Tithe" (finish)
 #####################################################################
 

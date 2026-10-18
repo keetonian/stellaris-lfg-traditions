@@ -25,3 +25,21 @@
 @lfg_shelve_unity_cost = 2000
 @lfg_shelve_influence_cost = 200
 @lfg_shelve_research_upkeep = 300
+
+# Hard Labour - Penal Supertensile Laborer (per job, i.e. per 100 pops): Gigastructural's Supertensiles Extractor
+# makes 3 for free from deposits; inmates make 2 from 4 minerals.
+@lfg_penal_supertensile_output = 2
+@lfg_penal_supertensile_mineral_upkeep = 4
+
+# Hard Labour - Penal Matter Compactor (per job): 0.01 bulk matter for 180 energy + 30 minerals + 40 alloys + 1 dark matter
+# a month = 18,000 energy + 3,000 minerals + 4,000 alloys + 100 dark matter per matter (Gigastructural's harvesting: 16,000 energy + 4,000 alloys).
+@lfg_penal_matter_output = 0.01
+@lfg_penal_matter_energy_upkeep = 180
+@lfg_penal_matter_mineral_upkeep = 30
+@lfg_penal_matter_alloys_upkeep = 40
+@lfg_penal_matter_dark_matter_upkeep = 1
+
+# Hard Labour - Idle Hands downsides: share of the penal colony's unemployed that die each month (attrition; the
+# unemployed settle at monthly arrivals / this share), and crime per 100 unemployed (riots).
+@lfg_idle_hands_attrition = 0.03
+@lfg_idle_hands_crime_per_hundred = 2

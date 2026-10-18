@@ -601,3 +601,463 @@ zone_resort_proving_grounds = {
 
 	ai_priority = 10
 }
+
+# from common/zones/00_zones.txt
+zone_industrial = {
+	inline_script = {
+		script = zones/shared_industrial_zone
+		AMOUNT = @scaling_district_2_jobs
+		LARGE_AMOUNT = @scaling_district_2_jobs
+	}
+
+	zone_sets = {
+		urban
+		habitat_urban
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_foundry_add = @scaling_district_2_jobs
+		job_artisan_add = @scaling_district_2_jobs
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+
+	ai_weight_coefficient = 1.1
+}
+
+# from common/zones/00_zones.txt
+zone_foundry = {
+	inline_script = {
+		script = zones/shared_industrial_foundry_zone
+		AMOUNT = @scaling_district_1_job
+		LARGE_AMOUNT = @scaling_district_1_job
+	}
+
+	zone_sets = {
+		urban
+		habitat_urban
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_foundry_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+
+	ai_weight_coefficient = 1.2
+}
+
+# from common/zones/00_zones.txt
+zone_factory = {
+	inline_script = {
+		script = zones/shared_industrial_factory_zone
+		AMOUNT = @scaling_district_1_job
+	}
+
+	zone_sets = {
+		urban
+		habitat_urban
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_artisan_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+}
+
+# from common/zones/00_zones.txt
+zone_research_unity = {
+	icon = GFX_district_specialization_bureaucrat
+	base_buildtime = @zone_buildtime
+	potential = { # planet scope
+		hidden_trigger = {
+			exists = owner
+			owner = {
+				is_wilderness_empire = no
+			}
+		}
+	}
+
+	unlock = { # planet scope
+		hidden_trigger = {
+			exists = owner
+			owner = {
+				is_wilderness_empire = no
+			}
+		}
+	}
+
+	resources = {
+		category = planet_zones
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = alloys
+			COST = @zone_cost
+			NOMADIC_COST_MULT = 0.5
+		}
+	}
+
+	zone_sets = {
+		urban
+		polytechnic
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_physicist_add = @scaling_district_researchers_4_jobs
+		job_biologist_add = @scaling_district_researchers_4_jobs
+		job_engineer_add = @scaling_district_researchers_4_jobs
+		job_bureaucrat_add = @scaling_district_unity_4_jobs
+		mult = 0.5
+	}
+
+	included_building_sets = {
+		research
+		unity
+		origin
+	}
+
+	inline_script = {
+		script = jobs/zone_researchers_add
+		AMOUNT = @scaling_district_researchers_4_jobs
+		LARGE_AMOUNT = @scaling_district_researchers_2_jobs
+	}
+
+	inline_script = {
+		script = jobs/zone_unity_jobs_add
+		AMOUNT = @scaling_district_unity_4_jobs
+	}
+
+	planet_modifier = {
+		zone_building_slots_add = 3
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+
+	triggered_desc = {
+		trigger = {
+			always = yes
+		}
+		text = zone_research_unity_triggered_desc
+	}
+
+	ai_priority = 8
+}
+
+# from common/zones/00_zones.txt
+zone_research = {
+	inline_script = {
+		script = zones/shared_research_zone
+		AMOUNT = @scaling_district_3_jobs
+	}
+
+	zone_sets = {
+		urban
+		polytechnic
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_physicist_add = @scaling_district_3_jobs
+		job_biologist_add = @scaling_district_3_jobs
+		job_engineer_add = @scaling_district_3_jobs
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+
+	ai_weight_coefficient = 1.2
+}
+
+# from common/zones/00_zones.txt
+zone_research_physics = {
+	inline_script = {
+		script = zones/shared_research_physics_zone
+		AMOUNT = @scaling_district_1_job
+	}
+
+	inline_script = {
+		script = zones/potential_no_wilderness
+	}
+
+	zone_sets = {
+		urban
+		habitat_research
+		polytechnic
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_physicist_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_research_zone_modifiers
+	}
+
+	ai_priority = 15
+
+	ai_weight_coefficient = 1.1
+}
+
+# from common/zones/00_zones.txt
+zone_research_society = {
+	inline_script = {
+		script = zones/shared_research_society_zone
+		AMOUNT = @scaling_district_1_job
+	}
+
+	inline_script = {
+		script = zones/potential_no_wilderness
+	}
+
+	zone_sets = {
+		urban
+		habitat_research
+		polytechnic
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_biologist_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_research_zone_modifiers
+	}
+
+	ai_priority = 15
+
+	ai_weight_coefficient = 1.1
+}
+
+# from common/zones/00_zones.txt
+zone_research_engineering = {
+	inline_script = {
+		script = zones/shared_research_engineering_zone
+		AMOUNT = @scaling_district_1_job
+	}
+
+	inline_script = {
+		script = zones/potential_no_wilderness
+	}
+
+	zone_sets = {
+		urban
+		habitat_research
+		polytechnic
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_engineer_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_research_zone_modifiers
+	}
+
+	ai_priority = 15
+
+	ai_weight_coefficient = 1.1
+}
+
+# from common/zones/00_zones.txt
+zone_unity = {
+	inline_script = {
+		script = zones/shared_unity_zone
+		AMOUNT = @scaling_district_1_job
+	}
+
+	zone_sets = {
+		urban
+		habitat_urban
+		polytechnic
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_bureaucrat_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+
+	convert_to = {
+		zone_unity_spiritualist
+		zone_unity_bio_trophy
+	}
+}
+
+# from common/zones/00_zones.txt
+zone_unity_spiritualist = {
+	inline_script = {
+		script = zones/shared_unity_spiritualist_zone
+		AMOUNT = @scaling_district_1_job
+	}
+
+	zone_sets = {
+		urban
+		habitat_urban
+		polytechnic
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_bureaucrat_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+
+	convert_to = {
+		zone_unity
+		zone_unity_bio_trophy
+	}
+}
+
+# from common/zones/00_zones.txt
+zone_fortress = {
+	inline_script = {
+		script = zones/shared_fortress_zone
+		AMOUNT = @scaling_district_1_job
+	}
+
+	zone_sets = {
+		urban
+		habitat_urban
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_soldier_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+}
+
+# from common/zones/00_zones.txt
+zone_trade = {
+	inline_script = {
+		script = zones/shared_trade_zone
+		AMOUNT = @scaling_district_1_job
+	}
+
+	zone_sets = {
+		urban
+		habitat_urban
+		resort
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_district_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_tradition = tr_lfg_penal_prison_industry
+			}
+			has_modifier = penal_colony
+		}
+		job_trader_add = @scaling_district_1_job
+		mult = 0.5
+	}
+
+	inline_script = {
+		script = zones/shared_city_non_urban_zone_modifiers
+	}
+
+	ai_weight_coefficient = 0.25
+}

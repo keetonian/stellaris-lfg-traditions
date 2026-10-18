@@ -38,7 +38,7 @@ KNOWN_TREE_TEMPLATES = {
     "tree_12_11", "tree_12_12", "tree_21_11", "tree_21_12", "tree_21_21",
 }
 # Required prerequisites per layout: slot index -> slots it must require (1-based).
-TEMPLATE_PREREQS = {"tree_21_11": {4: {1, 2}, 5: {3}}}
+TEMPLATE_PREREQS = {"tree_21_11": {4: {1, 2}, 5: {3}}, "tree_111_11": {2: {1}, 3: {2}, 5: {4}}}
 
 ALLOWED_FILES = [
     r"descriptor\.mod",
@@ -52,7 +52,9 @@ ALLOWED_FILES = [
     r"common/situations/zz_lfg_[^/]+\.txt",
     r"common/districts/zz_lfg_[^/]+\.txt",
     r"common/buildings/zz_lfg_[^/]+\.txt",
-    r"common/zones/zz_lfg_[^/]+\.txt",
+    r"common/zones/[^/]+\.txt",
+    r"common/pop_jobs/[^/]+\.txt",
+    r"common/economic_categories/[^/]+\.txt",
     r"common/script_values/[^/]+\.txt",
     r"common/scripted_variables/[^/]+\.txt",
     r"common/scripted_triggers/[^/]+\.txt",
@@ -71,7 +73,7 @@ ALLOWED_FILES = [
     r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
-KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "ap_lfg_", "lfg_",
+KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
                 "@lfg_")
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/",)
@@ -304,6 +306,15 @@ def check_edicts(mod: Mod, loc: Dict[str, str], r: Report) -> None:
              + list(mod.top("common/traits")) + list(mod.top("common/ascension_perks")))
     for key in names:
         for k in (key, f"{key}_desc"):
+            if k not in loc:
+                r.fail(f"missing localisation: {k}")
+    # Zones (district specializations): <key>, <key>_desc. Jobs: job_<key>, job_<key>_plural, job_<key>_desc.
+    for key in mod.top("common/zones"):
+        for k in (key, f"{key}_desc"):
+            if k not in loc:
+                r.fail(f"missing localisation: {k}")
+    for key in mod.top("common/pop_jobs"):
+        for k in (f"job_{key}", f"job_{key}_plural", f"job_{key}_desc"):
             if k not in loc:
                 r.fail(f"missing localisation: {k}")
 

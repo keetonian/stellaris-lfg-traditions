@@ -79,6 +79,16 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_evolution_migratory_instinct" textureFile = "gfx/interface/icons/traditions/tradition_mutation_planned_polymorphism.dds" }
 	spriteType = { name = "GFX_tr_lfg_evolution_branching_lineages" textureFile = "gfx/interface/icons/traditions/tradition_genetics_genetic_resequencing.dds" }
 	spriteType = { name = "GFX_tr_lfg_evolution_every_shore" textureFile = "gfx/interface/icons/traditions/tradition_mutation_environmental_integration.dds" }
+	### HARD LABOUR ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_penal" textureFile = "gfx/interface/traditions/tradition_hex_bg_red.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_penal" textureFile = "gfx/interface/tiles/tradition_category_tile_domination.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_penal" textureFile = "gfx/interface/tiles/tradition_category_tile_domination.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_penal" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_domination.dds" }
+	spriteType = { name = "GFX_tr_lfg_penal_wardens_code" textureFile = "gfx/interface/icons/traditions/tradition_domination_judgment_corps.dds" }
+	spriteType = { name = "GFX_tr_lfg_penal_transportation" textureFile = "gfx/interface/icons/traditions/tradition_domination_colonial_viceroys.dds" }
+	spriteType = { name = "GFX_tr_lfg_penal_idle_hands" textureFile = "gfx/interface/icons/traditions/tradition_domination_workplace_motivators.dds" }
+	spriteType = { name = "GFX_tr_lfg_penal_prison_industry" textureFile = "gfx/interface/icons/traditions/tradition_domination_imperious_architecture.dds" }
+	spriteType = { name = "GFX_tr_lfg_penal_chain_gangs" textureFile = "gfx/interface/icons/traditions/tradition_domination_deviancy_protocols.dds" }
 	### ASCENSION PERKS ###
 	spriteType = { name = "GFX_ap_lfg_curated_progress" textureFile = "gfx/interface/icons/ascension_perks/ap_technological_ascendancy.dds" }
 }

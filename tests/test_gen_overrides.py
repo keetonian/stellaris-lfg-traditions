@@ -126,7 +126,8 @@ def fake_zone(key):
 
 
 FAKE_ZONES = "zone_urban = {\n\tzone_sets = {\n\t\turban\n\t}\n}\n" + "".join(
-    fake_zone(z) for z, _job, _amount in gen_overrides.RESORT_ZONES)
+    fake_zone(z) for z, _job, _amount in gen_overrides.RESORT_ZONES) + "".join(
+    fake_zone(z) for z, _jobs in gen_overrides.PENAL_ZONES)
 
 
 def fake_tech(key, evidence=None):
@@ -290,6 +291,16 @@ class GenOverridesTests(unittest.TestCase):
         for pc in ("pc_desert", "pc_ocean", "pc_flat_world"):
             self.assertIn(f"\tmodifier = {{ add = 1 any_owned_planet = {{ is_planet_class = {pc} }} }}\n", out)
         self.assertNotIn("pc_barren", out)
+
+    def test_city_zones_get_prison_industry_jobs(self):
+        out = self.generate()["mod/common/zones/zz_lfg_zone_overrides.txt"]
+        for zone, jobs in gen_overrides.PENAL_ZONES:
+            block = gen_overrides.extract_block(out, zone)
+            self.assertIn("has_tradition = tr_lfg_penal_prison_industry", block)
+            self.assertIn("has_modifier = penal_colony", block)
+            for job, amount in jobs:
+                self.assertIn(f"\t\tjob_{job}_add = {amount}\n", block)
+            self.assertIn("\t\tmult = 0.5\n\t}\n", block)
 
     def test_virtuality_option_blocked_for_ring_origins(self):
         out = self.generate()["mod/events/00_lfg_event_overrides.txt"]

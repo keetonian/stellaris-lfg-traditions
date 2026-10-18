@@ -1,9 +1,9 @@
 # CLAUDE.md
 
-Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 7 tradition trees, 7 council agenda definitions (6 agendas), the Evolutionary
+Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 8 tradition trees, 7 council agenda definitions (6 agendas), the Evolutionary
 Predators edict `lfg_species_experimentation`, the ascension perk
 `ap_lfg_curated_progress` + 27 generated Shelve edicts, and generated overrides of 1 situation +
-1 district (district_resort) + 8 resort zones + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script
+1 district (district_resort) + 8 resort zones + 12 city zones (Prison Industry) + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script
 + event machine_age.4400 (Virtuality blocked for individual machines with Great Ring / Alderson Disk).
 User-facing docs and the full effect tables are in README.md. **Keep README's tables in sync when you change numbers.**
 
@@ -25,7 +25,7 @@ Python 3.9+ stdlib only. Always run with `-I`.
 
 ```
 mod/                                  # exactly what ships
-  common/tradition_categories/00_<tree name>_lfg.txt         # 7 trees, one per file (sort order, see below)
+  common/tradition_categories/00_<tree name>_lfg.txt         # 8 trees, one per file (sort order, see below)
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
   common/scripted_variables/lfg_scripted_variables.txt       # @lfg_species_split_* tunables (50 / 50 / -2000)
@@ -38,6 +38,11 @@ mod/                                  # exactly what ships
   events/lfg_shellworlders_events.txt                        # Shellworlders: lfg_shellworld_* modifiers on artificial worlds (monthly)
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
   events/lfg_synthetic_fertility_events.txt                  # lfg_synthetic_fertility.1: extra Identity Repository uploads (monthly)
+  events/lfg_penal_events.txt                                # lfg_penal.1: Hard Labour penal colony modifiers + counts (monthly)
+  common/scripted_effects/lfg_penal_effects.txt              # lfg_sync_penal_modifier / lfg_sync_prison_industry / lfg_sync_penal_unemployed
+  common/zones/lfg_zones.txt                                 # zone_lfg_penal_supertensiles, zone_lfg_penal_bulk_matter
+  common/pop_jobs/lfg_jobs.txt                               # lfg_penal_supertensile_laborer, lfg_penal_matter_compactor
+  common/economic_categories/lfg_economic_categories.txt     # planet_lfg_penal_laborers (the job's category)
   events/lfg_planet_events.txt                               # lfg_planet.1: strip per-planet modifiers on owner change
   events/lfg_lone_tide_events.txt                            # lfg_lone_tide.1 (global `event`, on_game_start): 75% spawn
   common/solar_system_initializers/lfg_system_initializers.txt # lfg_lone_tide_init (usage_odds = 0: never map-generated)
@@ -57,7 +62,8 @@ mod/                                  # exactly what ships
   common/situations/zz_lfg_situation_overrides.txt           # GENERATED
   common/districts/zz_lfg_district_overrides.txt             # GENERATED (district_resort: Hospitality Academies jobs)
   common/buildings/zz_lfg_building_overrides.txt             # GENERATED (3 holomuseums: Holo-Museums bonus)
-  common/zones/zz_lfg_zone_overrides.txt                     # GENERATED (8 resort zones: Hospitality Academies +50% jobs)
+  common/zones/zz_lfg_zone_overrides.txt                     # GENERATED (8 resort zones: Hospitality Academies; 12 city zones:
+                                                             #   Prison Industry; each +50% jobs on that colony type)
   interface/lfg_traditions.gfx                               # sprites -> vanilla .dds (no art ships)
   localisation/english/lfg_*_l_english.yml                   # UTF-8 BOM (lfg_modifiers_*: names for unnamed generated modifiers;
                                                              #   lfg_shelve_* is GENERATED)
@@ -117,6 +123,7 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
    Include the `@ap_pending_tradition_suppress` modifier, as vanilla does.
 2. `common/traditions/lfg_traditions.txt`: `_adopt` (optional `possible`), `_finish` (`ascension_perks_add = 1`), 5 traditions.
    With `tree_21_11`, slot 4 needs `possible = { has_tradition = <slot1> has_tradition = <slot2> }` and slot 5 needs `<slot3>`.
+   Hard Labour uses `tree_111_11` (two chains: 2 needs 1, 3 needs 2, 5 needs 4). No vanilla layout draws "three into one".
    Other layouts: see `interface/topbar_traditions_view.gui` in the game, and add their prerequisite shapes to `TEMPLATE_PREREQS` in `check_mod.py`.
 3. `interface/lfg_traditions.gfx`: `GFX_tradition_hex_bg_<cat>`, `GFX_tradition_category_bg_<cat>`,
    `GFX_tradition_category_tile_<cat>` (`corneredTileSpriteType`, `borderSize = { x = 140 y = 140 }`),
@@ -249,6 +256,18 @@ A Pleasure World (`col_pleasure`, Shroud + `bliss_accord` flag) is a resort colo
 check `has_modifier = resort_colony`, never `has_designation = col_resort`, so The Grand Tour covers both. District
 specializations are zones (`common/zones`, sets `resort` / `resort_attraction`); there's no zone-jobs modifier, so zone
 bonuses are per-zone overrides (`RESORT_ZONES` in gen_overrides.py).
+
+## Jobs and district specializations
+
+A zone (specialization) is offered in a district's slots by `zone_sets` (`urban` = city slots, which Prison Districts
+also use); restrict it with `potential` (planet scope). Jobs come from `triggered_district_planet_modifier = {
+job_<key>_add = @scaling_district_1_job }`. A job's icon is `swappable_data.default.icon = <name>`, loaded from
+`gfx/interface/icons/jobs/job_<name>.dds` (Giga's files work). Loc: zone `<key>`/`_desc`; job `job_<key>`/`_plural`/`_desc`
+(checker enforces). Modifiers the game generates for new jobs/categories (`job_<key>_add`, `planet_<category>_*`) aren't in
+modifiers.log until the game has loaded the mod, so don't use them in static modifiers checked against the snapshot.
+**Unverified in game:** the new zone, job and economic category.
+Also unverified: Idle Hands attrition (`lfg_penal_idle_hands_attrition`): `count_owned_pop_amount` exported in planet
+scope, variables on pop groups, and `kill_pop_group = { amount = <variable> }` (vanilla does this in refugee_events.txt).
 
 ## Special systems
 

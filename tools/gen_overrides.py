@@ -89,6 +89,44 @@ RESORT_ZONES = [
     ("zone_resort_restoration_enclave", "healthcare", "@doubled_scaling_district_1_job"),
     ("zone_resort_proving_grounds", "entertainer", "@doubled_scaling_district_1_job"),
 ]
+# Hard Labour - Prison Industry: +50% of each city specialization's jobs on the penal colony. Penal colonies are regular
+# empires on standard (not habitat/ecumenopolis/ring) planets, so only the base regular-empire jobs of each zone count.
+# (zone, [(job, amount per zone from the zone's own inline_script parameters)])
+PENAL_ZONES = [
+    ("zone_industrial", [("foundry", "@scaling_district_2_jobs"), ("artisan", "@scaling_district_2_jobs")]),
+    ("zone_foundry", [("foundry", "@scaling_district_1_job")]),
+    ("zone_factory", [("artisan", "@scaling_district_1_job")]),
+    ("zone_research_unity", [("physicist", "@scaling_district_researchers_4_jobs"),
+                             ("biologist", "@scaling_district_researchers_4_jobs"),
+                             ("engineer", "@scaling_district_researchers_4_jobs"),
+                             ("bureaucrat", "@scaling_district_unity_4_jobs")]),
+    ("zone_research", [("physicist", "@scaling_district_3_jobs"), ("biologist", "@scaling_district_3_jobs"),
+                       ("engineer", "@scaling_district_3_jobs")]),
+    ("zone_research_physics", [("physicist", "@scaling_district_1_job")]),
+    ("zone_research_society", [("biologist", "@scaling_district_1_job")]),
+    ("zone_research_engineering", [("engineer", "@scaling_district_1_job")]),
+    ("zone_unity", [("bureaucrat", "@scaling_district_1_job")]),
+    ("zone_unity_spiritualist", [("bureaucrat", "@scaling_district_1_job")]),
+    ("zone_fortress", [("soldier", "@scaling_district_1_job")]),
+    ("zone_trade", [("trader", "@scaling_district_1_job")]),
+]
+
+
+def penal_zone_block(jobs: list) -> str:
+    lines = "".join(f"\t\tjob_{job}_add = {amount}\n" for job, amount in jobs)
+    return f"""\ttriggered_district_planet_modifier = {{
+\t\tpotential = {{
+\t\t\texists = owner
+\t\t\towner = {{
+\t\t\t\thas_tradition = tr_lfg_penal_prison_industry
+\t\t\t}}
+\t\t\thas_modifier = penal_colony
+\t\t}}
+{lines}\t\tmult = 0.5
+\t}}
+"""
+
+
 ZONE_SETS_ANCHOR = r"^\tzone_sets = \{\n(?:\t\t\w+\n)+\t\}\n"
 
 
@@ -251,6 +289,9 @@ OVERRIDES = {
     "mod/common/zones/zz_lfg_zone_overrides.txt": [
         ("common/zones/00_zones.txt", zone, ZONE_SETS_ANCHOR, resort_zone_block(job, amount))
         for zone, job, amount in RESORT_ZONES
+    ] + [
+        ("common/zones/00_zones.txt", zone, ZONE_SETS_ANCHOR, penal_zone_block(jobs))
+        for zone, jobs in PENAL_ZONES
     ],
     "mod/common/buildings/zz_lfg_building_overrides.txt": [
         (HOLOMUSEUMS, "xeno_geology_holomuseum", holomuseum_anchor("engineering"), holomuseum_block("engineering")),

@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Seven new tradition trees, six council agendas, an ascension perk, a hidden special system, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Eight new tradition trees, six council agendas, an ascension perk, a hidden special system, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
@@ -42,6 +42,16 @@ Seven new tradition trees, six council agendas, an ascension perk, a hidden spec
 [*]Cheaper species modification; the finisher gives an ascension perk slot, an extra species trait point and an extra trait pick.
 [/list]
 
+[h3]Hard Labour[/h3]
+[i]Your penal colony runs the economy.[/i] Regular empires, needs Penal Colonies.
+[list]
+[*]Harder-working, better-guarded camps; crime falls everywhere and the unemployed are shipped off to the colony.
+[*][b]Idle Hands:[/b] every job on the colony +1% per 100 unemployed, but they riot and 3% die each month.
+[*][b]Prison Industry:[/b] +50% jobs from the colony's district specializations.
+[*]Finisher, [b]Penal Industries:[/b] penal factory jobs plus supertensile and (ruinously expensive) bulk matter specializations for Prison Districts.
+[*][b]Downsides:[/b] workers everywhere are less happy, and Chain Gangs make the colony miserable.
+[/list]
+
 [h3]Granary Kings[/h3]
 [i]Your food stockpile is political power.[/i] Only for empires whose main species eats food.
 [list]
@@ -67,7 +77,7 @@ Seven new tradition trees, six council agendas, an ascension perk, a hidden spec
 [list]
 [*][b]Hospitality Academies:[/b] +50% Resort Worker jobs in every Accommodation District, and +50% jobs from every resort district specialization.
 [*][b]Package Holidays:[/b] unity and pop happiness grow with every 100 Resort Workers you employ, with no cap.
-[*][b]Galactic Destination:[/b] Tourists on your resort world produce extra trade and unity, more unemployed pops move there, and every 1,000 Tourists add diplomatic weight, with no cap.
+[*][b]Galactic Destination:[/b] Tourists produce extra trade and unity, unemployed pops move there, and every 1,000 Tourists add diplomatic weight.
 [*][b]Paradise Unbound:[/b] Accommodation Districts make room for more districts, plus the [b]Expand the Resort[/b] decision: up to 5 × +2 max districts.
 [/list]
 
@@ -83,7 +93,7 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [/list]
 
 [h2]Special system: Lone Tide[/h2]
-In most games, a lonely star system appears beyond the edge of the galaxy, with no hyperlanes leading to it. Its huge ocean world is home to a pre-FTL civilization. You'll need a jump drive to get there.
+In most games, a lonely system appears beyond the galaxy's edge, with no hyperlanes. Its huge ocean world hosts a pre-FTL civilization. Bring a jump drive.
 
 [h2]Ascension perk: Curated Progress[/h2]
 Tired of drawing repeatables you don't want? Requires [b]Gigastructural Constructs[/b].
@@ -96,7 +106,7 @@ Tired of drawing repeatables you don't want? Requires [b]Gigastructural Construc
 [list]
 [*][b]Synthetic Fertility[/b]: the uploading situation gains +1 monthly progress per year passed, and uploads that many more pops to the Identity Repository.
 [*]The [b]Accommodation District[/b], the resort district specializations and the three [b]holomuseums[/b] gain extra blocks for The Grand Tour and Galactic Broadcast.
-[*]Every repeatable technology (and Gigastructural's megastructure capacity repeatables) checks its Shelve edict.
+[*]Repeatable technologies (vanilla and Gigastructural) check their Shelve edicts.
 [*][b]Virtuality[/b] can't be chosen as the Synthetic Age path by individual machine empires with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin (their origin descriptions say so).
 [/list]
 These replace those vanilla and Gigastructural definitions; other mods that change them may conflict.

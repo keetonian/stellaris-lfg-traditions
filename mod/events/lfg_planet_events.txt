@@ -16,6 +16,15 @@ planet_event = {
 		remove_modifier = lfg_shellworld_arc_neighbours
 		remove_modifier = lfg_shellworld_natural_world
 		remove_modifier = lfg_galactic_destination
+		remove_modifier = lfg_penal_adopt
+		remove_modifier = lfg_penal_wardens_code
+		remove_modifier = lfg_penal_transportation
+		remove_modifier = lfg_penal_chain_gangs
+		remove_modifier = lfg_penal_prison_industry
+		remove_modifier = lfg_penal_prison_industry_crafter
+		set_variable = { which = lfg_prison_districts value = 0 }
+		remove_modifier = lfg_penal_idle_hands
+		set_variable = { which = lfg_unemployed_hundreds value = 0 }
 		set_variable = { which = lfg_arc_neighbours value = 0 }
 	}
 }

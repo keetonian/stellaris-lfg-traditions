@@ -1,0 +1,17 @@
+# LFG Traditions - economic categories.
+
+# Hard Labour: own category for the Penal Supertensile Laborer, so its output can be scaled on its own
+# (planet_lfg_penal_laborers_produces_mult; Prison Industry scales it per 1,000 unemployed on the penal colony).
+planet_lfg_penal_laborers = {
+	parent = planet_jobs_worker
+	modifier_category = colony
+
+	generate_mult_modifiers = {
+		produces
+		upkeep
+	}
+	generate_add_modifiers = {
+		produces
+		upkeep
+	}
+}

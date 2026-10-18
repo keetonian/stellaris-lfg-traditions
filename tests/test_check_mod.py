@@ -45,14 +45,14 @@ class RealModTests(unittest.TestCase):
 
     def test_mod_contents(self):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
-        self.assertEqual(len(mod.top("common/tradition_categories")), 7)
-        self.assertEqual(len(mod.top("common/traditions")), 7 * 7)
+        self.assertEqual(len(mod.top("common/tradition_categories")), 8)
+        self.assertEqual(len(mod.top("common/traditions")), 8 * 7)
         self.assertEqual(mod.top("common/governments/civics"), {})
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3",
                                                             "lfg_resorts.1", "lfg_shellworlders.1",
                                                             "lfg_planet.1", "lfg_lone_tide.1",
-                                                            "lfg_synthetic_fertility.1"})
+                                                            "lfg_synthetic_fertility.1", "lfg_penal.1"})
         self.assertEqual(len(mod.top("common/council_agendas")), 7)
         self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
@@ -106,6 +106,10 @@ class MutationTests(unittest.TestCase):
     def test_prerequisite_wrong_shape(self):
         self.edit(TRADITIONS, "\t\thas_tradition = tr_lfg_granary_seed_vaults\n", "")
         self.assertFails("should require slots [1, 2]")
+
+    def test_chain_layout_prerequisites(self):
+        self.edit(TRADITIONS, "\t\thas_tradition = tr_lfg_penal_transportation\n", "\t\thas_tradition = tr_lfg_penal_wardens_code\n")
+        self.assertFails("tr_lfg_penal_idle_hands")
 
     def test_unknown_tree_template(self):
         self.edit(CATEGORIES, 'tree_template = "tree_21_11"', 'tree_template = "tree_99"')
@@ -305,6 +309,12 @@ class MutationTests(unittest.TestCase):
     def test_system_name_needs_loc(self):
         self.edit("localisation/english/lfg_systems_l_english.yml", " NAME_lfg_thalassa:", " NAME_lfg_thalassaz:")
         self.assertFails("name = NAME_lfg_thalassa has no localisation")
+
+    def test_job_and_zone_need_loc(self):
+        self.edit(TRAD_LOC, " job_lfg_penal_supertensile_laborer_plural:", " job_lfg_penal_supertensile_laborer_plurals:")
+        self.edit(TRAD_LOC, " zone_lfg_penal_supertensiles_desc:", " zone_lfg_penal_supertensiles_dezc:")
+        self.assertFails("missing localisation: job_lfg_penal_supertensile_laborer_plural")
+        self.assertFails("missing localisation: zone_lfg_penal_supertensiles_desc")
 
     def test_require_sources_turns_skips_into_failures(self):
         r = check_mod.run(self.mod, None, None, None, require_sources=True)

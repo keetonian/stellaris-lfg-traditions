@@ -1,0 +1,36 @@
+# LFG Traditions - tradition tree (penal).
+# Layout tree_111_11 (same as Statecraft): two chains, 1 -> 2 -> 3 and 4 -> 5.
+# The order of `traditions` maps to slots 1..5. Prerequisites live in common/traditions/lfg_traditions.txt.
+# One tree per file, named 00_<English tree name>_lfg.txt, so the traditions window sorts it alphabetically
+# among vanilla's regular trees (00_<tree>.txt) instead of after the ascension trees (01_*).
+
+# The penal colony (vanilla decision_penal_colony, one per empire, modifier penal_colony) as the engine of the economy.
+# Regular empires only, like penal colonies. Planet effects: lfg_penal_* static modifiers kept on the penal colony by
+# lfg_penal.1 (monthly + on_enabled).
+tradition_lfg_penal = {
+	desc = tradition_lfg_penal_desc
+	potential = {
+		is_regular_empire = yes
+	}
+	tree_template = "tree_111_11"
+	adoption_bonus = "tr_lfg_penal_adopt"
+	finish_bonus = "tr_lfg_penal_finish"
+	traditions = {
+		"tr_lfg_penal_wardens_code"
+		"tr_lfg_penal_transportation"
+		"tr_lfg_penal_idle_hands"
+		"tr_lfg_penal_prison_industry"
+		"tr_lfg_penal_chain_gangs"
+	}
+	ai_weight = {
+		factor = 1
+		modifier = {
+			factor = 3
+			any_owned_planet = { has_modifier = penal_colony }
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
