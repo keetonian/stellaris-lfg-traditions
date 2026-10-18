@@ -1,0 +1,69 @@
+# LFG Traditions - sprites. Every texture is vanilla art (no .dds files ship with this mod).
+# Each tree needs 4 category sprites; each tradition needs GFX_<tradition key>.
+spriteTypes = {
+	### MEGAFORGE ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_megaforge" textureFile = "gfx/interface/traditions/tradition_hex_bg_orange.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_megaforge" textureFile = "gfx/interface/tiles/tradition_category_tile_nanotech.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_megaforge" textureFile = "gfx/interface/tiles/tradition_category_tile_nanotech.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_megaforge" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_nanotech.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_guilds" textureFile = "gfx/interface/icons/traditions/tradition_nanotech_1.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_lattices" textureFile = "gfx/interface/icons/traditions/tradition_nanotech_2.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_priority" textureFile = "gfx/interface/icons/traditions/tradition_expansion_galactic_ambition.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_foundries" textureFile = "gfx/interface/icons/traditions/tradition_nanotech_3.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_monuments" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_public_works.dds" }
+
+	### LEISURE ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_leisure" textureFile = "gfx/interface/traditions/tradition_hex_bg_green.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_leisure" textureFile = "gfx/interface/tiles/tradition_category_tile_harmony.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_leisure" textureFile = "gfx/interface/tiles/tradition_category_tile_harmony.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_leisure" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_harmony.dds" }
+	spriteType = { name = "GFX_tr_lfg_leisure_arts" textureFile = "gfx/interface/icons/traditions/tradition_harmony_mind_and_body.dds" }
+	spriteType = { name = "GFX_tr_lfg_leisure_markets" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_commercial_enterprise.dds" }
+	spriteType = { name = "GFX_tr_lfg_leisure_shorter_shifts" textureFile = "gfx/interface/icons/traditions/tradition_harmony_utopian_dream.dds" }
+	spriteType = { name = "GFX_tr_lfg_leisure_citizen_dividend" textureFile = "gfx/interface/icons/traditions/tradition_politics_gravitas.dds" }
+	spriteType = { name = "GFX_tr_lfg_leisure_amenity_culture" textureFile = "gfx/interface/icons/traditions/tradition_harmony_kinship.dds" }
+
+	### ATTENDANTS ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_attendants" textureFile = "gfx/interface/traditions/tradition_hex_bg_blue.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_attendants" textureFile = "gfx/interface/tiles/tradition_category_tile_modularity.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_attendants" textureFile = "gfx/interface/tiles/tradition_category_tile_modularity.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_attendants" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_modularity.dds" }
+	spriteType = { name = "GFX_tr_lfg_attendants_domestic_protocols" textureFile = "gfx/interface/icons/traditions/tradition_modularity_1.dds" }
+	spriteType = { name = "GFX_tr_lfg_attendants_quality_over_quantity" textureFile = "gfx/interface/icons/traditions/tradition_synthetics_prefabricated_components.dds" }
+	spriteType = { name = "GFX_tr_lfg_attendants_licensed_roboticists" textureFile = "gfx/interface/icons/traditions/tradition_cybernetics_assembly_standards.dds" }
+	spriteType = { name = "GFX_tr_lfg_attendants_personal_valets" textureFile = "gfx/interface/icons/traditions/tradition_modularity_2.dds" }
+	spriteType = { name = "GFX_tr_lfg_attendants_household_ai" textureFile = "gfx/interface/icons/traditions/tradition_synthetics_optimization_algorithms.dds" }
+
+	### OVERCLOCK ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_overclock" textureFile = "gfx/interface/traditions/tradition_hex_bg_turqoise.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_overclock" textureFile = "gfx/interface/tiles/tradition_category_tile_synchronicity.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_overclock" textureFile = "gfx/interface/tiles/tradition_category_tile_synchronicity.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_overclock" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_synchronicity.dds" }
+	spriteType = { name = "GFX_tr_lfg_overclock_priority_threads" textureFile = "gfx/interface/icons/traditions/tradition_versatility_adaptive_programming.dds" }
+	spriteType = { name = "GFX_tr_lfg_overclock_coolant_loops" textureFile = "gfx/interface/icons/traditions/tradition_synthetics_power_systems.dds" }
+	spriteType = { name = "GFX_tr_lfg_overclock_burst_assembly" textureFile = "gfx/interface/icons/traditions/tradition_versatility_operational_proxies.dds" }
+	spriteType = { name = "GFX_tr_lfg_overclock_heuristic_cores" textureFile = "gfx/interface/icons/traditions/tradition_versatility_material_analysis.dds" }
+	spriteType = { name = "GFX_tr_lfg_overclock_redline" textureFile = "gfx/interface/icons/traditions/tradition_synthetics_solid_state_actuators.dds" }
+
+	### SHELLWORLDERS ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_shellworlders" textureFile = "gfx/interface/traditions/tradition_hex_bg_yellow.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_shellworlders" textureFile = "gfx/interface/tiles/tradition_category_tile_adaptability.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_shellworlders" textureFile = "gfx/interface/tiles/tradition_category_tile_adaptability.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_shellworlders" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_adaptability.dds" }
+	spriteType = { name = "GFX_tr_lfg_shellworlders_compact_living" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_recycling.dds" }
+	spriteType = { name = "GFX_tr_lfg_shellworlders_artificial_gravity" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_survival_fittest.dds" }
+	spriteType = { name = "GFX_tr_lfg_shellworlders_frame_engineering" textureFile = "gfx/interface/icons/traditions/tradition_expansion_reach_for_the_stars.dds" }
+	spriteType = { name = "GFX_tr_lfg_shellworlders_closed_ecology" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_adaptive_ecology.dds" }
+	spriteType = { name = "GFX_tr_lfg_shellworlders_ring_cities" textureFile = "gfx/interface/icons/traditions/tradition_expansion_a_new_life.dds" }
+
+	### STELLAR_HARVEST ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_stellar_harvest" textureFile = "gfx/interface/traditions/tradition_hex_bg_red.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_stellar_harvest" textureFile = "gfx/interface/tiles/tradition_category_tile_prosperity.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_stellar_harvest" textureFile = "gfx/interface/tiles/tradition_category_tile_prosperity.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_stellar_harvest" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_prosperity.dds" }
+	spriteType = { name = "GFX_tr_lfg_stellar_harvest_collector_arrays" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_efficiency_algorithms.dds" }
+	spriteType = { name = "GFX_tr_lfg_stellar_harvest_photonic_agriculture" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_dietary_enrichment.dds" }
+	spriteType = { name = "GFX_tr_lfg_stellar_harvest_star_lifting" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_peak_performance.dds" }
+	spriteType = { name = "GFX_tr_lfg_stellar_harvest_energy_credits" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_trickle_up_economics.dds" }
+	spriteType = { name = "GFX_tr_lfg_stellar_harvest_stellar_priority" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_sct.dds" }
+}

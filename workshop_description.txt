@@ -1,0 +1,37 @@
+[h1]LFG Traditions[/h1]
+
+Six new tradition trees and a new civic for [b]Gigastructural Engineering[/b] games. Every tree trades a clear buff for a clear nerf, and each one only appears for the empires it fits.
+
+[h2]Tradition trees[/h2]
+[list]
+[*][b]Megaforge Doctrine[/b]: supertensiles and megastructures first, the normal economy second. Needs Supertensile Materials or Mega-Engineering.
+[*][b]Leisure Society[/b]: civilians produce unity and trade and gain political power; workers produce less and lose influence. Regular empires only.
+[*][b]Attendant Robotics[/b]: fewer, better robots that serve your people. Not for machine, synthetic or cybernetic empires.
+[*][b]Overclocked Network[/b]: complex drones over simple drones. Machine Intelligence only.
+[*][b]Shellworlders[/b]: life on habitats, rings and frameworlds. Artificial-world origins, or after Orbital Habitats / Ring World.
+[*][b]Stellar Harvest[/b]: a star-powered economy at the expense of farms and mines. Needs Dyson Swarm or Dyson Sphere.
+[/list]
+
+[h2]Civic: Pampered Masters[/h2]
+A reverse Rogue Servitor: an individualist, biological empire whose robots serve the organics.
+[list]
+[*]Organics are happier and use fewer amenities; robots and robot servants work harder.
+[*][b]Strong downside:[/b] organic workforce -20%, robot assembly -40%, fewer and costlier roboticists, workers demand more consumer goods.
+[*]Not available to gestalts, machine or mechanical species, or cybernetic/synthetic origins. [b]Blocks Cybernetic and Synthetic ascension.[/b]
+[/list]
+
+[h2]Balance changes to vanilla[/h2]
+[list]
+[*][b]The Flesh is Weak[/b] and [b]Synthetic Evolution[/b] can't be taken with Pampered Masters.
+[*][b]Synthetic Fertility[/b]: the origin's uploading situation gains +1 monthly progress for every year that has passed.
+[/list]
+These replace the vanilla definitions of those two ascension perks and that situation. Other mods that change the same definitions may conflict.
+
+[h2]Requirements and compatibility[/h2]
+[list]
+[*]Stellaris 4.5, [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237]Gigastructural Engineering & More[/url] (load this mod after it).
+[*]Recommended: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981]A Lot of Traditions - 24 Tradition Slots[/url], since vanilla only allows 7 trees.
+[*]Compatible with Expanded Stellaris Traditions and More Traditions.
+[*]Changes the game checksum: everyone in a multiplayer game needs it.
+[*]Balance is a first draft. Feedback welcome!
+[/list]

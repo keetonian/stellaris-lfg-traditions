@@ -1,0 +1,10 @@
+# LFG Traditions - script values.
+
+# Extra monthly progress for the Synthetic Fertility situation (situation_synthetic_fertility_digitization,
+# see common/situations/zz_lfg_situation_overrides.txt): +1 per year since game start, which is when the
+# origin's situation begins. Year 10 => +10 per month on top of the vanilla base of 15.
+lfg_synthetic_fertility_acceleration = {
+	base = 0
+	add = trigger:years_passed
+	mult = 1
+}

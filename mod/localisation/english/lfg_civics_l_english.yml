@@ -1,0 +1,9 @@
+﻿l_english:
+ civic_lfg_pampered_masters:0 "Pampered Masters"
+ civic_lfg_pampered_masters_desc:0 "§RWARNING: Incompatible with Cybernetic and Synthetic Ascension.§!\n\nOur robots do the work so that our people do not have to. Every citizen is attended to by a carefully made and licensed robot servant. Robots are precious and expensive to make, and our citizens have grown very comfortable."
+ civic_tooltip_lfg_pampered_masters_effects:0 "- Organic pops are happier and use fewer amenities\n- Robot pops and robot servants work harder"
+ civic_tooltip_lfg_pampered_masters_negative_effects:0 "- Organic pops work far less\n- Robot assembly is much slower and roboticists are fewer and cost more alloys\n- Workers expect more consumer goods\n- §RCannot take the Cybernetic or Synthetic ascension paths§!"
+ civic_tooltip_lfg_not_machine_or_synthetic:0 "Not a Machine or Mechanical species"
+ civic_tooltip_lfg_not_robotic_origin:0 "Not a cybernetic, synthetic or robot-focused origin"
+ lfg_requires_not_pampered_masters:0 "$TRIGGER_FAIL$Incompatible with the §YPampered Masters§! civic"
+ lfg_situation_synthetic_fertility_acceleration_desc:0 "Years since the start: §R+1§! per year"

@@ -1,0 +1,223 @@
+# LFG Traditions - tradition trees.
+# All trees use the vanilla tree_21_11 layout (same as Supremacy):
+#   slots 1 2 3 on top; slot 4 requires 1 + 2; slot 5 requires 3.
+# The order of `traditions` maps to slots 1..5. Prerequisites live in common/traditions/lfg_traditions.txt.
+
+# Megastructures first: buffs supertensiles (Gigastructural) and megastructures, nerfs the normal economy.
+tradition_lfg_megaforge = {
+	desc = tradition_lfg_megaforge_desc
+	potential = {
+		is_nomadic = no
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_megaforge_adopt"
+	finish_bonus = "tr_lfg_megaforge_finish"
+	traditions = {
+		"tr_lfg_megaforge_guilds"
+		"tr_lfg_megaforge_lattices"
+		"tr_lfg_megaforge_priority"
+		"tr_lfg_megaforge_foundries"
+		"tr_lfg_megaforge_monuments"
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 3
+			OR = {
+				has_origin = origin_frameworld
+				has_origin = origin_birch
+				has_origin = origin_great_ring
+				has_origin = origin_interstellar_ring
+				has_origin = origin_alderson
+			}
+		}
+		modifier = {
+			factor = 2
+			has_global_flag = giga_buildcap_j
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
+
+# Civilians over workers: a society that lives for leisure, not labour. Regular empires only (civilian job).
+tradition_lfg_leisure = {
+	desc = tradition_lfg_leisure_desc
+	potential = {
+		is_regular_empire = yes
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_leisure_adopt"
+	finish_bonus = "tr_lfg_leisure_finish"
+	traditions = {
+		"tr_lfg_leisure_arts"
+		"tr_lfg_leisure_markets"
+		"tr_lfg_leisure_shorter_shifts"
+		"tr_lfg_leisure_citizen_dividend"
+		"tr_lfg_leisure_amenity_culture"
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 3
+			OR = {
+				has_ethic = ethic_egalitarian
+				has_ethic = ethic_fanatic_egalitarian
+			}
+		}
+		modifier = {
+			factor = 2
+			OR = {
+				has_valid_civic = civic_pleasure_seekers
+				has_valid_civic = civic_corporate_hedonism
+			}
+		}
+		modifier = {
+			factor = 5
+			has_valid_civic = civic_lfg_pampered_masters
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
+
+# Domestic robots that serve organics. Companion tree for the Pampered Masters civic.
+# Not for machine, synthetic or cybernetic empires.
+tradition_lfg_attendants = {
+	desc = tradition_lfg_attendants_desc
+	potential = {
+		is_regular_empire = yes
+		is_individual_machine = no
+		is_synthetic_empire = no
+		has_cybernetic_ascension = no
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_attendants_adopt"
+	finish_bonus = "tr_lfg_attendants_finish"
+	traditions = {
+		"tr_lfg_attendants_domestic_protocols"
+		"tr_lfg_attendants_quality_over_quantity"
+		"tr_lfg_attendants_licensed_roboticists"
+		"tr_lfg_attendants_personal_valets"
+		"tr_lfg_attendants_household_ai"
+	}
+	ai_weight = {
+		factor = 3
+		modifier = {
+			factor = 10
+			has_valid_civic = civic_lfg_pampered_masters
+		}
+		modifier = {
+			factor = 2
+			OR = {
+				has_ethic = ethic_materialist
+				has_ethic = ethic_fanatic_materialist
+			}
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
+
+# Machine Intelligence mirror of Leisure: complex drones over simple drones.
+tradition_lfg_overclock = {
+	desc = tradition_lfg_overclock_desc
+	potential = {
+		is_machine_empire = yes
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_overclock_adopt"
+	finish_bonus = "tr_lfg_overclock_finish"
+	traditions = {
+		"tr_lfg_overclock_priority_threads"
+		"tr_lfg_overclock_coolant_loops"
+		"tr_lfg_overclock_burst_assembly"
+		"tr_lfg_overclock_heuristic_cores"
+		"tr_lfg_overclock_redline"
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
+
+# Life on artificial worlds: habitats, ring worlds and Gigastructural's habitable megastructures.
+tradition_lfg_shellworlders = {
+	desc = tradition_lfg_shellworlders_desc
+	potential = {
+		OR = {
+			has_origin = origin_frameworld
+			has_origin = origin_birch
+			has_origin = origin_great_ring
+			has_origin = origin_interstellar_ring
+			has_origin = origin_alderson
+			has_origin = origin_shattered_ring
+			has_origin = origin_void_dwellers
+			has_technology = tech_habitat_1
+			has_technology = tech_ring_world
+		}
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_shellworlders_adopt"
+	finish_bonus = "tr_lfg_shellworlders_finish"
+	traditions = {
+		"tr_lfg_shellworlders_compact_living"
+		"tr_lfg_shellworlders_artificial_gravity"
+		"tr_lfg_shellworlders_frame_engineering"
+		"tr_lfg_shellworlders_closed_ecology"
+		"tr_lfg_shellworlders_ring_cities"
+	}
+	ai_weight = {
+		factor = 3
+		modifier = {
+			factor = 5
+			OR = {
+				has_origin = origin_frameworld
+				has_origin = origin_birch
+				has_origin = origin_great_ring
+				has_origin = origin_interstellar_ring
+				has_origin = origin_alderson
+				has_origin = origin_shattered_ring
+				has_origin = origin_void_dwellers
+			}
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
+
+# A star-powered economy: Dyson swarms and spheres over farms and mines. Base game.
+tradition_lfg_stellar_harvest = {
+	desc = tradition_lfg_stellar_harvest_desc
+	potential = {
+		is_nomadic = no
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_stellar_harvest_adopt"
+	finish_bonus = "tr_lfg_stellar_harvest_finish"
+	traditions = {
+		"tr_lfg_stellar_harvest_collector_arrays"
+		"tr_lfg_stellar_harvest_photonic_agriculture"
+		"tr_lfg_stellar_harvest_star_lifting"
+		"tr_lfg_stellar_harvest_energy_credits"
+		"tr_lfg_stellar_harvest_stellar_priority"
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
