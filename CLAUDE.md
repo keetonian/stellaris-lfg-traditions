@@ -1,16 +1,17 @@
 # CLAUDE.md
 
-Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 8 tradition trees, 8 council agendas, the civic
-`civic_lfg_pampered_masters`, the Evolutionary Predators edict `lfg_species_experimentation`, and generated overrides of
-2 ascension perks + 1 situation + 1 district (district_resort) + 3 buildings (holomuseums). User-facing docs and the
-full effect tables are in README.md. **Keep README's tables in sync when you change numbers.**
+Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 7 tradition trees, 8 council agendas, the civic
+`civic_lfg_pampered_masters`, the Evolutionary Predators edict `lfg_species_experimentation`, the ascension perk
+`ap_lfg_curated_progress` + 27 generated Shelve edicts, and generated overrides of 2 ascension perks + 1 situation +
+1 district (district_resort) + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script.
+User-facing docs and the full effect tables are in README.md. **Keep README's tables in sync when you change numbers.**
 
 ## Commands
 
 ```sh
 scripts/verify.sh                         # unittest (tests/) + tools/check_mod.py; run after every change
 scripts/verify.sh --require-sources       # also fail if game/Giga files are missing (do before releases)
-python3 -I tools/gen_overrides.py         # regenerate vanilla overrides (after game updates)
+python3 -I tools/gen_overrides.py         # regenerate overrides + Shelve edicts/loc (after game/Giga updates or SHELVE edits)
 python3 -I tools/check_mod.py --update-snapshot   # refresh tools/data/modifiers_4.5.txt.gz from modifiers.log
 scripts/install.sh                        # install a "[LOCAL DEV]" copy (no remote_file_id) for in-game testing
 RELEASE=1 scripts/install.sh              # exact copy; only for uploading via the Paradox launcher
@@ -23,7 +24,7 @@ Python 3.9+ stdlib only. Always run with `-I`.
 
 ```
 mod/                                  # exactly what ships
-  common/tradition_categories/lfg_tradition_categories.txt   # 8 trees
+  common/tradition_categories/00_<tree name>_lfg.txt         # 7 trees, one per file (sort order, see below)
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
   common/governments/civics/lfg_civics.txt                   # Pampered Masters
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
@@ -33,18 +34,24 @@ mod/                                  # exactly what ships
   common/edicts/lfg_edicts.txt                               # lfg_species_experimentation -> fires lfg_species_split.1
   events/lfg_species_split_events.txt                        # species picker event
   events/lfg_polymath_events.txt                             # Reckless Experimentation lab accident (yearly)
+  events/lfg_resorts_events.txt                              # Galactic Destination: resort world modifier + tourist count (monthly)
   common/council_agendas/lfg_council_agendas.txt             # 8 agendas, unlocked by tree finishers
   common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + lfg_lab_accident
-  common/on_actions/lfg_on_actions.txt                       # on_yearly_pulse_country -> lfg_polymath.1
+  common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1, yearly -> lfg_polymath.1
   common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (resort world, Paradise Unbound)
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)
   common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy)
+  common/ascension_perks/lfg_ascension_perks.txt             # ap_lfg_curated_progress (needs Gigastructural Constructs)
+  common/edicts/lfg_shelve_edicts.txt                        # GENERATED Shelve edicts (from SHELVE in gen_overrides.py)
+  common/technology/zz_lfg_repeatable_overrides.txt          # GENERATED (24 repeatables: factor 0 while shelved)
+  common/inline_scripts/technology/giga_mega_repeatable.txt  # GENERATED whole-file override of Giga's inline script
   common/ascension_perks/zz_lfg_ascension_path_overrides.txt # GENERATED
   common/situations/zz_lfg_situation_overrides.txt           # GENERATED
   common/districts/zz_lfg_district_overrides.txt             # GENERATED (district_resort: Hospitality Academies jobs)
   common/buildings/zz_lfg_building_overrides.txt             # GENERATED (3 holomuseums: Holo-Museums bonus)
   interface/lfg_traditions.gfx                               # sprites -> vanilla .dds (no art ships)
-  localisation/english/lfg_*_l_english.yml                   # UTF-8 BOM (lfg_modifiers_*: names for unnamed generated modifiers)
+  localisation/english/lfg_*_l_english.yml                   # UTF-8 BOM (lfg_modifiers_*: names for unnamed generated modifiers;
+                                                             #   lfg_shelve_* is GENERATED)
 tools/pdx.py          # small Paradox-script parser
 tools/check_mod.py    # static verification (see README "Verification")
 tools/gen_overrides.py
@@ -60,8 +67,10 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
 - **Prefix everything** `lfg`: `tradition_lfg_*`, `tr_lfg_*`, `civic_lfg_*`, `lfg_*` (script values, loc). Other installed
   mods use `tr_est_*`, `tr_mt_*`, `tr_macroengineering_*`, `tr_gigaengineering_*`, `tr_gigabulwark_*`. Never redefine vanilla or Giga keys
   except through `tools/gen_overrides.py`. The checker enforces prefixes.
-- **Never hand-edit the `zz_lfg_*` override files.** Change `OVERRIDES` / the snippets in `tools/gen_overrides.py` and regenerate.
-  They are vanilla text plus `# LFG: added` lines. `zz_` makes them load after vanilla so they replace it.
+- **Never hand-edit generated files** (`zz_lfg_*`, `inline_scripts/technology/giga_mega_repeatable.txt`, `lfg_shelve_edicts.txt`,
+  `lfg_shelve_l_english.yml`). Change `OVERRIDES` / `SHELVE` / the snippets in `tools/gen_overrides.py` and regenerate.
+  Overrides are source text plus `# LFG: added` lines. `zz_` makes them load after vanilla (and `zz_lfg_` after Giga's `zz_giga_`).
+  Sources prefixed `giga:` are read from the Giga dir; key `None` copies a whole file (inline scripts can't be overridden per block).
 - **Every modifier must exist in 4.5.** Look it up in
   `~/Documents/Paradox Interactive/Stellaris/logs/script_documentation/modifiers.log` (the checker does). Pitfalls:
   - `megastructures_cost_mult`, not `megastructure_build_cost_mult` (which doesn't exist)
@@ -85,7 +94,10 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
 
 ## How the pieces connect (adding a tree)
 
-1. `common/tradition_categories/lfg_tradition_categories.txt`: `tradition_lfg_<name> = { desc, potential, tree_template = "tree_21_11",
+1. `common/tradition_categories/00_<English tree name>_lfg.txt` (one tree per file; e.g. "The Grand Tour" ->
+   `00_grand_tour_lfg.txt`). The traditions window lists trees in load order = file name order, so this sorts the tree
+   alphabetically among vanilla's `00_<tree>.txt` regular trees instead of after the `01_*` ascension trees (More
+   Traditions does the same). The checker enforces the name. Then `tradition_lfg_<name> = { desc, potential, tree_template = "tree_21_11",
    adoption_bonus = "tr_lfg_<name>_adopt", finish_bonus = "tr_lfg_<name>_finish", traditions = { 5 keys in slot order }, ai_weight }`.
    Include the `@ap_pending_tradition_suppress` modifier, as vanilla does.
 2. `common/traditions/lfg_traditions.txt`: `_adopt` (optional `possible`), `_finish` (`ascension_perks_add = 1`), 5 traditions.
@@ -104,8 +116,8 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
 - Giga: `~/Library/Application Support/Steam/steamapps/workshop/content/281990/1121692237`
 - Modifier list: `~/Documents/Paradox Interactive/Stellaris/logs/script_documentation/modifiers.log` (regenerated by the
   game's `script_docs` console command; it includes modifiers from the mods loaded at the time)
-- Overridden vanilla definitions: `common/ascension_perks/00_ascension_paths.txt` (`ap_the_flesh_is_weak`,
-  `ap_synthetic_evolution`), `common/situations/08_machine_age_situations.txt` (`situation_synthetic_fertility_digitization`)
+- Overridden definitions: see `OVERRIDES` in `tools/gen_overrides.py` (ascension paths, Synthetic Fertility situation,
+  district_resort, holomuseums, the repeatable techs in `SHELVE`, Giga's `giga_mega_repeatable` inline script)
 
 ## Updating for a new Stellaris / Giga version
 
@@ -200,9 +212,20 @@ leader, habitability, upkeep, or a phenotype tag + `species`), so vanilla `add_r
 Tag `lfg_predator_only` keeps it out of Species Experimentation (its filter excludes that tag). Loc: `trait_<key>`, `_desc`.
 Per-pop output goes in `resources = { category = planet_pops_traits produces = { ... } }` (like vanilla trait_notofthisworld).
 
+## Curated Progress / Shelve edicts
+
+- To shelve a new repeatable (new game or Giga version): find techs with `levels = -1` in game + Giga `common/technology`
+  (skip event techs like `tech_repeatable_lcluster_clue`, `tech_cosmogenesis_thesis`), add a `SHELVE` row (edict suffix,
+  tech, area, source file, potential trigger = the tech's prerequisite), regenerate, and update README's table and the
+  edict count in `tests/test_check_mod.py`. Techs with `levels = 5` are not repeatables.
+- Blocking = `modifier = { factor = 0 has_edict = ... }` in the tech's `weight_modifier` (country scope). It only stops new draws.
+- Edict cost/upkeep `multiplier = value:edict_size_effect` (vanilla script value), research upkeep in the tech's area
+  (pattern from More Traditions). Loc uses `$<tech key>$`; the checker verifies those keys exist.
+- **Unverified in game:** research upkeep on edicts, the inline-script override replacing Giga's, `$tech$` in edict names.
+
 ## Steam page: easter eggs stay secret
 
 `workshop_description.txt` must explain every feature **except** the Evolutionary Predators content: the
 Inherited Genius trait and the Species Experimentation edict are easter eggs (user's decision). Don't mention them,
-Evolutionary Predators, edicts or subspecies on the Steam page; `tests/test_workshop_description.py` enforces it.
+Evolutionary Predators or subspecies on the Steam page (the Shelve edicts are public); `tests/test_workshop_description.py` enforces it.
 The README (private repo) documents them normally. When features change, update the Steam page too.

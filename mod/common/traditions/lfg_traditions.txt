@@ -298,84 +298,6 @@ tr_lfg_overclock_redline = {
 }
 
 #####################################################################
-# SHELLWORLDERS - hook: grows with the number of artificial worlds you own (2 / 5 / 10)
-#####################################################################
-
-tr_lfg_shellworlders_adopt = {
-	modifier = {
-		megastructures_habitat_cost_mult = -0.10
-		logistic_growth_mult = -0.05
-	}
-}
-
-tr_lfg_shellworlders_finish = {
-	custom_tooltip = tr_lfg_shellworlders_finish_tt
-	modifier = {
-		ascension_perks_add = 1
-	}
-	triggered_modifier = {
-		potential = { count_owned_planet = { limit = { is_artificial = yes } count >= 2 } }
-		planet_stability_add = 2
-	}
-	triggered_modifier = {
-		potential = { count_owned_planet = { limit = { is_artificial = yes } count >= 5 } }
-		planet_stability_add = 2
-		pop_housing_usage_mult = -0.05
-	}
-	triggered_modifier = {
-		potential = { count_owned_planet = { limit = { is_artificial = yes } count >= 10 } }
-		planet_stability_add = 2
-		pop_housing_usage_mult = -0.05
-		megastructure_build_speed_mult = 0.10
-	}
-}
-
-tr_lfg_shellworlders_compact_living = {
-	modifier = {
-		pop_housing_usage_mult = -0.05
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_shellworlders_artificial_gravity = {
-	modifier = {
-		planet_stability_add = 3
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_shellworlders_frame_engineering = {
-	modifier = {
-		megastructures_frameworld_cost_mult = -0.15
-		megastructures_habitat_cost_mult = -0.10
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_shellworlders_closed_ecology = {
-	possible = {
-		has_tradition = tr_lfg_shellworlders_compact_living
-		has_tradition = tr_lfg_shellworlders_artificial_gravity
-	}
-	modifier = {
-		planet_amenities_mult = 0.05
-		logistic_growth_mult = -0.05
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_shellworlders_ring_cities = {
-	possible = {
-		has_tradition = tr_lfg_shellworlders_frame_engineering
-	}
-	modifier = {
-		megastructure_build_speed_mult = 0.10
-		pop_housing_usage_mult = -0.05
-	}
-	ai_weight = { factor = 1000 }
-}
-
-#####################################################################
 # POLYMATH COMMONS - hook: research from everyone; scales with species and rivals; agenda "Eureka Season"
 #####################################################################
 
@@ -462,8 +384,8 @@ tr_lfg_polymath_interdisciplinary_seminars = {
 tr_lfg_granary_adopt = {
 	unlocks_agenda = agenda_lfg_feast_of_plenty
 	modifier = {
-		country_resource_max_food_add = 5000
-		planet_farmers_produces_mult = 0.05
+		country_resource_max_add = 10000
+		planet_farmers_produces_mult = 0.10
 	}
 }
 
@@ -490,13 +412,14 @@ tr_lfg_granary_finish = {
 tr_lfg_granary_tithe_barns = {
 	custom_tooltip = tr_lfg_granary_tithe_barns_tt
 	triggered_modifier = {
-		potential = { resource_stockpile_compare = { resource = food value >= 5000 } }
-		planet_stability_add = 3
-		country_unity_produces_mult = 0.05
+		potential = { resource_stockpile_compare = { resource = food value >= 10000 } }
+		planet_stability_add = 5
+		logistic_growth_mult = 0.10
 	}
 	triggered_modifier = {
-		potential = { resource_stockpile_compare = { resource = food value < 500 } }
+		potential = { resource_stockpile_compare = { resource = food value < 1000 } }
 		planet_stability_add = -5
+		logistic_growth_mult = -0.10
 	}
 	ai_weight = { factor = 1000 }
 }
@@ -514,7 +437,7 @@ tr_lfg_granary_seed_vaults = {
 
 tr_lfg_granary_bountiful_fields = {
 	modifier = {
-		planet_farmers_produces_mult = 0.10
+		planet_farmers_produces_mult = 0.20
 	}
 	ai_weight = { factor = 1000 }
 }
@@ -680,7 +603,7 @@ tr_lfg_resorts_package_holidays = {
 	triggered_modifier = {
 		potential = { always = yes }
 		country_unity_produces_mult = 0.005
-		pop_amenities_usage_mult = -0.0025
+		pop_happiness = 0.0025
 		mult = value:lfg_resort_worker_hundreds
 	}
 	ai_weight = { factor = 1000 }
@@ -714,12 +637,16 @@ tr_lfg_resorts_galactic_destination = {
 	possible = {
 		has_tradition = tr_lfg_resorts_wonders_of_the_galaxy
 	}
+	# Tourists = civilians on the resort world. The planet part is the static modifier lfg_galactic_destination, kept on
+	# the resort world by lfg_resorts.1 (monthly), which also counts its tourists into the country variable lfg_tourists.
 	custom_tooltip = tr_lfg_resorts_galactic_destination_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_resorts.1 } }
+	}
 	triggered_modifier = {
 		potential = { always = yes }
-		country_trade_produces_mult = 0.005
-		diplo_weight_mult = 0.005
-		mult = value:lfg_resort_worker_hundreds
+		diplo_weight_mult = 0.01
+		mult = value:lfg_tourist_thousands
 	}
 	ai_weight = { factor = 1000 }
 }

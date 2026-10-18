@@ -11,7 +11,7 @@ import check_mod  # noqa: E402
 
 GAME_INSTALLED = check_mod.DEFAULT_GAME.exists() and check_mod.DEFAULT_GIGA.exists()
 TRADITIONS = "common/traditions/lfg_traditions.txt"
-CATEGORIES = "common/tradition_categories/lfg_tradition_categories.txt"
+CATEGORIES = "common/tradition_categories/00_granary_kings_lfg.txt"
 CIVICS = "common/governments/civics/lfg_civics.txt"
 TRAD_LOC = "localisation/english/lfg_traditions_l_english.yml"
 GFX = "interface/lfg_traditions.gfx"
@@ -24,6 +24,10 @@ STATICS = "common/static_modifiers/lfg_static_modifiers.txt"
 POLYMATH_EVENTS = "events/lfg_polymath_events.txt"
 ON_ACTIONS = "common/on_actions/lfg_on_actions.txt"
 POLICY_LOC = "localisation/english/lfg_policies_l_english.yml"
+PERKS = "common/ascension_perks/lfg_ascension_perks.txt"
+SHELVE_LOC = "localisation/english/lfg_shelve_l_english.yml"
+TECH_OVERRIDES = "common/technology/zz_lfg_repeatable_overrides.txt"
+MEGA_CAP_SCRIPT = "common/inline_scripts/technology/giga_mega_repeatable.txt"
 
 
 def failures(mod_dir, game=None, giga=None):
@@ -42,12 +46,16 @@ class RealModTests(unittest.TestCase):
 
     def test_mod_contents(self):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
-        self.assertEqual(len(mod.top("common/tradition_categories")), 8)
-        self.assertEqual(len(mod.top("common/traditions")), 8 * 7)
+        self.assertEqual(len(mod.top("common/tradition_categories")), 7)
+        self.assertEqual(len(mod.top("common/traditions")), 7 * 7)
         self.assertIn("civic_lfg_pampered_masters", mod.top("common/governments/civics"))
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
-        self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3"})
+        self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3",
+                                                            "lfg_resorts.1"})
         self.assertEqual(len(mod.top("common/council_agendas")), 8)
+        self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress"})
+        shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
+        self.assertEqual(len(shelve), 24 + 3)  # one per repeatable tech + megastructure capacity per research area
 
 
 class MutationTests(unittest.TestCase):
@@ -140,13 +148,44 @@ class MutationTests(unittest.TestCase):
         self.edit(CIVICS, "civic_lfg_pampered_masters = {", "civic_pampered_masters = {")
         self.assertFails("lacks an lfg prefix")
 
+    def test_tree_file_must_be_named_after_the_tree(self):
+        (self.mod / CATEGORIES).rename(self.mod / "common/tradition_categories/lfg_granary.txt")
+        self.assertFails("rename to 00_granary_kings_lfg.txt")
+
+    def test_one_tree_per_file(self):
+        other = self.mod / "common/tradition_categories/00_grand_tour_lfg.txt"
+        with open(self.mod / CATEGORIES, "a") as f:
+            f.write(other.read_text())
+        other.unlink()
+        self.assertFails("exactly one tree per file (found 2)")
+
+    def test_tree_file_name(self):
+        self.assertEqual(check_mod.tree_file_name("The Grand Tour"), "00_grand_tour_lfg.txt")
+        self.assertEqual(check_mod.tree_file_name("Megaforge Doctrine"), "00_megaforge_doctrine_lfg.txt")
+
     def test_unexpected_file(self):
         (self.mod / "common/events_by_mistake.txt").write_text("x = 1\n")
         self.assertFails("unexpected file in mod/")
 
     def test_override_file_outside_generator(self):
-        (self.mod / "common/ascension_perks/my_ap.txt").write_text("ap_x = { }\n")
+        (self.mod / "common/technology/my_tech.txt").write_text("tech_x = { }\n")
         self.assertFails("unexpected file in mod/")
+
+    def test_ascension_perk_needs_loc_and_sprite(self):
+        self.edit(GFX, 'name = "GFX_ap_lfg_curated_progress"', 'name = "GFX_ap_lfg_curated_progresz"')
+        self.edit("localisation/english/lfg_ascension_perks_l_english.yml", " ap_lfg_curated_progress_desc:",
+                  " ap_lfg_curated_progresz_desc:")
+        self.assertFails("missing sprite GFX_ap_lfg_curated_progress")
+        self.assertFails("missing localisation: ap_lfg_curated_progress_desc")
+
+    def test_shelve_check_for_unknown_edict(self):
+        self.edit(TECH_OVERRIDES, "has_edict = lfg_shelve_armor", "has_edict = lfg_shelve_armour")
+        self.assertFails("has_edict = lfg_shelve_armour is not an edict defined in this mod")
+
+    def test_shelve_check_in_inline_script_expands_area(self):
+        self.edit(MEGA_CAP_SCRIPT, "has_edict = lfg_shelve_megastructure_capacity_$area$",
+                  "has_edict = lfg_shelve_megastructure_cap_$area$")
+        self.assertFails("has_edict = lfg_shelve_megastructure_cap_physics is not an edict")
 
     def test_descriptor_path(self):
         with open(self.mod / "descriptor.mod", "a") as f:
@@ -279,6 +318,24 @@ class MutationTests(unittest.TestCase):
     def test_missing_texture(self):
         self.edit(GFX, "tradition_icon_nanotech.dds", "tradition_icon_nanotechz.dds")
         self.assertFails("texture not found", game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
+
+    @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
+    def test_unknown_ascension_perk(self):
+        self.edit(PERKS, "NOT = { has_ascension_perk = ap_lfg_curated_progress }",
+                  "NOT = { has_ascension_perk = ap_lfg_curated_progres }")
+        self.assertFails("has_ascension_perk = ap_lfg_curated_progres is not defined",
+                         game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
+
+    @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
+    def test_loc_reference_to_unknown_key(self):
+        self.edit(SHELVE_LOC, "$tech_repeatable_improved_armor_output$", "$tech_repeatable_improved_armour_output$", 2)
+        self.assertFails("$tech_repeatable_improved_armour_output$ is not a localisation key",
+                         game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
+
+    @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
+    def test_hand_edited_inline_script_override(self):
+        self.edit(MEGA_CAP_SCRIPT, "tier = 5", "tier = 4")
+        self.assertFails("giga_mega_repeatable.txt is stale", game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
     def test_hand_edited_override(self):

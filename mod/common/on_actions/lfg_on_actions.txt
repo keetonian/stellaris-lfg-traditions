@@ -1,5 +1,11 @@
 # LFG Traditions - on_actions (merged with vanilla's lists).
 
+on_monthly_pulse_country = {
+	events = {
+		lfg_resorts.1	# Galactic Destination: resort world modifier + tourist count
+	}
+}
+
 on_yearly_pulse_country = {
 	events = {
 		lfg_polymath.1	# Reckless Experimentation: yearly lab accident chance

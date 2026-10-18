@@ -1,5 +1,5 @@
 # LFG Traditions - sprites. Every texture is vanilla art (no .dds files ship with this mod).
-# Each tree needs 4 category sprites; each tradition needs GFX_<tradition key>.
+# Each tree needs 4 category sprites; each tradition needs GFX_<tradition key>; each ascension perk GFX_<perk key>.
 spriteTypes = {
 	### MEGAFORGE ###
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_megaforge" textureFile = "gfx/interface/traditions/tradition_hex_bg_orange.dds" }
@@ -34,16 +34,6 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_overclock_heuristic_cores" textureFile = "gfx/interface/icons/traditions/tradition_versatility_material_analysis.dds" }
 	spriteType = { name = "GFX_tr_lfg_overclock_redline" textureFile = "gfx/interface/icons/traditions/tradition_synthetics_solid_state_actuators.dds" }
 
-	### SHELLWORLDERS ###
-	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_shellworlders" textureFile = "gfx/interface/traditions/tradition_hex_bg_yellow.dds" }
-	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_shellworlders" textureFile = "gfx/interface/tiles/tradition_category_tile_adaptability.dds" }
-	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_shellworlders" textureFile = "gfx/interface/tiles/tradition_category_tile_adaptability.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
-	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_shellworlders" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_adaptability.dds" }
-	spriteType = { name = "GFX_tr_lfg_shellworlders_compact_living" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_recycling.dds" }
-	spriteType = { name = "GFX_tr_lfg_shellworlders_artificial_gravity" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_survival_fittest.dds" }
-	spriteType = { name = "GFX_tr_lfg_shellworlders_frame_engineering" textureFile = "gfx/interface/icons/traditions/tradition_expansion_reach_for_the_stars.dds" }
-	spriteType = { name = "GFX_tr_lfg_shellworlders_closed_ecology" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_adaptive_ecology.dds" }
-	spriteType = { name = "GFX_tr_lfg_shellworlders_ring_cities" textureFile = "gfx/interface/icons/traditions/tradition_expansion_a_new_life.dds" }
 
 	### POLYMATH ###
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_polymath" textureFile = "gfx/interface/traditions/tradition_hex_bg_purple.dds" }
@@ -88,4 +78,6 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_resorts_wonders_of_the_galaxy" textureFile = "gfx/interface/icons/traditions/tradition_domestication_astrozoology.dds" }
 	spriteType = { name = "GFX_tr_lfg_resorts_tourist_traps" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_adaptive_economic_policies.dds" }
 	spriteType = { name = "GFX_tr_lfg_resorts_galactic_destination" textureFile = "gfx/interface/icons/traditions/tradition_diplomacy_eminent_diplomats.dds" }
+	### ASCENSION PERKS ###
+	spriteType = { name = "GFX_ap_lfg_curated_progress" textureFile = "gfx/interface/icons/ascension_perks/ap_technological_ascendancy.dds" }
 }

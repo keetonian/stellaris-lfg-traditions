@@ -4,7 +4,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 SECRETS = ("Evolutionary Predators", "Species Experimentation", "Inherited Genius", "lfg_species_experimentation",
-           "trait_lfg_inherited_genius", "edict", "Edict", "subspecies")
+           "trait_lfg_inherited_genius", "subspecies")
 
 
 class WorkshopDescriptionTests(unittest.TestCase):

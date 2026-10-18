@@ -1,0 +1,19 @@
+# LFG Traditions - ascension perks.
+
+# Curated Progress: unlocks the Shelve edicts (common/edicts/lfg_shelve_edicts.txt), which stop specific
+# repeatable techs from being offered as research options. Requires Gigastructural Constructs.
+ap_lfg_curated_progress = {
+	on_enabled = {
+		custom_tooltip = ap_lfg_curated_progress_tt
+	}
+	possible = {
+		custom_tooltip = { fail_text = "requires_ap_gigastructural_constructs" has_gigastructural_constructs = yes }
+	}
+	potential = {
+		NOT = { has_ascension_perk = ap_lfg_curated_progress }
+		NOT = { has_global_flag = giga_gigastructural_perk_disabled }
+	}
+	ai_weight = {
+		factor = 0
+	}
+}

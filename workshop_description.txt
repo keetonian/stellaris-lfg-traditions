@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Eight new tradition trees, seven council agendas, a new civic, a policy and a planet decision for [b]Gigastructural Engineering[/b] games. Every tree only appears for the empires it fits, and every tree has a [b]hook[/b]: bonuses that scale with or depend on your game state, so each one changes how you play rather than just adding percentages.
+Seven new tradition trees, seven council agendas, a new civic, an ascension perk, a policy and a planet decision for [b]Gigastructural Engineering[/b] games. Every tree only appears for the empires it fits, and every tree has a [b]hook[/b]: bonuses that scale with or depend on your game state, so each one changes how you play rather than just adding percentages.
 
 [h2]Tradition trees[/h2]
 
@@ -29,13 +29,6 @@ Eight new tradition trees, seven council agendas, a new civic, a policy and a pl
 [*]Runs hot: an energy deficit cuts complex drone output by 25%; at war, complex drones push harder and ships fire faster.
 [/list]
 
-[h3]Shellworlders[/h3]
-[i]Life on habitats, rings and frameworlds.[/i] Artificial-world origins (including Gigastructural's), or after Orbital Habitats / Ring World.
-[list]
-[*]Cheaper habitats and frameworlds, less housing usage, more stability; growth is limited.
-[*]Finisher grows with every artificial world you own (2 / 5 / 10).
-[/list]
-
 [h3]Polymath Commons[/h3]
 [i]Research from everyone.[/i] Any empire.
 [list]
@@ -48,7 +41,9 @@ Eight new tradition trees, seven council agendas, a new civic, a policy and a pl
 [h3]Granary Kings[/h3]
 [i]Your food stockpile is political power.[/i] Only for empires whose main species eats food.
 [list]
-[*]Full granaries mean stability and unity (up to +20% unity from stored food); empty ones mean unrest.
+[*]Storage for every resource, and much more productive farmers.
+[*][b]Tithe Barns:[/b] 10,000 stored food means stability and faster growth; under 1,000 means unrest and slower growth.
+[*]Up to +20% unity from stored food.
 [*][b]Grain Reserves:[/b] +100,000 food storage, but your people eat twice as much.
 [*]Food surpluses buy influence, and farmers gain political power over specialists.
 [*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth for every 1,000 monthly food income, with no cap.
@@ -67,7 +62,8 @@ Eight new tradition trees, seven council agendas, a new civic, a policy and a pl
 [i]Your resort world as the jewel of the galaxy.[/i] Regular empires, needs Resort Colonies.
 [list]
 [*][b]Hospitality Academies:[/b] +50% Resort Worker jobs in every Accommodation District.
-[*]Unity, trade and diplomatic weight grow with every 100 Resort Workers you employ, with no cap.
+[*][b]Package Holidays:[/b] unity and pop happiness grow with every 100 Resort Workers you employ, with no cap.
+[*][b]Galactic Destination:[/b] Tourists on your resort world produce extra trade and unity, more unemployed pops move there, and every 1,000 Tourists add diplomatic weight, with no cap.
 [*][b]Paradise Unbound:[/b] Accommodation Districts make room for more districts, and unlocks the [b]Expand the Resort[/b] decision: up to 5 expansions of +2 max districts each, for alloys, minerals, unity and influence. Together they can more than cancel the resort world's -25% district penalty.
 [/list]
 
@@ -81,6 +77,14 @@ Seven new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [*][b]The Harvest Tithe[/b] (Granary): turns 3,000 food into influence and unity, then more food and stability.
 [*][b]Gala Season[/b] (Galactic Broadcast): happiness and unity; trade suffers.
 [*][b]Grand Tour Season[/b] (The Grand Tour): happiness, trade and much harder-working resort workers.
+[/list]
+
+[h2]Ascension perk: Curated Progress[/h2]
+Tired of drawing repeatables you don't want? Requires [b]Gigastructural Constructs[/b].
+[list]
+[*]Unlocks a [b]Shelve[/b] edict for every repeatable technology, vanilla and Gigastructural (megastructure capacity repeatables are grouped by research area). While it's active, that technology is never offered as a research option.
+[*]Each costs 1,000 unity and 100 influence to enact, plus 150 monthly research of the technology's type, all scaled by empire size.
+[*]Edicts only appear once their technology could show up.
 [/list]
 
 [h2]Civic: Pampered Masters[/h2]
@@ -97,8 +101,9 @@ A reverse Rogue Servitor: an individualist, biological empire whose robots serve
 [*][b]The Flesh is Weak[/b] and [b]Synthetic Evolution[/b] can't be taken with Pampered Masters.
 [*][b]Synthetic Fertility[/b]: the origin's uploading situation gains +1 monthly progress for every year that has passed.
 [*]The [b]Accommodation District[/b] and the three [b]holomuseums[/b] gain extra blocks for The Grand Tour and Galactic Broadcast.
+[*]Every repeatable technology (and Gigastructural's megastructure capacity repeatables) checks its Shelve edict.
 [/list]
-These replace the vanilla definitions of those two ascension perks, that situation, that district and those three buildings. Other mods that change the same definitions may conflict.
+These replace the vanilla definitions of those two ascension perks, that situation, that district, those three buildings and the repeatable technologies, plus Gigastructural's repeatables. Other mods that change the same definitions may conflict.
 
 [h2]Requirements and compatibility[/h2]
 [list]

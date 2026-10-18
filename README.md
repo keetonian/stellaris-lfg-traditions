@@ -2,11 +2,12 @@
 
 A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games that adds:
 
-- **8 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
+- **7 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
 - **8 council agendas** unlocked by the trees.
 - **1 civic, Pampered Masters**: a "reverse Rogue Servitor", where biological masters are served by robots.
+- **1 ascension perk, Curated Progress** (after Gigastructural Constructs): unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options.
 - **1 edict, Species Experimentation** (Evolutionary Predators, after finishing Mutation): half of a secondary species dies, the rest splits into 50 random-trait subspecies.
-- **2 balance overrides**: the civic blocks Cybernetic/Synthetic ascension, and Synthetic Fertility's situation speeds up every year.
+- **Overrides** of vanilla/Gigastructural definitions (generated, see [Overrides](#overrides-of-vanilla-and-gigastructural-content)): the civic blocks Cybernetic/Synthetic ascension, Synthetic Fertility's situation speeds up every year, two trees extend the Accommodation District and holomuseums, and the repeatable techs check the Shelve edicts.
 
 This is a gameplay mod (it adds `common/` files), so it **changes the game checksum**. Everyone in a multiplayer game needs it.
 
@@ -18,7 +19,7 @@ This is a gameplay mod (it adds `common/` files), so it **changes the game check
 - Stellaris 4.5.x
 - [Gigastructural Engineering & More (4.5)](https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237). Required: the Megaforge tree uses its supertensiles, techs and origins.
 - Recommended: [A Lot of Traditions - 24 Tradition Slots](https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981).
-  Vanilla allows 7 trees in total, and this mod adds 8 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
+  Vanilla allows 7 trees in total, and this mod adds 7 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
 
 Load order: after Gigastructural.
 
@@ -70,20 +71,6 @@ Supertensile bonuses need Gigastructural's job-based build mode (`giga_buildcap_
 | 5. Redline ⚙ | Complex drone workforce +10% (+10% more and ship fire rate +5% at war) · simple drone workforce −10% |
 | Finish | Unlocks agenda **Overclock Protocol** |
 
-### Shellworlders: life on artificial worlds
-**Who:** artificial-world origins (Giga: Frameworld, Decaying Birch World, Great Ring, Interstellar Ring, Alderson Disk;
-vanilla: Shattered Ring, Void Dwellers), or after *Orbital Habitats* / *Ring World*. **Hook:** grows with artificial worlds owned.
-
-| Tradition | Effect |
-|---|---|
-| Adopt | Habitat cost −10% · organic growth −5% |
-| 1. Compact Living | Housing usage −5% |
-| 2. Artificial Gravity | Stability +3 |
-| 3. Frame Engineering | Frameworld cost −15%, habitat cost −10% |
-| 4. Closed Ecology | Amenities +5% · organic growth −5% |
-| 5. Ring Cities | Megastructure build speed +10%, housing usage −5% |
-| Finish ⚙ | 2+ artificial worlds: stability +2; 5+: +2 more and housing −5%; 10+: +2 more, housing −5% more, megastructure build speed +10% |
-
 ### Polymath Commons: research from everyone
 **Who:** any empire. **Hook:** research scales with species and rivals; experiments go wrong. **Agenda:** Eureka Season.
 
@@ -103,10 +90,10 @@ vanilla: Shattered Ring, Void Dwellers), or after *Orbital Habitats* / *Ring Wor
 
 | Tradition | Effect |
 |---|---|
-| Adopt | Food storage +5000, farmer output +5% · unlocks agenda **Feast of Plenty** |
-| 1. Tithe Barns ⚙ | 5,000+ food stored: stability +3, unity +5% · under 500: stability −5 |
+| Adopt | Storage +10,000 for every resource, farmer output +10% · unlocks agenda **Feast of Plenty** |
+| 1. Tithe Barns ⚙ | 10,000+ food stored: stability +5, organic growth +10% · under 1,000: stability −5, organic growth −10% |
 | 2. Seed Vaults ⚙ | Unity +1% per 5,000 stored food (max +20%) |
-| 3. Bountiful Fields | Farmer output +10% |
+| 3. Bountiful Fields | Farmer output +20% |
 | 4. Grain Reserves | Food storage +100,000 · pop food upkeep +100% |
 | 5. Harvest Courts ⚙ | Worker political power +25% · specialist political power −25% · while food income is positive: influence +10% |
 | Finish ⚙ | **Bumper Crops:** organic growth +1% per 1,000 monthly food income (no cap; doubled during **Feast of Plenty**) · unlocks agenda **The Harvest Tithe** |
@@ -125,17 +112,18 @@ vanilla: Shattered Ring, Void Dwellers), or after *Orbital Habitats* / *Ring Wor
 | Finish | Unlocks agenda **Gala Season** |
 
 ### The Grand Tour: resort worlds as showpieces
-**Who:** regular empires. **Adopt requires:** *Resort Colonies*. **Hook:** an empire can only have **one** resort world, so bonuses scale with how built-up it is: per 100 Resort Workers employed (no cap).
+**Who:** regular empires. **Adopt requires:** *Resort Colonies*. **Hook:** an empire can only have **one** resort world, so bonuses scale with how built-up it is: per 100 Resort Workers employed and per 1,000 Tourists there (both uncapped).
+**Tourists** are vanilla's civilian job on a resort world (2 trade + 50 amenities each).
 **Agenda (on adoption):** Grand Tour Season. Resort Workers share the entertainer category, so entertainer bonuses (e.g. Galactic Broadcast) also boost them.
 
 | Tradition | Effect |
 |---|---|
 | Adopt | Resort Worker workforce +10%, resort district build speed +25% · unlocks agenda **Grand Tour Season** |
 | 1. Hospitality Academies | Each **Accommodation District** gives +150 Resort Worker jobs (+50%; via a generated `district_resort` override, see below) |
-| 2. Package Holidays ⚙ | Per 100 Resort Workers (no cap): unity +0.5%, amenity usage −0.25% |
+| 2. Package Holidays ⚙ | Per 100 Resort Workers (no cap): unity +0.5%, pop happiness +0.25% |
 | 3. Paradise Unbound | Each Accommodation District adds +0.5 max districts to the resort world · unlocks the **Expand the Resort** decision · +1 max Accommodation District, resort district build speed +25% |
 | 4. Tourist Traps | Resort Worker workforce +15% · entertainer/resort worker consumer goods upkeep +0.5 |
-| 5. Galactic Destination ⚙ | Per 100 Resort Workers (no cap): trade +0.5%, diplomatic weight +0.5% |
+| 5. Galactic Destination ⚙ | On the resort world: **Tourists** +1 trade and +1 unity, unemployed pops +50% more likely to move there · diplomatic weight +1% per 1,000 Tourists there (no cap). The planet part is the `lfg_galactic_destination` modifier, kept on the resort world by the monthly hidden event `lfg_resorts.1`, which also stores the tourist count (`num_assigned_jobs = { job = civilian }`) in `lfg_tourists`; so it can lag up to a month |
 | Finish | Resort Worker workforce +10% |
 
 **Growing the resort world** (resort worlds start with −25% max districts, and an empire can only have one):
@@ -175,6 +163,56 @@ prepares an agenda over time; when launched, its effect lasts **10 years**.
   "Incompatible with the Pampered Masters civic". Psionic and Genetic ascension remain available.
 - Pairs with the **Attendant Robotics** tree. Tip: give your robots *Domestic Protocols* and Servitude citizenship so they take the Servant job.
 
+## Ascension perk: Curated Progress
+
+Not every repeatable is worth chasing. **Curated Progress** (`ap_lfg_curated_progress`) unlocks one perpetual
+**Shelve** edict per repeatable tech; while an edict is active, that tech is never drawn as a research option.
+
+- **Requires:** the Gigastructural **Gigastructural Constructs** ascension perk (via Giga's `has_gigastructural_constructs`
+  trigger). Hidden if Giga's perk is disabled by game rule. The AI never takes it and never enacts the edicts.
+- **Each edict costs** 1,000 unity + 100 influence to enact and **150 monthly research of the shelved tech's type**
+  (engineering/physics/society) while active. All of it scales with empire size like vanilla edicts
+  (`value:edict_size_effect`: +1% per point of empire size over capacity). Numbers: `@lfg_shelve_*` in
+  `mod/common/scripted_variables/lfg_scripted_variables.txt`.
+- **How it works:** each repeatable's `weight_modifier` gets `modifier = { factor = 0 has_edict = <edict> }` (generated
+  tech overrides). A tech already in your current research options stays there until you pick another option.
+- **Edicts only show up once the tech can:** each edict's `potential` also needs the tech's prerequisite (or Giga's flag/origin
+  for special repeatables), and an active edict always stays visible.
+- Gigastructural's ~50 **megastructure capacity** repeatables (+1 cap per megastructure type) share one inline script, so they get
+  one edict per research area.
+- The edicts and their localisation are **generated** from the `SHELVE` table in `tools/gen_overrides.py`
+  (`lfg_shelve_edicts.txt`, `lfg_shelve_l_english.yml`); names use the tech's own name ("Shelve: Extraction Patterns").
+
+| Edict | Tech | Research upkeep | Shown once you have |
+|---|---|---|---|
+| `lfg_shelve_mineral_output` | `tech_repeatable_improved_tile_mineral_output` (vanilla) | Engineering | `has_technology = tech_mineral_purification_2` |
+| `lfg_shelve_station_damage` | `tech_repeatable_improved_military_station_damage` (vanilla) | Engineering | `has_technology = tech_defense_platform_hull_1` |
+| `lfg_shelve_station_health` | `tech_repeatable_improved_military_station_health` (vanilla) | Engineering | `has_technology = tech_defense_platform_hull_1` |
+| `lfg_shelve_armor` | `tech_repeatable_improved_armor_output` (vanilla) | Engineering | `has_technology = tech_ship_armor_3` |
+| `lfg_shelve_explosive_damage` | `tech_repeatable_weapon_type_explosive_damage` (vanilla) | Engineering | `tech_missiles_3` or `tech_swarmer_missiles_2` |
+| `lfg_shelve_explosive_fire_rate` | `tech_repeatable_weapon_type_explosive_fire_rate` (vanilla) | Engineering | `tech_missiles_3` or `tech_swarmer_missiles_2` |
+| `lfg_shelve_kinetic_damage` | `tech_repeatable_weapon_type_kinetic_damage` (vanilla) | Engineering | `has_technology = tech_mass_drivers_3` |
+| `lfg_shelve_kinetic_fire_rate` | `tech_repeatable_weapon_type_kinetic_fire_rate` (vanilla) | Engineering | `has_technology = tech_mass_drivers_3` |
+| `lfg_shelve_blokkat_scrap_damage` | `giga_tech_blokkat_scrap_damage` (Giga) | Engineering | `has_country_flag = researching_blokkat_scrap_damage` |
+| `lfg_shelve_energy_output` | `tech_repeatable_improved_tile_energy_output` (vanilla) | Physics | `has_technology = tech_power_plant_3` |
+| `lfg_shelve_shields` | `tech_repeatable_improved_shield_output` (vanilla) | Physics | `has_technology = tech_shields_4` |
+| `lfg_shelve_energy_damage` | `tech_repeatable_weapon_type_energy_damage` (vanilla) | Physics | `has_technology = tech_lasers_4` |
+| `lfg_shelve_energy_fire_rate` | `tech_repeatable_weapon_type_energy_fire_rate` (vanilla) | Physics | `has_technology = tech_lasers_2` |
+| `lfg_shelve_dimensional_storage` | `giga_tech_repeatable_dimensional_storage` (Giga) | Physics | `has_technology = giga_tech_tetradimensional_engineering` |
+| `lfg_shelve_food_output` | `tech_repeatable_improved_tile_food_output` (vanilla) | Society | `has_technology = tech_gene_crops` |
+| `lfg_shelve_core_system_cap` | `tech_repeatable_improved_core_system_cap` (vanilla) | Society | `has_technology = tech_galactic_bureaucracy` |
+| `lfg_shelve_army_damage` | `tech_repeatable_improved_army_damage` (vanilla) | Society | `has_technology = tech_combat_training` |
+| `lfg_shelve_army_health` | `tech_repeatable_improved_army_health` (vanilla) | Society | `has_technology = tech_combat_training` |
+| `lfg_shelve_leader_life_span` | `tech_repeatable_improved_leader_life_span` (vanilla) | Society | `has_technology = tech_vitality_boosters` |
+| `lfg_shelve_strike_craft_damage` | `tech_repeatable_weapon_type_strike_craft_fire_damage` (vanilla) | Society | `has_technology = tech_strike_craft_3` |
+| `lfg_shelve_strike_craft_fire_rate` | `tech_repeatable_weapon_type_strike_craft_fire_rate` (vanilla) | Society | `has_technology = tech_strike_craft_3` |
+| `lfg_shelve_blokkat_scrap_research` | `giga_tech_blokkat_scrap_research` (Giga) | Society | `has_country_flag = researching_blokkat_scrap_research` |
+| `lfg_shelve_frameworld_outposts` | `tech_frameworld_repeatable_outpost_output` (Giga) | Society | `giga_has_frameworld_origin = yes` |
+| `lfg_shelve_eawaf_weapons` | `giga_tech_eawaf_weapons_repeatable` (Giga) | Society | `has_country_flag = giga_tech_eawaf_weapons_repeatable_possible` |
+| `lfg_shelve_megastructure_capacity_engineering` | every Giga `giga_tech_repeatable_*_cap` in engineering | Engineering | always |
+| `lfg_shelve_megastructure_capacity_physics` | every Giga `giga_tech_repeatable_*_cap` in physics | Physics | always |
+| `lfg_shelve_megastructure_capacity_society` | every Giga `giga_tech_repeatable_*_cap` in society | Society | always |
+
 ## Edict: Species Experimentation (Evolutionary Predators)
 
 Subject one of your secondary species to brutal experiments: **half of it dies**, and the survivors are split into
@@ -203,19 +241,21 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
   trait events can grant it (it's in their "pop output" category, alongside vanilla traits).
 - Never given by **Species Experimentation** (its random trait filter skips it).
 
-## Overrides of vanilla content
+## Overrides of vanilla and Gigastructural content
 
-These replace two vanilla definitions. Other mods that change the same definitions will conflict; whichever loads last wins.
+These replace vanilla and Gigastructural definitions. Other mods that change the same definitions will conflict; whichever loads last wins.
 
 | Vanilla definition | Change |
 |---|---|
 | Ascension perks `ap_the_flesh_is_weak`, `ap_synthetic_evolution` | Added requirement: not Pampered Masters |
 | Buildings `xeno_geology_holomuseum`, `aesthetic_wonders_holomuseum`, `galactic_history_holomuseum` | Added: their entertainer unity/research bonus again while the owner has Holo-Museums |
 | District `district_resort` (Accommodation District) | Added: +150 Resort Worker jobs per district (Hospitality Academies) and +0.5 max districts per district (Paradise Unbound) |
+| The 24 repeatable techs in the Curated Progress table (19 vanilla, 5 Giga) | Added to `weight_modifier`: never drawn while their Shelve edict is active |
+| Giga inline script `common/inline_scripts/technology/giga_mega_repeatable.txt` (all megastructure capacity repeatables) | Same, with `has_edict = lfg_shelve_megastructure_capacity_$area$`. Inline scripts can only be replaced as a whole file (same path, this mod loads after Giga) |
 | Situation `situation_synthetic_fertility_digitization` (the Synthetic Fertility origin's "uploading" situation) | Monthly progress **+1 for every year since game start**, on top of the vanilla base of 15 (year 10: 25/month). It completes noticeably sooner. |
 
-The override files are **generated** from the installed game by `tools/gen_overrides.py`, so they're vanilla text
-plus clearly marked `# LFG: added` lines.
+The override files are **generated** from the installed game and Gigastructural by `tools/gen_overrides.py`, so they're
+their text plus clearly marked `# LFG: added` lines. The tech overrides are named `zz_lfg_` so they load after Giga's `zz_giga_` files.
 
 ## Install (local)
 
@@ -233,7 +273,7 @@ Enable the mod after Gigastructural.
 ## Verification
 
 ```sh
-scripts/verify.sh                    # 71 tests + static check
+scripts/verify.sh                    # 84 tests + static check
 scripts/verify.sh --require-sources  # before a release: fail if game/Giga files are missing
 ```
 
@@ -248,7 +288,9 @@ scripts/verify.sh --require-sources  # before a release: fail if game/Giga files
   `tools/data/modifiers_4.5.txt.gz` snapshot in CI), and every value is numeric.
 - **References:** every `has_technology`/`has_origin`/`has_valid_civic`/`has_ethic`/`has_tradition`, civic `origin`/`civics`/`ethics`
   value and `@variable` exists in the game, Gigastructural or this mod.
-- **Overrides:** the vanilla override files match a fresh `tools/gen_overrides.py` run.
+- **Overrides:** the override files, Shelve edicts and their loc match a fresh `tools/gen_overrides.py` run; every
+  `has_edict = lfg_*` (including `$area$` in the inline script) names an edict in this mod; `$key$` references in the loc exist.
+- **Ascension perks:** loc (`key`, `_desc`), a `GFX_<perk>` sprite, and every `has_ascension_perk` exists.
 - **Modifier names:** every job/district-generated modifier shown in a tooltip has a name in the game, Giga or `lfg_modifiers_l_english.yml`
   (otherwise the tooltip shows the raw `mod_...` key), unless it's hidden behind `show_only_custom_tooltip`.
 - **Events and edicts:** event namespace and ids are prefixed and consistent, every event title/desc/option and edict has
@@ -257,6 +299,8 @@ scripts/verify.sh --require-sources  # before a release: fail if game/Giga files
 CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't need game files on every push.
 
 **Still to test in game:**
+- Curated Progress: shown after Gigastructural Constructs; Shelve edicts appear with the tech's name, charge research upkeep,
+  and a shelved tech (including a megastructure capacity repeatable) stops appearing in new research options.
 - Each tree appears only for the right empires.
 - The civic is blocked for cybernetic/machine/synthetic setups, and the two ascension perks show the new requirement.
 - Hooks: scaled bonuses (per species, rival, contact, decade, stored food/energy) and tiers (megastructures, artificial worlds,
@@ -301,5 +345,4 @@ Publishing to the Workshop is local-only on purpose: CI would need your Steam cr
 
 - Custom icons and art instead of reused vanilla icons.
 - `tradition_swap` variants with gestalt- and nomad-specific names and text.
-- Planet-level effects for Shellworlders that apply only on artificial worlds (needs scripted planet modifiers).
 - A start-of-game effect for Pampered Masters that gives the founder robots *Domestic Protocols* and Servitude citizenship.

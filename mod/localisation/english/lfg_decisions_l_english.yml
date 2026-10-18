@@ -4,4 +4,6 @@
  lfg_decision_expand_resort_effect_tt:0 "This planet gains §G+2§! max districts (stacks up to §Y5§! times)."
  lfg_decision_expand_resort_maxed:0 "$TRIGGER_FAIL$The resort has already been expanded §Y5§! times"
  lfg_resort_expansion:0 "Resort Expansions"
+ lfg_galactic_destination:0 "Galactic Destination"
+ lfg_galactic_destination_desc:0 "Tourists from across the galaxy fill this resort world's hotels and pay well for the privilege."
  lfg_resort_expansion_desc:0 "This resort world has been expanded beyond its original limits."

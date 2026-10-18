@@ -1,0 +1,42 @@
+# LFG Traditions - tradition tree (resorts).
+# All trees use the vanilla tree_21_11 layout (same as Supremacy):
+#   slots 1 2 3 on top; slot 4 requires 1 + 2; slot 5 requires 3.
+# The order of `traditions` maps to slots 1..5. Prerequisites live in common/traditions/lfg_traditions.txt.
+# One tree per file, named 00_<English tree name>_lfg.txt, so the traditions window sorts it alphabetically
+# among vanilla's regular trees (00_<tree>.txt) instead of after the ascension trees (01_*).
+
+# Resort worlds as the empire's showpieces. Regular empires only (resort colonies and resort workers are non-gestalt).
+tradition_lfg_resorts = {
+	desc = tradition_lfg_resorts_desc
+	potential = {
+		is_regular_empire = yes
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_resorts_adopt"
+	finish_bonus = "tr_lfg_resorts_finish"
+	traditions = {
+		"tr_lfg_resorts_hospitality_academies"
+		"tr_lfg_resorts_package_holidays"
+		"tr_lfg_resorts_wonders_of_the_galaxy"
+		"tr_lfg_resorts_tourist_traps"
+		"tr_lfg_resorts_galactic_destination"
+	}
+	ai_weight = {
+		factor = 3
+		modifier = {
+			factor = 3
+			any_owned_planet = { has_modifier = resort_colony }
+		}
+		modifier = {
+			factor = 2
+			OR = {
+				has_valid_civic = civic_pleasure_seekers
+				has_valid_civic = civic_corporate_hedonism
+			}
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}

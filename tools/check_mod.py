@@ -46,7 +46,9 @@ ALLOWED_FILES = [
     r"common/tradition_categories/[^/]+\.txt",
     r"common/traditions/[^/]+\.txt",
     r"common/governments/civics/[^/]+\.txt",
-    r"common/ascension_perks/zz_lfg_[^/]+\.txt",
+    r"common/ascension_perks/[^/]+\.txt",
+    r"common/technology/zz_lfg_[^/]+\.txt",
+    r"common/inline_scripts/technology/giga_mega_repeatable\.txt",  # generated whole-file override of Giga's
     r"common/situations/zz_lfg_[^/]+\.txt",
     r"common/districts/zz_lfg_[^/]+\.txt",
     r"common/buildings/zz_lfg_[^/]+\.txt",
@@ -66,7 +68,8 @@ ALLOWED_FILES = [
     r"localisation/english/[^/]+_l_english\.yml",
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
-KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "lfg_", "@lfg_")
+KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "ap_lfg_", "lfg_",
+                "@lfg_")
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/",)
 # Single-category values used by vanilla policies (common/policies/00_policies.txt, 4.5).
@@ -178,6 +181,29 @@ def load_loc(mod: Mod, r: Report) -> Dict[str, str]:
     return keys
 
 
+def tree_file_name(name: str) -> str:
+    """00_<English tree name>_lfg.txt: sorts the tree alphabetically among vanilla's 00_<tree>.txt regular trees in the
+    traditions window (load order = file name order), instead of after the 01_* ascension trees."""
+    words = re.sub(r"[^a-z0-9]+", " ", name.lower()).split()
+    if words[:1] == ["the"]:
+        words = words[1:]
+    return "00_" + "_".join(words) + "_lfg.txt"
+
+
+def check_tree_files(mod: Mod, loc: Dict[str, str], r: Report) -> None:
+    for rel, entries in mod.files.items():
+        if not rel.startswith("common/tradition_categories/"):
+            continue
+        keys = [e.key for e in entries if e.key is not None]
+        if len(keys) != 1:
+            r.fail(f"{rel}: put exactly one tree per file (found {len(keys)}), so each sorts into place")
+            continue
+        if keys[0] in loc:
+            expected = tree_file_name(loc[keys[0]])
+            if Path(rel).name != expected:
+                r.fail(f"{rel}: rename to {expected} so {keys[0]} sorts by its name in the traditions window")
+
+
 def check_traditions(mod: Mod, loc: Dict[str, str], templates: Set[str], r: Report) -> None:
     cats = mod.top("common/tradition_categories")
     trads = mod.top("common/traditions")
@@ -261,9 +287,9 @@ def check_loc_references(mod: Mod, loc: Dict[str, str], r: Report) -> None:
 
 
 def check_edicts(mod: Mod, loc: Dict[str, str], r: Report) -> None:
-    # Edicts are localised as edict_<key>; decisions as <key> (both vanilla conventions).
+    # Edicts are localised as edict_<key>; decisions, traits and ascension perks as <key> (vanilla conventions).
     names = ([f"edict_{k}" for k in mod.top("common/edicts")] + list(mod.top("common/decisions"))
-             + list(mod.top("common/traits")))
+             + list(mod.top("common/traits")) + list(mod.top("common/ascension_perks")))
     for key in names:
         for k in (key, f"{key}_desc"):
             if k not in loc:
@@ -402,10 +428,17 @@ def check_scripted_references(mod: Mod, r: Report) -> None:
     """lfg_* scripted triggers/effects used as `x = yes` and value:lfg_* script values must be defined in the mod."""
     scripted = set(mod.top("common/scripted_triggers")) | set(mod.top("common/scripted_effects"))
     values = set(mod.top("common/script_values"))
+    edicts = set(mod.top("common/edicts"))
     for rel, entries in mod.files.items():
         for e in pdx.walk(entries):
             if e.is_block:
                 continue
+            if e.key == "has_edict" and e.value.startswith("lfg_"):
+                names = [e.value.replace("$area$", a) for a in gen_overrides.MEGA_CAP_AREAS] if "$area$" in e.value \
+                    else [e.value]
+                for name in names:
+                    if name not in edicts:
+                        r.fail(f"{rel}:{e.line}: has_edict = {name} is not an edict defined in this mod")
             if e.key and e.key.startswith("lfg_") and e.value in ("yes", "no") and e.key not in scripted:
                 r.fail(f"{rel}:{e.line}: {e.key} is not a scripted trigger/effect defined in this mod")
             if isinstance(e.value, str) and e.value.startswith("value:lfg_") and e.value[6:] not in values:
@@ -441,6 +474,9 @@ def check_sprites(mod: Mod, game: Optional[Path], r: Report) -> None:
         for t in pdx.bare_values(tlist.value) if tlist is not None and tlist.is_block else []:
             if f"GFX_{t}" not in sprites:
                 r.fail(f"{t}: missing sprite GFX_{t}")
+    for ap in mod.top("common/ascension_perks"):
+        if f"GFX_{ap}" not in sprites:
+            r.fail(f"{ap}: missing sprite GFX_{ap}")
     textures = set(sprites.values())
     for civ in list(mod.top("common/governments/civics").values()) + list(mod.top("common/traits").values()):
         icon = pdx.first(civ.value, "icon") if civ.is_block else None
@@ -524,7 +560,7 @@ def load_game_loc_keys(dirs: List[Path]) -> Set[str]:
     keys: Set[str] = set()
     for d in dirs:
         for path in (d / "localisation").rglob("*english*.yml") if (d / "localisation").exists() else []:
-            for m in re.finditer(r"^ ([A-Za-z0-9_.\-]+):", path.read_text(encoding="utf-8-sig", errors="replace"), re.M):
+            for m in re.finditer(r"^[ \t]+([A-Za-z0-9_.\-]+):", path.read_text(encoding="utf-8-sig", errors="replace"), re.M):
                 keys.add(m.group(1).lower())
     return keys
 
@@ -565,6 +601,18 @@ def check_prefixes(mod: Mod, loc: Dict[str, str], r: Report) -> None:
 
 
 # --- needs game / Giga --------------------------------------------------------------------------
+def check_loc_parameters(loc: Dict[str, str], game: Optional[Path], giga: Optional[Path], r: Report) -> None:
+    """$key$ references in the mod's loc (e.g. tech names in the Shelve edicts) must name an existing loc key."""
+    if game is None or giga is None:
+        r.skip("$key$ references in localisation exist")
+        return
+    known = load_game_loc_keys([game, giga]) | {k.lower() for k in loc}
+    for key, value in loc.items():
+        for ref in re.findall(r"\$([A-Za-z0-9_.]+)\$", value):
+            if ref.lower() not in known:
+                r.fail(f"localisation {key}: ${ref}$ is not a localisation key in the game, Giga or this mod")
+
+
 def defined_keys(dirs: List[Path], folder: str) -> Set[str]:
     out: Set[str] = set()
     for d in dirs:
@@ -592,9 +640,10 @@ def check_references(mod: Mod, game: Optional[Path], giga: Optional[Path], r: Re
     ethics = defined_keys(dirs, "common/ethics")
     trads = defined_keys(dirs, "common/traditions")
     buildings = defined_keys(dirs, "common/buildings")
+    perks = defined_keys(dirs, "common/ascension_perks")
     variables = defined_variables([game, giga, mod.root])
     lookups = {"has_technology": techs, "has_origin": civics, "has_valid_civic": civics, "has_civic": civics,
-               "has_ethic": ethics, "has_tradition": trads, "has_building": buildings}
+               "has_ethic": ethics, "has_tradition": trads, "has_building": buildings, "has_ascension_perk": perks}
     for rel, entries in mod.files.items():
         if not rel.startswith("common/") or rel in OVERRIDE_FILES:
             continue
@@ -610,14 +659,14 @@ def check_references(mod: Mod, game: Optional[Path], giga: Optional[Path], r: Re
                         r.fail(f"{rel}:{v.line}: {e.key} value {v.value} is not defined")
 
 
-def check_overrides(mod: Mod, game: Optional[Path], r: Report) -> None:
-    if game is None:
-        r.skip("vanilla overrides are up to date")
+def check_overrides(mod: Mod, game: Optional[Path], giga: Optional[Path], r: Report) -> None:
+    if game is None or giga is None:
+        r.skip("vanilla/Giga overrides and Shelve edicts are up to date")
         return
     try:
-        generated = gen_overrides.generate(game)
+        generated = gen_overrides.generate(game, giga)
     except (gen_overrides.GenError, OSError) as e:
-        r.fail(f"tools/gen_overrides.py fails against the installed game: {e}")
+        r.fail(f"tools/gen_overrides.py fails against the installed game/Giga: {e}")
         return
     for out_rel, content in generated.items():
         path = mod.root.parent / out_rel
@@ -643,6 +692,7 @@ def run(mod_dir: Path, game: Optional[Path], giga: Optional[Path], modifiers_log
     check_descriptor(mod, r)
     loc = load_loc(mod, r)
     check_traditions(mod, loc, tree_templates(game, r), r)
+    check_tree_files(mod, loc, r)
     check_civics(mod, loc, r)
     check_loc_references(mod, loc, r)
     check_edicts(mod, loc, r)
@@ -658,7 +708,8 @@ def run(mod_dir: Path, game: Optional[Path], giga: Optional[Path], modifiers_log
     check_references(mod, game, giga, r)
     check_modifier_loc(mod, loc, game, giga, r)
     check_show_only_custom_tooltip(mod, r)
-    check_overrides(mod, game, r)
+    check_loc_parameters(loc, game, giga, r)
+    check_overrides(mod, game, giga, r)
     return r
 
 

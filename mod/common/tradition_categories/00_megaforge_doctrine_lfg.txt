@@ -1,0 +1,45 @@
+# LFG Traditions - tradition tree (megaforge).
+# All trees use the vanilla tree_21_11 layout (same as Supremacy):
+#   slots 1 2 3 on top; slot 4 requires 1 + 2; slot 5 requires 3.
+# The order of `traditions` maps to slots 1..5. Prerequisites live in common/traditions/lfg_traditions.txt.
+# One tree per file, named 00_<English tree name>_lfg.txt, so the traditions window sorts it alphabetically
+# among vanilla's regular trees (00_<tree>.txt) instead of after the ascension trees (01_*).
+
+# Megastructures first: buffs supertensiles (Gigastructural) and megastructures, nerfs the normal economy.
+tradition_lfg_megaforge = {
+	desc = tradition_lfg_megaforge_desc
+	potential = {
+		is_nomadic = no
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_megaforge_adopt"
+	finish_bonus = "tr_lfg_megaforge_finish"
+	traditions = {
+		"tr_lfg_megaforge_guilds"
+		"tr_lfg_megaforge_lattices"
+		"tr_lfg_megaforge_priority"
+		"tr_lfg_megaforge_foundries"
+		"tr_lfg_megaforge_monuments"
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 3
+			OR = {
+				has_origin = origin_frameworld
+				has_origin = origin_birch
+				has_origin = origin_great_ring
+				has_origin = origin_interstellar_ring
+				has_origin = origin_alderson
+			}
+		}
+		modifier = {
+			factor = 2
+			has_global_flag = giga_buildcap_j
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}

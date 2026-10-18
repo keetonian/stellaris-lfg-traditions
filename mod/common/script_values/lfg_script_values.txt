@@ -95,6 +95,20 @@ lfg_resort_worker_hundreds = {
 	divide = 100
 }
 
+# The Grand Tour - Galactic Destination: tourists (civilians) on the resort world / 1000, uncapped. Country variable
+# lfg_tourists is refreshed monthly by lfg_resorts.1.
+lfg_tourist_thousands = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = check_variable
+		parameters = {
+			which = lfg_tourists
+		}
+		mode = add
+	}
+	divide = 1000
+}
+
 # The Grand Tour - Expand the Resort decision cost multiplier (planet scope): 1, 2, 3, 4, 5 for the
 # 1st..5th expansion, i.e. 1 + expansions already made (planet variable lfg_resort_expansions).
 lfg_resort_expansion_cost_mult = {

@@ -1,0 +1,53 @@
+# LFG Traditions - The Grand Tour events.
+namespace = lfg_resorts
+
+# Monthly (on_monthly_pulse_country) and when Galactic Destination is adopted: keep the lfg_galactic_destination
+# modifier on the resort world (and only there), and store its tourist count in the country variable lfg_tourists.
+# Cost: for most countries the trigger is two lookups (tradition, flag); only owners of the tradition (or countries
+# that just lost it, flag lfg_galactic_destination_applied) loop over their own planets.
+country_event = {
+	id = lfg_resorts.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_tradition = tr_lfg_resorts_galactic_destination
+			has_country_flag = lfg_galactic_destination_applied
+		}
+	}
+
+	immediate = {
+		every_owned_planet = {
+			limit = {
+				has_modifier = lfg_galactic_destination
+				NAND = {
+					has_modifier = resort_colony
+					owner = { has_tradition = tr_lfg_resorts_galactic_destination }
+				}
+			}
+			remove_modifier = lfg_galactic_destination
+		}
+		set_variable = { which = lfg_tourists value = 0 }
+		remove_country_flag = lfg_galactic_destination_applied
+		if = {
+			limit = { has_tradition = tr_lfg_resorts_galactic_destination }
+			set_country_flag = lfg_galactic_destination_applied
+			every_owned_planet = {
+				limit = { has_modifier = resort_colony }
+				if = {
+					limit = { NOT = { has_modifier = lfg_galactic_destination } }
+					add_modifier = { modifier = lfg_galactic_destination days = -1 }
+				}
+				export_trigger_value_to_variable = {
+					trigger = num_assigned_jobs
+					parameters = {
+						job = civilian
+					}
+					variable = lfg_tourists
+				}
+				owner = { change_variable = { which = lfg_tourists value = prev.lfg_tourists } }
+			}
+		}
+	}
+}
