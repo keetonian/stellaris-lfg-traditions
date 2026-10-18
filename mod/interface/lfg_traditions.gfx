@@ -69,6 +69,16 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_shellworlders_arc_foundries" textureFile = "gfx/interface/icons/traditions/tradition_expansion_reach_for_the_stars.dds" }
 	spriteType = { name = "GFX_tr_lfg_shellworlders_closed_ecology" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_adaptive_ecology.dds" }
 	spriteType = { name = "GFX_tr_lfg_shellworlders_arc_neighbours" textureFile = "gfx/interface/icons/traditions/tradition_expansion_a_new_life.dds" }
+	### EVOLUTIONARY PERFECTION ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_evolution" textureFile = "gfx/interface/traditions/tradition_hex_bg_green.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_evolution" textureFile = "gfx/interface/tiles/tradition_category_tile_mutation.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_evolution" textureFile = "gfx/interface/tiles/tradition_category_tile_mutation.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_evolution" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_mutation.dds" }
+	spriteType = { name = "GFX_tr_lfg_evolution_hardship" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_survival_fittest.dds" }
+	spriteType = { name = "GFX_tr_lfg_evolution_honed_strengths" textureFile = "gfx/interface/icons/traditions/tradition_purity_heightened_attributes.dds" }
+	spriteType = { name = "GFX_tr_lfg_evolution_migratory_instinct" textureFile = "gfx/interface/icons/traditions/tradition_mutation_planned_polymorphism.dds" }
+	spriteType = { name = "GFX_tr_lfg_evolution_branching_lineages" textureFile = "gfx/interface/icons/traditions/tradition_genetics_genetic_resequencing.dds" }
+	spriteType = { name = "GFX_tr_lfg_evolution_every_shore" textureFile = "gfx/interface/icons/traditions/tradition_mutation_environmental_integration.dds" }
 	### ASCENSION PERKS ###
 	spriteType = { name = "GFX_ap_lfg_curated_progress" textureFile = "gfx/interface/icons/ascension_perks/ap_technological_ascendancy.dds" }
 }

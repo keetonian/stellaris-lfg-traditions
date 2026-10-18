@@ -159,11 +159,16 @@ class GenOverridesTests(unittest.TestCase):
         (self.game / "common/situations/08_machine_age_situations.txt").write_text(FAKE_SITUATIONS)
         (self.game / "launcher-settings.json").write_text('{ "rawVersion": "v9.9.9" }')
         (self.game / "events").mkdir()
+        (self.game / "common/planet_classes").mkdir()
+        (self.game / "common/planet_classes/00_planet_classes.txt").write_text(
+            "pc_desert = {\n\tcolonizable = yes\n}\npc_barren = {\n\tcolonizable = no\n}\npc_ocean = {\n\tcolonizable = yes\n}\n")
+        (self.tmp / "giga/common/planet_classes").mkdir(parents=True)
+        (self.tmp / "giga/common/planet_classes/giga_planet_classes.txt").write_text("pc_flat_world = {\r\n\tcolonizable = yes\r\n}\r\n")
         (self.game / "common/zones").mkdir()
         (self.game / "common/zones/00_zones.txt").write_text(FAKE_ZONES)
         (self.game / "events/machine_age_situation_events_3.txt").write_text(FAKE_EVENTS)
         self.giga = self.tmp / "giga"
-        (self.giga / "descriptor.mod").parent.mkdir(parents=True)
+        (self.giga / "descriptor.mod").parent.mkdir(parents=True, exist_ok=True)
         (self.giga / "descriptor.mod").write_text('version="8.8.8"\n')
         techs = {}
         for suffix, tech, _area, src, _potential in gen_overrides.SHELVE:
@@ -270,6 +275,12 @@ class GenOverridesTests(unittest.TestCase):
         (self.giga / "localisation/english/giga_alderson_l_english.yml").write_text("\ufeffl_english:\n", encoding="utf-8")
         with self.assertRaisesRegex(gen_overrides.GenError, "origin_alderson_effects"):
             self.generate()
+
+    def test_world_types_count_colonizable_classes(self):
+        out = self.generate()[gen_overrides.WORLD_TYPES_FILE]
+        for pc in ("pc_desert", "pc_ocean", "pc_flat_world"):
+            self.assertIn(f"\tmodifier = {{ add = 1 any_owned_planet = {{ is_planet_class = {pc} }} }}\n", out)
+        self.assertNotIn("pc_barren", out)
 
     def test_virtuality_option_blocked_for_ring_origins(self):
         out = self.generate()["mod/events/00_lfg_event_overrides.txt"]

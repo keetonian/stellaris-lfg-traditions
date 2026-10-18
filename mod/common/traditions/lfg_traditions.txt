@@ -292,6 +292,94 @@ tr_lfg_polymath_interdisciplinary_seminars = {
 }
 
 #####################################################################
+# EVOLUTIONARY PERFECTION - hook: scales with our main species' traits (negative: growth; positive: efficiency), the
+# species and subspecies we have and the planet types we live on. Any empire.
+#####################################################################
+
+tr_lfg_evolution_adopt = {
+	modifier = {
+		modify_species_cost_mult = -0.25
+	}
+}
+
+tr_lfg_evolution_finish = {
+	modifier = {
+		ascension_perks_add = 1
+		BIOLOGICAL_species_trait_points_add = 1
+		LITHOID_species_trait_points_add = 1
+		ROBOT_species_trait_points_add = 1
+		MACHINE_species_trait_points_add = 1
+		BIOLOGICAL_species_trait_picks_add = 1
+		LITHOID_species_trait_picks_add = 1
+		ROBOT_species_trait_picks_add = 1
+		MACHINE_species_trait_picks_add = 1
+	}
+}
+
+# Hook: per negative trait of our main species: organic pop growth +5% and pop assembly +5% (no cap).
+tr_lfg_evolution_hardship = {
+	custom_tooltip = tr_lfg_evolution_hardship_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		logistic_growth_mult = 0.05
+		planet_pop_assembly_mult = 0.05
+		mult = value:lfg_num_negative_traits
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: per positive trait of our main species: job efficiency +1% (no cap).
+tr_lfg_evolution_honed_strengths = {
+	custom_tooltip = tr_lfg_evolution_honed_strengths_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		pop_bonus_workforce_mult = 0.01
+		mult = value:lfg_num_positive_traits
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: per species in the empire: ship speed +1% (no cap).
+tr_lfg_evolution_migratory_instinct = {
+	custom_tooltip = tr_lfg_evolution_migratory_instinct_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		ship_speed_mult = 0.01
+		mult = value:lfg_num_species_uncapped
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: per subspecies of our main species: society research +2% (no cap).
+tr_lfg_evolution_branching_lineages = {
+	possible = {
+		has_tradition = tr_lfg_evolution_hardship
+		has_tradition = tr_lfg_evolution_honed_strengths
+	}
+	custom_tooltip = tr_lfg_evolution_branching_lineages_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		country_society_research_produces_mult = 0.02
+		mult = value:lfg_num_subspecies
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: per planet type we have a colony on (value:lfg_num_world_types, generated): diplomatic weight +1% (no cap).
+tr_lfg_evolution_every_shore = {
+	possible = {
+		has_tradition = tr_lfg_evolution_migratory_instinct
+	}
+	custom_tooltip = tr_lfg_evolution_every_shore_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		diplo_weight_mult = 0.01
+		mult = value:lfg_num_world_types
+	}
+	ai_weight = { factor = 1000 }
+}
+
+#####################################################################
 # GRANARY KINGS - hook: the food stockpile is political power; agendas "Feast of Plenty" (adopt), "The Harvest Tithe" (finish)
 #####################################################################
 

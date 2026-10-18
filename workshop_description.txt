@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Six new tradition trees, six council agendas, an ascension perk, a policy and a planet decision for [b]Gigastructural Engineering[/b] games. Every tree only appears for the empires it fits, and every tree has a [b]hook[/b]: bonuses that scale with or depend on your game state, so each one changes how you play rather than just adding percentages.
+Seven new tradition trees, six council agendas, an ascension perk, a hidden special system, a policy and a planet decision for [b]Gigastructural Engineering[/b] games. Every tree only appears for the empires it fits, and every tree has a [b]hook[/b]: bonuses that scale with or depend on your game state, so each one changes how you play rather than just adding percentages.
 
 [h2]Tradition trees[/h2]
 
@@ -32,6 +32,15 @@ Six new tradition trees, six council agendas, an ascension perk, a policy and a 
 [*][b]Rival Laboratories:[/b] +4% research speed per rival, but -5% with none.
 [*][b]Reckless Experimentation:[/b] +15% research from jobs, and every year a colony may suffer a [b]Lab Accident[/b] (5%) or enjoy a [b]Lab Breakthrough[/b] (15%).
 [*]Finisher: +15% anomaly discovery chance.
+[/list]
+
+[h3]Evolutionary Perfection[/h3]
+[i]Every trait is an advantage.[/i] Any empire.
+[list]
+[*][b]Strength Through Hardship:[/b] every negative trait of your main species speeds up pop growth and assembly.
+[*][b]Honed Strengths:[/b] every positive trait makes jobs more efficient.
+[*]Ship speed per species, society research per genetic variant of your main species, and diplomatic weight per planet type you live on. No caps.
+[*]Cheaper species modification; the finisher gives an ascension perk slot, an extra species trait point and an extra trait pick.
 [/list]
 
 [h3]Granary Kings[/h3]
@@ -73,6 +82,9 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [*][b]Gala Season[/b] (Galactic Broadcast): happiness and unity; trade suffers.
 [*][b]Grand Tour Season[/b] (The Grand Tour): happiness, trade and much harder-working resort workers.
 [/list]
+
+[h2]Special system: Lone Tide[/h2]
+In most games, a lonely star system appears beyond the edge of the galaxy, with no hyperlanes leading to it. Its huge ocean world is home to a pre-FTL civilization. You'll need a jump drive to get there.
 
 [h2]Ascension perk: Curated Progress[/h2]
 Tired of drawing repeatables you don't want? Requires [b]Gigastructural Constructs[/b].

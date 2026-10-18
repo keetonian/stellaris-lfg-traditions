@@ -1,0 +1,67 @@
+# LFG Traditions - Lone Tide system.
+namespace = lfg_lone_tide
+
+# on_game_start: 75% chance to spawn the Lone Tide system (lfg_lone_tide_init) just beyond
+# the galactic rim, with no hyperlanes. Positions are measured from the galactic core (no_scope, like vanilla's
+# L-Cluster); the galaxy radius is 200 / 300 / 400 / 450 / 450 for tiny .. huge (map/setup_scenarios), so it sits
+# ~40 units outside. Angles 200-250 keep it away from the L-Cluster (44-46).
+event = {
+	id = lfg_lone_tide.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		random_list = {
+			75 = {
+				set_spawn_system_batch = begin
+				no_scope = {
+					if = {
+						limit = { galaxy_size = tiny }
+						spawn_system = {
+							min_distance >= 235
+							max_distance <= 245
+							min_orientation_angle = 200
+							max_orientation_angle = 250
+							initializer = lfg_lone_tide_init
+							hyperlane = no
+						}
+					}
+					else_if = {
+						limit = { galaxy_size = small }
+						spawn_system = {
+							min_distance >= 335
+							max_distance <= 345
+							min_orientation_angle = 200
+							max_orientation_angle = 250
+							initializer = lfg_lone_tide_init
+							hyperlane = no
+						}
+					}
+					else_if = {
+						limit = { galaxy_size = medium }
+						spawn_system = {
+							min_distance >= 435
+							max_distance <= 445
+							min_orientation_angle = 200
+							max_orientation_angle = 250
+							initializer = lfg_lone_tide_init
+							hyperlane = no
+						}
+					}
+					else = {
+						spawn_system = {
+							min_distance >= 485
+							max_distance <= 495
+							min_orientation_angle = 200
+							max_orientation_angle = 250
+							initializer = lfg_lone_tide_init
+							hyperlane = no
+						}
+					}
+				}
+				set_spawn_system_batch = end
+			}
+			25 = { }
+		}
+	}
+}

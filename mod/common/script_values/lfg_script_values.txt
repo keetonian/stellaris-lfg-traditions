@@ -160,3 +160,42 @@ lfg_num_artificial_worlds = {
 		mode = add
 	}
 }
+
+# Evolutionary Perfection: our main species' negative / positive traits (trait cost < 0 / > 0), every species in the
+# empire (uncapped, unlike lfg_num_species), and subspecies of our main species. All uncapped.
+lfg_num_negative_traits = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = num_negative_traits
+		mode = add
+	}
+}
+
+lfg_num_positive_traits = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = num_positive_traits
+		mode = add
+	}
+}
+
+lfg_num_species_uncapped = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = num_species
+		mode = add
+	}
+}
+
+lfg_num_subspecies = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = count_owned_species
+		parameters = {
+			limit = {
+				is_subspecies = root.owner_species
+			}
+		}
+		mode = add
+	}
+}

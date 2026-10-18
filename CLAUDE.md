@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 6 tradition trees, 7 council agenda definitions (6 agendas), the Evolutionary
+Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 7 tradition trees, 7 council agenda definitions (6 agendas), the Evolutionary
 Predators edict `lfg_species_experimentation`, the ascension perk
 `ap_lfg_curated_progress` + 27 generated Shelve edicts, and generated overrides of 1 situation +
 1 district (district_resort) + 8 resort zones + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script
@@ -25,7 +25,7 @@ Python 3.9+ stdlib only. Always run with `-I`.
 
 ```
 mod/                                  # exactly what ships
-  common/tradition_categories/00_<tree name>_lfg.txt         # 6 trees, one per file (sort order, see below)
+  common/tradition_categories/00_<tree name>_lfg.txt         # 7 trees, one per file (sort order, see below)
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
   common/scripted_variables/lfg_scripted_variables.txt       # @lfg_species_split_* tunables (50 / 50 / -2000)
@@ -38,6 +38,9 @@ mod/                                  # exactly what ships
   events/lfg_shellworlders_events.txt                        # Shellworlders: lfg_shellworld_* modifiers on artificial worlds (monthly)
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
   events/lfg_planet_events.txt                               # lfg_planet.1: strip per-planet modifiers on owner change
+  events/lfg_lone_tide_events.txt                            # lfg_lone_tide.1 (global `event`, on_game_start): 75% spawn
+  common/solar_system_initializers/lfg_system_initializers.txt # lfg_lone_tide_init (usage_odds = 0: never map-generated)
+  common/script_values/lfg_world_types_values.txt            # GENERATED lfg_num_world_types (colonizable planet classes)
   events/00_lfg_event_overrides.txt                          # GENERATED (machine_age.4400: Virtuality block); 00_ = loads first
   common/council_agendas/lfg_council_agendas.txt             # 7 agendas, unlocked by tree finishers
   common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + lfg_lab_accident
@@ -241,6 +244,15 @@ A Pleasure World (`col_pleasure`, Shroud + `bliss_accord` flag) is a resort colo
 check `has_modifier = resort_colony`, never `has_designation = col_resort`, so The Grand Tour covers both. District
 specializations are zones (`common/zones`, sets `resort` / `resort_attraction`); there's no zone-jobs modifier, so zone
 bonuses are per-zone overrides (`RESORT_ZONES` in gen_overrides.py).
+
+## Special systems
+
+Spawned from `on_game_start` with a global `event = { ... }` (the checker accepts `event` as an event key) using
+`set_spawn_system_batch = begin/end` + `no_scope = { spawn_system = { ... initializer = lfg_x hyperlane = no } }`, like
+vanilla's L-Cluster: distances are from the galactic core; galaxy radius is 200/300/400/450/450 (tiny..huge,
+`map/setup_scenarios`), checked with `galaxy_size = <size>`. Initializers need `usage_odds = 0` so map generation never
+places them. Pre-FTLs: `init_effect = { generate_pre_ftls_on_planet = yes }` (vanilla picks species, age, pops).
+**Unverified in game:** pre-FTL generation from an initializer spawned after game start.
 
 ## Curated Progress / Shelve edicts
 

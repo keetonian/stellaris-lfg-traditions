@@ -64,6 +64,7 @@ ALLOWED_FILES = [
     r"common/policies/[^/]+\.txt",
     r"common/decisions/[^/]+\.txt",
     r"common/traits/[^/]+\.txt",
+    r"common/solar_system_initializers/[^/]+\.txt",
     r"events/[^/]+\.txt",
     r"interface/[^/]+\.gfx",
     r"localisation/english/[^/]+_l_english\.yml",
@@ -288,6 +289,15 @@ def check_loc_references(mod: Mod, loc: Dict[str, str], r: Report) -> None:
                 r.fail(f"{rel}:{e.line}: {e.key} = {e.value} has no localisation")
 
 
+def check_system_names(mod: Mod, loc: Dict[str, str], r: Report) -> None:
+    """System initializers name their star/planets with loc keys (name = "NAME_lfg_...")."""
+    for rel, entries in mod.files.items():
+        if rel.startswith("common/solar_system_initializers/"):
+            for e in pdx.walk(entries):
+                if e.key == "name" and not e.is_block and e.value not in loc:
+                    r.fail(f"{rel}:{e.line}: name = {e.value} has no localisation")
+
+
 def check_edicts(mod: Mod, loc: Dict[str, str], r: Report) -> None:
     # Edicts are localised as edict_<key>; decisions, traits and ascension perks as <key> (vanilla conventions).
     names = ([f"edict_{k}" for k in mod.top("common/edicts")] + list(mod.top("common/decisions"))
@@ -298,12 +308,17 @@ def check_edicts(mod: Mod, loc: Dict[str, str], r: Report) -> None:
                 r.fail(f"missing localisation: {k}")
 
 
+def is_event_key(key: Optional[str]) -> bool:
+    """country_event, planet_event, ... and `event` (global events, e.g. fired from on_game_start)."""
+    return key is not None and (key == "event" or key.endswith("_event"))
+
+
 def mod_event_ids(mod: Mod) -> Set[str]:
     ids: Set[str] = set()
     for rel, entries in mod.files.items():
         if rel.startswith("events/") and rel not in OVERRIDE_FILES:
             for e in entries:
-                if e.key and e.key.endswith("_event") and e.is_block:
+                if is_event_key(e.key) and e.is_block:
                     i = pdx.first(e.value, "id")
                     if i is not None:
                         ids.add(i.value)
@@ -324,7 +339,7 @@ def check_events(mod: Mod, loc: Dict[str, str], r: Report) -> None:
         for e in entries:
             if e.key == "namespace":
                 continue
-            if not (e.key and e.key.endswith("_event") and e.is_block):
+            if not (is_event_key(e.key) and e.is_block):
                 r.fail(f"{rel}:{e.line}: unexpected top-level entry {e.key}")
                 continue
             i = pdx.first(e.value, "id")
@@ -345,7 +360,7 @@ def check_events(mod: Mod, loc: Dict[str, str], r: Report) -> None:
     for rel, entries in mod.files.items():
         definitions = {id(e) for e in entries} if rel.startswith("events/") else set()
         for e in pdx.walk(entries):
-            if id(e) in definitions or not (e.key and e.key.endswith("_event") and e.is_block):
+            if id(e) in definitions or not (is_event_key(e.key) and e.is_block):
                 continue
             i = pdx.first(e.value, "id")
             if i is not None and i.value.startswith("lfg_") and i.value not in ids:
@@ -431,10 +446,13 @@ def check_scripted_references(mod: Mod, r: Report) -> None:
     scripted = set(mod.top("common/scripted_triggers")) | set(mod.top("common/scripted_effects"))
     values = set(mod.top("common/script_values"))
     edicts = set(mod.top("common/edicts"))
+    initializers = set(mod.top("common/solar_system_initializers"))
     for rel, entries in mod.files.items():
         for e in pdx.walk(entries):
             if e.is_block:
                 continue
+            if e.key == "initializer" and e.value.startswith("lfg_") and e.value not in initializers:
+                r.fail(f"{rel}:{e.line}: initializer = {e.value} is not defined in common/solar_system_initializers")
             if e.key == "has_edict" and e.value.startswith("lfg_"):
                 names = [e.value.replace("$area$", a) for a in gen_overrides.MEGA_CAP_AREAS] if "$area$" in e.value \
                     else [e.value]
@@ -702,6 +720,7 @@ def run(mod_dir: Path, game: Optional[Path], giga: Optional[Path], modifiers_log
     check_civics(mod, loc, r)
     check_loc_references(mod, loc, r)
     check_edicts(mod, loc, r)
+    check_system_names(mod, loc, r)
     check_events(mod, loc, r)
     check_scripted_references(mod, r)
     check_sprites(mod, game, r)

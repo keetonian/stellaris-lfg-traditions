@@ -1,0 +1,61 @@
+# LFG Traditions - special systems.
+
+# Lone Tide: a system beyond the galactic rim with no hyperlanes, home to a pre-FTL civilization on a huge ocean world.
+# Never placed by map generation (usage_odds = 0); events/lfg_lone_tide_events.txt spawns it at game start
+# (75% of games). Only reachable by jump drives and similar.
+lfg_lone_tide_init = {
+	name = "NAME_lfg_lone_tide"
+	class = "sc_g"
+
+	usage = misc_system_init
+	usage_odds = 0
+
+	flags = { lfg_lone_tide }
+
+	planet = {
+		name = "NAME_lfg_lone_tide"
+		class = "pc_g_star"
+		orbit_distance = 0
+		orbit_angle = 1
+		size = 30
+		has_ring = no
+	}
+
+	planet = {
+		class = "pc_molten"
+		orbit_distance = 35
+		orbit_angle = 60
+		size = 10
+		has_ring = no
+	}
+
+	planet = {
+		name = "NAME_lfg_thalassa"
+		class = "pc_ocean"
+		orbit_distance = 35
+		orbit_angle = 140
+		size = 35
+		has_ring = no
+
+		init_effect = {
+			prevent_anomaly = yes
+			generate_pre_ftls_on_planet = yes	# vanilla: random age, population sized by age
+		}
+	}
+
+	planet = {
+		class = "pc_gas_giant"
+		orbit_distance = 40
+		orbit_angle = 250
+		size = 28
+		has_ring = yes
+	}
+
+	planet = {
+		class = "pc_frozen"
+		orbit_distance = 30
+		orbit_angle = 30
+		size = 14
+		has_ring = no
+	}
+}

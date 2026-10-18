@@ -45,13 +45,13 @@ class RealModTests(unittest.TestCase):
 
     def test_mod_contents(self):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
-        self.assertEqual(len(mod.top("common/tradition_categories")), 6)
-        self.assertEqual(len(mod.top("common/traditions")), 6 * 7)
+        self.assertEqual(len(mod.top("common/tradition_categories")), 7)
+        self.assertEqual(len(mod.top("common/traditions")), 7 * 7)
         self.assertEqual(mod.top("common/governments/civics"), {})
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3",
                                                             "lfg_resorts.1", "lfg_shellworlders.1",
-                                                            "lfg_planet.1"})
+                                                            "lfg_planet.1", "lfg_lone_tide.1"})
         self.assertEqual(len(mod.top("common/council_agendas")), 7)
         self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
@@ -296,6 +296,14 @@ class MutationTests(unittest.TestCase):
         log = self.tmp / "modifiers.log"
         log.write_text("")
         self.assertIn("megastructure_build_speed_mult", check_mod.load_modifiers(log))
+
+    def test_spawned_initializer_must_exist(self):
+        self.edit("events/lfg_lone_tide_events.txt", "initializer = lfg_lone_tide_init", "initializer = lfg_lone_tidez_init", 4)
+        self.assertFails("initializer = lfg_lone_tidez_init is not defined")
+
+    def test_system_name_needs_loc(self):
+        self.edit("localisation/english/lfg_systems_l_english.yml", " NAME_lfg_thalassa:", " NAME_lfg_thalassaz:")
+        self.assertFails("name = NAME_lfg_thalassa has no localisation")
 
     def test_require_sources_turns_skips_into_failures(self):
         r = check_mod.run(self.mod, None, None, None, require_sources=True)
