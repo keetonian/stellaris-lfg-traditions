@@ -1,0 +1,27 @@
+# LFG Traditions - Massed Assault.
+namespace = lfg_massed_assault
+
+# When the perk is taken (ap_lfg_massed_assault on_enabled) and whenever a leader is created (on_leader_spawned):
+# give every general of an empire with the perk the Massed Assault Doctrine trait.
+country_event = {
+	id = lfg_massed_assault.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_ascension_perk = ap_lfg_massed_assault
+	}
+
+	immediate = {
+		every_owned_leader = {
+			limit = {
+				leader_class = commander
+				NOT = { has_trait = leader_trait_lfg_massed_assault }
+			}
+			add_trait = {
+				trait = leader_trait_lfg_massed_assault
+				show_message = no
+			}
+		}
+	}
+}

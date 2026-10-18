@@ -52,9 +52,10 @@ class RealModTests(unittest.TestCase):
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3",
                                                             "lfg_resorts.1", "lfg_shellworlders.1",
                                                             "lfg_planet.1", "lfg_lone_tide.1",
-                                                            "lfg_synthetic_fertility.1", "lfg_penal.1"})
+                                                            "lfg_synthetic_fertility.1", "lfg_penal.1",
+                                                            "lfg_massed_assault.1"})
         self.assertEqual(len(mod.top("common/council_agendas")), 7)
-        self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress"})
+        self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress", "ap_lfg_massed_assault"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
         self.assertEqual(len(shelve), 24 + 3)  # one per repeatable tech + megastructure capacity per research area
 

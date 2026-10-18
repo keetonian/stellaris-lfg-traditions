@@ -54,8 +54,9 @@ mod/                                  # exactly what ships
                                                              #   colony transfer/ownerless -> lfg_planet.1
   common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (resort world, Paradise Unbound)
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)
+  common/traits/lfg_leader_traits.txt                        # leader_trait_lfg_massed_assault (given by events/lfg_massed_assault_events.txt)
   common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy)
-  common/ascension_perks/lfg_ascension_perks.txt             # ap_lfg_curated_progress (needs Gigastructural Constructs)
+  common/ascension_perks/lfg_ascension_perks.txt             # ap_lfg_curated_progress (needs Gigastructural Constructs), ap_lfg_massed_assault
   common/edicts/lfg_shelve_edicts.txt                        # GENERATED Shelve edicts (from SHELVE in gen_overrides.py)
   common/technology/zz_lfg_repeatable_overrides.txt          # GENERATED (24 repeatables: factor 0 while shelved)
   common/inline_scripts/technology/giga_mega_repeatable.txt  # GENERATED whole-file override of Giga's inline script

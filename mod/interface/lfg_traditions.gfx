@@ -90,5 +90,6 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_penal_prison_industry" textureFile = "gfx/interface/icons/traditions/tradition_domination_imperious_architecture.dds" }
 	spriteType = { name = "GFX_tr_lfg_penal_chain_gangs" textureFile = "gfx/interface/icons/traditions/tradition_domination_deviancy_protocols.dds" }
 	### ASCENSION PERKS ###
+	spriteType = { name = "GFX_ap_lfg_massed_assault" textureFile = "gfx/interface/icons/ascension_perks/ap_lord_of_war.dds" }
 	spriteType = { name = "GFX_ap_lfg_curated_progress" textureFile = "gfx/interface/icons/ascension_perks/ap_technological_ascendancy.dds" }
 }

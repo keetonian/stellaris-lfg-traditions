@@ -2,3 +2,6 @@
  ap_lfg_curated_progress:0 "Curated Progress"
  ap_lfg_curated_progress_desc:0 "Not every breakthrough is worth chasing. Our research councils may strike whole lines of incremental study from the agenda, so our scientists spend their time on the work that matters.\n\nUnlocks §YShelve§! edicts: each one stops a specific repeatable technology from being offered as a research option."
  ap_lfg_curated_progress_tt:0 "Unlocks §YShelve§! edicts for every repeatable technology (one per technology; Gigastructural's megastructure capacity repeatables are grouped by research area).\nEach costs §Y2,000§! £unity£ Unity and §Y200§! £influence£ Influence to enact and §Y300§! monthly research of the shelved technology's type, scaled by empire size."
+ ap_lfg_massed_assault:0 "Massed Assault"
+ ap_lfg_massed_assault_desc:0 "A planet is not taken one regiment at a time. Our doctrine commits every army at once, on every front, until the defenders are simply overwhelmed.\n\nMore of our armies fight at the same time in ground combat, and every general is trained in the doctrine."
+ ap_lfg_massed_assault_tt:0 "All our generals gain the §YMassed Assault Doctrine§! trait: armies they lead get damage §G+25%§!, health §G+25%§! and morale §G+50%§!."

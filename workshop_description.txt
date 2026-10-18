@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Eight new tradition trees, six council agendas, an ascension perk, a hidden special system, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Eight new tradition trees, six council agendas, two ascension perks, a hidden special system, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
@@ -95,8 +95,10 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [h2]Special system: Lone Tide[/h2]
 In most games, a lonely system appears beyond the galaxy's edge, with no hyperlanes. Its huge ocean world hosts a pre-FTL civilization. Bring a jump drive.
 
-[h2]Ascension perk: Curated Progress[/h2]
-Tired of drawing repeatables you don't want? Requires [b]Gigastructural Constructs[/b].
+[h2]Ascension perks[/h2]
+[b]Massed Assault:[/b] +10 ground combat width; every general boosts the armies they lead.
+
+[b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]):
 [list]
 [*]A [b]Shelve[/b] edict for every repeatable technology (vanilla and Gigastructural): while active, it's never offered as a research option.
 [*]Each costs 2,000 unity and 200 influence, plus 300 monthly research of that type, scaled by empire size.
@@ -114,8 +116,8 @@ These replace those vanilla and Gigastructural definitions; other mods that chan
 [h2]Requirements and compatibility[/h2]
 [list]
 [*]Stellaris 4.5, [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237]Gigastructural Engineering & More[/url] (load this mod after it).
-[*]Recommended: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981]A Lot of Traditions - 24 Tradition Slots[/url], since vanilla only allows 7 trees.
+[*]Recommended: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981]A Lot of Traditions - 24 Tradition Slots[/url] (vanilla allows 7 trees).
 [*]Compatible with Expanded Stellaris Traditions and More Traditions.
 [*]Changes the game checksum: everyone in a multiplayer game needs it.
-[*]Balance is a first draft. Feedback welcome!
+[*]Balance is a first draft; feedback welcome!
 [/list]

@@ -17,3 +17,22 @@ ap_lfg_curated_progress = {
 		factor = 0
 	}
 }
+
+# Massed Assault: wider ground battles (more armies fight at once). Width is 5 + 0.2 x planet size (defines
+# PLANET_COMBAT_WIDTH_*); vanilla only grants planet_combat_width_add through general traits (+1, +2, Paragon +10).
+# Every general also gets leader_trait_lfg_massed_assault (army bonuses while a general leads).
+ap_lfg_massed_assault = {
+	on_enabled = {
+		custom_tooltip = ap_lfg_massed_assault_tt
+		hidden_effect = { country_event = { id = lfg_massed_assault.1 } }
+	}
+	modifier = {
+		planet_combat_width_add = @lfg_massed_assault_width
+	}
+	potential = {
+		NOT = { has_ascension_perk = ap_lfg_massed_assault }
+	}
+	ai_weight = {
+		factor = 0
+	}
+}

@@ -73,7 +73,7 @@ ALLOWED_FILES = [
     r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
-KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
+KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
                 "@lfg_")
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/",)

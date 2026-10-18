@@ -20,6 +20,13 @@ on_yearly_pulse_country = {
 	}
 }
 
+# scope: country, from: the new leader
+on_leader_spawned = {
+	events = {
+		lfg_massed_assault.1	# Massed Assault: give new generals the doctrine trait
+	}
+}
+
 on_colony_transfer = {
 	events = {
 		lfg_planet.1	# strip the old owner's per-planet tradition modifiers

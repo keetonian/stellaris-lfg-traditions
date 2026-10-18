@@ -1,5 +1,5 @@
 ﻿l_english:
- # Evolutionary Predators: Species Experimentation edict + event, Inherited Genius trait.
+ # Evolutionary Predators: Species Experimentation edict + event, Inherited Genius trait. Also leader traits.
  edict_lfg_species_experimentation:0 "Species Experimentation"
  edict_lfg_species_experimentation_desc:0 "Our predatory evolution can be forced. Subject one of our secondary species to brutal experiments: §Rhalf of them will die§!, and the survivors are split into §Y50§! subspecies, each with a random new positive trait.\n\nRequires a species with at least §Y100§! pops that isn't our main species or one of its subspecies. Costs §Y2000§! £society£ Society Research when a species is chosen."
  lfg_species_experimentation_no_species:0 "$TRIGGER_FAIL$Requires a species with at least §Y100§! pops that isn't our main species or one of its subspecies"
@@ -15,3 +15,5 @@
  lfg_species_split.1.split_tt:0 "§R-2000§! £society£ Society Research\n§RHalf of this species dies.§! The survivors are split into §Y50§! subspecies with a random new positive trait each."
  trait_lfg_inherited_genius:0 "Inherited Genius"
  trait_lfg_inherited_genius_desc:0 "Generations of predatory evolution have rewarded only the sharpest minds. Every member of this species is born with an instinct for discovery, and contributes to our research simply by living among us."
+ leader_trait_lfg_massed_assault:0 "Massed Assault Doctrine"
+ leader_trait_lfg_massed_assault_desc:0 "Trained to commit every regiment at once and keep pushing until the defenders break."
