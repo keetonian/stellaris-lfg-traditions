@@ -11,7 +11,8 @@ scripts/verify.sh                         # unittest (tests/) + tools/check_mod.
 scripts/verify.sh --require-sources       # also fail if game/Giga files are missing (do before releases)
 python3 -I tools/gen_overrides.py         # regenerate vanilla overrides (after game updates)
 python3 -I tools/check_mod.py --update-snapshot   # refresh tools/data/modifiers_4.5.txt.gz from modifiers.log
-scripts/install.sh                        # copy mod/ into the Stellaris mod folder for in-game testing
+scripts/install.sh                        # install a "[LOCAL DEV]" copy (no remote_file_id) for in-game testing
+RELEASE=1 scripts/install.sh              # exact copy; only for uploading via the Paradox launcher
 DRY_RUN=1 scripts/publish.sh              # what a Workshop upload would send (no login)
 STEAM_USER=<login> scripts/publish.sh "note"   # verify + upload with steamcmd (see Release)
 ```
@@ -34,7 +35,8 @@ tools/check_mod.py    # static verification (see README "Verification")
 tools/gen_overrides.py
 tools/data/modifiers_4.5.txt.gz       # modifier-name snapshot used when modifiers.log is absent (CI)
 tests/                # unittest; mutation tests copy mod/, break one thing, expect a specific failure;
-                      # test_publish.py dry-runs publish.sh (needs game + Giga, skipped in CI)
+                      # test_publish.py dry-runs publish.sh (needs game + Giga, skipped in CI);
+                      # test_install.py checks the [LOCAL DEV] / RELEASE=1 installs
 workshop_description.txt   # Steam BBCode description (sent on first upload or with SYNC_DESCRIPTION=1)
 ```
 

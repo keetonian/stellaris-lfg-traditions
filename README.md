@@ -143,12 +143,16 @@ scripts/install.sh
 ```
 
 This copies `mod/` to `~/Documents/Paradox Interactive/Stellaris/mod/lfg_traditions/` and writes `lfg_traditions.mod` for the launcher.
+It installs a **local dev copy**: the name gets a ` [LOCAL DEV]` suffix and `remote_file_id` is removed, so the
+launcher lists it separately from the Workshop version you're subscribed to. Enable one or the other, not both.
+`mod/descriptor.mod` itself is never changed. `RELEASE=1 scripts/install.sh` installs an exact copy instead; use that only
+for a launcher upload.
 Enable the mod after Gigastructural.
 
 ## Verification
 
 ```sh
-scripts/verify.sh                    # 46 tests + static check
+scripts/verify.sh                    # 49 tests + static check
 scripts/verify.sh --require-sources  # before a release: fail if game/Giga files are missing
 ```
 
@@ -197,7 +201,7 @@ STEAM_USER=<steam account name> scripts/publish.sh "Changelog line"
   Steam Guard code once, then caches the login. Nothing is stored in this repo.
 - Double quotes in the description or change note are turned into “typographic quotes”, because steamcmd's VDF parser has no escapes.
 
-Alternative: run `scripts/install.sh`, then use the Paradox launcher's **Upload mod** and copy the `remote_file_id` it writes
+Alternative: run `RELEASE=1 scripts/install.sh` (so the upload isn't named "[LOCAL DEV]"), then use the Paradox launcher's **Upload mod** and copy the `remote_file_id` it writes
 into `mod/descriptor.mod`.
 
 Publishing to the Workshop is local-only on purpose: CI would need your Steam credentials, and the strict checks need the game installed.

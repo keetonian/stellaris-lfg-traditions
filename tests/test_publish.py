@@ -26,6 +26,10 @@ class PublishDryRunTests(unittest.TestCase):
         self.addCleanup(shutil.rmtree, self.tmp)
         self.mod = self.tmp / "mod"
         shutil.copytree(REPO / "mod", self.mod)
+        # Start from a never-published descriptor; tests that need an id add one.
+        descriptor = self.mod / "descriptor.mod"
+        descriptor.write_text("".join(line for line in descriptor.read_text().splitlines(keepends=True)
+                                      if not line.startswith("remote_file_id=")))
         self.desc = self.tmp / "desc.txt"
         self.desc.write_text('Use "this" not "that".\nPath C:\\mods\\ and a lone " quote.\n', encoding="utf-8")
 
