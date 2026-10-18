@@ -1,0 +1,7 @@
+# LFG Traditions - on_actions (merged with vanilla's lists).
+
+on_yearly_pulse_country = {
+	events = {
+		lfg_polymath.1	# Reckless Experimentation: yearly lab accident chance
+	}
+}

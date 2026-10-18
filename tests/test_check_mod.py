@@ -15,6 +15,15 @@ CATEGORIES = "common/tradition_categories/lfg_tradition_categories.txt"
 CIVICS = "common/governments/civics/lfg_civics.txt"
 TRAD_LOC = "localisation/english/lfg_traditions_l_english.yml"
 GFX = "interface/lfg_traditions.gfx"
+EVENTS = "events/lfg_species_split_events.txt"
+EDICTS = "common/edicts/lfg_edicts.txt"
+SPLIT_EFFECTS = "common/scripted_effects/lfg_species_split_effects.txt"
+CIVIC_LOC = "localisation/english/lfg_civics_l_english.yml"
+AGENDA_LOC = "localisation/english/lfg_agendas_l_english.yml"
+STATICS = "common/static_modifiers/lfg_static_modifiers.txt"
+POLYMATH_EVENTS = "events/lfg_polymath_events.txt"
+ON_ACTIONS = "common/on_actions/lfg_on_actions.txt"
+POLICY_LOC = "localisation/english/lfg_policies_l_english.yml"
 
 
 def failures(mod_dir, game=None, giga=None):
@@ -31,11 +40,14 @@ class RealModTests(unittest.TestCase):
                           check_mod.DEFAULT_MODIFIERS_LOG, require_sources=True)
         self.assertEqual(r.failures, [])
 
-    def test_mod_has_six_trees_and_a_civic(self):
+    def test_mod_contents(self):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
-        self.assertEqual(len(mod.top("common/tradition_categories")), 6)
-        self.assertEqual(len(mod.top("common/traditions")), 6 * 7)
+        self.assertEqual(len(mod.top("common/tradition_categories")), 9)
+        self.assertEqual(len(mod.top("common/traditions")), 9 * 7)
         self.assertIn("civic_lfg_pampered_masters", mod.top("common/governments/civics"))
+        self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
+        self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3"})
+        self.assertEqual(len(mod.top("common/council_agendas")), 9)
 
 
 class MutationTests(unittest.TestCase):
@@ -108,7 +120,7 @@ class MutationTests(unittest.TestCase):
         self.assertFails("malformed localisation line")
 
     def test_unbalanced_colour_code(self):
-        self.edit(TRAD_LOC, "§YSupertensile§!", "§YSupertensile")
+        self.edit(TRAD_LOC, "§YMega-Engineering§!", "§YMega-Engineering")
         self.assertFails("unbalanced § colour codes")
 
     def test_loc_reference_without_loc(self):
@@ -150,6 +162,97 @@ class MutationTests(unittest.TestCase):
                   "lfg_renamed = {")
         self.assertFails("value:lfg_synthetic_fertility_acceleration is not defined")
 
+    def test_fired_event_must_exist(self):
+        self.edit(EDICTS, "country_event = { id = lfg_species_split.1 }", "country_event = { id = lfg_species_split.2 }")
+        self.assertFails("fires lfg_species_split.2, which is not defined")
+
+    def test_event_loc_missing(self):
+        self.edit(CIVIC_LOC, " lfg_species_split.1.others:", " lfg_species_split.1.otherz:")
+        self.assertFails("uses lfg_species_split.1.others, which has no localisation")
+
+    def test_event_id_outside_namespace(self):
+        self.edit(EVENTS, "id = lfg_species_split.1\n", "id = lfg_other.1\n")
+        self.assertFails("not in this file's namespace")
+
+    def test_event_namespace_prefix(self):
+        self.edit(EVENTS, "namespace = lfg_species_split", "namespace = species_split")
+        self.assertFails("namespace species_split lacks an lfg prefix")
+
+    def test_edict_loc_missing(self):
+        self.edit(CIVIC_LOC, " edict_lfg_species_experimentation_desc:", " edict_lfg_species_experimentation_dezc:")
+        self.assertFails("missing localisation: edict_lfg_species_experimentation_desc")
+
+    def test_undefined_scripted_trigger(self):
+        self.edit(EDICTS, "lfg_species_split_eligible = yes", "lfg_species_split_eligable = yes")
+        self.assertFails("lfg_species_split_eligable is not a scripted trigger/effect")
+
+    def test_undefined_script_value(self):
+        self.edit(SPLIT_EFFECTS, "value:lfg_species_split_share", "value:lfg_species_split_shar")
+        self.assertFails("value:lfg_species_split_shar is not defined")
+
+    @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
+    def test_undefined_mod_variable(self):
+        self.edit(SPLIT_EFFECTS, "count = @lfg_species_split_count", "count = @lfg_species_split_cnt")
+        self.assertFails("scripted variable @lfg_species_split_cnt is not defined",
+                         game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
+
+    def test_agenda_loc_missing(self):
+        self.edit(AGENDA_LOC, " council_agenda_agenda_lfg_eureka_season_desc:", " council_agenda_agenda_lfg_eureka_season_dezc:")
+        self.assertFails("missing localisation: council_agenda_agenda_lfg_eureka_season_desc")
+
+    def test_unknown_agenda(self):
+        self.edit(TRADITIONS, "unlocks_agenda = agenda_lfg_eureka_season", "unlocks_agenda = agenda_lfg_eureka_seasonn")
+        self.assertFails("unlocks_agenda agenda_lfg_eureka_seasonn is not defined")
+
+    def test_agenda_finish_modifier_missing(self):
+        self.edit(STATICS, "agenda_lfg_gala_season_finish = {", "agenda_lfg_gala_seasons_finish = {")
+        self.assertFails("finish_modifier agenda_lfg_gala_season_finish is not defined")
+
+    def test_static_modifier_unknown_modifier(self):
+        self.edit(STATICS, "planet_researchers_produces_mult = -0.25", "planet_researcher_produces_mult = -0.25")
+        self.assertFails("static modifier lfg_lab_accident: unknown modifier planet_researcher_produces_mult")
+
+    def test_add_modifier_undefined(self):
+        self.edit(POLYMATH_EVENTS, "modifier = lfg_lab_accident ", "modifier = lfg_lab_accidents ")
+        self.assertFails("add_modifier lfg_lab_accidents is not defined")
+
+    def test_on_action_event_missing(self):
+        self.edit(ON_ACTIONS, "lfg_polymath.1", "lfg_polymath.9")
+        self.assertFails("on_yearly_pulse_country fires lfg_polymath.9, which is not defined")
+
+    def test_policy_flag_not_set(self):
+        self.edit(TRADITIONS, "potential = { has_policy_flag = lfg_people_first }", "potential = { has_policy_flag = lfg_peoples_first }")
+        self.assertFails("has_policy_flag = lfg_peoples_first is not set by any policy option")
+
+    def test_policy_bad_category(self):
+        self.edit("common/policies/lfg_policies.txt", "category = economy", "category = economic")
+        self.assertFails("policy category must be one of")
+
+    def test_policy_option_loc_missing(self):
+        self.edit(POLICY_LOC, " lfg_monument_economy_people_first_desc:", " lfg_monument_economy_people_first_dezc:")
+        self.assertFails("missing localisation: lfg_monument_economy_people_first_desc")
+
+    def test_decision_loc_missing(self):
+        self.edit("localisation/english/lfg_decisions_l_english.yml", " decision_lfg_expand_resort_desc:", " decision_lfg_expand_resort_dezc:")
+        self.assertFails("missing localisation: decision_lfg_expand_resort_desc")
+
+    @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
+    def test_generated_modifier_without_loc(self):
+        self.edit("localisation/english/lfg_modifiers_l_english.yml", " mod_pop_resort_worker_bonus_workforce_mult:", " mod_pop_resort_workerz_bonus_workforce_mult:")
+        self.assertFails("modifier pop_resort_worker_bonus_workforce_mult has no localisation",
+                         game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
+
+    @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
+    def test_hidden_modifiers_need_no_loc(self):
+        # Grand Works Priority's 44 district lines are in a static modifier behind show_only_custom_tooltip.
+        found = failures(self.mod, game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
+        self.assertFalse(any("planet_district_arcology_housing_build_speed_mult" in f for f in found), found)
+
+    def test_show_only_custom_tooltip_in_tradition_is_rejected(self):
+        self.edit(TRADITIONS, "\t\tmegastructure_build_speed_mult = 0.20\n\t\tplanet_structures_cost_mult = 0.30",
+                  "\t\tshow_only_custom_tooltip = yes\n\t\tmegastructure_build_speed_mult = 0.20\n\t\tplanet_structures_cost_mult = 0.30")
+        self.assertFails("tr_lfg_megaforge_priority: show_only_custom_tooltip has no effect here")
+
     def test_require_sources_turns_skips_into_failures(self):
         r = check_mod.run(self.mod, None, None, None, require_sources=True)
         self.assertTrue(any("--require-sources" in f for f in r.failures))
@@ -158,6 +261,12 @@ class MutationTests(unittest.TestCase):
     def test_unknown_technology(self):
         self.edit(TRADITIONS, "has_technology = tech_robotic_workers", "has_technology = tech_robotic_workerz")
         self.assertFails("tech_robotic_workerz is not defined",
+                         game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
+
+    @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
+    def test_unknown_building(self):
+        self.edit(TRADITIONS, "has_building = galactic_history_holomuseum", "has_building = galactic_history_museum")
+        self.assertFails("has_building = galactic_history_museum is not defined",
                          game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")

@@ -1,0 +1,154 @@
+# LFG Traditions - council agendas, unlocked by tradition finishers (`unlocks_agenda`).
+# `modifier` applies while the council prepares the agenda; on launch `effect` runs once and the
+# `finish_modifier` (common/static_modifiers/lfg_static_modifiers.txt) lasts 10 years (COUNCIL_AGENDA_FINISH_MODIFIER_DURATION).
+
+# Two versions, like vanilla's agenda_conquer_nature / _nomads: only one is ever available, depending on
+# whether Gigastructural's supertensiles exist in this game (global flag giga_buildcap_j). Unlocked by adopting
+# the tree (tr_lfg_megaforge_adopt); its unlocks_agenda names the supertensile version; the classic one is offered through its own allow/potential.
+agenda_lfg_great_project = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_megaforge_adopt
+	}
+	potential = {
+		has_paragon_dlc = yes
+		is_nomadic = no
+		has_global_flag = giga_buildcap_j
+	}
+	modifier = {
+		megastructure_build_speed_mult = 0.05
+	}
+	finish_modifier = agenda_lfg_great_project_finish
+}
+
+agenda_lfg_great_project_classic = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_megaforge_adopt
+	}
+	potential = {
+		has_paragon_dlc = yes
+		is_nomadic = no
+		NOT = { has_global_flag = giga_buildcap_j }
+	}
+	modifier = {
+		megastructure_build_speed_mult = 0.05
+	}
+	finish_modifier = agenda_lfg_great_project_classic_finish
+}
+
+agenda_lfg_long_holiday = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_leisure_finish
+	}
+	potential = {
+		has_paragon_dlc = yes
+		is_regular_empire = yes
+	}
+	modifier = {
+		pop_cat_civilian_happiness = 0.05
+	}
+	finish_modifier = agenda_lfg_long_holiday_finish
+}
+
+agenda_lfg_overclock_protocol = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_overclock_finish
+	}
+	potential = {
+		has_paragon_dlc = yes
+		is_machine_empire = yes
+	}
+	modifier = {
+		planet_jobs_complex_drone_produces_mult = 0.03
+	}
+	finish_modifier = agenda_lfg_overclock_protocol_finish
+}
+
+agenda_lfg_eureka_season = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_polymath_finish
+	}
+	potential = {
+		has_paragon_dlc = yes
+	}
+	modifier = {
+		all_technology_research_speed = 0.03
+	}
+	finish_modifier = agenda_lfg_eureka_season_finish
+}
+
+agenda_lfg_harvest_tithe = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_granary_finish
+	}
+	potential = {
+		has_paragon_dlc = yes
+		lfg_main_species_eats_food = yes
+	}
+	modifier = {
+		planet_farmers_produces_mult = 0.05
+	}
+	finish_modifier = agenda_lfg_harvest_tithe_finish
+	effect = {
+		if = {
+			limit = { resource_stockpile_compare = { resource = food value >= 3000 } }
+			add_resource = {
+				food = -3000
+				influence = 150
+				unity = 2000
+			}
+		}
+	}
+}
+
+agenda_lfg_gala_season = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_broadcast_finish
+	}
+	potential = {
+		has_paragon_dlc = yes
+		is_gestalt = no
+	}
+	modifier = {
+		planet_entertainers_produces_mult = 0.05
+	}
+	finish_modifier = agenda_lfg_gala_season_finish
+}
+
+agenda_lfg_grand_tour_season = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_resorts_adopt
+	}
+	potential = {
+		has_paragon_dlc = yes
+		is_regular_empire = yes
+	}
+	modifier = {
+		pop_resort_worker_bonus_workforce_mult = 0.05
+	}
+	finish_modifier = agenda_lfg_grand_tour_season_finish
+}
+
+# Granary Kings (unlocked on adoption). Doubles the Granary Kings finisher's growth bonus while its finish modifier
+# is active (the scaling lives in tr_lfg_granary_finish, keyed on agenda_lfg_feast_of_plenty_finish).
+agenda_lfg_feast_of_plenty = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_granary_adopt
+	}
+	potential = {
+		has_paragon_dlc = yes
+		lfg_main_species_eats_food = yes
+	}
+	modifier = {
+		planet_farmers_produces_mult = 0.05
+	}
+	finish_modifier = agenda_lfg_feast_of_plenty_finish
+}

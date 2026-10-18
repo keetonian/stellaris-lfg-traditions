@@ -1,0 +1,83 @@
+# LFG Traditions - static modifiers.
+
+# Council agenda finish modifiers (10 years after launch).
+# The Great Project, supertensile version (only offered when giga_buildcap_j is set).
+agenda_lfg_great_project_finish = {
+	country_giga_sr_amb_megaconstruction_produces_mult = 0.25
+	megastructure_build_speed_mult = 0.33
+	megastructures_cost_mult = -0.10
+	planet_jobs_worker_produces_mult = -0.10
+}
+
+# The Great Project, classic version (no supertensiles in this game): a bigger cost cut instead.
+agenda_lfg_great_project_classic_finish = {
+	megastructure_build_speed_mult = 0.33
+	megastructures_cost_mult = -0.20
+	planet_jobs_worker_produces_mult = -0.10
+}
+
+agenda_lfg_long_holiday_finish = {
+	pop_happiness = 0.10
+	planet_amenities_mult = 0.15
+	country_unity_produces_mult = 0.10
+	planet_jobs_worker_produces_mult = -0.10
+}
+
+agenda_lfg_overclock_protocol_finish = {
+	planet_jobs_complex_drone_produces_mult = 0.20
+	planet_jobs_simple_drone_produces_mult = -0.10
+	planet_jobs_upkeep_mult = 0.10
+}
+
+agenda_lfg_eureka_season_finish = {
+	all_technology_research_speed = 0.20
+	planet_stability_add = -5
+}
+
+agenda_lfg_harvest_tithe_finish = {
+	country_food_produces_mult = 0.10
+	planet_stability_add = 2
+}
+
+agenda_lfg_gala_season_finish = {
+	pop_happiness = 0.10
+	country_unity_produces_mult = 0.10
+	country_trade_produces_mult = -0.10
+}
+
+# Polymath Commons - Reckless Experimentation: applied to a colony by events/lfg_polymath_events.txt.
+lfg_lab_accident = {
+	planet_stability_add = -10
+	planet_researchers_produces_mult = -0.25
+	icon = "gfx/interface/icons/planet_modifiers/pm_particle_aftermath_modifier.dds"
+	icon_frame = 3
+}
+
+# Polymath Commons - Reckless Experimentation: the good outcome (events/lfg_polymath_events.txt).
+lfg_lab_breakthrough = {
+	planet_stability_add = 5
+	planet_researchers_produces_mult = 0.25
+	icon = "gfx/interface/icons/planet_modifiers/pm_particle_aftermath_modifier.dds"
+	icon_frame = 1
+}
+
+# The Grand Tour agenda (10 years after launch).
+agenda_lfg_grand_tour_season_finish = {
+	pop_happiness = 0.10
+	country_trade_produces_mult = 0.15
+	pop_resort_worker_bonus_workforce_mult = 0.25
+	planet_jobs_worker_produces_mult = -0.05
+}
+
+# The Grand Tour - Expand the Resort decision: applied to the resort world with multiplier = number of expansions.
+lfg_resort_expansion = {
+	planet_max_districts_add = 2
+	icon = "gfx/interface/icons/planet_modifiers/pm_resort_planet.dds"
+	icon_frame = 1
+}
+
+# Feast of Plenty agenda (10 years): doubles the Granary Kings finisher's growth bonus (in tr_lfg_granary_finish).
+agenda_lfg_feast_of_plenty_finish = {
+	custom_tooltip = agenda_lfg_feast_of_plenty_finish_tt
+}
+

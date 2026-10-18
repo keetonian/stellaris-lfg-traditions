@@ -1,0 +1,7 @@
+﻿l_english:
+ decision_lfg_expand_resort:0 "Expand the Resort"
+ decision_lfg_expand_resort_desc:0 "New wings, new islands, new attractions. Push the resort world past the limits its designation imposes.\nEach expansion costs §Y100§! £influence£ Influence, and §Y500§! £alloys£ Alloys, §Y500§! £minerals£ Minerals and §Y1,000§! £unity£ Unity more than the last."
+ lfg_decision_expand_resort_effect_tt:0 "This planet gains §G+2§! max districts (stacks up to §Y5§! times)."
+ lfg_decision_expand_resort_maxed:0 "$TRIGGER_FAIL$The resort has already been expanded §Y5§! times"
+ lfg_resort_expansion:0 "Resort Expansions"
+ lfg_resort_expansion_desc:0 "This resort world has been expanded beyond its original limits."

@@ -1,0 +1,20 @@
+# LFG Traditions - species split (Evolutionary Predators edict).
+
+# Scope: species, with prev = the owning country (as inside any_/random_/count_owned_species from a country).
+# True when this isn't the country's main species or any subspecies of it, and the country owns at least
+# @lfg_species_split_min_pops pops (raw population) of exactly this species.
+lfg_species_split_eligible = {
+	is_sapient = yes
+	is_robotic_species = no
+	NOR = {
+		is_exact_same_species = prev.owner_species
+		is_subspecies = prev.owner_species
+		is_same_species = prev.owner_species
+	}
+	prev = {
+		count_owned_pop_amount = {
+			limit = { is_exact_same_species = prevprev }
+			count >= @lfg_species_split_min_pops
+		}
+	}
+}

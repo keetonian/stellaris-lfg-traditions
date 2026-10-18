@@ -30,11 +30,77 @@ SYNTH_FERTILITY_BLOCK = """\t\tmodifier = {
 \t\t}
 """
 
+RESORT_DISTRICT_BLOCK = """\ttriggered_planet_modifier = {
+\t\tpotential = {
+\t\t\texists = owner
+\t\t\towner = {
+\t\t\t\tis_regular_empire = yes
+\t\t\t\thas_active_tradition = tr_lfg_resorts_hospitality_academies
+\t\t\t}
+\t\t}
+\t\tmodifier = {
+\t\t\tjob_resort_worker_add = @lfg_resort_extra_district_jobs
+\t\t}
+\t}
+\ttriggered_planet_modifier = {
+\t\tpotential = {
+\t\t\texists = owner
+\t\t\towner = {
+\t\t\t\tis_regular_empire = yes
+\t\t\t\thas_active_tradition = tr_lfg_resorts_wonders_of_the_galaxy
+\t\t\t}
+\t\t}
+\t\tmodifier = {
+\t\t\tplanet_max_districts_add = @lfg_resort_districts_per_district
+\t\t}
+\t}
+"""
+
+def holomuseum_block(research: str) -> str:
+    """Galactic Broadcast - Holo-Museums: the museum's regular-empire entertainer bonuses again (not its upkeep),
+    like vanilla's Archaeoengineers block in the same building."""
+    return f"""\ttriggered_planet_modifier = {{
+\t\tpotential = {{
+\t\t\texists = owner
+\t\t\towner = {{
+\t\t\t\tis_regular_empire = yes
+\t\t\t\thas_active_tradition = tr_lfg_broadcast_holo_museums
+\t\t\t}}
+\t\t}}
+\t\tplanet_entertainers_unity_produces_add = 0.25
+\t\tplanet_entertainers_{research}_research_produces_add = 0.25
+\t}}
+"""
+
+
+def holomuseum_anchor(research: str) -> str:
+    """The building's regular-empire block granting entertainer unity, research and consumer goods upkeep."""
+    return (r"^\ttriggered_planet_modifier = \{\n\t\tpotential = \{\n\t\t\texists = owner\n\t\t\towner = \{\n"
+            r"\t\t\t\tis_regular_empire = yes\n\t\t\t\}\n\t\t\}\n"
+            r"\t\tplanet_entertainers_unity_produces_add = 0\.25\n"
+            rf"\t\tplanet_entertainers_{research}_research_produces_add = 0\.25\n"
+            r"\t\tplanet_entertainers_consumer_goods_upkeep_add = 0\.25\n\t\}\n")
+
+
+HOLOMUSEUMS = "common/buildings/21_grand_archive_buildings.txt"
+
 # out file -> list of (vanilla source file, top-level key, anchor regex, snippet inserted after the anchor)
 OVERRIDES = {
     "mod/common/ascension_perks/zz_lfg_ascension_path_overrides.txt": [
         ("common/ascension_perks/00_ascension_paths.txt", "ap_the_flesh_is_weak", r"^\tpossible = \{\n", FLESH_BLOCK),
         ("common/ascension_perks/00_ascension_paths.txt", "ap_synthetic_evolution", r"^\tpossible = \{\n", FLESH_BLOCK),
+    ],
+    "mod/common/districts/zz_lfg_district_overrides.txt": [
+        # Accommodation District: the regular-empire block that grants its resort workers, then our extra block.
+        ("common/districts/00_urban_districts.txt", "district_resort",
+         r"^\ttriggered_planet_modifier = \{\n\t\tpotential = \{\n\t\t\texists = owner\n\t\t\towner = \{\n"
+         r"\t\t\t\tis_regular_empire = yes\n\t\t\t\}\n\t\t\}\n\t\tmodifier = \{\n"
+         r"\t\t\tjob_resort_worker_add = @special_district_jobs\n\t\t\}\n\t\}\n", RESORT_DISTRICT_BLOCK),
+    ],
+    "mod/common/buildings/zz_lfg_building_overrides.txt": [
+        (HOLOMUSEUMS, "xeno_geology_holomuseum", holomuseum_anchor("engineering"), holomuseum_block("engineering")),
+        (HOLOMUSEUMS, "aesthetic_wonders_holomuseum", holomuseum_anchor("physics"), holomuseum_block("physics")),
+        (HOLOMUSEUMS, "galactic_history_holomuseum", holomuseum_anchor("society"), holomuseum_block("society")),
     ],
     "mod/common/situations/zz_lfg_situation_overrides.txt": [
         ("common/situations/08_machine_age_situations.txt", "situation_synthetic_fertility_digitization",
@@ -100,7 +166,8 @@ def generate(game: Path) -> dict[str, str]:
             if len(hits) != 1:
                 raise GenError(f"{key}: anchor {anchor!r} matched {len(hits)} times in {src} (expected 1)")
             cut = hits[0].end()
-            marked = "\t\t# LFG: added by stellaris-lfg-traditions\n" + snippet
+            indent = re.match(r"\t*", snippet).group(0)
+            marked = f"{indent}# LFG: added by stellaris-lfg-traditions\n" + snippet
             parts.append(f"\n# from {src}\n" + block[:cut] + marked + block[cut:])
         out[out_path] = "".join(parts)
     return out

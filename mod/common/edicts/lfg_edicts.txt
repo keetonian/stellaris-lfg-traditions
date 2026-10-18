@@ -1,0 +1,32 @@
+# LFG Traditions - edicts.
+
+# Species Experimentation (Evolutionary Predators, after finishing the vanilla Mutation tradition tree):
+# half of one species dies, the rest is split into 50 random-trait subspecies (see events/lfg_species_split_events.txt).
+# Activating it opens a picker event; the chosen option applies @lfg_species_split_society_research_change society research.
+# Localisation keys are edict_<key> / edict_<key>_desc, like vanilla edicts.
+lfg_species_experimentation = {
+	length = 30
+	icon = "GFX_edict_type_policy"
+	resources = {
+		category = edicts
+	}
+	potential = {
+		has_origin = origin_evolutionary_predators
+		has_tradition = tr_mutation_finish
+	}
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_species_experimentation_no_species
+			any_owned_species = { lfg_species_split_eligible = yes }
+		}
+	}
+	effect = {
+		custom_tooltip = lfg_species_experimentation_effect_tt
+		hidden_effect = {
+			country_event = { id = lfg_species_split.1 }
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}

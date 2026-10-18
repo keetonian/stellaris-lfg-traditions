@@ -1,0 +1,11 @@
+# LFG Traditions - general scripted triggers.
+
+# Scope: country. The empire's main species is a food-eating (organic) species: vanilla gives food upkeep through the
+# hidden trait_organic (biological species; phototrophic ones still eat, just less), see
+# common/traits/02_species_traits_basic_characteristics.txt. Voidlings count too (by design). Lithoids eat minerals;
+# machines and robots don't eat.
+lfg_main_species_eats_food = {
+	owner_species = {
+		has_trait = trait_organic
+	}
+}

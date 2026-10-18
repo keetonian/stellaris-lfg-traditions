@@ -1,0 +1,51 @@
+# LFG Traditions - planet decisions.
+
+# The Grand Tour - Wonders of the Galaxy: expand the resort world (an empire can only have one).
+# Each use adds +2 max districts on the planet (lfg_resort_expansion, stacked via a planet variable), up to
+# @lfg_resort_expansions_max times. Cost: (500 alloys + 500 minerals + 1000 unity) x (expansions made + 1), i.e.
+# +500 / +500 / +1000 per previous expansion (value:lfg_resort_expansion_cost_mult), plus a flat 100 influence.
+decision_lfg_expand_resort = {
+	owned_planets_only = yes
+	enactment_time = 360
+	icon = decision_resort_colony
+	resources = {
+		category = decisions
+		cost = {
+			alloys = 500
+			minerals = 500
+			unity = 1000
+			multiplier = value:lfg_resort_expansion_cost_mult
+		}
+		cost = {
+			influence = 100
+		}
+	}
+	potential = {
+		has_modifier = resort_colony
+		owner = { has_tradition = tr_lfg_resorts_wonders_of_the_galaxy }
+	}
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_decision_expand_resort_maxed
+			NOT = { check_variable = { which = lfg_resort_expansions value >= @lfg_resort_expansions_max } }
+		}
+	}
+	effect = {
+		custom_tooltip = lfg_decision_expand_resort_effect_tt
+		hidden_effect = {
+			if = {
+				limit = { NOT = { is_variable_set = lfg_resort_expansions } }
+				set_variable = { which = lfg_resort_expansions value = 0 }
+			}
+			change_variable = { which = lfg_resort_expansions value = 1 }
+			remove_modifier = lfg_resort_expansion
+			add_modifier = {
+				modifier = lfg_resort_expansion
+				multiplier = lfg_resort_expansions
+			}
+		}
+	}
+	ai_weight = {
+		weight = 10
+	}
+}

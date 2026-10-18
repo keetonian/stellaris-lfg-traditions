@@ -56,7 +56,7 @@ tradition_lfg_leisure = {
 		"tr_lfg_leisure_markets"
 		"tr_lfg_leisure_shorter_shifts"
 		"tr_lfg_leisure_citizen_dividend"
-		"tr_lfg_leisure_amenity_culture"
+		"tr_lfg_leisure_idle_rich"
 	}
 	ai_weight = {
 		factor = 5
@@ -85,15 +85,11 @@ tradition_lfg_leisure = {
 	}
 }
 
-# Domestic robots that serve organics. Companion tree for the Pampered Masters civic.
-# Not for machine, synthetic or cybernetic empires.
+# Domestic robots that serve organics. Only for empires with the Pampered Masters civic.
 tradition_lfg_attendants = {
 	desc = tradition_lfg_attendants_desc
 	potential = {
-		is_regular_empire = yes
-		is_individual_machine = no
-		is_synthetic_empire = no
-		has_cybernetic_ascension = no
+		has_valid_civic = civic_lfg_pampered_masters
 	}
 	tree_template = "tree_21_11"
 	adoption_bonus = "tr_lfg_attendants_adopt"
@@ -106,18 +102,7 @@ tradition_lfg_attendants = {
 		"tr_lfg_attendants_household_ai"
 	}
 	ai_weight = {
-		factor = 3
-		modifier = {
-			factor = 10
-			has_valid_civic = civic_lfg_pampered_masters
-		}
-		modifier = {
-			factor = 2
-			OR = {
-				has_ethic = ethic_materialist
-				has_ethic = ethic_fanatic_materialist
-			}
-		}
+		factor = 30
 		modifier = {
 			factor = @ap_pending_tradition_suppress
 			has_ap_pending = yes
@@ -197,24 +182,135 @@ tradition_lfg_shellworlders = {
 	}
 }
 
-# A star-powered economy: Dyson swarms and spheres over farms and mines. Base game.
-tradition_lfg_stellar_harvest = {
-	desc = tradition_lfg_stellar_harvest_desc
+# Research from everyone: civilians do science, diversity and rivalry drive it, and it's a little dangerous.
+tradition_lfg_polymath = {
+	desc = tradition_lfg_polymath_desc
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_polymath_adopt"
+	finish_bonus = "tr_lfg_polymath_finish"
+	traditions = {
+		"tr_lfg_polymath_many_minds"
+		"tr_lfg_polymath_rival_laboratories"
+		"tr_lfg_polymath_open_journals"
+		"tr_lfg_polymath_reckless_experimentation"
+		"tr_lfg_polymath_interdisciplinary_seminars"
+	}
+	ai_weight = {
+		factor = 5
+		modifier = {
+			factor = 3
+			OR = {
+				has_ethic = ethic_materialist
+				has_ethic = ethic_fanatic_materialist
+			}
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
+
+# The food stockpile as political power. Only for empires whose main species eats food (lfg_main_species_eats_food).
+tradition_lfg_granary = {
+	desc = {
+		trigger = { is_hive_empire = no }
+		text = tradition_lfg_granary_desc
+	}
+	desc = {
+		trigger = { is_hive_empire = yes }
+		text = tradition_lfg_granary_hive_desc
+	}
 	potential = {
-		is_nomadic = no
+		lfg_main_species_eats_food = yes
 	}
 	tree_template = "tree_21_11"
-	adoption_bonus = "tr_lfg_stellar_harvest_adopt"
-	finish_bonus = "tr_lfg_stellar_harvest_finish"
+	adoption_bonus = "tr_lfg_granary_adopt"
+	finish_bonus = "tr_lfg_granary_finish"
 	traditions = {
-		"tr_lfg_stellar_harvest_collector_arrays"
-		"tr_lfg_stellar_harvest_photonic_agriculture"
-		"tr_lfg_stellar_harvest_star_lifting"
-		"tr_lfg_stellar_harvest_energy_credits"
-		"tr_lfg_stellar_harvest_stellar_priority"
+		"tr_lfg_granary_tithe_barns"
+		"tr_lfg_granary_seed_vaults"
+		"tr_lfg_granary_bountiful_fields"
+		"tr_lfg_granary_grain_reserves"
+		"tr_lfg_granary_harvest_courts"
 	}
 	ai_weight = {
 		factor = 4
+		modifier = {
+			factor = 2
+			OR = {
+				has_origin = origin_evolutionary_predators
+				has_valid_civic = civic_agrarian_idyll
+			}
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
+
+# Entertainment exported to the whole galaxy: scales with contacts and rivals. Regular empires only (entertainers).
+tradition_lfg_broadcast = {
+	desc = tradition_lfg_broadcast_desc
+	potential = {
+		is_gestalt = no
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_broadcast_adopt"
+	finish_bonus = "tr_lfg_broadcast_finish"
+	traditions = {
+		"tr_lfg_broadcast_holo_museums"
+		"tr_lfg_broadcast_celebrity_council"
+		"tr_lfg_broadcast_propaganda_serials"
+		"tr_lfg_broadcast_ratings_war"
+		"tr_lfg_broadcast_syndication_deals"
+	}
+	ai_weight = {
+		factor = 4
+		modifier = {
+			factor = 3
+			OR = {
+				has_valid_civic = civic_pleasure_seekers
+				has_valid_civic = civic_corporate_hedonism
+			}
+		}
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}
+
+# Resort worlds as the empire's showpieces. Regular empires only (resort colonies and resort workers are non-gestalt).
+tradition_lfg_resorts = {
+	desc = tradition_lfg_resorts_desc
+	potential = {
+		is_regular_empire = yes
+	}
+	tree_template = "tree_21_11"
+	adoption_bonus = "tr_lfg_resorts_adopt"
+	finish_bonus = "tr_lfg_resorts_finish"
+	traditions = {
+		"tr_lfg_resorts_hospitality_academies"
+		"tr_lfg_resorts_package_holidays"
+		"tr_lfg_resorts_wonders_of_the_galaxy"
+		"tr_lfg_resorts_tourist_traps"
+		"tr_lfg_resorts_galactic_destination"
+	}
+	ai_weight = {
+		factor = 3
+		modifier = {
+			factor = 3
+			any_owned_planet = { has_modifier = resort_colony }
+		}
+		modifier = {
+			factor = 2
+			OR = {
+				has_valid_civic = civic_pleasure_seekers
+				has_valid_civic = civic_corporate_hedonism
+			}
+		}
 		modifier = {
 			factor = @ap_pending_tradition_suppress
 			has_ap_pending = yes

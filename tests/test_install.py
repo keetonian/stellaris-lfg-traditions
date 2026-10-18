@@ -27,7 +27,7 @@ class InstallTests(unittest.TestCase):
     def test_dev_install_is_labelled_and_unlinked(self):
         launcher, installed = self.install()
         for text in (launcher, installed):
-            self.assertIn(f'name="{self.name} [LOCAL DEV]"', text)
+            self.assertIn(f'name="[LOCAL DEV] {self.name}"', text)
             self.assertNotIn("remote_file_id=", text)
         self.assertIn(f'path="{self.mods / "lfg_traditions"}"', launcher)
         self.assertEqual((self.mods / "lfg_traditions/common/traditions/lfg_traditions.txt").read_bytes(),

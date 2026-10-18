@@ -1,0 +1,31 @@
+# LFG Traditions - species traits.
+
+# Inherited Genius: an Evolutionary Predators-only mutation. Not pickable at species creation or through gene modding
+# (species_potential_add = always no); the origin's random trait events (vanilla add_random_trait_evopred, which
+# picks a random trait tagged { <category> organic positive }) can grant it under the pop_output category.
+# Tagged lfg_predator_only so Species Experimentation's random trait filter skips it.
+trait_lfg_inherited_genius = {
+	cost = 2
+	icon = "gfx/interface/icons/traits/trait_erudite.dds"
+	initial = no
+	randomized = no
+	species_potential_add = {
+		always = no
+	}
+	species_possible_merge_add = {
+		always = no
+	}
+	allowed_archetypes = { BIOLOGICAL }
+	tags = { organic positive pop_output lfg_predator_only }
+	resources = {
+		category = planet_pops_traits
+		produces = {
+			trigger = {
+				is_slave_or_better = yes
+			}
+			physics_research = 0.3
+			society_research = 0.3
+			engineering_research = 0.3
+		}
+	}
+}

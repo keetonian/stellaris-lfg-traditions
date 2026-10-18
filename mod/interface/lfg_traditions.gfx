@@ -21,7 +21,7 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_leisure_markets" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_commercial_enterprise.dds" }
 	spriteType = { name = "GFX_tr_lfg_leisure_shorter_shifts" textureFile = "gfx/interface/icons/traditions/tradition_harmony_utopian_dream.dds" }
 	spriteType = { name = "GFX_tr_lfg_leisure_citizen_dividend" textureFile = "gfx/interface/icons/traditions/tradition_politics_gravitas.dds" }
-	spriteType = { name = "GFX_tr_lfg_leisure_amenity_culture" textureFile = "gfx/interface/icons/traditions/tradition_harmony_kinship.dds" }
+	spriteType = { name = "GFX_tr_lfg_leisure_idle_rich" textureFile = "gfx/interface/icons/traditions/tradition_harmony_kinship.dds" }
 
 	### ATTENDANTS ###
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_attendants" textureFile = "gfx/interface/traditions/tradition_hex_bg_blue.dds" }
@@ -56,14 +56,47 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_shellworlders_closed_ecology" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_adaptive_ecology.dds" }
 	spriteType = { name = "GFX_tr_lfg_shellworlders_ring_cities" textureFile = "gfx/interface/icons/traditions/tradition_expansion_a_new_life.dds" }
 
-	### STELLAR_HARVEST ###
-	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_stellar_harvest" textureFile = "gfx/interface/traditions/tradition_hex_bg_red.dds" }
-	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_stellar_harvest" textureFile = "gfx/interface/tiles/tradition_category_tile_prosperity.dds" }
-	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_stellar_harvest" textureFile = "gfx/interface/tiles/tradition_category_tile_prosperity.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
-	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_stellar_harvest" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_prosperity.dds" }
-	spriteType = { name = "GFX_tr_lfg_stellar_harvest_collector_arrays" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_efficiency_algorithms.dds" }
-	spriteType = { name = "GFX_tr_lfg_stellar_harvest_photonic_agriculture" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_dietary_enrichment.dds" }
-	spriteType = { name = "GFX_tr_lfg_stellar_harvest_star_lifting" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_peak_performance.dds" }
-	spriteType = { name = "GFX_tr_lfg_stellar_harvest_energy_credits" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_trickle_up_economics.dds" }
-	spriteType = { name = "GFX_tr_lfg_stellar_harvest_stellar_priority" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_sct.dds" }
+	### POLYMATH ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_polymath" textureFile = "gfx/interface/traditions/tradition_hex_bg_purple.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_polymath" textureFile = "gfx/interface/tiles/tradition_category_tile_discovery.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_polymath" textureFile = "gfx/interface/tiles/tradition_category_tile_discovery.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_polymath" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_discovery.dds" }
+	spriteType = { name = "GFX_tr_lfg_polymath_many_minds" textureFile = "gfx/interface/icons/traditions/tradition_aptitude_psychological_profiling.dds" }
+	spriteType = { name = "GFX_tr_lfg_polymath_rival_laboratories" textureFile = "gfx/interface/icons/traditions/tradition_enmity_outpace.dds" }
+	spriteType = { name = "GFX_tr_lfg_polymath_open_journals" textureFile = "gfx/interface/icons/traditions/tradition_discovery_polytechnic_education.dds" }
+	spriteType = { name = "GFX_tr_lfg_polymath_reckless_experimentation" textureFile = "gfx/interface/icons/traditions/tradition_discovery_science_division.dds" }
+	spriteType = { name = "GFX_tr_lfg_polymath_interdisciplinary_seminars" textureFile = "gfx/interface/icons/traditions/tradition_aptitude_specialist_training.dds" }
+
+	### GRANARY ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_granary" textureFile = "gfx/interface/traditions/tradition_hex_bg_prosperity.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_granary" textureFile = "gfx/interface/tiles/tradition_category_tile_prosperity.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_granary" textureFile = "gfx/interface/tiles/tradition_category_tile_prosperity.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_granary" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_prosperity.dds" }
+	spriteType = { name = "GFX_tr_lfg_granary_tithe_barns" textureFile = "gfx/interface/icons/traditions/tradition_domestication_metabolic_regulation.dds" }
+	spriteType = { name = "GFX_tr_lfg_granary_seed_vaults" textureFile = "gfx/interface/icons/traditions/tradition_cloning_genomic_growth.dds" }
+	spriteType = { name = "GFX_tr_lfg_granary_bountiful_fields" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_dietary_enrichment.dds" }
+	spriteType = { name = "GFX_tr_lfg_granary_grain_reserves" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_insider_trading.dds" }
+	spriteType = { name = "GFX_tr_lfg_granary_harvest_courts" textureFile = "gfx/interface/icons/traditions/tradition_politics_persistent_petitioners.dds" }
+
+	### BROADCAST ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_broadcast" textureFile = "gfx/interface/traditions/tradition_hex_bg_mercantile.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_broadcast" textureFile = "gfx/interface/tiles/tradition_category_tile_mercantile.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_broadcast" textureFile = "gfx/interface/tiles/tradition_category_tile_mercantile.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_broadcast" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_mercantile.dds" }
+	spriteType = { name = "GFX_tr_lfg_broadcast_holo_museums" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_marketplace_of_better_ideas.dds" }
+	spriteType = { name = "GFX_tr_lfg_broadcast_celebrity_council" textureFile = "gfx/interface/icons/traditions/tradition_aptitude_champions_of_the_empire.dds" }
+	spriteType = { name = "GFX_tr_lfg_broadcast_propaganda_serials" textureFile = "gfx/interface/icons/traditions/tradition_politics_quid_pro_quo.dds" }
+	spriteType = { name = "GFX_tr_lfg_broadcast_ratings_war" textureFile = "gfx/interface/icons/traditions/tradition_enmity_match.dds" }
+	spriteType = { name = "GFX_tr_lfg_broadcast_syndication_deals" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_commercial_enterprise.dds" }
+
+	### RESORTS ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_resorts" textureFile = "gfx/interface/traditions/tradition_hex_bg_versatility.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_resorts" textureFile = "gfx/interface/tiles/tradition_category_tile_versatility.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_resorts" textureFile = "gfx/interface/tiles/tradition_category_tile_versatility.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_resorts" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_versatility.dds" }
+	spriteType = { name = "GFX_tr_lfg_resorts_hospitality_academies" textureFile = "gfx/interface/icons/traditions/tradition_aptitude_healthcare_program.dds" }
+	spriteType = { name = "GFX_tr_lfg_resorts_package_holidays" textureFile = "gfx/interface/icons/traditions/tradition_expansion_courier_network.dds" }
+	spriteType = { name = "GFX_tr_lfg_resorts_wonders_of_the_galaxy" textureFile = "gfx/interface/icons/traditions/tradition_domestication_astrozoology.dds" }
+	spriteType = { name = "GFX_tr_lfg_resorts_tourist_traps" textureFile = "gfx/interface/icons/traditions/tradition_mercantile_adaptive_economic_policies.dds" }
+	spriteType = { name = "GFX_tr_lfg_resorts_galactic_destination" textureFile = "gfx/interface/icons/traditions/tradition_diplomacy_eminent_diplomats.dds" }
 }

@@ -1,12 +1,20 @@
 # LFG Traditions - traditions. Layout per tree (tree_21_11): slot 4 requires slots 1 + 2, slot 5 requires slot 3.
+#
+# Every tree has a "hook": bonuses that scale with or depend on the game state (stockpiles, rivals, contacts,
+# species, megastructures, artificial worlds, robot share, age of the empire, war/peace), so they change how you play.
+# Scaling bonuses use `triggered_modifier = { ... mult = value:<script value> }` (common/script_values) and are explained
+# with a custom_tooltip, because the game can't show the live multiplier. Most finishers also unlock a council agenda
+# (common/council_agendas/lfg_council_agendas.txt).
+#
 # Supertensile modifiers only apply when Gigastructural's job-based build mode is active (global flag giga_buildcap_j);
 # otherwise the matching `NOT = { has_global_flag = giga_buildcap_j }` block gives a plain megastructure fallback.
 
 #####################################################################
-# MEGAFORGE DOCTRINE
+# MEGAFORGE DOCTRINE - hook: grows with the number of megastructures you own; adopting unlocks agenda "The Great Project"
 #####################################################################
 
 tr_lfg_megaforge_adopt = {
+	unlocks_agenda = agenda_lfg_great_project
 	possible = {
 		OR = {
 			has_technology = giga_tech_amb_supertensiles
@@ -15,8 +23,6 @@ tr_lfg_megaforge_adopt = {
 	}
 	modifier = {
 		megastructure_build_speed_mult = 0.10
-		country_minerals_produces_mult = -0.05
-		country_energy_produces_mult = -0.05
 	}
 	triggered_modifier = {
 		potential = { has_global_flag = giga_buildcap_j }
@@ -28,86 +34,113 @@ tr_lfg_megaforge_adopt = {
 	}
 }
 
+# country_megastructure_build_cap_add does double duty: with supertensiles off it's the vanilla
+# "megastructures under construction at once" limit; with supertensiles on, Giga copies it into the
+# Megaconstruction Logistics Hub limit (giga_amb_cap, giga_alternate_mega_build_effects.txt).
 tr_lfg_megaforge_finish = {
 	modifier = {
 		ascension_perks_add = 1
-		megastructure_build_speed_mult = 0.10
+		country_megastructure_build_cap_add = 1
 	}
 }
 
 tr_lfg_megaforge_guilds = {
-	modifier = {
-		planet_jobs_worker_produces_mult = -0.05
-	}
 	triggered_modifier = {
 		potential = { has_global_flag = giga_buildcap_j }
 		planet_giga_megaengineers_produces_mult = 0.15
-		planet_giga_megaengineers_upkeep_mult = -0.10
+		planet_giga_megaengineers_upkeep_mult = 0.15
 	}
 	triggered_modifier = {
 		potential = { NOT = { has_global_flag = giga_buildcap_j } }
-		megastructures_cost_mult = -0.05
+		megastructure_build_speed_mult = 0.15
 	}
 	ai_weight = { factor = 1000 }
 }
 
 tr_lfg_megaforge_lattices = {
-	modifier = {
-		country_trade_produces_mult = -0.05
-	}
 	triggered_modifier = {
 		potential = { has_global_flag = giga_buildcap_j }
 		megastructures_giga_sr_amb_megaconstruction_upkeep_mult = -0.20
-		country_resource_max_giga_sr_amb_megaconstruction_add = 1000
+		country_resource_max_giga_sr_amb_megaconstruction_add = 10000
 	}
 	triggered_modifier = {
 		potential = { NOT = { has_global_flag = giga_buildcap_j } }
-		megastructures_upkeep_mult = -0.10
+		megastructures_upkeep_mult = -0.15
+		country_resource_max_add = 100000
 	}
 	ai_weight = { factor = 1000 }
 }
 
+# Infrastructure (buildings and districts) costs 30% more but builds 20% faster: planet_building_build_speed_mult is
+# vanilla's "Infrastructure Build Speed", the same modifier Prosperity's Public Works uses.
 tr_lfg_megaforge_priority = {
 	modifier = {
-		megastructure_build_speed_mult = 0.15
-		planet_structures_cost_mult = 0.10
-		planet_building_build_speed_mult = -0.10
+		megastructure_build_speed_mult = 0.20
+		planet_structures_cost_mult = 0.30
+		planet_building_build_speed_mult = 0.20
 	}
 	ai_weight = { factor = 1000 }
 }
 
+# Per-job supertensile output (4.x jobs are per 100 pops). Giga's job categories also cover the drone versions
+# (Supertensiles Drone, Megaconstruction Overseer). The Overlord Supertensiles Engineer is a holding job whose
+# category generates no modifiers, so it can't be targeted on its own.
 tr_lfg_megaforge_foundries = {
 	possible = {
 		has_tradition = tr_lfg_megaforge_guilds
 		has_tradition = tr_lfg_megaforge_lattices
 	}
 	modifier = {
-		country_minerals_produces_mult = -0.05
+		country_minerals_produces_mult = -0.10
 	}
+	# Extra output costs alloys at each job's own rate: Technician 4 alloys : 1 supertensile, Director 10 : 5.
 	triggered_modifier = {
 		potential = { has_global_flag = giga_buildcap_j }
-		country_giga_sr_amb_megaconstruction_produces_mult = 0.15
+		planet_giga_megaengineers_job_giga_sr_amb_megaconstruction_produces_add = 0.25
+		planet_giga_megaengineers_job_alloys_upkeep_add = 1
+		planet_giga_megaengineering_overseers_giga_sr_amb_megaconstruction_produces_add = 1.5
+		planet_giga_megaengineering_overseers_alloys_upkeep_add = 3
 	}
 	triggered_modifier = {
 		potential = { NOT = { has_global_flag = giga_buildcap_j } }
 		megastructures_cost_mult = -0.10
+		country_alloys_produces_mult = -0.05
 	}
 	ai_weight = { factor = 1000 }
 }
 
+# Hook: scales with every megastructure we own (value:lfg_num_megastructures, no cap). Adopting this unlocks the
+# lfg_monument_economy policy (common/policies), whose flag picks the direction:
+#   Balanced (default): nothing
+#   Monuments First: +1% megastructure output, -0.5% job output per megastructure
+#   People First:             +0.5% job output, -1% megastructure output per megastructure
+# Plus +10 supertensiles/month (Giga names the modifier "Monthly Supertensile Materials").
 tr_lfg_megaforge_monuments = {
 	possible = {
 		has_tradition = tr_lfg_megaforge_priority
 	}
+	custom_tooltip = tr_lfg_megaforge_monuments_tt
 	modifier = {
-		megastructures_produces_mult = 0.10
-		country_energy_produces_mult = -0.05
+		country_base_giga_sr_amb_megaconstruction_produces_add = 10
 	}
+	triggered_modifier = {
+		potential = { has_policy_flag = lfg_monuments_first }
+		megastructures_produces_mult = 0.01
+		planet_jobs_produces_mult = -0.005
+		mult = value:lfg_num_megastructures
+	}
+	triggered_modifier = {
+		potential = { has_policy_flag = lfg_people_first }
+		planet_jobs_produces_mult = 0.005
+		megastructures_produces_mult = -0.01
+		mult = value:lfg_num_megastructures
+	}
+
 	ai_weight = { factor = 1000 }
 }
 
 #####################################################################
-# LEISURE SOCIETY
+# LEISURE SOCIETY - hook: rewards a large civilian class; agenda "The Long Holiday"
 #####################################################################
 
 tr_lfg_leisure_adopt = {
@@ -118,10 +151,17 @@ tr_lfg_leisure_adopt = {
 	}
 }
 
+# Citizen science: the leisured civilians do a little research (the civilian job's own output, per 100 civilians).
+# Organic pop upkeep +25%. (Leisure Society is regular-empire only, so no gestalt check is needed.)
 tr_lfg_leisure_finish = {
+	unlocks_agenda = agenda_lfg_long_holiday
+	custom_tooltip = tr_lfg_leisure_finish_tt
 	modifier = {
 		ascension_perks_add = 1
-		planet_civilians_unity_produces_add = 0.25
+		planet_civilians_physics_research_produces_add = 0.1
+		planet_civilians_society_research_produces_add = 0.1
+		planet_civilians_engineering_research_produces_add = 0.1
+		planet_pops_organics_upkeep_mult = 0.25
 	}
 }
 
@@ -159,19 +199,33 @@ tr_lfg_leisure_citizen_dividend = {
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_leisure_amenity_culture = {
+# Hook: the bigger the civilian share of the population, the stronger the leisure economy (10% / 20% / 30%).
+tr_lfg_leisure_idle_rich = {
 	possible = {
 		has_tradition = tr_lfg_leisure_shorter_shifts
 	}
-	modifier = {
-		planet_amenities_mult = 0.10
-		pop_category_workers_consumer_goods_upkeep_add = 0.05
+	custom_tooltip = tr_lfg_leisure_idle_rich_tt
+	triggered_modifier = {
+		potential = { pop_amount_percentage = { percentage >= 0.10 limit = { is_pop_category = civilian } } }
+		country_unity_produces_mult = 0.05
+		country_trade_produces_mult = 0.05
+	}
+	triggered_modifier = {
+		potential = { pop_amount_percentage = { percentage >= 0.20 limit = { is_pop_category = civilian } } }
+		country_unity_produces_mult = 0.05
+		country_trade_produces_mult = 0.05
+	}
+	triggered_modifier = {
+		potential = { pop_amount_percentage = { percentage >= 0.30 limit = { is_pop_category = civilian } } }
+		country_unity_produces_mult = 0.05
+		country_trade_produces_mult = 0.05
+		planet_jobs_worker_produces_mult = -0.05
 	}
 	ai_weight = { factor = 1000 }
 }
 
 #####################################################################
-# ATTENDANT ROBOTICS
+# ATTENDANT ROBOTICS (Pampered Masters only) - hook: robots are strong only while they are rare
 #####################################################################
 
 tr_lfg_attendants_adopt = {
@@ -184,14 +238,14 @@ tr_lfg_attendants_adopt = {
 	}
 }
 
+# Doubles the Pampered Masters civic's pampering (its biological happiness, organic amenity usage and servant
+# workforce bonuses apply again). Keep in sync with civic_lfg_pampered_masters.
 tr_lfg_attendants_finish = {
 	modifier = {
 		ascension_perks_add = 1
-		robotic_pop_bonus_workforce_mult = 0.05
-	}
-	triggered_modifier = {
-		potential = { has_valid_civic = civic_lfg_pampered_masters }
-		organic_pop_bonus_workforce_mult = 0.10
+		biological_pop_happiness = 0.10
+		pop_amenities_usage_organic_mult = -0.20
+		pop_servant_bonus_workforce_mult = 0.25
 	}
 }
 
@@ -203,10 +257,19 @@ tr_lfg_attendants_domestic_protocols = {
 	ai_weight = { factor = 1000 }
 }
 
+# Hook: robots under 15% of the population work much harder; over 35%, the craftsmanship slips.
 tr_lfg_attendants_quality_over_quantity = {
+	custom_tooltip = tr_lfg_attendants_quality_over_quantity_tt
 	modifier = {
-		robotic_pop_bonus_workforce_mult = 0.10
 		planet_pop_assembly_mult = -0.10
+	}
+	triggered_modifier = {
+		potential = { pop_amount_percentage = { percentage < 0.15 limit = { is_robot_pop_group = yes } } }
+		robotic_pop_bonus_workforce_mult = 0.20
+	}
+	triggered_modifier = {
+		potential = { pop_amount_percentage = { percentage > 0.35 limit = { is_robot_pop_group = yes } } }
+		robotic_pop_bonus_workforce_mult = -0.10
 	}
 	ai_weight = { factor = 1000 }
 }
@@ -225,11 +288,7 @@ tr_lfg_attendants_personal_valets = {
 		has_tradition = tr_lfg_attendants_quality_over_quantity
 	}
 	modifier = {
-		biological_pop_happiness = 0.05
-	}
-	triggered_modifier = {
-		potential = { has_valid_civic = civic_lfg_pampered_masters }
-		biological_pop_happiness = 0.05
+		biological_pop_happiness = 0.10
 	}
 	ai_weight = { factor = 1000 }
 }
@@ -240,16 +299,13 @@ tr_lfg_attendants_household_ai = {
 	}
 	modifier = {
 		pop_amenities_usage_robotic_mult = -0.25
-	}
-	triggered_modifier = {
-		potential = { has_valid_civic = civic_lfg_pampered_masters }
 		robotic_pop_bonus_workforce_mult = 0.10
 	}
 	ai_weight = { factor = 1000 }
 }
 
 #####################################################################
-# OVERCLOCKED NETWORK
+# OVERCLOCKED NETWORK - hook: runs hot; energy deficits throttle it, war pushes it; agenda "Overclock Protocol"
 #####################################################################
 
 tr_lfg_overclock_adopt = {
@@ -260,9 +316,9 @@ tr_lfg_overclock_adopt = {
 }
 
 tr_lfg_overclock_finish = {
+	unlocks_agenda = agenda_lfg_overclock_protocol
 	modifier = {
 		ascension_perks_add = 1
-		planet_jobs_complex_drone_produces_mult = 0.05
 	}
 }
 
@@ -274,9 +330,15 @@ tr_lfg_overclock_priority_threads = {
 	ai_weight = { factor = 1000 }
 }
 
+# Hook: cheaper to run, but an energy deficit throttles the whole network.
 tr_lfg_overclock_coolant_loops = {
+	custom_tooltip = tr_lfg_overclock_coolant_loops_tt
 	modifier = {
-		planet_jobs_upkeep_mult = -0.05
+		planet_jobs_upkeep_mult = -0.10
+	}
+	triggered_modifier = {
+		potential = { has_deficit = energy }
+		planet_jobs_complex_drone_produces_mult = -0.25
 	}
 	ai_weight = { factor = 1000 }
 }
@@ -296,24 +358,32 @@ tr_lfg_overclock_heuristic_cores = {
 	}
 	modifier = {
 		all_technology_research_speed = 0.05
+		num_tech_alternatives_add = 1
 		country_minerals_produces_mult = -0.05
 	}
 	ai_weight = { factor = 1000 }
 }
 
+# Hook: at war, the network redlines: complex drones push past their limits.
 tr_lfg_overclock_redline = {
 	possible = {
 		has_tradition = tr_lfg_overclock_burst_assembly
 	}
+	custom_tooltip = tr_lfg_overclock_redline_tt
 	modifier = {
 		pop_cat_complex_drone_bonus_workforce_mult = 0.10
 		pop_cat_simple_drone_bonus_workforce_mult = -0.10
+	}
+	triggered_modifier = {
+		potential = { is_at_war = yes }
+		pop_cat_complex_drone_bonus_workforce_mult = 0.10
+		ship_fire_rate_mult = 0.05
 	}
 	ai_weight = { factor = 1000 }
 }
 
 #####################################################################
-# SHELLWORLDERS
+# SHELLWORLDERS - hook: grows with the number of artificial worlds you own (2 / 5 / 10)
 #####################################################################
 
 tr_lfg_shellworlders_adopt = {
@@ -324,9 +394,24 @@ tr_lfg_shellworlders_adopt = {
 }
 
 tr_lfg_shellworlders_finish = {
+	custom_tooltip = tr_lfg_shellworlders_finish_tt
 	modifier = {
 		ascension_perks_add = 1
+	}
+	triggered_modifier = {
+		potential = { count_owned_planet = { limit = { is_artificial = yes } count >= 2 } }
 		planet_stability_add = 2
+	}
+	triggered_modifier = {
+		potential = { count_owned_planet = { limit = { is_artificial = yes } count >= 5 } }
+		planet_stability_add = 2
+		pop_housing_usage_mult = -0.05
+	}
+	triggered_modifier = {
+		potential = { count_owned_planet = { limit = { is_artificial = yes } count >= 10 } }
+		planet_stability_add = 2
+		pop_housing_usage_mult = -0.05
+		megastructure_build_speed_mult = 0.10
 	}
 }
 
@@ -376,70 +461,350 @@ tr_lfg_shellworlders_ring_cities = {
 }
 
 #####################################################################
-# STELLAR HARVEST
+# POLYMATH COMMONS - hook: research from everyone; scales with species and rivals; agenda "Eureka Season"
 #####################################################################
 
-tr_lfg_stellar_harvest_adopt = {
-	possible = {
-		OR = {
-			has_technology = tech_dyson_swarm
-			has_technology = tech_dyson_sphere
-		}
-	}
+tr_lfg_polymath_adopt = {
 	modifier = {
-		megastructures_energy_produces_mult = 0.10
-		country_food_produces_mult = -0.05
+		all_technology_research_speed = 0.05
+		planet_researchers_upkeep_mult = 0.05
 	}
 }
 
-tr_lfg_stellar_harvest_finish = {
+tr_lfg_polymath_finish = {
+	unlocks_agenda = agenda_lfg_eureka_season
 	modifier = {
 		ascension_perks_add = 1
-		megastructures_energy_produces_mult = 0.10
+		ship_anomaly_generation_chance_mult = 0.15
 	}
 }
 
-tr_lfg_stellar_harvest_collector_arrays = {
-	modifier = {
-		country_energy_produces_mult = 0.05
-		country_minerals_produces_mult = -0.05
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_stellar_harvest_photonic_agriculture = {
-	modifier = {
-		megastructures_upkeep_mult = -0.10
+# Hook: research speed +1% per species in the empire (max +30%).
+tr_lfg_polymath_many_minds = {
+	custom_tooltip = tr_lfg_polymath_many_minds_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		all_technology_research_speed = 0.01
+		mult = value:lfg_num_species
 	}
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_stellar_harvest_star_lifting = {
-	modifier = {
-		megastructures_produces_mult = 0.05
-		country_minerals_produces_mult = -0.05
+# Hook: research speed +4% per rival (max +16%), but -5% with no rivals at all.
+tr_lfg_polymath_rival_laboratories = {
+	custom_tooltip = tr_lfg_polymath_rival_laboratories_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		all_technology_research_speed = 0.04
+		mult = value:lfg_num_rivals
+	}
+	triggered_modifier = {
+		potential = { NOT = { num_rivals > 0 } }
+		all_technology_research_speed = -0.05
 	}
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_stellar_harvest_energy_credits = {
+tr_lfg_polymath_open_journals = {
+	modifier = {
+		all_technology_research_speed = 0.10
+		diplo_weight_mult = -0.10
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: research from jobs +15%, but each year a colony may have a lab accident or a breakthrough
+# (on_yearly_pulse_country -> events/lfg_polymath_events.txt).
+tr_lfg_polymath_reckless_experimentation = {
 	possible = {
-		has_tradition = tr_lfg_stellar_harvest_collector_arrays
-		has_tradition = tr_lfg_stellar_harvest_photonic_agriculture
+		has_tradition = tr_lfg_polymath_many_minds
+		has_tradition = tr_lfg_polymath_rival_laboratories
 	}
+	custom_tooltip = tr_lfg_polymath_reckless_experimentation_tt
 	modifier = {
-		country_trade_produces_mult = 0.10
-		country_food_produces_mult = -0.05
+		planet_jobs_physics_research_produces_mult = 0.15
+		planet_jobs_society_research_produces_mult = 0.15
+		planet_jobs_engineering_research_produces_mult = 0.15
 	}
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_stellar_harvest_stellar_priority = {
+tr_lfg_polymath_interdisciplinary_seminars = {
 	possible = {
-		has_tradition = tr_lfg_stellar_harvest_star_lifting
+		has_tradition = tr_lfg_polymath_open_journals
 	}
 	modifier = {
-		megastructure_build_speed_mult = 0.15
+		num_tech_alternatives_add = 1
+		country_scientist_cap_add = 1
+	}
+	ai_weight = { factor = 1000 }
+}
+
+#####################################################################
+# GRANARY KINGS - hook: the food stockpile is political power; agendas "Feast of Plenty" (adopt), "The Harvest Tithe" (finish)
+#####################################################################
+
+tr_lfg_granary_adopt = {
+	unlocks_agenda = agenda_lfg_feast_of_plenty
+	modifier = {
+		country_resource_max_food_add = 5000
+		planet_farmers_produces_mult = 0.05
+	}
+}
+
+# Hook: organic growth +1% per 1,000 monthly food income (no cap). The Feast of Plenty agenda doubles it while active.
+tr_lfg_granary_finish = {
+	unlocks_agenda = agenda_lfg_harvest_tithe
+	custom_tooltip = tr_lfg_granary_finish_tt
+	modifier = {
+		ascension_perks_add = 1
+	}
+	triggered_modifier = {
+		potential = { always = yes }
+		logistic_growth_mult = 0.01
+		mult = value:lfg_food_income_1000s
+	}
+	triggered_modifier = {
+		potential = { has_modifier = agenda_lfg_feast_of_plenty_finish }
+		logistic_growth_mult = 0.01
+		mult = value:lfg_food_income_1000s
+	}
+}
+
+# Hook: full granaries (5,000+ food) bring stability and unity; empty ones (under 500) bring unrest.
+tr_lfg_granary_tithe_barns = {
+	custom_tooltip = tr_lfg_granary_tithe_barns_tt
+	triggered_modifier = {
+		potential = { resource_stockpile_compare = { resource = food value >= 5000 } }
+		planet_stability_add = 3
+		country_unity_produces_mult = 0.05
+	}
+	triggered_modifier = {
+		potential = { resource_stockpile_compare = { resource = food value < 500 } }
+		planet_stability_add = -5
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: unity +1% per 5,000 stored food (max +20% at 100,000).
+tr_lfg_granary_seed_vaults = {
+	custom_tooltip = tr_lfg_granary_seed_vaults_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		country_unity_produces_mult = 0.01
+		mult = value:lfg_food_stored_5000s
+	}
+	ai_weight = { factor = 1000 }
+}
+
+tr_lfg_granary_bountiful_fields = {
+	modifier = {
+		planet_farmers_produces_mult = 0.10
+	}
+	ai_weight = { factor = 1000 }
+}
+
+tr_lfg_granary_grain_reserves = {
+	possible = {
+		has_tradition = tr_lfg_granary_tithe_barns
+		has_tradition = tr_lfg_granary_seed_vaults
+	}
+	modifier = {
+		country_resource_max_food_add = 100000
+		planet_pops_food_upkeep_mult = 1.0
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: while food income is positive, the farmers' courts add influence.
+tr_lfg_granary_harvest_courts = {
+	possible = {
+		has_tradition = tr_lfg_granary_bountiful_fields
+	}
+	custom_tooltip = tr_lfg_granary_harvest_courts_tt
+	modifier = {
+		pop_cat_worker_political_power = 0.25
+		pop_cat_specialist_political_power = -0.25
+	}
+	triggered_modifier = {
+		potential = { has_monthly_income = { resource = food value > 0 } }
+		country_influence_produces_mult = 0.10
+	}
+	ai_weight = { factor = 1000 }
+}
+
+#####################################################################
+# GALACTIC BROADCAST - hook: entertainment exported to every empire you know; agenda "Gala Season"
+#####################################################################
+
+# Hook: trade +1% per empire we have contact with (max +20%).
+tr_lfg_broadcast_adopt = {
+	custom_tooltip = tr_lfg_broadcast_adopt_tt
+	modifier = {
+		planet_entertainers_produces_mult = 0.05
+	}
+	triggered_modifier = {
+		potential = { always = yes }
+		country_trade_produces_mult = 0.01
+		mult = value:lfg_num_contacts
+	}
+}
+
+tr_lfg_broadcast_finish = {
+	unlocks_agenda = agenda_lfg_gala_season
+	modifier = {
+		ascension_perks_add = 1
+	}
+}
+
+# Boosts the Grand Archive holomuseums: each one you own gets its specimen bonus doubled (+15% more, same as the
+# building), and its planet's entertainers get the museum's unity and research bonus again (generated building
+# override, common/buildings/zz_lfg_building_overrides.txt).
+tr_lfg_broadcast_holo_museums = {
+	custom_tooltip = tr_lfg_broadcast_holo_museums_tt
+	triggered_modifier = {
+		potential = { any_owned_planet = { has_building = xeno_geology_holomuseum } }
+		xeno_geology_specimens_produces_mult = @holomuseum_specimen_produces_mult
+	}
+	triggered_modifier = {
+		potential = { any_owned_planet = { has_building = aesthetic_wonders_holomuseum } }
+		aesthetic_wonder_specimens_produces_mult = @holomuseum_specimen_produces_mult
+	}
+	triggered_modifier = {
+		potential = { any_owned_planet = { has_building = galactic_history_holomuseum } }
+		historical_item_specimens_produces_mult = @holomuseum_specimen_produces_mult
+	}
+	ai_weight = { factor = 1000 }
+}
+
+tr_lfg_broadcast_celebrity_council = {
+	modifier = {
+		council_agenda_progress_speed = 0.15
+		planet_entertainers_unity_produces_add = 0.25
+	}
+	ai_weight = { factor = 1000 }
+}
+
+tr_lfg_broadcast_propaganda_serials = {
+	modifier = {
+		diplo_weight_mult = 0.10
+		pop_government_ethic_attraction = -0.15
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: every war is prime time. While at war: war exhaustion gain -20%, entertainer output +20%.
+tr_lfg_broadcast_ratings_war = {
+	possible = {
+		has_tradition = tr_lfg_broadcast_holo_museums
+		has_tradition = tr_lfg_broadcast_celebrity_council
+	}
+	custom_tooltip = tr_lfg_broadcast_ratings_war_tt
+	modifier = {
+		envoy_harm_relations_mult = 0.50
+	}
+	triggered_modifier = {
+		potential = { is_at_war = yes }
+		country_war_exhaustion_mult = -0.20
+		planet_entertainers_produces_mult = 0.20
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: entertainers produce +0.5 trade (per 100 entertainers, i.e. per job) for each commercial pact (no cap).
+tr_lfg_broadcast_syndication_deals = {
+	possible = {
+		has_tradition = tr_lfg_broadcast_propaganda_serials
+	}
+	custom_tooltip = tr_lfg_broadcast_syndication_deals_tt
+	modifier = {
+		envoys_add = 1
+		envoy_improve_relations_mult = 0.25
+		planet_researchers_produces_mult = -0.05
+	}
+	triggered_modifier = {
+		potential = { always = yes }
+		planet_entertainers_trade_produces_add = 0.5
+		mult = value:lfg_num_commercial_pacts
+	}
+	ai_weight = { factor = 1000 }
+}
+
+#####################################################################
+# THE GRAND TOUR - hook: scales with Resort Workers employed (per 100, no cap); agenda "Grand Tour Season"
+#####################################################################
+
+tr_lfg_resorts_adopt = {
+	unlocks_agenda = agenda_lfg_grand_tour_season
+	possible = {
+		has_technology = tech_resort_colonies
+	}
+	modifier = {
+		pop_resort_worker_bonus_workforce_mult = 0.10
+		planet_district_resort_build_speed_mult = 0.25
+	}
+}
+
+tr_lfg_resorts_finish = {
+	modifier = {
+		ascension_perks_add = 1
+		pop_resort_worker_bonus_workforce_mult = 0.10
+	}
+}
+
+# More resort workers per Accommodation District: implemented in the generated district_resort override
+# (common/districts/zz_lfg_district_overrides.txt), mirroring vanilla's Commercial Enterprise / Public Works pattern.
+tr_lfg_resorts_hospitality_academies = {
+	custom_tooltip = tr_lfg_resorts_hospitality_academies_tt
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: per 100 Resort Workers (no cap): unity +0.5%, amenity usage -0.25%.
+tr_lfg_resorts_package_holidays = {
+	custom_tooltip = tr_lfg_resorts_package_holidays_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		country_unity_produces_mult = 0.005
+		pop_amenities_usage_mult = -0.0025
+		mult = value:lfg_resort_worker_hundreds
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Grows the (one) resort world: each Accommodation District adds +0.5 max districts to its planet (generated
+# district_resort override) and unlocks the Expand the Resort decision (common/decisions/lfg_decisions.txt).
+tr_lfg_resorts_wonders_of_the_galaxy = {
+	custom_tooltip = tr_lfg_resorts_wonders_of_the_galaxy_tt
+	modifier = {
+		district_resort_max_add = 1
+		planet_district_resort_build_speed_mult = 0.25
+	}
+	ai_weight = { factor = 1000 }
+}
+
+tr_lfg_resorts_tourist_traps = {
+	possible = {
+		has_tradition = tr_lfg_resorts_hospitality_academies
+		has_tradition = tr_lfg_resorts_package_holidays
+	}
+	modifier = {
+		pop_resort_worker_bonus_workforce_mult = 0.15
+		planet_entertainers_consumer_goods_upkeep_add = 0.5
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: per 100 Resort Workers (no cap): trade +0.5%, diplomatic weight +0.5%.
+tr_lfg_resorts_galactic_destination = {
+	possible = {
+		has_tradition = tr_lfg_resorts_wonders_of_the_galaxy
+	}
+	custom_tooltip = tr_lfg_resorts_galactic_destination_tt
+	triggered_modifier = {
+		potential = { always = yes }
+		country_trade_produces_mult = 0.005
+		diplo_weight_mult = 0.005
+		mult = value:lfg_resort_worker_hundreds
 	}
 	ai_weight = { factor = 1000 }
 }

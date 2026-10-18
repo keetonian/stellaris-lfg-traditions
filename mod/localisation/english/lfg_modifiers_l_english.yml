@@ -1,0 +1,8 @@
+﻿l_english:
+ # Names for modifiers the game generates per job / district but vanilla leaves unnamed (otherwise tooltips show
+ # the raw key). Wording follows vanilla's mod_pop_entertainer_bonus_workforce_mult / mod_planet_district_city_build_speed_mult.
+ mod_pop_resort_worker_bonus_workforce_mult:0 "Job Efficiency for [resort_worker.GetNamePlural]"
+ mod_pop_servant_bonus_workforce_mult:0 "Job Efficiency for [servant.GetNamePlural]"
+ mod_job_roboticist_max_workforce_mult:0 "$job_roboticist$ Max Workforce"
+ mod_planet_district_resort_build_speed_mult:0 "$district_resort$ Build Speed"
+ mod_district_resort_max_add:0 "Max $district_resort$s"

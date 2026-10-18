@@ -1,0 +1,53 @@
+# LFG Traditions - species split (Evolutionary Predators edict).
+
+# Scope: country. Expects event_target:lfg_split_source (the species to split).
+# Pays the society research, kills half of every pop group of the source species, then creates @lfg_species_split_count subspecies, each with one extra random
+# positive organic trait, and moves an equal share of every pop group of the source species into each one.
+# Equal shares without knowing group sizes: variant k takes 1/(remaining) of what is left (1/50, 1/49, ... 1/1),
+# so the source species ends up empty. Small pop groups round, so some subspecies can end up with fewer pops.
+lfg_split_species = {
+	add_resource = {
+		society_research = @lfg_species_split_society_research_change
+	}
+	# The experiments are lethal: half of the species dies first.
+	every_owned_pop_group = {
+		limit = { is_exact_same_species = event_target:lfg_split_source }
+		kill_pop_group = {
+			pop_group = this
+			percentage = 0.5
+		}
+	}
+	set_variable = { which = lfg_split_remaining value = @lfg_species_split_count }
+	while = {
+		count = @lfg_species_split_count
+		modify_species = {
+			species = event_target:lfg_split_source
+			change_scoped_species = no
+			add_random_species_trait = {
+				trait_has_all_tags = { organic positive }
+				NOT = { trait_has_any_tag = { special cybernetic presapient drawbacks genetic_ascension lfg_predator_only } }
+			}
+			effect = { save_event_target_as = lfg_split_variant }
+		}
+		every_owned_pop_group = {
+			limit = { is_exact_same_species = event_target:lfg_split_source }
+			save_event_target_as = lfg_split_from
+			colony = {
+				create_pop_group = {
+					pop_group = event_target:lfg_split_from
+					species = event_target:lfg_split_variant
+					size = 0
+					effect = {
+						transfer_pop_amount = {
+							source = event_target:lfg_split_from
+							target = this
+							percentage = value:lfg_species_split_share
+						}
+					}
+				}
+			}
+		}
+		change_variable = { which = lfg_split_remaining value = -1 }
+	}
+	remove_variable = lfg_split_remaining
+}

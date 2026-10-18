@@ -1,0 +1,12 @@
+﻿l_english:
+ policy_lfg_monument_economy:0 "Monument Economy"
+ policy_lfg_monument_economy_desc:0 "Each megastructure we own reshapes our economy. Do the great works come first, or the people who live beneath them?"
+ lfg_monument_economy_balanced:0 "Balanced"
+ lfg_monument_economy_balanced_name:0 "Balanced"
+ lfg_monument_economy_balanced_desc:0 "The great works and the worlds around them are left to find their own balance.\nNo effect."
+ lfg_monument_economy_monuments_first:0 "Monuments First"
+ lfg_monument_economy_monuments_first_name:0 "Monuments First"
+ lfg_monument_economy_monuments_first_desc:0 "Labour is drawn away to staff the great works.\nFor each megastructure we own: megastructure output §G+1%§!, job output §R-0.5%§!."
+ lfg_monument_economy_people_first:0 "People First"
+ lfg_monument_economy_people_first_name:0 "People First"
+ lfg_monument_economy_people_first_desc:0 "The great works serve the worlds around them.\nFor each megastructure we own: job output §G+0.5%§!, megastructure output §R-1%§!."

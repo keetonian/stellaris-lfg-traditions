@@ -1,0 +1,22 @@
+# LFG Traditions - scripted variables.
+
+# Species Experimentation edict (Evolutionary Predators): how many subspecies are made, the minimum population
+# of the species (raw pops, not 100-pop units; half of them die first), and the society research change it applies
+# (negative = cost).
+@lfg_species_split_count = 50
+@lfg_species_split_min_pops = 100
+@lfg_species_split_society_research_change = -2000
+
+# Council agendas unlocked by LFG tradition finishers (same as vanilla @base_tradition_agenda_cost).
+@lfg_agenda_cost = 7000
+
+# The Grand Tour - Hospitality Academies: extra resort worker jobs per Accommodation District
+# (vanilla gives @special_district_jobs = 300; this is +50%). Used by the generated district_resort override.
+@lfg_resort_extra_district_jobs = 150
+
+# The Grand Tour - Expand the Resort decision: how many times it can be used on the resort world.
+@lfg_resort_expansions_max = 5
+
+# The Grand Tour - Wonders of the Galaxy: max districts each Accommodation District adds to its own planet.
+# Below 1 so growth converges (at 0.5 a resort world tops out around double its normal district count).
+@lfg_resort_districts_per_district = 0.5

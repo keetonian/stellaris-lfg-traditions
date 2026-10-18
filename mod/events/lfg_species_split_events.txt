@@ -1,0 +1,99 @@
+# LFG Traditions - Species Experimentation picker (fired by the lfg_species_experimentation edict).
+namespace = lfg_species_split
+
+# Pick which species to split. Shows up to 4 eligible species; "Show others" re-rolls the selection.
+country_event = {
+	id = lfg_species_split.1
+	title = lfg_species_split.1.name
+	desc = lfg_species_split.1.desc
+	picture = GFX_evt_genetic_modification
+	is_triggered_only = yes
+
+	immediate = {
+		random_owned_species = {
+			limit = { lfg_species_split_eligible = yes }
+			save_event_target_as = lfg_split_candidate_1
+		}
+		random_owned_species = {
+			limit = {
+				lfg_species_split_eligible = yes
+				NOT = { is_same_value = event_target:lfg_split_candidate_1 }
+			}
+			save_event_target_as = lfg_split_candidate_2
+		}
+		random_owned_species = {
+			limit = {
+				lfg_species_split_eligible = yes
+				NOR = {
+					is_same_value = event_target:lfg_split_candidate_1
+					is_same_value = event_target:lfg_split_candidate_2
+				}
+			}
+			save_event_target_as = lfg_split_candidate_3
+		}
+		random_owned_species = {
+			limit = {
+				lfg_species_split_eligible = yes
+				NOR = {
+					is_same_value = event_target:lfg_split_candidate_1
+					is_same_value = event_target:lfg_split_candidate_2
+					is_same_value = event_target:lfg_split_candidate_3
+				}
+			}
+			save_event_target_as = lfg_split_candidate_4
+		}
+	}
+
+	option = {
+		name = lfg_species_split.1.a
+		trigger = { exists = event_target:lfg_split_candidate_1 }
+		custom_tooltip = lfg_species_split.1.split_tt
+		hidden_effect = {
+			event_target:lfg_split_candidate_1 = { save_event_target_as = lfg_split_source }
+			lfg_split_species = yes
+		}
+	}
+	option = {
+		name = lfg_species_split.1.b
+		trigger = { exists = event_target:lfg_split_candidate_2 }
+		custom_tooltip = lfg_species_split.1.split_tt
+		hidden_effect = {
+			event_target:lfg_split_candidate_2 = { save_event_target_as = lfg_split_source }
+			lfg_split_species = yes
+		}
+	}
+	option = {
+		name = lfg_species_split.1.c
+		trigger = { exists = event_target:lfg_split_candidate_3 }
+		custom_tooltip = lfg_species_split.1.split_tt
+		hidden_effect = {
+			event_target:lfg_split_candidate_3 = { save_event_target_as = lfg_split_source }
+			lfg_split_species = yes
+		}
+	}
+	option = {
+		name = lfg_species_split.1.d
+		trigger = { exists = event_target:lfg_split_candidate_4 }
+		custom_tooltip = lfg_species_split.1.split_tt
+		hidden_effect = {
+			event_target:lfg_split_candidate_4 = { save_event_target_as = lfg_split_source }
+			lfg_split_species = yes
+		}
+	}
+	option = {
+		name = lfg_species_split.1.others
+		trigger = {
+			count_owned_species = {
+				limit = { lfg_species_split_eligible = yes }
+				count > 4
+			}
+		}
+		hidden_effect = {
+			country_event = { id = lfg_species_split.1 }
+		}
+	}
+	option = {
+		name = lfg_species_split.1.cancel
+		default_hide_option = yes
+	}
+}
