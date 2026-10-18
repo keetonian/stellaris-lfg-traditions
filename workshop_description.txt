@@ -102,8 +102,9 @@ A reverse Rogue Servitor: an individualist, biological empire whose robots serve
 [*][b]Synthetic Fertility[/b]: the origin's uploading situation gains +1 monthly progress for every year that has passed.
 [*]The [b]Accommodation District[/b] and the three [b]holomuseums[/b] gain extra blocks for The Grand Tour and Galactic Broadcast.
 [*]Every repeatable technology (and Gigastructural's megastructure capacity repeatables) checks its Shelve edict.
+[*][b]Virtuality[/b] can't be chosen as the Synthetic Age path by individual machine empires with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin.
 [/list]
-These replace the vanilla definitions of those two ascension perks, that situation, that district, those three buildings and the repeatable technologies, plus Gigastructural's repeatables. Other mods that change the same definitions may conflict.
+These replace the vanilla definitions of those two ascension perks, that situation, that district, those three buildings, the repeatable technologies and the Synthetic Age path-choice event, plus Gigastructural's repeatables. Other mods that change the same definitions may conflict.
 
 [h2]Requirements and compatibility[/h2]
 [list]

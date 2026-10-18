@@ -252,6 +252,7 @@ These replace vanilla and Gigastructural definitions. Other mods that change the
 | District `district_resort` (Accommodation District) | Added: +150 Resort Worker jobs per district (Hospitality Academies) and +0.5 max districts per district (Paradise Unbound) |
 | The 24 repeatable techs in the Curated Progress table (19 vanilla, 5 Giga) | Added to `weight_modifier`: never drawn while their Shelve edict is active |
 | Giga inline script `common/inline_scripts/technology/giga_mega_repeatable.txt` (all megastructure capacity repeatables) | Same, with `has_edict = lfg_shelve_megastructure_capacity_$area$`. Inline scripts can only be replaced as a whole file (same path, this mod loads after Giga) |
+| Event `machine_age.4400` (Synthetic Age transformation: pick Nanotech / Modularity / Virtuality) | Virtuality option greyed out ("Individual machine empires whose origin is The Great Ring or Alderson Disk cannot take the Virtuality path") for **individual machine** empires with Giga's **The Great Ring** or **Alderson Disk** origin. Machine Intelligences and other origins are unaffected. Events are first-definition-wins, so this file is `events/00_lfg_event_overrides.txt` (sorts before vanilla's) |
 | Situation `situation_synthetic_fertility_digitization` (the Synthetic Fertility origin's "uploading" situation) | Monthly progress **+1 for every year since game start**, on top of the vanilla base of 15 (year 10: 25/month). It completes noticeably sooner. |
 
 The override files are **generated** from the installed game and Gigastructural by `tools/gen_overrides.py`, so they're
@@ -299,6 +300,8 @@ scripts/verify.sh --require-sources  # before a release: fail if game/Giga files
 CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't need game files on every push.
 
 **Still to test in game:**
+- Virtuality block: an individual machine Great Ring / Alderson Disk empire sees Virtuality greyed out in the Synthetic Age path choice
+  (and error.log shows our `machine_age.4400` winning, not vanilla's).
 - Curated Progress: shown after Gigastructural Constructs; Shelve edicts appear with the tech's name, charge research upkeep,
   and a shelved tech (including a megastructure capacity repeatable) stops appearing in new research options.
 - Each tree appears only for the right empires.

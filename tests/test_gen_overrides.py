@@ -86,6 +86,29 @@ FAKE_BUILDINGS = "".join(fake_holomuseum(k, r) for k, r in (
     ("galactic_history_holomuseum", "society")))
 
 
+FAKE_EVENTS = """\
+namespace = machine_age
+
+situation_event = { # Tradition 0
+\tid = machine_age.4390
+\toption = {
+\t\tname = "machine_age.4400.c"
+\t}
+}
+
+situation_event = { # Tradition 1
+\tid = machine_age.4400
+\toption = {
+\t\tname = "machine_age.4400.a"
+\t}
+\toption = {
+\t\tname = "machine_age.4400.c"
+\t\towner = { set_country_flag = transformation_virtuality }
+\t}
+}
+"""
+
+
 def fake_tech(key):
     return f"""{key} = {{
 \tarea = physics
@@ -119,6 +142,8 @@ class GenOverridesTests(unittest.TestCase):
         (self.game / "common/ascension_perks/00_ascension_paths.txt").write_text(FAKE_APS)
         (self.game / "common/situations/08_machine_age_situations.txt").write_text(FAKE_SITUATIONS)
         (self.game / "launcher-settings.json").write_text('{ "rawVersion": "v9.9.9" }')
+        (self.game / "events").mkdir()
+        (self.game / "events/machine_age_situation_events_3.txt").write_text(FAKE_EVENTS)
         self.giga = self.tmp / "giga"
         (self.giga / "descriptor.mod").parent.mkdir(parents=True)
         (self.giga / "descriptor.mod").write_text('version="8.8.8"\n')
@@ -204,6 +229,21 @@ class GenOverridesTests(unittest.TestCase):
             self.assertIn(f"{area}_research = @lfg_shelve_research_upkeep", block)
             self.assertIn(f" edict_lfg_shelve_megastructure_capacity_{area}_desc:0", loc)
         self.assertEqual(edicts.count("has_ascension_perk = ap_lfg_curated_progress"), len(gen_overrides.SHELVE) + 3)
+
+    def test_virtuality_option_blocked_for_ring_origins(self):
+        out = self.generate()["mod/events/00_lfg_event_overrides.txt"]
+        self.assertIn("\nnamespace = machine_age\n", out)
+        self.assertNotIn("machine_age.4390", out)  # only the event with the right id
+        self.assertIn('\t\tname = "machine_age.4400.c"\n\t\t# LFG: added by stellaris-lfg-traditions\n\t\tallow = {\n', out)
+        self.assertIn("has_origin = origin_great_ring", out)
+        self.assertIn("has_origin = origin_alderson", out)
+        self.assertIn("is_individual_machine = yes", out)
+        self.assertEqual(out.count("# LFG: added"), 1)
+
+    def test_missing_event_fails(self):
+        (self.game / "events/machine_age_situation_events_3.txt").write_text(FAKE_EVENTS.replace("4400", "4401"))
+        with self.assertRaisesRegex(gen_overrides.GenError, "machine_age.4400"):
+            self.generate()
 
     def test_extract_block_ignores_braces_in_comments_and_strings(self):
         block = gen_overrides.extract_block(FAKE_APS, "ap_the_flesh_is_weak")

@@ -337,6 +337,10 @@ class MutationTests(unittest.TestCase):
         self.edit(MEGA_CAP_SCRIPT, "tier = 5", "tier = 4")
         self.assertFails("giga_mega_repeatable.txt is stale", game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 
+    def test_event_overrides_are_exempt_from_lfg_event_rules(self):
+        self.assertEqual(failures(self.mod), [])
+        self.assertNotIn("machine_age.4400", check_mod.mod_event_ids(check_mod.Mod(self.mod, check_mod.Report(False))))
+
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
     def test_hand_edited_override(self):
         self.edit("common/situations/zz_lfg_situation_overrides.txt", "initial_progress = 300", "initial_progress = 0")

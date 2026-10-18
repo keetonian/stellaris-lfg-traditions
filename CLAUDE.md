@@ -3,7 +3,8 @@
 Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 7 tradition trees, 8 council agendas, the civic
 `civic_lfg_pampered_masters`, the Evolutionary Predators edict `lfg_species_experimentation`, the ascension perk
 `ap_lfg_curated_progress` + 27 generated Shelve edicts, and generated overrides of 2 ascension perks + 1 situation +
-1 district (district_resort) + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script.
+1 district (district_resort) + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script
++ event machine_age.4400 (Virtuality blocked for individual machines with Great Ring / Alderson Disk).
 User-facing docs and the full effect tables are in README.md. **Keep README's tables in sync when you change numbers.**
 
 ## Commands
@@ -35,6 +36,7 @@ mod/                                  # exactly what ships
   events/lfg_species_split_events.txt                        # species picker event
   events/lfg_polymath_events.txt                             # Reckless Experimentation lab accident (yearly)
   events/lfg_resorts_events.txt                              # Galactic Destination: resort world modifier + tourist count (monthly)
+  events/00_lfg_event_overrides.txt                          # GENERATED (machine_age.4400: Virtuality block); 00_ = loads first
   common/council_agendas/lfg_council_agendas.txt             # 8 agendas, unlocked by tree finishers
   common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + lfg_lab_accident
   common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1, yearly -> lfg_polymath.1
@@ -71,6 +73,9 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
   `lfg_shelve_l_english.yml`). Change `OVERRIDES` / `SHELVE` / the snippets in `tools/gen_overrides.py` and regenerate.
   Overrides are source text plus `# LFG: added` lines. `zz_` makes them load after vanilla (and `zz_lfg_` after Giga's `zz_giga_`).
   Sources prefixed `giga:` are read from the Giga dir; key `None` copies a whole file (inline scripts can't be overridden per block).
+  Key `event:<id>` copies one event. **Events are first-definition-wins** (common/ is last-wins), so event overrides go in
+  `events/00_lfg_event_overrides.txt` (sorts before vanilla's event files) with the vanilla `namespace` in `PRELUDE`;
+  the checker exempts that file from the lfg event-namespace rules.
 - **Every modifier must exist in 4.5.** Look it up in
   `~/Documents/Paradox Interactive/Stellaris/logs/script_documentation/modifiers.log` (the checker does). Pitfalls:
   - `megastructures_cost_mult`, not `megastructure_build_cost_mult` (which doesn't exist)

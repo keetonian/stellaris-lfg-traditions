@@ -299,7 +299,7 @@ def check_edicts(mod: Mod, loc: Dict[str, str], r: Report) -> None:
 def mod_event_ids(mod: Mod) -> Set[str]:
     ids: Set[str] = set()
     for rel, entries in mod.files.items():
-        if rel.startswith("events/"):
+        if rel.startswith("events/") and rel not in OVERRIDE_FILES:
             for e in entries:
                 if e.key and e.key.endswith("_event") and e.is_block:
                     i = pdx.first(e.value, "id")
@@ -311,7 +311,7 @@ def mod_event_ids(mod: Mod) -> Set[str]:
 def check_events(mod: Mod, loc: Dict[str, str], r: Report) -> None:
     seen: Set[str] = set()
     for rel, entries in mod.files.items():
-        if not rel.startswith("events/"):
+        if not rel.startswith("events/") or rel in OVERRIDE_FILES:  # generated vanilla event overrides
             continue
         namespaces = [e.value for e in pdx.get(entries, "namespace")]
         if not namespaces:

@@ -24,3 +24,4 @@
  lfg_species_split.1.split_tt:0 "§R-2000§! £society£ Society Research\n§RHalf of this species dies.§! The survivors are split into §Y50§! subspecies with a random new positive trait each."
  trait_lfg_inherited_genius:0 "Inherited Genius"
  trait_lfg_inherited_genius_desc:0 "Generations of predatory evolution have rewarded only the sharpest minds. Every member of this species is born with an instinct for discovery, and contributes to our research simply by living among us."
+ lfg_virtuality_blocked_by_origin:0 "$TRIGGER_FAIL$Individual machine empires whose origin is §Y$origin_great_ring$§! or §Y$origin_alderson$§! cannot take the Virtuality path"
