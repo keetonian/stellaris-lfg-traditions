@@ -237,6 +237,8 @@ kept on the right planets by a hidden monthly event (`on_monthly_pulse_country`)
 Examples: Galactic Destination (`lfg_resorts.1`), Shellworlders (`lfg_shellworlders.1` + `lfg_sync_shellworld_modifier`).
 Add every such modifier to `lfg_planet.1` (owner-change cleanup). A count-scaled one is re-added with
 `add_modifier = { ... multiplier = <planet variable> }` only when the count changes (see `lfg_sync_arc_neighbours`).
+Also **verified in game**: adding our own event to a vanilla situation's `on_monthly` list via a generated override, and
+`while = { count = value:<script value> ... }` (Synthetic Fertility's `lfg_synthetic_fertility.1`).
 `multiplier = <planet variable>` is **verified in game** (Expand the Resort's `lfg_resort_expansion`, as is its
 `multiplier = value:...` decision cost).
 Prefer a real planet-class modifier when one exists (e.g. `planet_artificial_max_districts_add`), which is instant.

@@ -310,6 +310,7 @@ scripts/verify.sh --require-sources  # before a release: fail if game/Giga files
 CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't need game files on every push.
 
 **Verified in game:**
+- Synthetic Fertility: faster situation progress, and the extra monthly Identity Repository uploads (`lfg_synthetic_fertility.1`).
 - Expand the Resort: the decision works, including its growing cost and the expansion modifier applied with
   `multiplier = <planet variable>`.
 
@@ -326,8 +327,6 @@ CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't nee
   Resort Worker, Tourist) apply as described; agendas appear after finishing their tree; Reckless Experimentation's lab accident fires.
 - Species Experimentation: only Evolutionary Predators who finished Mutation see it; your main species and its subspecies are never offered;
   under 100 pops it's greyed out; picking a species kills half of it, creates 50 subspecies and deducts 2000 society research.
-- A Synthetic Fertility empire's situation tooltip shows the yearly line and the rate grows each year; the Identity
-  Repository count (and the infected pops lost) grows by 15 + years passed each month.
 - `~/Documents/Paradox Interactive/Stellaris/logs/error.log` has no `lfg` errors.
 
 ## Publish to the Steam Workshop
