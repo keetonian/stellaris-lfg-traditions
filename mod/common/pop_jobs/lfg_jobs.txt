@@ -38,6 +38,9 @@ lfg_penal_supertensile_laborer = {
 		}
 		upkeep = {
 			minerals = @lfg_penal_supertensile_mineral_upkeep
+			alloys = @lfg_penal_supertensile_alloys_upkeep
+			energy = @lfg_penal_supertensile_energy_upkeep
+			unity = @lfg_penal_supertensile_unity_upkeep
 		}
 	}
 
