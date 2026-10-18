@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Seven new tradition trees, seven council agendas, a new civic, an ascension perk, a policy and a planet decision for [b]Gigastructural Engineering[/b] games. Every tree only appears for the empires it fits, and every tree has a [b]hook[/b]: bonuses that scale with or depend on your game state, so each one changes how you play rather than just adding percentages.
+Six new tradition trees, six council agendas, an ascension perk, a policy and a planet decision for [b]Gigastructural Engineering[/b] games. Every tree only appears for the empires it fits, and every tree has a [b]hook[/b]: bonuses that scale with or depend on your game state, so each one changes how you play rather than just adding percentages.
 
 [h2]Tradition trees[/h2]
 
@@ -14,19 +14,15 @@ Seven new tradition trees, seven council agendas, a new civic, an ascension perk
 [*]Costs: minerals, alloys and infrastructure cost.
 [/list]
 
-[h3]Attendant Robotics[/h3]
-[i]Fewer, better robots that serve your people.[/i] Only for the [b]Pampered Masters[/b] civic.
+[h3]Shellworlders[/h3]
+[i]Life on artificial worlds.[/i] Artificial-world origins (including Gigastructural's), or after Orbital Habitats / Ring World.
 [list]
-[*]Robots work much harder while they're under 15% of your population, and get sloppy when mass-produced.
-[*]Servant robots, happier organics, cheaper robot upkeep; robot assembly and roboticists are limited.
-[*]Finisher: [b]doubles[/b] the civic's pampering bonuses.
-[/list]
-
-[h3]Overclocked Network[/h3]
-[i]Complex drones over simple drones.[/i] Machine Intelligence only.
-[list]
-[*]Complex drones produce and work more; simple drones are throttled.
-[*]Runs hot: an energy deficit cuts complex drone output by 25%; at war, complex drones push harder and ships fire faster.
+[*]Every bonus applies on your artificial worlds: habitats, ring segments, Alderson Disk slices and Gigastructural's other habitable megastructures.
+[*]More efficient jobs, less housing usage and more stability there.
+[*][b]Arc Neighbours:[/b] each artificial world works better for every other one you own in the same system.
+[*][b]Downsides:[/b] slower organic growth and robot assembly; [b]Closed Ecology[/b] makes your people less happy and stable on natural worlds.
+[*][b]Arc Foundries:[/b] +5% megastructure build speed for every artificial world you own, with no cap.
+[*]Finisher: +1 max districts on artificial worlds.
 [/list]
 
 [h3]Polymath Commons[/h3]
@@ -59,19 +55,18 @@ Seven new tradition trees, seven council agendas, a new civic, an ascension perk
 [/list]
 
 [h3]The Grand Tour[/h3]
-[i]Your resort world as the jewel of the galaxy.[/i] Regular empires, needs Resort Colonies.
+[i]Your resort world as the jewel of the galaxy.[/i] Regular empires, needs Resort Colonies. Works for Pleasure Worlds too.
 [list]
-[*][b]Hospitality Academies:[/b] +50% Resort Worker jobs in every Accommodation District.
+[*][b]Hospitality Academies:[/b] +50% Resort Worker jobs in every Accommodation District, and +50% jobs from every resort district specialization.
 [*][b]Package Holidays:[/b] unity and pop happiness grow with every 100 Resort Workers you employ, with no cap.
 [*][b]Galactic Destination:[/b] Tourists on your resort world produce extra trade and unity, more unemployed pops move there, and every 1,000 Tourists add diplomatic weight, with no cap.
 [*][b]Paradise Unbound:[/b] Accommodation Districts make room for more districts, and unlocks the [b]Expand the Resort[/b] decision: up to 5 expansions of +2 max districts each, for alloys, minerals, unity and influence. Together they can more than cancel the resort world's -25% district penalty.
 [/list]
 
 [h2]Council agendas[/h2]
-Seven new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
+Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [list]
 [*][b]The Great Project[/b] (Megaforge): much faster, cheaper megastructures (and more supertensiles); workers produce less.
-[*][b]Overclock Protocol[/b] (Overclocked Network): complex drones +20%; simple drones and job upkeep pay for it.
 [*][b]Eureka Season[/b] (Polymath): +20% research speed; -5 stability.
 [*][b]Feast of Plenty[/b] (Granary): doubles Bumper Crops' growth.
 [*][b]The Harvest Tithe[/b] (Granary): turns 3,000 food into influence and unity, then more food and stability.
@@ -87,24 +82,14 @@ Tired of drawing repeatables you don't want? Requires [b]Gigastructural Construc
 [*]Edicts only appear once their technology could show up.
 [/list]
 
-[h2]Civic: Pampered Masters[/h2]
-A reverse Rogue Servitor: an individualist, biological empire whose robots serve the organics.
-[list]
-[*]Organics are happier and use fewer amenities; robots and robot servants work harder.
-[*][b]Strong downside:[/b] organic workforce -20%, robot assembly -40%, fewer and costlier roboticists, workers demand more consumer goods.
-[*]Not available to gestalts, machine or mechanical species, or cybernetic/synthetic origins. [b]Blocks Cybernetic and Synthetic ascension.[/b]
-[*]Unlocks the Attendant Robotics tradition tree.
-[/list]
-
 [h2]Changes to vanilla content[/h2]
 [list]
-[*][b]The Flesh is Weak[/b] and [b]Synthetic Evolution[/b] can't be taken with Pampered Masters.
 [*][b]Synthetic Fertility[/b]: the origin's uploading situation gains +1 monthly progress for every year that has passed.
-[*]The [b]Accommodation District[/b] and the three [b]holomuseums[/b] gain extra blocks for The Grand Tour and Galactic Broadcast.
+[*]The [b]Accommodation District[/b], the resort district specializations and the three [b]holomuseums[/b] gain extra blocks for The Grand Tour and Galactic Broadcast.
 [*]Every repeatable technology (and Gigastructural's megastructure capacity repeatables) checks its Shelve edict.
-[*][b]Virtuality[/b] can't be chosen as the Synthetic Age path by individual machine empires with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin.
+[*][b]Virtuality[/b] can't be chosen as the Synthetic Age path by individual machine empires with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin (their origin descriptions say so).
 [/list]
-These replace the vanilla definitions of those two ascension perks, that situation, that district, those three buildings, the repeatable technologies and the Synthetic Age path-choice event, plus Gigastructural's repeatables. Other mods that change the same definitions may conflict.
+These replace the vanilla definitions of that situation, that district, those specializations, those three buildings, the repeatable technologies and the Synthetic Age path-choice event, plus Gigastructural's repeatables. Other mods that change the same definitions may conflict.
 
 [h2]Requirements and compatibility[/h2]
 [list]

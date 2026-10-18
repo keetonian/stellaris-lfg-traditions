@@ -3,11 +3,24 @@
 on_monthly_pulse_country = {
 	events = {
 		lfg_resorts.1	# Galactic Destination: resort world modifier + tourist count
+		lfg_shellworlders.1	# Shellworlders: artificial world modifiers
 	}
 }
 
 on_yearly_pulse_country = {
 	events = {
 		lfg_polymath.1	# Reckless Experimentation: yearly lab accident chance
+	}
+}
+
+on_colony_transfer = {
+	events = {
+		lfg_planet.1	# strip the old owner's per-planet tradition modifiers
+	}
+}
+
+on_colony_ownerless = {
+	events = {
+		lfg_planet.1	# strip the old owner's per-planet tradition modifiers
 	}
 }

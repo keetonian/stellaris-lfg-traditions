@@ -52,6 +52,7 @@ ALLOWED_FILES = [
     r"common/situations/zz_lfg_[^/]+\.txt",
     r"common/districts/zz_lfg_[^/]+\.txt",
     r"common/buildings/zz_lfg_[^/]+\.txt",
+    r"common/zones/zz_lfg_[^/]+\.txt",
     r"common/script_values/[^/]+\.txt",
     r"common/scripted_variables/[^/]+\.txt",
     r"common/scripted_triggers/[^/]+\.txt",
@@ -66,6 +67,7 @@ ALLOWED_FILES = [
     r"events/[^/]+\.txt",
     r"interface/[^/]+\.gfx",
     r"localisation/english/[^/]+_l_english\.yml",
+    r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
 KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "ap_lfg_", "lfg_",
@@ -595,8 +597,9 @@ def check_prefixes(mod: Mod, loc: Dict[str, str], r: Report) -> None:
         for e in entries:
             if e.key is not None and not e.key.startswith(KEY_PREFIXES):
                 r.fail(f"{rel}:{e.line}: top-level key {e.key} lacks an lfg prefix")
+    replaced = set(gen_overrides.LOC_OVERRIDES_KEYS)
     for key in loc:
-        if "lfg" not in key and not key.startswith("mod_"):  # mod_<modifier>: loc for modifiers vanilla left unnamed
+        if "lfg" not in key and not key.startswith("mod_") and key not in replaced:  # mod_<modifier>: loc for modifiers vanilla left unnamed
             r.fail(f"localisation key {key} lacks an lfg prefix (could overwrite vanilla/other mods)")
 
 
@@ -648,7 +651,8 @@ def check_references(mod: Mod, game: Optional[Path], giga: Optional[Path], r: Re
         if not rel.startswith("common/") or rel in OVERRIDE_FILES:
             continue
         for e in pdx.walk(entries):
-            if not e.is_block and e.key in lookups and e.value not in lookups[e.key]:
+            # $PARAM$ values are scripted-effect/trigger parameters, filled in at the call site
+            if not e.is_block and e.key in lookups and "$" not in e.value and e.value not in lookups[e.key]:
                 r.fail(f"{rel}:{e.line}: {e.key} = {e.value} is not defined in the game, Giga or this mod")
             if not e.is_block and isinstance(e.value, str) and e.value.startswith("@") and e.value not in variables:
                 r.fail(f"{rel}:{e.line}: scripted variable {e.value} is not defined")

@@ -12,13 +12,12 @@ import check_mod  # noqa: E402
 GAME_INSTALLED = check_mod.DEFAULT_GAME.exists() and check_mod.DEFAULT_GIGA.exists()
 TRADITIONS = "common/traditions/lfg_traditions.txt"
 CATEGORIES = "common/tradition_categories/00_granary_kings_lfg.txt"
-CIVICS = "common/governments/civics/lfg_civics.txt"
 TRAD_LOC = "localisation/english/lfg_traditions_l_english.yml"
 GFX = "interface/lfg_traditions.gfx"
 EVENTS = "events/lfg_species_split_events.txt"
 EDICTS = "common/edicts/lfg_edicts.txt"
 SPLIT_EFFECTS = "common/scripted_effects/lfg_species_split_effects.txt"
-CIVIC_LOC = "localisation/english/lfg_civics_l_english.yml"
+SPECIES_LOC = "localisation/english/lfg_species_l_english.yml"
 AGENDA_LOC = "localisation/english/lfg_agendas_l_english.yml"
 STATICS = "common/static_modifiers/lfg_static_modifiers.txt"
 POLYMATH_EVENTS = "events/lfg_polymath_events.txt"
@@ -46,13 +45,14 @@ class RealModTests(unittest.TestCase):
 
     def test_mod_contents(self):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
-        self.assertEqual(len(mod.top("common/tradition_categories")), 7)
-        self.assertEqual(len(mod.top("common/traditions")), 7 * 7)
-        self.assertIn("civic_lfg_pampered_masters", mod.top("common/governments/civics"))
+        self.assertEqual(len(mod.top("common/tradition_categories")), 6)
+        self.assertEqual(len(mod.top("common/traditions")), 6 * 7)
+        self.assertEqual(mod.top("common/governments/civics"), {})
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3",
-                                                            "lfg_resorts.1"})
-        self.assertEqual(len(mod.top("common/council_agendas")), 8)
+                                                            "lfg_resorts.1", "lfg_shellworlders.1",
+                                                            "lfg_planet.1"})
+        self.assertEqual(len(mod.top("common/council_agendas")), 7)
         self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
         self.assertEqual(len(shelve), 24 + 3)  # one per repeatable tech + megastructure capacity per research area
@@ -86,7 +86,7 @@ class MutationTests(unittest.TestCase):
         self.assertFails("non-numeric value")
 
     def test_parse_error(self):
-        self.edit(CIVICS, "modification = no", "modification = no {")
+        self.edit(EDICTS, "length = 30", "length = 30 {")
         self.assertFails("parse error")
 
     def test_missing_tradition_definition(self):
@@ -132,8 +132,8 @@ class MutationTests(unittest.TestCase):
         self.assertFails("unbalanced § colour codes")
 
     def test_loc_reference_without_loc(self):
-        self.edit(CIVICS, "description = civic_tooltip_lfg_pampered_masters_effects",
-                  "description = civic_tooltip_lfg_pampered_masters_effectz")
+        self.edit(EDICTS, "fail_text = lfg_species_experimentation_no_species",
+                  "fail_text = lfg_species_experimentation_no_speciez")
         self.assertFails("has no localisation")
 
     def test_missing_sprite(self):
@@ -141,11 +141,11 @@ class MutationTests(unittest.TestCase):
         self.assertFails("missing sprite GFX_tr_lfg_granary_tithe_barns")
 
     def test_missing_category_sprite(self):
-        self.edit(GFX, 'name = "GFX_tradition_hex_bg_tradition_lfg_overclock"', 'name = "GFX_x"')
-        self.assertFails("missing sprite GFX_tradition_hex_bg_tradition_lfg_overclock")
+        self.edit(GFX, 'name = "GFX_tradition_hex_bg_tradition_lfg_polymath"', 'name = "GFX_x"')
+        self.assertFails("missing sprite GFX_tradition_hex_bg_tradition_lfg_polymath")
 
     def test_unprefixed_key(self):
-        self.edit(CIVICS, "civic_lfg_pampered_masters = {", "civic_pampered_masters = {")
+        self.edit(EDICTS, "lfg_species_experimentation = {", "species_experimentation = {")
         self.assertFails("lacks an lfg prefix")
 
     def test_tree_file_must_be_named_after_the_tree(self):
@@ -206,7 +206,7 @@ class MutationTests(unittest.TestCase):
         self.assertFails("fires lfg_species_split.2, which is not defined")
 
     def test_event_loc_missing(self):
-        self.edit(CIVIC_LOC, " lfg_species_split.1.others:", " lfg_species_split.1.otherz:")
+        self.edit(SPECIES_LOC, " lfg_species_split.1.others:", " lfg_species_split.1.otherz:")
         self.assertFails("uses lfg_species_split.1.others, which has no localisation")
 
     def test_event_id_outside_namespace(self):
@@ -218,7 +218,7 @@ class MutationTests(unittest.TestCase):
         self.assertFails("namespace species_split lacks an lfg prefix")
 
     def test_edict_loc_missing(self):
-        self.edit(CIVIC_LOC, " edict_lfg_species_experimentation_desc:", " edict_lfg_species_experimentation_dezc:")
+        self.edit(SPECIES_LOC, " edict_lfg_species_experimentation_desc:", " edict_lfg_species_experimentation_dezc:")
         self.assertFails("missing localisation: edict_lfg_species_experimentation_desc")
 
     def test_undefined_scripted_trigger(self):
@@ -298,8 +298,8 @@ class MutationTests(unittest.TestCase):
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
     def test_unknown_technology(self):
-        self.edit(TRADITIONS, "has_technology = tech_robotic_workers", "has_technology = tech_robotic_workerz")
-        self.assertFails("tech_robotic_workerz is not defined",
+        self.edit(TRADITIONS, "has_technology = tech_resort_colonies", "has_technology = tech_resort_colonies_")
+        self.assertFails("tech_resort_colonies_ is not defined",
                          game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
@@ -309,9 +309,9 @@ class MutationTests(unittest.TestCase):
                          game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
-    def test_unknown_origin_in_civic(self):
-        self.edit(CIVICS, "value = origin_mechanists", "value = origin_mechanistz")
-        self.assertFails("origin value origin_mechanistz is not defined",
+    def test_unknown_origin(self):
+        self.edit(EDICTS, "has_origin = origin_evolutionary_predators", "has_origin = origin_evolutionary_predatorz")
+        self.assertFails("has_origin = origin_evolutionary_predatorz is not defined",
                          game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")

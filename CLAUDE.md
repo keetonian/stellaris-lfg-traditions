@@ -1,9 +1,9 @@
 # CLAUDE.md
 
-Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 7 tradition trees, 8 council agendas, the civic
-`civic_lfg_pampered_masters`, the Evolutionary Predators edict `lfg_species_experimentation`, the ascension perk
-`ap_lfg_curated_progress` + 27 generated Shelve edicts, and generated overrides of 2 ascension perks + 1 situation +
-1 district (district_resort) + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script
+Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 6 tradition trees, 7 council agenda definitions (6 agendas), the Evolutionary
+Predators edict `lfg_species_experimentation`, the ascension perk
+`ap_lfg_curated_progress` + 27 generated Shelve edicts, and generated overrides of 1 situation +
+1 district (district_resort) + 8 resort zones + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script
 + event machine_age.4400 (Virtuality blocked for individual machines with Great Ring / Alderson Disk).
 User-facing docs and the full effect tables are in README.md. **Keep README's tables in sync when you change numbers.**
 
@@ -25,9 +25,8 @@ Python 3.9+ stdlib only. Always run with `-I`.
 
 ```
 mod/                                  # exactly what ships
-  common/tradition_categories/00_<tree name>_lfg.txt         # 7 trees, one per file (sort order, see below)
+  common/tradition_categories/00_<tree name>_lfg.txt         # 6 trees, one per file (sort order, see below)
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
-  common/governments/civics/lfg_civics.txt                   # Pampered Masters
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
   common/scripted_variables/lfg_scripted_variables.txt       # @lfg_species_split_* tunables (50 / 50 / -2000)
   common/scripted_triggers/lfg_species_split_triggers.txt    # lfg_species_split_eligible (species scope, prev = country)
@@ -36,10 +35,14 @@ mod/                                  # exactly what ships
   events/lfg_species_split_events.txt                        # species picker event
   events/lfg_polymath_events.txt                             # Reckless Experimentation lab accident (yearly)
   events/lfg_resorts_events.txt                              # Galactic Destination: resort world modifier + tourist count (monthly)
+  events/lfg_shellworlders_events.txt                        # Shellworlders: lfg_shellworld_* modifiers on artificial worlds (monthly)
+  common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
+  events/lfg_planet_events.txt                               # lfg_planet.1: strip per-planet modifiers on owner change
   events/00_lfg_event_overrides.txt                          # GENERATED (machine_age.4400: Virtuality block); 00_ = loads first
-  common/council_agendas/lfg_council_agendas.txt             # 8 agendas, unlocked by tree finishers
+  common/council_agendas/lfg_council_agendas.txt             # 7 agendas, unlocked by tree finishers
   common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + lfg_lab_accident
-  common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1, yearly -> lfg_polymath.1
+  common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1 + lfg_shellworlders.1, yearly -> lfg_polymath.1,
+                                                             #   colony transfer/ownerless -> lfg_planet.1
   common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (resort world, Paradise Unbound)
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)
   common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy)
@@ -47,10 +50,10 @@ mod/                                  # exactly what ships
   common/edicts/lfg_shelve_edicts.txt                        # GENERATED Shelve edicts (from SHELVE in gen_overrides.py)
   common/technology/zz_lfg_repeatable_overrides.txt          # GENERATED (24 repeatables: factor 0 while shelved)
   common/inline_scripts/technology/giga_mega_repeatable.txt  # GENERATED whole-file override of Giga's inline script
-  common/ascension_perks/zz_lfg_ascension_path_overrides.txt # GENERATED
   common/situations/zz_lfg_situation_overrides.txt           # GENERATED
   common/districts/zz_lfg_district_overrides.txt             # GENERATED (district_resort: Hospitality Academies jobs)
   common/buildings/zz_lfg_building_overrides.txt             # GENERATED (3 holomuseums: Holo-Museums bonus)
+  common/zones/zz_lfg_zone_overrides.txt                     # GENERATED (8 resort zones: Hospitality Academies +50% jobs)
   interface/lfg_traditions.gfx                               # sprites -> vanilla .dds (no art ships)
   localisation/english/lfg_*_l_english.yml                   # UTF-8 BOM (lfg_modifiers_*: names for unnamed generated modifiers;
                                                              #   lfg_shelve_* is GENERATED)
@@ -76,6 +79,8 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
   Key `event:<id>` copies one event. **Events are first-definition-wins** (common/ is last-wins), so event overrides go in
   `events/00_lfg_event_overrides.txt` (sorts before vanilla's event files) with the vanilla `namespace` in `PRELUDE`;
   the checker exempts that file from the lfg event-namespace rules.
+  Text of the game/Giga: `LOC_OVERRIDES` (source loc file, key, appended text) -> `localisation/english/replace/lfg_origin_overrides_l_english.yml`
+  (the `replace/` folder wins over other mods' keys; the checker exempts those keys from the lfg-prefix rule).
 - **Every modifier must exist in 4.5.** Look it up in
   `~/Documents/Paradox Interactive/Stellaris/logs/script_documentation/modifiers.log` (the checker does). Pitfalls:
   - `megastructures_cost_mult`, not `megastructure_build_cost_mult` (which doesn't exist)
@@ -91,10 +96,11 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
   Useful triggers: `is_regular_empire`, `is_gestalt`, `is_machine_empire`, `is_individual_machine`, `is_synthetic_empire`,
   `has_cybernetic_ascension`, `has_synthetic_ascension`, `is_nomadic`, `has_origin`, `has_valid_civic`.
   Civic `potential`/`possible` use the list syntax `origin = { NOR = { value = ... } }` (see `common/governments/99_README_GOVERNMENT.txt`).
-- **Civic `possible` can't see ascension perks.** Blocking mid-game ascension requires overriding the perk (that's why
-  `gen_overrides.py` exists). Put the block in the perk's `possible` with a `custom_tooltip`/`fail_text` so it shows greyed out with a reason.
+- **Civic `possible` can't see ascension perks.** Blocking a mid-game choice for some empires means overriding the thing
+  that offers it (perk `possible`, or an event option's `allow`, like `machine_age.4400`) with a `custom_tooltip`/`fail_text`
+  so it shows greyed out with a reason. (The mod has no civics now; Pampered Masters was removed.)
 - **Loc** files must be UTF-8 **with BOM**, start with `l_english:`, one-space indent, `key:0 "text"`. Each tradition needs
-  `key`, `key_desc`, `key_delayed`; each tree `tradition_lfg_x` + `_desc`; the civic `civic_x` + `_desc` + the `description`/
+  `key`, `key_desc`, `key_delayed`; each tree `tradition_lfg_x` + `_desc`; a civic `civic_x` + `_desc` + the `description`/
   `negative_description` keys. Balance every `§Y…§!` colour code.
 
 ## How the pieces connect (adding a tree)
@@ -113,7 +119,7 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
    `GFX_tradition_category_icon_<cat>`, and `GFX_tr_lfg_<tradition>` for the 5 traditions. Point them at vanilla art under
    `gfx/interface/{traditions,tiles,icons/traditions}/`.
 4. Loc keys (see Rules). Then the README table, then `scripts/verify.sh`. Update the tree count in
-   `tests/test_check_mod.py::test_mod_has_six_trees_and_a_civic`.
+   `tests/test_check_mod.py::test_mod_contents`.
 
 ## Sources (macOS)
 
@@ -216,6 +222,25 @@ Predator-only traits: `species_potential_add = { always = no }` + `initial = no`
 leader, habitability, upkeep, or a phenotype tag + `species`), so vanilla `add_random_trait_evopred` can grant it.
 Tag `lfg_predator_only` keeps it out of Species Experimentation (its filter excludes that tag). Loc: `trait_<key>`, `_desc`.
 Per-pop output goes in `resources = { category = planet_pops_traits produces = { ... } }` (like vanilla trait_notofthisworld).
+
+## Planet-only effects from a tradition
+
+Tradition modifiers are country-wide (they reach every planet). For "only on X planets", use a static planet modifier
+kept on the right planets by a hidden monthly event (`on_monthly_pulse_country`) also fired from the tradition's
+`on_enabled`, with a country flag so the trigger is cheap and one last run cleans up after the tradition is lost.
+Examples: Galactic Destination (`lfg_resorts.1`), Shellworlders (`lfg_shellworlders.1` + `lfg_sync_shellworld_modifier`).
+Add every such modifier to `lfg_planet.1` (owner-change cleanup). A count-scaled one is re-added with
+`add_modifier = { ... multiplier = <planet variable> }` only when the count changes (see `lfg_sync_arc_neighbours`).
+`multiplier = <planet variable>` is **verified in game** (Expand the Resort's `lfg_resort_expansion`, as is its
+`multiplier = value:...` decision cost).
+Prefer a real planet-class modifier when one exists (e.g. `planet_artificial_max_districts_add`), which is instant.
+
+## Resort and Pleasure Worlds
+
+A Pleasure World (`col_pleasure`, Shroud + `bliss_accord` flag) is a resort colony with another designation. Always
+check `has_modifier = resort_colony`, never `has_designation = col_resort`, so The Grand Tour covers both. District
+specializations are zones (`common/zones`, sets `resort` / `resort_attraction`); there's no zone-jobs modifier, so zone
+bonuses are per-zone overrides (`RESORT_ZONES` in gen_overrides.py).
 
 ## Curated Progress / Shelve edicts
 

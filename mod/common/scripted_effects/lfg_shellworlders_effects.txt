@@ -1,0 +1,78 @@
+# LFG Traditions - Shellworlders effects.
+
+# Planet scope (owner = the country). Keeps static modifier $MODIFIER$ on this planet exactly while it is artificial and
+# its owner has $TRADITION$.
+lfg_sync_shellworld_modifier = {
+	if = {
+		limit = {
+			is_artificial = yes
+			owner = { has_tradition = $TRADITION$ }
+		}
+		if = {
+			limit = { NOT = { has_modifier = $MODIFIER$ } }
+			add_modifier = { modifier = $MODIFIER$ days = -1 }
+		}
+	}
+	else_if = {
+		limit = { has_modifier = $MODIFIER$ }
+		remove_modifier = $MODIFIER$
+	}
+}
+
+# Planet scope. Closed Ecology downside: lfg_shellworld_natural_world on owned natural worlds while it is held.
+lfg_sync_shellworld_natural_world = {
+	if = {
+		limit = {
+			is_artificial = no
+			owner = { has_tradition = tr_lfg_shellworlders_closed_ecology }
+		}
+		if = {
+			limit = { NOT = { has_modifier = lfg_shellworld_natural_world } }
+			add_modifier = { modifier = lfg_shellworld_natural_world days = -1 }
+		}
+	}
+	else_if = {
+		limit = { has_modifier = lfg_shellworld_natural_world }
+		remove_modifier = lfg_shellworld_natural_world
+	}
+}
+
+# Planet scope. Arc Neighbours: lfg_shellworld_arc_neighbours with multiplier = the other artificial worlds the owner
+# has in this system (planet variable lfg_arc_neighbours). Re-added only when the count changes.
+lfg_sync_arc_neighbours = {
+	set_variable = { which = lfg_arc_neighbours_now value = 0 }
+	if = {
+		limit = {
+			is_artificial = yes
+			owner = { has_tradition = tr_lfg_shellworlders_arc_neighbours }
+		}
+		solar_system = {
+			every_system_planet = {
+				limit = {
+					is_artificial = yes
+					exists = owner
+					owner = { is_same_value = prevprev.owner }
+					NOT = { is_same_value = prevprev }
+				}
+				prevprev = { change_variable = { which = lfg_arc_neighbours_now value = 1 } }
+			}
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				NOT = { check_variable = { which = lfg_arc_neighbours value = lfg_arc_neighbours_now } }
+				AND = {
+					check_variable = { which = lfg_arc_neighbours_now value > 0 }
+					NOT = { has_modifier = lfg_shellworld_arc_neighbours }
+				}
+			}
+		}
+		remove_modifier = lfg_shellworld_arc_neighbours
+		set_variable = { which = lfg_arc_neighbours value = lfg_arc_neighbours_now }
+		if = {
+			limit = { check_variable = { which = lfg_arc_neighbours value > 0 } }
+			add_modifier = { modifier = lfg_shellworld_arc_neighbours days = -1 multiplier = lfg_arc_neighbours }
+		}
+	}
+}

@@ -37,21 +37,6 @@ agenda_lfg_great_project_classic = {
 	finish_modifier = agenda_lfg_great_project_classic_finish
 }
 
-agenda_lfg_overclock_protocol = {
-	agenda_cost = @lfg_agenda_cost
-	allow = {
-		has_tradition = tr_lfg_overclock_finish
-	}
-	potential = {
-		has_paragon_dlc = yes
-		is_machine_empire = yes
-	}
-	modifier = {
-		planet_jobs_complex_drone_produces_mult = 0.03
-	}
-	finish_modifier = agenda_lfg_overclock_protocol_finish
-}
-
 agenda_lfg_eureka_season = {
 	agenda_cost = @lfg_agenda_cost
 	allow = {

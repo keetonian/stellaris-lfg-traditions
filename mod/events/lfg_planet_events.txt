@@ -1,0 +1,21 @@
+# LFG Traditions - planet housekeeping events.
+namespace = lfg_planet
+
+# on_colony_transfer / on_colony_ownerless: the per-planet tradition modifiers belong to the old owner. Strip them;
+# the new owner's monthly sync (lfg_shellworlders.1, lfg_resorts.1) re-adds whatever its own traditions grant.
+planet_event = {
+	id = lfg_planet.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		remove_modifier = lfg_shellworld_adopt
+		remove_modifier = lfg_shellworld_compact_living
+		remove_modifier = lfg_shellworld_artificial_gravity
+		remove_modifier = lfg_shellworld_closed_ecology
+		remove_modifier = lfg_shellworld_arc_neighbours
+		remove_modifier = lfg_shellworld_natural_world
+		remove_modifier = lfg_galactic_destination
+		set_variable = { which = lfg_arc_neighbours value = 0 }
+	}
+}

@@ -1,14 +1,5 @@
 ﻿l_english:
- civic_lfg_pampered_masters:0 "Pampered Masters"
- civic_lfg_pampered_masters_desc:0 "§RWARNING: Incompatible with Cybernetic and Synthetic Ascension.§!\n\nOur robots do the work so that our people do not have to. Every citizen is attended to by a carefully made and licensed robot servant. Robots are precious and expensive to make, and our citizens have grown very comfortable."
- civic_tooltip_lfg_pampered_masters_effects:0 "- Organic pops are happier and use fewer amenities\n- Robot pops and robot servants work harder"
- civic_tooltip_lfg_pampered_masters_negative_effects:0 "- Organic pops work far less\n- Robot assembly is much slower and roboticists are fewer and cost more alloys\n- Workers expect more consumer goods\n- §RCannot take the Cybernetic or Synthetic ascension paths§!"
- civic_tooltip_lfg_not_machine_or_synthetic:0 "Not a Machine or Mechanical species"
- civic_tooltip_lfg_not_robotic_origin:0 "Not a cybernetic, synthetic or robot-focused origin"
- lfg_requires_not_pampered_masters:0 "$TRIGGER_FAIL$Incompatible with the §YPampered Masters§! civic"
- lfg_situation_synthetic_fertility_acceleration_desc:0 "Years since the start: §R+1§! per year"
-
- # ---------------- Species Experimentation (Evolutionary Predators edict) ----------------
+ # Evolutionary Predators: Species Experimentation edict + event, Inherited Genius trait.
  edict_lfg_species_experimentation:0 "Species Experimentation"
  edict_lfg_species_experimentation_desc:0 "Our predatory evolution can be forced. Subject one of our secondary species to brutal experiments: §Rhalf of them will die§!, and the survivors are split into §Y50§! subspecies, each with a random new positive trait.\n\nRequires a species with at least §Y100§! pops that isn't our main species or one of its subspecies. Costs §Y2000§! £society£ Society Research when a species is chosen."
  lfg_species_experimentation_no_species:0 "$TRIGGER_FAIL$Requires a species with at least §Y100§! pops that isn't our main species or one of its subspecies"
@@ -24,4 +15,3 @@
  lfg_species_split.1.split_tt:0 "§R-2000§! £society£ Society Research\n§RHalf of this species dies.§! The survivors are split into §Y50§! subspecies with a random new positive trait each."
  trait_lfg_inherited_genius:0 "Inherited Genius"
  trait_lfg_inherited_genius_desc:0 "Generations of predatory evolution have rewarded only the sharpest minds. Every member of this species is born with an instinct for discovery, and contributes to our research simply by living among us."
- lfg_virtuality_blocked_by_origin:0 "$TRIGGER_FAIL$Individual machine empires whose origin is §Y$origin_great_ring$§! or §Y$origin_alderson$§! cannot take the Virtuality path"

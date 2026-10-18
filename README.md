@@ -2,12 +2,11 @@
 
 A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games that adds:
 
-- **7 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
-- **8 council agendas** unlocked by the trees.
-- **1 civic, Pampered Masters**: a "reverse Rogue Servitor", where biological masters are served by robots.
+- **6 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
+- **6 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
 - **1 ascension perk, Curated Progress** (after Gigastructural Constructs): unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options.
 - **1 edict, Species Experimentation** (Evolutionary Predators, after finishing Mutation): half of a secondary species dies, the rest splits into 50 random-trait subspecies.
-- **Overrides** of vanilla/Gigastructural definitions (generated, see [Overrides](#overrides-of-vanilla-and-gigastructural-content)): the civic blocks Cybernetic/Synthetic ascension, Synthetic Fertility's situation speeds up every year, two trees extend the Accommodation District and holomuseums, and the repeatable techs check the Shelve edicts.
+- **Overrides** of vanilla/Gigastructural definitions (generated, see [Overrides](#overrides-of-vanilla-and-gigastructural-content)): Synthetic Fertility's situation speeds up every year, two trees extend the Accommodation District and holomuseums, and the repeatable techs check the Shelve edicts.
 
 This is a gameplay mod (it adds `common/` files), so it **changes the game checksum**. Everyone in a multiplayer game needs it.
 
@@ -19,7 +18,7 @@ This is a gameplay mod (it adds `common/` files), so it **changes the game check
 - Stellaris 4.5.x
 - [Gigastructural Engineering & More (4.5)](https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237). Required: the Megaforge tree uses its supertensiles, techs and origins.
 - Recommended: [A Lot of Traditions - 24 Tradition Slots](https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981).
-  Vanilla allows 7 trees in total, and this mod adds 7 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
+  Vanilla allows 7 trees in total, and this mod adds 6 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
 
 Load order: after Gigastructural.
 
@@ -45,31 +44,28 @@ Supertensile bonuses need Gigastructural's job-based build mode (`giga_buildcap_
 | 5. Monument Economy ⚙ | Unlocks the **Monument Economy** policy. Per megastructure owned (kilostructures count, ruins don't; no cap): *Balanced* (default) no effect, *Monuments First* megastructure output +1% · job output −0.5%, or *People First* job output +0.5% · megastructure output −1%. Monthly supertensiles +10 |
 | Finish | +1 Megaconstruction Logistics Hub limit (else +1 megastructure build limit) |
 
-### Attendant Robotics: fewer, better robots that serve organics
-**Who:** only empires with the **Pampered Masters** civic. **Adopt requires:** *Robotic Workers*. **Hook:** robots excel only while rare.
+### Shellworlders: life on artificial worlds
+**Who:** artificial-world origins (Giga: Frameworld, Decaying Birch World, Great Ring, Interstellar Ring, Alderson Disk;
+vanilla: Shattered Ring, Void Dwellers), or after *Orbital Habitats* / *Ring World*. **Hook:** every bonus applies on your
+**artificial worlds** (`is_artificial`: habitats, ring segments, Alderson Disk slices, Maginot worlds and Giga's other habitable
+megastructures), and megastructure build speed grows with how many you own.
 
 | Tradition | Effect |
 |---|---|
-| Adopt | Robot workforce +5% · robot assembly −5% |
-| 1. Domestic Protocols | Servant workforce +25%, organic amenity usage −5% |
-| 2. Quality over Quantity ⚙ | Robots under 15% of pops: robot workforce +20%; over 35%: −10% · robot assembly −10% |
-| 3. Licensed Roboticists | Robot upkeep −15% · roboticist max workforce −10% |
-| 4. Personal Valets | Biological happiness +10% |
-| 5. Household AI | Robot amenity usage −25%, robot workforce +10% |
-| Finish | **Doubles the civic's pampering:** biological happiness +10%, organic amenity usage −20%, servant workforce +25% |
+| Adopt | Artificial worlds: job efficiency +5% · habitat cost −10% · **organic growth −10%, robot assembly −10%** |
+| 1. Compact Living | Artificial worlds: housing usage −10% |
+| 2. Artificial Gravity | Artificial worlds: stability +3 |
+| 3. Arc Foundries ⚙ | Megastructure build speed +5% per artificial world owned (no cap) |
+| 4. Closed Ecology | Artificial worlds: job efficiency +10% · **natural worlds: happiness −10%, stability −10%** |
+| 5. Arc Neighbours ⚙ | Each artificial world: job efficiency +3% per other artificial world you own in its system (no cap; a full ring world gives each segment +9%) |
+| Finish | +1 max districts on artificial worlds |
 
-### Overclocked Network: complex drones over simple drones
-**Who:** Machine Intelligence only. **Hook:** runs hot: an energy deficit throttles it, war pushes it. **Agenda:** Overclock Protocol.
-
-| Tradition | Effect |
-|---|---|
-| Adopt | Complex drone output +5% · simple drone output −5% |
-| 1. Priority Threads | Complex drone output +10% · simple drone output −5% |
-| 2. Coolant Loops ⚙ | Job upkeep −10% · during an energy deficit, complex drone output −25% |
-| 3. Burst Assembly | Pop assembly +10% · simple drone output −5% |
-| 4. Heuristic Cores | Research speed +5%, +1 research option · minerals −5% |
-| 5. Redline ⚙ | Complex drone workforce +10% (+10% more and ship fire rate +5% at war) · simple drone workforce −10% |
-| Finish | Unlocks agenda **Overclock Protocol** |
+Tradition modifiers are empire-wide, so the planet effects are static modifiers (`lfg_shellworld_*`, one per tradition)
+that the hidden event `lfg_shellworlders.1` keeps on every owned artificial world: on adoption and monthly (new or lost
+worlds can lag up to a month). The natural-world penalty is `lfg_shellworld_natural_world`, kept the same way. Arc Neighbours
+re-adds its modifier with the neighbour count as multiplier when the count changes (planet variable `lfg_arc_neighbours`).
+When a planet changes owner, `lfg_planet.1` (`on_colony_transfer`/`on_colony_ownerless`) strips all these per-planet modifiers
+(and Galactic Destination's); the new owner's sync re-adds its own. The finisher uses vanilla's `planet_artificial_max_districts_add`, which applies instantly.
 
 ### Polymath Commons: research from everyone
 **Who:** any empire. **Hook:** research scales with species and rivals; experiments go wrong. **Agenda:** Eureka Season.
@@ -114,12 +110,14 @@ Supertensile bonuses need Gigastructural's job-based build mode (`giga_buildcap_
 ### The Grand Tour: resort worlds as showpieces
 **Who:** regular empires. **Adopt requires:** *Resort Colonies*. **Hook:** an empire can only have **one** resort world, so bonuses scale with how built-up it is: per 100 Resort Workers employed and per 1,000 Tourists there (both uncapped).
 **Tourists** are vanilla's civilian job on a resort world (2 trade + 50 amenities each).
+**Pleasure Worlds** (Shroud, Bliss Accord) are resort colonies with a different designation, so everything here applies to them too
+(the mod only checks the `resort_colony` modifier, never the `col_resort` designation).
 **Agenda (on adoption):** Grand Tour Season. Resort Workers share the entertainer category, so entertainer bonuses (e.g. Galactic Broadcast) also boost them.
 
 | Tradition | Effect |
 |---|---|
 | Adopt | Resort Worker workforce +10%, resort district build speed +25% · unlocks agenda **Grand Tour Season** |
-| 1. Hospitality Academies | Each **Accommodation District** gives +150 Resort Worker jobs (+50%; via a generated `district_resort` override, see below) |
+| 1. Hospitality Academies | Each **Accommodation District** gives +150 Resort Worker jobs (+50%; via a generated `district_resort` override), and every resort-world **district specialization** gives +50% jobs: Resort (+50 Resort Workers), Entertainment (+50 Entertainers), and the attractions Zoo (+100 Biologists), Grand Museum and Spiritual Retreat (+100 Bureaucrats), Hunting Ground (+100 Wranglers), Restoration Enclave (+100 Healthcare), Proving Grounds (+100 Entertainers). Generated zone overrides, modelled on vanilla's Commercial Enterprise |
 | 2. Package Holidays ⚙ | Per 100 Resort Workers (no cap): unity +0.5%, pop happiness +0.25% |
 | 3. Paradise Unbound | Each Accommodation District adds +0.5 max districts to the resort world · unlocks the **Expand the Resort** decision · +1 max Accommodation District, resort district build speed +25% |
 | 4. Tourist Traps | Resort Worker workforce +15% · entertainer/resort worker consumer goods upkeep +0.5 |
@@ -142,26 +140,11 @@ prepares an agenda over time; when launched, its effect lasts **10 years**.
 | Agenda | Tree | While preparing | Launch / 10-year effect |
 |---|---|---|---|
 | The Great Project | Megaforge (on adoption) | Megastructure build speed +5% | With supertensiles on: supertensile output +25%, megastructure build speed +33%, cost −10% · worker output −10%. With supertensiles off (separate version, same name): build speed +33%, cost −20% · worker output −10% |
-| Overclock Protocol | Overclocked Network | Complex drone output +3% | Complex drone output +20% · simple drone output −10%, job upkeep +10% |
 | Eureka Season | Polymath | Research speed +3% | Research speed +20% · stability −5 |
 | Feast of Plenty | Granary (on adoption) | Farmer output +5% | For 10 years: doubles the finisher's Bumper Crops (another +1% organic growth per 1,000 monthly food income) |
 | The Harvest Tithe | Granary | Farmer output +5% | On launch, if you have 3,000 food: −3,000 food, +150 influence, +2,000 unity. Then food +10%, stability +2 |
 | Gala Season | Galactic Broadcast | Entertainer output +5% | Happiness +10%, unity +10% · trade −10% |
 | Grand Tour Season | The Grand Tour (on adoption) | Resort Worker workforce +5% | Happiness +10%, trade +15%, Resort Worker workforce +25% · worker output −5% |
-
-## Civic: Pampered Masters
-
-"Our robots do the work so that our people do not have to." This is the reverse of Rogue Servitor: an
-**individualist, biological** empire whose robots serve the organics. Robots are precious and few, and the masters are comfortable and lazy.
-
-- **Who can take it:** non-gestalt empires whose species is not Machine or Mechanical. **Not** with the origins Cybernetic Creed,
-  Synthetic Fertility, Mechanists or Unplugged, the civics Augmentation Bazaars or Permanent Employment, or Fanatic Spiritualist ethics.
-- **Upsides:** biological happiness +10%, organic amenity usage −20%, robot workforce +20%, servant (domestic robot) workforce +25%.
-- **Strong downsides:** organic workforce **−20%**, robot assembly **−40%**, roboticist jobs −25%, roboticist alloy upkeep +1,
-  worker consumer goods upkeep +0.1.
-- **No Cybernetic or Synthetic ascension.** *The Flesh is Weak* and *Synthetic Evolution* show as unavailable, with the reason
-  "Incompatible with the Pampered Masters civic". Psionic and Genetic ascension remain available.
-- Pairs with the **Attendant Robotics** tree. Tip: give your robots *Domestic Protocols* and Servitude citizenship so they take the Servant job.
 
 ## Ascension perk: Curated Progress
 
@@ -247,12 +230,13 @@ These replace vanilla and Gigastructural definitions. Other mods that change the
 
 | Vanilla definition | Change |
 |---|---|
-| Ascension perks `ap_the_flesh_is_weak`, `ap_synthetic_evolution` | Added requirement: not Pampered Masters |
 | Buildings `xeno_geology_holomuseum`, `aesthetic_wonders_holomuseum`, `galactic_history_holomuseum` | Added: their entertainer unity/research bonus again while the owner has Holo-Museums |
 | District `district_resort` (Accommodation District) | Added: +150 Resort Worker jobs per district (Hospitality Academies) and +0.5 max districts per district (Paradise Unbound) |
 | The 24 repeatable techs in the Curated Progress table (19 vanilla, 5 Giga) | Added to `weight_modifier`: never drawn while their Shelve edict is active |
 | Giga inline script `common/inline_scripts/technology/giga_mega_repeatable.txt` (all megastructure capacity repeatables) | Same, with `has_edict = lfg_shelve_megastructure_capacity_$area$`. Inline scripts can only be replaced as a whole file (same path, this mod loads after Giga) |
 | Event `machine_age.4400` (Synthetic Age transformation: pick Nanotech / Modularity / Virtuality) | Virtuality option greyed out ("Individual machine empires whose origin is The Great Ring or Alderson Disk cannot take the Virtuality path") for **individual machine** empires with Giga's **The Great Ring** or **Alderson Disk** origin. Machine Intelligences and other origins are unaffected. Events are first-definition-wins, so this file is `events/00_lfg_event_overrides.txt` (sorts before vanilla's) |
+| The 8 resort-world zones (`zone_resort`, `zone_resort_entertainment`, `zone_resort_zoo`, `zone_resort_grand_museum`, `zone_resort_hunting_ground`, `zone_resort_spiritual_retreat`, `zone_resort_restoration_enclave`, `zone_resort_proving_grounds`) | Added: +50% of the zone's jobs with Hospitality Academies |
+| Giga loc `origin_tooltip_great_ring_effects`, `origin_alderson_effects` (origin selection cards) | Appended: "Individual machine empires can't take the Virtuality path (LFG Traditions)." Generated from Giga's text into `localisation/english/replace/` |
 | Situation `situation_synthetic_fertility_digitization` (the Synthetic Fertility origin's "uploading" situation) | Monthly progress **+1 for every year since game start**, on top of the vanilla base of 15 (year 10: 25/month). It completes noticeably sooner. |
 
 The override files are **generated** from the installed game and Gigastructural by `tools/gen_overrides.py`, so they're
@@ -299,15 +283,19 @@ scripts/verify.sh --require-sources  # before a release: fail if game/Giga files
 
 CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't need game files on every push.
 
+**Verified in game:**
+- Expand the Resort: the decision works, including its growing cost and the expansion modifier applied with
+  `multiplier = <planet variable>`.
+
 **Still to test in game:**
+- Shellworlders: modifiers appear on artificial / natural worlds; Arc Neighbours scales with neighbours in the system.
 - Virtuality block: an individual machine Great Ring / Alderson Disk empire sees Virtuality greyed out in the Synthetic Age path choice
   (and error.log shows our `machine_age.4400` winning, not vanilla's).
 - Curated Progress: shown after Gigastructural Constructs; Shelve edicts appear with the tech's name, charge research upkeep,
   and a shelved tech (including a megastructure capacity repeatable) stops appearing in new research options.
 - Each tree appears only for the right empires.
-- The civic is blocked for cybernetic/machine/synthetic setups, and the two ascension perks show the new requirement.
-- Hooks: scaled bonuses (per species, rival, contact, decade, stored food/energy) and tiers (megastructures, artificial worlds,
-  robot share) apply as described; agendas appear after finishing their tree; Reckless Experimentation's lab accident fires.
+- Hooks: scaled bonuses (per species, rival, contact, megastructure, artificial world, stored food, food income,
+  Resort Worker, Tourist) apply as described; agendas appear after finishing their tree; Reckless Experimentation's lab accident fires.
 - Species Experimentation: only Evolutionary Predators who finished Mutation see it; your main species and its subspecies are never offered;
   under 100 pops it's greyed out; picking a species kills half of it, creates 50 subspecies and deducts 2000 society research.
 - A Synthetic Fertility empire's situation tooltip shows the yearly line and the rate grows each year.
@@ -344,8 +332,9 @@ Publishing to the Workshop is local-only on purpose: CI would need your Steam cr
 
 ## Ideas for later
 
+- Rework **Overclocked Network** (Machine Intelligence: complex vs simple drones; removed in 0.2.1, last version in git history).
+
 - **Leisure Society** (civilians over workers) was removed for a rework; the old version is in git history (before this change).
 
 - Custom icons and art instead of reused vanilla icons.
 - `tradition_swap` variants with gestalt- and nomad-specific names and text.
-- A start-of-game effect for Pampered Masters that gives the founder robots *Domestic Protocols* and Servitude citizenship.

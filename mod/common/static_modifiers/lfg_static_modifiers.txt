@@ -16,12 +16,6 @@ agenda_lfg_great_project_classic_finish = {
 	planet_jobs_worker_produces_mult = -0.10
 }
 
-agenda_lfg_overclock_protocol_finish = {
-	planet_jobs_complex_drone_produces_mult = 0.20
-	planet_jobs_simple_drone_produces_mult = -0.10
-	planet_jobs_upkeep_mult = 0.10
-}
-
 agenda_lfg_eureka_season_finish = {
 	all_technology_research_speed = 0.20
 	planet_stability_add = -5
@@ -84,3 +78,39 @@ agenda_lfg_feast_of_plenty_finish = {
 	custom_tooltip = agenda_lfg_feast_of_plenty_finish_tt
 }
 
+
+# Shellworlders: planet modifiers kept on every owned artificial world (is_artificial) while the matching tradition is
+# held, by lfg_shellworlders.1. One per tradition, so the planet view shows where each bonus comes from.
+lfg_shellworld_adopt = {
+	pop_bonus_workforce_mult = 0.05
+	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon_frame = 1
+}
+lfg_shellworld_compact_living = {
+	pop_housing_usage_mult = -0.10
+	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon_frame = 1
+}
+lfg_shellworld_artificial_gravity = {
+	planet_stability_add = 3
+	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon_frame = 1
+}
+# Closed Ecology downside: on every owned natural (non-artificial) world while the tradition is held.
+lfg_shellworld_natural_world = {
+	pop_happiness = -0.10
+	planet_stability_mult = -0.10
+	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon_frame = 3
+}
+lfg_shellworld_closed_ecology = {
+	pop_bonus_workforce_mult = 0.10
+	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon_frame = 1
+}
+# Added with multiplier = other artificial worlds we own in the same system.
+lfg_shellworld_arc_neighbours = {
+	pop_bonus_workforce_mult = 0.03
+	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon_frame = 1
+}

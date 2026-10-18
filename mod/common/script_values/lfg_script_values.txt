@@ -146,3 +146,17 @@ lfg_num_commercial_pacts = {
 		mode = add
 	}
 }
+
+# Shellworlders - Arc Foundries: artificial worlds owned (is_artificial), uncapped. Owned planets are colonies.
+lfg_num_artificial_worlds = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = count_owned_planet
+		parameters = {
+			limit = {
+				is_artificial = yes
+			}
+		}
+		mode = add
+	}
+}

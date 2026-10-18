@@ -24,12 +24,6 @@ DEFAULT_GIGA = STEAM / "workshop/content/281990/1121692237"
 # Sources starting with this prefix are read from the Gigastructural directory instead of the game.
 GIGA = "giga:"
 
-FLESH_BLOCK = """\t\tcustom_tooltip = {
-\t\t\tfail_text = "lfg_requires_not_pampered_masters"
-\t\t\tNOT = { has_valid_civic = civic_lfg_pampered_masters }
-\t\t}
-"""
-
 SYNTH_FERTILITY_BLOCK = """\t\tmodifier = {
 \t\t\tadd = value:lfg_synthetic_fertility_acceleration
 \t\t\tdesc = lfg_situation_synthetic_fertility_acceleration_desc
@@ -61,6 +55,38 @@ RESORT_DISTRICT_BLOCK = """\ttriggered_planet_modifier = {
 \t\t}
 \t}
 """
+
+def resort_zone_block(job: str, amount: str) -> str:
+    """Hospitality Academies: +50% of a resort-world zone's jobs (like vanilla's tr_mercantile_commercial_enterprise
+    in jobs/zone_resort_worker_add). Resort and Pleasure Worlds are both resort_colony planets."""
+    return f"""\ttriggered_district_planet_modifier = {{
+\t\tpotential = {{
+\t\t\texists = owner
+\t\t\towner = {{
+\t\t\t\tis_regular_empire = yes
+\t\t\t\thas_active_tradition = tr_lfg_resorts_hospitality_academies
+\t\t\t}}
+\t\t\thas_modifier = resort_colony
+\t\t}}
+\t\tjob_{job}_add = {amount}
+\t\tmult = 0.5
+\t}}
+"""
+
+
+# Resort-world district specializations (zones in the resort / resort_attraction sets) and the job each adds.
+RESORT_ZONES = [
+    ("zone_resort", "resort_worker", "@scaling_district_1_job"),
+    ("zone_resort_entertainment", "entertainer", "@scaling_district_1_job"),
+    ("zone_resort_zoo", "biologist", "@doubled_scaling_district_1_job"),
+    ("zone_resort_grand_museum", "bureaucrat", "@doubled_scaling_district_1_job"),
+    ("zone_resort_hunting_ground", "wrangler", "@doubled_scaling_district_1_job"),
+    ("zone_resort_spiritual_retreat", "bureaucrat", "@doubled_scaling_district_1_job"),
+    ("zone_resort_restoration_enclave", "healthcare", "@doubled_scaling_district_1_job"),
+    ("zone_resort_proving_grounds", "entertainer", "@doubled_scaling_district_1_job"),
+]
+ZONE_SETS_ANCHOR = r"^\tzone_sets = \{\n(?:\t\t\w+\n)+\t\}\n"
+
 
 def holomuseum_block(research: str) -> str:
     """Galactic Broadcast - Holo-Museums: the museum's regular-empire entertainer bonuses again (not its upkeep),
@@ -177,16 +203,16 @@ def shelve_tech_block(edict: str, indent: str = "\t\t") -> str:
 
 # out file -> list of (vanilla source file, top-level key, anchor regex, snippet inserted after the anchor)
 OVERRIDES = {
-    "mod/common/ascension_perks/zz_lfg_ascension_path_overrides.txt": [
-        ("common/ascension_perks/00_ascension_paths.txt", "ap_the_flesh_is_weak", r"^\tpossible = \{\n", FLESH_BLOCK),
-        ("common/ascension_perks/00_ascension_paths.txt", "ap_synthetic_evolution", r"^\tpossible = \{\n", FLESH_BLOCK),
-    ],
     "mod/common/districts/zz_lfg_district_overrides.txt": [
         # Accommodation District: the regular-empire block that grants its resort workers, then our extra block.
         ("common/districts/00_urban_districts.txt", "district_resort",
          r"^\ttriggered_planet_modifier = \{\n\t\tpotential = \{\n\t\t\texists = owner\n\t\t\towner = \{\n"
          r"\t\t\t\tis_regular_empire = yes\n\t\t\t\}\n\t\t\}\n\t\tmodifier = \{\n"
          r"\t\t\tjob_resort_worker_add = @special_district_jobs\n\t\t\}\n\t\}\n", RESORT_DISTRICT_BLOCK),
+    ],
+    "mod/common/zones/zz_lfg_zone_overrides.txt": [
+        ("common/zones/00_zones.txt", zone, ZONE_SETS_ANCHOR, resort_zone_block(job, amount))
+        for zone, job, amount in RESORT_ZONES
     ],
     "mod/common/buildings/zz_lfg_building_overrides.txt": [
         (HOLOMUSEUMS, "xeno_geology_holomuseum", holomuseum_anchor("engineering"), holomuseum_block("engineering")),
@@ -214,6 +240,15 @@ OVERRIDES = {
 }
 # Lines written after the header of an override file (event files must declare the namespace of their ids).
 PRELUDE = {"mod/events/00_lfg_event_overrides.txt": "\nnamespace = machine_age\n"}
+# Localisation overrides: (source loc file, key, text appended to its value). Written to localisation/english/replace/,
+# which the game loads over other mods' keys. Generated from the source so the original text stays current.
+VIRTUALITY_NOTE = "\\n- §RIndividual machine empires can't take the Virtuality path§! (LFG Traditions)."
+LOC_OVERRIDES_FILE = "mod/localisation/english/replace/lfg_origin_overrides_l_english.yml"
+LOC_OVERRIDES = [
+    (GIGA + "localisation/english/giga_l_english.yml", "origin_tooltip_great_ring_effects", VIRTUALITY_NOTE),
+    (GIGA + "localisation/english/giga_alderson_l_english.yml", "origin_alderson_effects", VIRTUALITY_NOTE),
+]
+LOC_OVERRIDES_KEYS = [key for _src, key, _extra in LOC_OVERRIDES]
 SHELVE_EDICTS_FILE = "mod/common/edicts/lfg_shelve_edicts.txt"
 SHELVE_LOC_FILE = "mod/localisation/english/lfg_shelve_l_english.yml"
 
@@ -341,6 +376,17 @@ def generate_shelve_loc() -> str:
     return "".join(lines)
 
 
+def generate_loc_overrides(game: Path, giga: Path) -> str:
+    lines = ["\ufeffl_english:\n",
+             " # GENERATED by tools/gen_overrides.py - do not edit by hand. Source text + an LFG note appended.\n"]
+    for src, key, extra in LOC_OVERRIDES:
+        hits = re.findall(rf'^[ \t]+{re.escape(key)}:\d*[ \t]*"(.*)"[ \t]*$', read_source(src, game, giga), re.M)
+        if len(hits) != 1:
+            raise GenError(f"expected exactly one localisation key {key} in {src}, found {len(hits)}")
+        lines.append(f' {key}:0 "{hits[0]}{extra}"\n')
+    return "".join(lines)
+
+
 def generate(game: Path, giga: Path = DEFAULT_GIGA) -> dict[str, str]:
     out: dict[str, str] = {}
     for out_path, items in OVERRIDES.items():
@@ -374,6 +420,7 @@ def generate(game: Path, giga: Path = DEFAULT_GIGA) -> dict[str, str]:
         out[out_path] = "".join(parts)
     out[SHELVE_EDICTS_FILE] = generate_shelve_edicts()
     out[SHELVE_LOC_FILE] = generate_shelve_loc()
+    out[LOC_OVERRIDES_FILE] = generate_loc_overrides(game, giga)
     return out
 
 

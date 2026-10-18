@@ -1,0 +1,34 @@
+# LFG Traditions - Shellworlders events.
+namespace = lfg_shellworlders
+
+# Monthly (on_monthly_pulse_country) and when a Shellworlders tradition is adopted: keep the lfg_shellworld_* planet
+# modifiers on every owned artificial world (and only there). Countries without the tree cost two lookups; the flag
+# lets one last run clean up after the tree is lost.
+country_event = {
+	id = lfg_shellworlders.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_tradition = tr_lfg_shellworlders_adopt
+			has_country_flag = lfg_shellworld_applied
+		}
+	}
+
+	immediate = {
+		remove_country_flag = lfg_shellworld_applied
+		if = {
+			limit = { has_tradition = tr_lfg_shellworlders_adopt }
+			set_country_flag = lfg_shellworld_applied
+		}
+		every_owned_planet = {
+			lfg_sync_shellworld_modifier = { MODIFIER = lfg_shellworld_adopt TRADITION = tr_lfg_shellworlders_adopt }
+			lfg_sync_shellworld_modifier = { MODIFIER = lfg_shellworld_compact_living TRADITION = tr_lfg_shellworlders_compact_living }
+			lfg_sync_shellworld_modifier = { MODIFIER = lfg_shellworld_artificial_gravity TRADITION = tr_lfg_shellworlders_artificial_gravity }
+			lfg_sync_shellworld_modifier = { MODIFIER = lfg_shellworld_closed_ecology TRADITION = tr_lfg_shellworlders_closed_ecology }
+			lfg_sync_arc_neighbours = yes
+			lfg_sync_shellworld_natural_world = yes
+		}
+	}
+}

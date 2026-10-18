@@ -109,6 +109,21 @@ situation_event = { # Tradition 1
 """
 
 
+def fake_zone(key):
+    return f"""{key} = {{
+\tbase_buildtime = @zone_buildtime
+\tzone_sets = {{
+\t\tresort
+\t}}
+\tmax_buildings = 1
+}}
+"""
+
+
+FAKE_ZONES = "zone_urban = {\n\tzone_sets = {\n\t\turban\n\t}\n}\n" + "".join(
+    fake_zone(z) for z, _job, _amount in gen_overrides.RESORT_ZONES)
+
+
 def fake_tech(key):
     return f"""{key} = {{
 \tarea = physics
@@ -143,6 +158,8 @@ class GenOverridesTests(unittest.TestCase):
         (self.game / "common/situations/08_machine_age_situations.txt").write_text(FAKE_SITUATIONS)
         (self.game / "launcher-settings.json").write_text('{ "rawVersion": "v9.9.9" }')
         (self.game / "events").mkdir()
+        (self.game / "common/zones").mkdir()
+        (self.game / "common/zones/00_zones.txt").write_text(FAKE_ZONES)
         (self.game / "events/machine_age_situation_events_3.txt").write_text(FAKE_EVENTS)
         self.giga = self.tmp / "giga"
         (self.giga / "descriptor.mod").parent.mkdir(parents=True)
@@ -154,6 +171,12 @@ class GenOverridesTests(unittest.TestCase):
             path = (self.giga / src[len(gen_overrides.GIGA):]) if src.startswith(gen_overrides.GIGA) else self.game / src
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("\n".join(fake_tech(k) for k in keys))
+        (self.giga / "localisation/english").mkdir(parents=True)
+        (self.giga / "localisation/english/giga_l_english.yml").write_text(
+            '\ufeffl_english:\r\n  origin_great_ring_desc:0 "Lore."\r\n  origin_tooltip_great_ring_effects:0 "Start on a ring.\\n- Hab."\r\n',
+            encoding="utf-8")
+        (self.giga / "localisation/english/giga_alderson_l_english.yml").write_text(
+            '\ufeffl_english:\n  origin_alderson_effects:0 "Start on a slice."\n', encoding="utf-8")
         script = self.giga / gen_overrides.MEGA_CAP_SCRIPT
         script.parent.mkdir(parents=True)
         script.write_bytes(FAKE_MEGA_CAP_SCRIPT.encode())
@@ -163,15 +186,11 @@ class GenOverridesTests(unittest.TestCase):
 
     def test_inserts_snippets_and_keeps_vanilla_text(self):
         out = self.generate()
-        aps = out["mod/common/ascension_perks/zz_lfg_ascension_path_overrides.txt"]
-        self.assertIn("Stellaris v9.9.9", aps)
-        self.assertNotIn("ap_other", aps)
-        self.assertEqual(aps.count("has_valid_civic = civic_lfg_pampered_masters"), 2)
-        # Removing the marked additions gives back the vanilla blocks exactly.
-        stripped = aps.replace("\t\t# LFG: added by stellaris-lfg-traditions\n" + gen_overrides.FLESH_BLOCK, "")
-        self.assertIn(gen_overrides.extract_block(FAKE_APS, "ap_the_flesh_is_weak"), stripped)
-        self.assertIn(gen_overrides.extract_block(FAKE_APS, "ap_synthetic_evolution"), stripped)
         sit = out["mod/common/situations/zz_lfg_situation_overrides.txt"]
+        self.assertIn("Stellaris v9.9.9", sit)
+        # Removing the marked addition gives back the vanilla block exactly.
+        stripped = sit.replace("\t\t# LFG: added by stellaris-lfg-traditions\n" + gen_overrides.SYNTH_FERTILITY_BLOCK, "")
+        self.assertIn(FAKE_SITUATIONS, stripped)
         self.assertIn("\t\tbase = 15\n\t\t# LFG: added", sit)
         self.assertIn("add = value:lfg_synthetic_fertility_acceleration", sit)
 
@@ -230,6 +249,27 @@ class GenOverridesTests(unittest.TestCase):
             self.assertIn(f" edict_lfg_shelve_megastructure_capacity_{area}_desc:0", loc)
         self.assertEqual(edicts.count("has_ascension_perk = ap_lfg_curated_progress"), len(gen_overrides.SHELVE) + 3)
 
+    def test_resort_zones_get_hospitality_jobs(self):
+        out = self.generate()["mod/common/zones/zz_lfg_zone_overrides.txt"]
+        self.assertNotIn("zone_urban", out)
+        for zone, job, amount in gen_overrides.RESORT_ZONES:
+            block = gen_overrides.extract_block(out, zone)
+            self.assertIn("\t\tresort\n\t}\n\t# LFG: added by stellaris-lfg-traditions\n\ttriggered_district_planet_modifier = {", block)
+            self.assertIn(f"\t\tjob_{job}_add = {amount}\n\t\tmult = 0.5\n", block)
+            self.assertIn("has_active_tradition = tr_lfg_resorts_hospitality_academies", block)
+
+    def test_origin_texts_mention_virtuality_block(self):
+        loc = self.generate()[gen_overrides.LOC_OVERRIDES_FILE]
+        self.assertTrue(loc.startswith("\ufeffl_english:\n"))
+        self.assertIn(' origin_tooltip_great_ring_effects:0 "Start on a ring.\\n- Hab.\\n- §RIndividual machine', loc)
+        self.assertIn(' origin_alderson_effects:0 "Start on a slice.\\n- §RIndividual machine', loc)
+        self.assertNotIn("origin_great_ring_desc", loc)
+
+    def test_missing_loc_key_fails(self):
+        (self.giga / "localisation/english/giga_alderson_l_english.yml").write_text("\ufeffl_english:\n", encoding="utf-8")
+        with self.assertRaisesRegex(gen_overrides.GenError, "origin_alderson_effects"):
+            self.generate()
+
     def test_virtuality_option_blocked_for_ring_origins(self):
         out = self.generate()["mod/events/00_lfg_event_overrides.txt"]
         self.assertIn("\nnamespace = machine_age\n", out)
@@ -258,8 +298,8 @@ class GenOverridesTests(unittest.TestCase):
             self.generate()
 
     def test_missing_definition_fails(self):
-        (self.game / "common/ascension_perks/00_ascension_paths.txt").write_text("ap_other = { }\n")
-        with self.assertRaisesRegex(gen_overrides.GenError, "ap_the_flesh_is_weak"):
+        (self.game / "common/situations/08_machine_age_situations.txt").write_text("situation_other = { }\n")
+        with self.assertRaisesRegex(gen_overrides.GenError, "situation_synthetic_fertility_digitization"):
             self.generate()
 
     def test_check_mode_detects_stale_files(self):

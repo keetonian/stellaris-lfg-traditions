@@ -1,0 +1,4 @@
+﻿l_english:
+ # Text used by the generated overrides (tools/gen_overrides.py).
+ lfg_situation_synthetic_fertility_acceleration_desc:0 "Years since the start: §R+1§! per year"
+ lfg_virtuality_blocked_by_origin:0 "$TRIGGER_FAIL$Individual machine empires whose origin is §Y$origin_great_ring$§! or §Y$origin_alderson$§! cannot take the Virtuality path"

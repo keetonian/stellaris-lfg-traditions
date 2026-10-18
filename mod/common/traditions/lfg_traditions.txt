@@ -1,7 +1,7 @@
 # LFG Traditions - traditions. Layout per tree (tree_21_11): slot 4 requires slots 1 + 2, slot 5 requires slot 3.
 #
 # Every tree has a "hook": bonuses that scale with or depend on the game state (stockpiles, rivals, contacts,
-# species, megastructures, artificial worlds, robot share, age of the empire, war/peace), so they change how you play.
+# species, megastructures, artificial worlds, resort workers, war/peace), so they change how you play.
 # Scaling bonuses use `triggered_modifier = { ... mult = value:<script value> }` (common/script_values) and are explained
 # with a custom_tooltip, because the game can't show the live multiplier. Most finishers also unlock a council agenda
 # (common/council_agendas/lfg_council_agendas.txt).
@@ -140,159 +140,73 @@ tr_lfg_megaforge_monuments = {
 }
 
 #####################################################################
-# ATTENDANT ROBOTICS (Pampered Masters only) - hook: robots are strong only while they are rare
+# SHELLWORLDERS - hook: everything applies on artificial worlds (is_artificial); megastructure build speed scales
+# with the number of artificial worlds you own. Planet effects: lfg_shellworld_* static modifiers, kept on artificial
+# worlds by events/lfg_shellworlders_events.txt (monthly + on_enabled), since tradition modifiers are empire-wide.
 #####################################################################
-
-tr_lfg_attendants_adopt = {
-	possible = {
-		has_technology = tech_robotic_workers
+# Downside: growth and robot assembly -10% everywhere. (Closed Ecology adds the natural-world penalty.)
+tr_lfg_shellworlders_adopt = {
+	custom_tooltip = tr_lfg_shellworlders_adopt_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_shellworlders.1 } }
 	}
 	modifier = {
-		robotic_pop_bonus_workforce_mult = 0.05
-		planet_pop_assembly_mult = -0.05
-	}
-}
-
-# Doubles the Pampered Masters civic's pampering (its biological happiness, organic amenity usage and servant
-# workforce bonuses apply again). Keep in sync with civic_lfg_pampered_masters.
-tr_lfg_attendants_finish = {
-	modifier = {
-		ascension_perks_add = 1
-		biological_pop_happiness = 0.10
-		pop_amenities_usage_organic_mult = -0.20
-		pop_servant_bonus_workforce_mult = 0.25
-	}
-}
-
-tr_lfg_attendants_domestic_protocols = {
-	modifier = {
-		pop_servant_bonus_workforce_mult = 0.25
-		pop_amenities_usage_organic_mult = -0.05
-	}
-	ai_weight = { factor = 1000 }
-}
-
-# Hook: robots under 15% of the population work much harder; over 35%, the craftsmanship slips.
-tr_lfg_attendants_quality_over_quantity = {
-	custom_tooltip = tr_lfg_attendants_quality_over_quantity_tt
-	modifier = {
+		megastructures_habitat_cost_mult = -0.10
+		logistic_growth_mult = -0.10
 		planet_pop_assembly_mult = -0.10
 	}
-	triggered_modifier = {
-		potential = { pop_amount_percentage = { percentage < 0.15 limit = { is_robot_pop_group = yes } } }
-		robotic_pop_bonus_workforce_mult = 0.20
-	}
-	triggered_modifier = {
-		potential = { pop_amount_percentage = { percentage > 0.35 limit = { is_robot_pop_group = yes } } }
-		robotic_pop_bonus_workforce_mult = -0.10
-	}
-	ai_weight = { factor = 1000 }
 }
-
-tr_lfg_attendants_licensed_roboticists = {
-	modifier = {
-		planet_pops_robotics_upkeep_mult = -0.15
-		job_roboticist_max_workforce_mult = -0.10
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_attendants_personal_valets = {
-	possible = {
-		has_tradition = tr_lfg_attendants_domestic_protocols
-		has_tradition = tr_lfg_attendants_quality_over_quantity
-	}
-	modifier = {
-		biological_pop_happiness = 0.10
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_attendants_household_ai = {
-	possible = {
-		has_tradition = tr_lfg_attendants_licensed_roboticists
-	}
-	modifier = {
-		pop_amenities_usage_robotic_mult = -0.25
-		robotic_pop_bonus_workforce_mult = 0.10
-	}
-	ai_weight = { factor = 1000 }
-}
-
-#####################################################################
-# OVERCLOCKED NETWORK - hook: runs hot; energy deficits throttle it, war pushes it; agenda "Overclock Protocol"
-#####################################################################
-
-tr_lfg_overclock_adopt = {
-	modifier = {
-		planet_jobs_complex_drone_produces_mult = 0.05
-		planet_jobs_simple_drone_produces_mult = -0.05
-	}
-}
-
-tr_lfg_overclock_finish = {
-	unlocks_agenda = agenda_lfg_overclock_protocol
+tr_lfg_shellworlders_finish = {
 	modifier = {
 		ascension_perks_add = 1
+		planet_artificial_max_districts_add = 1
 	}
 }
-
-tr_lfg_overclock_priority_threads = {
-	modifier = {
-		planet_jobs_complex_drone_produces_mult = 0.10
-		planet_jobs_simple_drone_produces_mult = -0.05
+tr_lfg_shellworlders_compact_living = {
+	custom_tooltip = tr_lfg_shellworlders_compact_living_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_shellworlders.1 } }
 	}
 	ai_weight = { factor = 1000 }
 }
-
-# Hook: cheaper to run, but an energy deficit throttles the whole network.
-tr_lfg_overclock_coolant_loops = {
-	custom_tooltip = tr_lfg_overclock_coolant_loops_tt
-	modifier = {
-		planet_jobs_upkeep_mult = -0.10
+tr_lfg_shellworlders_artificial_gravity = {
+	custom_tooltip = tr_lfg_shellworlders_artificial_gravity_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_shellworlders.1 } }
 	}
+	ai_weight = { factor = 1000 }
+}
+# Hook: megastructure build speed +5% per artificial world owned (no cap).
+tr_lfg_shellworlders_arc_foundries = {
+	custom_tooltip = tr_lfg_shellworlders_arc_foundries_tt
 	triggered_modifier = {
-		potential = { has_deficit = energy }
-		planet_jobs_complex_drone_produces_mult = -0.25
+		potential = { always = yes }
+		megastructure_build_speed_mult = 0.05
+		mult = value:lfg_num_artificial_worlds
 	}
 	ai_weight = { factor = 1000 }
 }
-
-tr_lfg_overclock_burst_assembly = {
-	modifier = {
-		planet_pop_assembly_mult = 0.10
-		planet_jobs_simple_drone_produces_mult = -0.05
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_overclock_heuristic_cores = {
+# Downside: natural (non-artificial) worlds get lfg_shellworld_natural_world (happiness and stability -10%).
+tr_lfg_shellworlders_closed_ecology = {
 	possible = {
-		has_tradition = tr_lfg_overclock_priority_threads
-		has_tradition = tr_lfg_overclock_coolant_loops
+		has_tradition = tr_lfg_shellworlders_compact_living
+		has_tradition = tr_lfg_shellworlders_artificial_gravity
 	}
-	modifier = {
-		all_technology_research_speed = 0.05
-		num_tech_alternatives_add = 1
-		country_minerals_produces_mult = -0.05
+	custom_tooltip = tr_lfg_shellworlders_closed_ecology_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_shellworlders.1 } }
 	}
 	ai_weight = { factor = 1000 }
 }
-
-# Hook: at war, the network redlines: complex drones push past their limits.
-tr_lfg_overclock_redline = {
+# Hook: each artificial world gets +3% job efficiency per other artificial world we own in its system
+# (lfg_shellworld_arc_neighbours, added with that count as multiplier by lfg_sync_arc_neighbours).
+tr_lfg_shellworlders_arc_neighbours = {
 	possible = {
-		has_tradition = tr_lfg_overclock_burst_assembly
+		has_tradition = tr_lfg_shellworlders_arc_foundries
 	}
-	custom_tooltip = tr_lfg_overclock_redline_tt
-	modifier = {
-		pop_cat_complex_drone_bonus_workforce_mult = 0.10
-		pop_cat_simple_drone_bonus_workforce_mult = -0.10
-	}
-	triggered_modifier = {
-		potential = { is_at_war = yes }
-		pop_cat_complex_drone_bonus_workforce_mult = 0.10
-		ship_fire_rate_mult = 0.05
+	custom_tooltip = tr_lfg_shellworlders_arc_neighbours_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_shellworlders.1 } }
 	}
 	ai_weight = { factor = 1000 }
 }
@@ -408,7 +322,7 @@ tr_lfg_granary_finish = {
 	}
 }
 
-# Hook: full granaries (5,000+ food) bring stability and unity; empty ones (under 500) bring unrest.
+# Hook: full granaries (10,000+ food) bring stability and growth; nearly empty ones (under 1,000) bring unrest and slower growth.
 tr_lfg_granary_tithe_barns = {
 	custom_tooltip = tr_lfg_granary_tithe_barns_tt
 	triggered_modifier = {
@@ -597,7 +511,7 @@ tr_lfg_resorts_hospitality_academies = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: per 100 Resort Workers (no cap): unity +0.5%, amenity usage -0.25%.
+# Hook: per 100 Resort Workers (no cap): unity +0.5%, pop happiness +0.25%.
 tr_lfg_resorts_package_holidays = {
 	custom_tooltip = tr_lfg_resorts_package_holidays_tt
 	triggered_modifier = {
@@ -632,7 +546,7 @@ tr_lfg_resorts_tourist_traps = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: per 100 Resort Workers (no cap): trade +0.5%, diplomatic weight +0.5%.
+# Hook: Tourists on the resort world produce more; diplomatic weight +1% per 1,000 Tourists (no cap).
 tr_lfg_resorts_galactic_destination = {
 	possible = {
 		has_tradition = tr_lfg_resorts_wonders_of_the_galaxy
