@@ -33,6 +33,11 @@ ap_synthetic_evolution = {
 
 FAKE_SITUATIONS = """\
 situation_synthetic_fertility_digitization = {
+\ton_monthly = {
+\t\tevents = {
+\t\t\tmachine_age.3325 #Monthly Progress
+\t\t}
+\t}
 \tinitial_progress = 300
 \tmonthly_progress = {
 \t\tbase = 15
@@ -194,8 +199,12 @@ class GenOverridesTests(unittest.TestCase):
         out = self.generate()
         sit = out["mod/common/situations/zz_lfg_situation_overrides.txt"]
         self.assertIn("Stellaris v9.9.9", sit)
-        # Removing the marked addition gives back the vanilla block exactly.
+        # One copy of the situation with both insertions; removing them gives back the vanilla block exactly.
+        self.assertEqual(sit.count("situation_synthetic_fertility_digitization = {"), 1)
+        self.assertIn("\t\t\tmachine_age.3325 #Monthly Progress\n\t\t\t# LFG: added by stellaris-lfg-traditions\n"
+                      "\t\t\tlfg_synthetic_fertility.1", sit)
         stripped = sit.replace("\t\t# LFG: added by stellaris-lfg-traditions\n" + gen_overrides.SYNTH_FERTILITY_BLOCK, "")
+        stripped = stripped.replace("\t\t\t# LFG: added by stellaris-lfg-traditions\n" + gen_overrides.SYNTH_FERTILITY_UPLOAD, "")
         self.assertIn(FAKE_SITUATIONS, stripped)
         self.assertIn("\t\tbase = 15\n\t\t# LFG: added", sit)
         self.assertIn("add = value:lfg_synthetic_fertility_acceleration", sit)

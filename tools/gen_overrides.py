@@ -24,6 +24,10 @@ DEFAULT_GIGA = STEAM / "workshop/content/281990/1121692237"
 # Sources starting with this prefix are read from the Gigastructural directory instead of the game.
 GIGA = "giga:"
 
+# Upload the extra pops too: vanilla's machine_age.3325 uploads up to 15 pops/month to match the base 15 progress.
+SYNTH_FERTILITY_UPLOAD = """\t\t\tlfg_synthetic_fertility.1 # Upload one extra pop per extra point of progress
+"""
+
 SYNTH_FERTILITY_BLOCK = """\t\tmodifier = {
 \t\t\tadd = value:lfg_synthetic_fertility_acceleration
 \t\t\tdesc = lfg_situation_synthetic_fertility_acceleration_desc
@@ -256,6 +260,8 @@ OVERRIDES = {
     "mod/common/situations/zz_lfg_situation_overrides.txt": [
         ("common/situations/08_machine_age_situations.txt", "situation_synthetic_fertility_digitization",
          r"^\tmonthly_progress = \{\n\t\tbase = 15\n", SYNTH_FERTILITY_BLOCK),
+        ("common/situations/08_machine_age_situations.txt", "situation_synthetic_fertility_digitization",
+         r"^\t\t\tmachine_age\.3325 #Monthly Progress\n", SYNTH_FERTILITY_UPLOAD),
     ],
     # Shelve edicts: vanilla and Gigastructural repeatables. zz_lfg_ sorts after Giga's zz_giga_ tech files.
     "mod/common/technology/zz_lfg_repeatable_overrides.txt": [
@@ -476,22 +482,26 @@ def generate(game: Path, giga: Path = DEFAULT_GIGA) -> dict[str, str]:
             "# Events: the first definition of an id wins, so the 00_ file name makes these load before (and replace) vanilla's.\n",
         ]
         parts.append(PRELUDE.get(out_path, ""))
+        # Several items may target the same block: copy it once and apply their insertions in order.
+        blocks: dict[tuple, str] = {}
         for src, key, anchor, snippet in items:
-            text = read_source(src, game, giga)
-            if key is None:
-                block = text
-            elif key.startswith(EVENT):
-                block = extract_event(text, key[len(EVENT):])
-            else:
-                block = extract_block(text, key)
-            name = key or src
-            hits = list(re.finditer(anchor, block, re.M))
+            if (src, key) not in blocks:
+                text = read_source(src, game, giga)
+                if key is None:
+                    blocks[(src, key)] = text
+                elif key.startswith(EVENT):
+                    blocks[(src, key)] = extract_event(text, key[len(EVENT):])
+                else:
+                    blocks[(src, key)] = extract_block(text, key)
+            block = blocks[(src, key)]
+            hits = [h for h in re.finditer(anchor, block, re.M)]
             if len(hits) != 1:
-                raise GenError(f"{name}: anchor {anchor!r} matched {len(hits)} times in {src} (expected 1)")
+                raise GenError(f"{key or src}: anchor {anchor!r} matched {len(hits)} times in {src} (expected 1)")
             cut = hits[0].end()
             indent = re.match(r"[ \t]*", snippet).group(0)
             marked = f"{indent}# LFG: added by stellaris-lfg-traditions\n" + snippet
-            body = block[:cut] + marked + block[cut:]
+            blocks[(src, key)] = block[:cut] + marked + block[cut:]
+        for (src, _key), body in blocks.items():
             parts.append(f"\n# from {src.replace(GIGA, 'Gigastructural ')}\n" + body + ("" if body.endswith("\n") else "\n"))
         out[out_path] = "".join(parts)
     check_shelve_effects(game, giga)

@@ -37,6 +37,7 @@ mod/                                  # exactly what ships
   events/lfg_resorts_events.txt                              # Galactic Destination: resort world modifier + tourist count (monthly)
   events/lfg_shellworlders_events.txt                        # Shellworlders: lfg_shellworld_* modifiers on artificial worlds (monthly)
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
+  events/lfg_synthetic_fertility_events.txt                  # lfg_synthetic_fertility.1: extra Identity Repository uploads (monthly)
   events/lfg_planet_events.txt                               # lfg_planet.1: strip per-planet modifiers on owner change
   events/lfg_lone_tide_events.txt                            # lfg_lone_tide.1 (global `event`, on_game_start): 75% spawn
   common/solar_system_initializers/lfg_system_initializers.txt # lfg_lone_tide_init (usage_odds = 0: never map-generated)

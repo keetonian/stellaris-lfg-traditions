@@ -263,7 +263,7 @@ These replace vanilla and Gigastructural definitions. Other mods that change the
 | Event `machine_age.4400` (Synthetic Age transformation: pick Nanotech / Modularity / Virtuality) | Virtuality option greyed out ("Individual machine empires whose origin is The Great Ring or Alderson Disk cannot take the Virtuality path") for **individual machine** empires with Giga's **The Great Ring** or **Alderson Disk** origin. Machine Intelligences and other origins are unaffected. Events are first-definition-wins, so this file is `events/00_lfg_event_overrides.txt` (sorts before vanilla's) |
 | The 8 resort-world zones (`zone_resort`, `zone_resort_entertainment`, `zone_resort_zoo`, `zone_resort_grand_museum`, `zone_resort_hunting_ground`, `zone_resort_spiritual_retreat`, `zone_resort_restoration_enclave`, `zone_resort_proving_grounds`) | Added: +50% of the zone's jobs with Hospitality Academies |
 | Giga loc `origin_tooltip_great_ring_effects`, `origin_alderson_effects` (origin selection cards) | Appended: "Individual machine empires can't take the Virtuality path (LFG Traditions)." Generated from Giga's text into `localisation/english/replace/` |
-| Situation `situation_synthetic_fertility_digitization` (the Synthetic Fertility origin's "uploading" situation) | Monthly progress **+1 for every year since game start**, on top of the vanilla base of 15 (year 10: 25/month). It completes noticeably sooner. |
+| Situation `situation_synthetic_fertility_digitization` (the Synthetic Fertility origin's "uploading" situation) | Monthly progress **+1 for every year since game start**, on top of the vanilla base of 15 (year 10: 25/month). It completes noticeably sooner. Each month, `lfg_synthetic_fertility.1` (added to the situation's `on_monthly` after vanilla's `machine_age.3325`) also uploads the **same number of extra pops** to the Identity Repository, the way vanilla does (one infected pop dies, its identity is stored), until none are left. |
 
 The override files are **generated** from the installed game and Gigastructural by `tools/gen_overrides.py`, so they're
 their text plus clearly marked `# LFG: added` lines. The tech overrides are named `zz_lfg_` so they load after Giga's `zz_giga_` files.
@@ -326,7 +326,8 @@ CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't nee
   Resort Worker, Tourist) apply as described; agendas appear after finishing their tree; Reckless Experimentation's lab accident fires.
 - Species Experimentation: only Evolutionary Predators who finished Mutation see it; your main species and its subspecies are never offered;
   under 100 pops it's greyed out; picking a species kills half of it, creates 50 subspecies and deducts 2000 society research.
-- A Synthetic Fertility empire's situation tooltip shows the yearly line and the rate grows each year.
+- A Synthetic Fertility empire's situation tooltip shows the yearly line and the rate grows each year; the Identity
+  Repository count (and the infected pops lost) grows by 15 + years passed each month.
 - `~/Documents/Paradox Interactive/Stellaris/logs/error.log` has no `lfg` errors.
 
 ## Publish to the Steam Workshop

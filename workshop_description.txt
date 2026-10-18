@@ -94,7 +94,7 @@ Tired of drawing repeatables you don't want? Requires [b]Gigastructural Construc
 
 [h2]Changes to vanilla content[/h2]
 [list]
-[*][b]Synthetic Fertility[/b]: the origin's uploading situation gains +1 monthly progress for every year that has passed.
+[*][b]Synthetic Fertility[/b]: the uploading situation gains +1 monthly progress per year passed, and uploads that many more pops to the Identity Repository.
 [*]The [b]Accommodation District[/b], the resort district specializations and the three [b]holomuseums[/b] gain extra blocks for The Grand Tour and Galactic Broadcast.
 [*]Every repeatable technology (and Gigastructural's megastructure capacity repeatables) checks its Shelve edict.
 [*][b]Virtuality[/b] can't be chosen as the Synthetic Age path by individual machine empires with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin (their origin descriptions say so).

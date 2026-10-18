@@ -26,6 +26,8 @@ situation_synthetic_fertility_digitization = {
 	on_monthly = {
 		events = {
 			machine_age.3325 #Monthly Progress
+			# LFG: added by stellaris-lfg-traditions
+			lfg_synthetic_fertility.1 # Upload one extra pop per extra point of progress
 		}
 	}
 

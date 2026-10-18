@@ -1,0 +1,36 @@
+# LFG Traditions - Synthetic Fertility.
+namespace = lfg_synthetic_fertility
+
+# Monthly, from situation_synthetic_fertility_digitization's on_monthly (generated override), right after vanilla's
+# machine_age.3325. Our override adds value:lfg_synthetic_fertility_acceleration monthly progress; this uploads the
+# same number of extra pops to the Identity Repository, with vanilla's own steps (one infected pop dies, its identity
+# is stored), stopping once no infected pops remain.
+situation_event = {
+	id = lfg_synthetic_fertility.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		owner = {
+			while = {
+				count = value:lfg_synthetic_fertility_acceleration
+				if = {
+					limit = {
+						check_variable = { which = remaining_synth_fert_pops value > 0 }
+					}
+					add_variable = { which = num_dead_identities value = 1 }
+					subtract_variable = { which = remaining_synth_fert_pops value = 1 }
+					weighted_random_owned_pop_group = {
+						limit = {
+							has_trait = trait_pathogenic_genes
+						}
+						kill_pop_group = {
+							pop_group = this
+							amount = 1
+						}
+					}
+				}
+			}
+		}
+	}
+}
