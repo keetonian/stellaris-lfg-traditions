@@ -298,8 +298,8 @@ STEAM_USER=<steam account name> scripts/publish.sh "Changelog line"
   `workshop_description.txt` as its description. It then appends `remote_file_id` to `mod/descriptor.mod`.
   Commit that line, and add **Gigastructural Engineering** as a *Required item* on the Workshop page.
 - **Later runs** update the same item with the files and a change note (default `v<version> (<commit>)`). Bump `version` in
-  `mod/descriptor.mod` first. `VISIBILITY=0|1|2|3` (public / friends-only / private / unlisted) and `SYNC_DESCRIPTION=1`
-  also update those on Steam.
+  `mod/descriptor.mod` first. Every upload also replaces the Steam description with `workshop_description.txt`
+  (`SYNC_DESCRIPTION=0` to skip). `VISIBILITY=0|1|2|3` (public / friends-only / private / unlisted) updates visibility.
 - `STEAM_USER` is your Steam **account name** (the login name, not your profile name). steamcmd asks for the password and
   Steam Guard code once, then caches the login. Nothing is stored in this repo.
 - Double quotes in the description or change note are turned into “typographic quotes”, because steamcmd's VDF parser has no escapes.

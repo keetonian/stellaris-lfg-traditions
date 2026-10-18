@@ -52,7 +52,7 @@ tools/data/modifiers_4.5.txt.gz       # modifier-name snapshot used when modifie
 tests/                # unittest; mutation tests copy mod/, break one thing, expect a specific failure;
                       # test_publish.py dry-runs publish.sh (needs game + Giga, skipped in CI);
                       # test_install.py checks the [LOCAL DEV] / RELEASE=1 installs
-workshop_description.txt   # Steam BBCode description (sent on first upload or with SYNC_DESCRIPTION=1)
+workshop_description.txt   # Steam BBCode description (sent on every upload; SYNC_DESCRIPTION=0 to skip)
 ```
 
 ## Rules

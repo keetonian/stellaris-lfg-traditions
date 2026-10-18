@@ -63,13 +63,19 @@ class PublishDryRunTests(unittest.TestCase):
         self.assertIn('"title"\t\t"LFG Traditions"', vdf)
         self.assertIn('"description"', vdf)
 
-    def test_update_keeps_steam_metadata(self):
+    def test_update_syncs_description_but_keeps_title_and_visibility(self):
         with open(self.mod / "descriptor.mod", "a") as f:
             f.write('remote_file_id="123456"\n')
         vdf = self.vdf(self.publish().stdout)
         self.assertIn('"publishedfileid"\t"123456"', vdf)
-        for key in ('"title"', '"visibility"', '"description"'):
+        self.assertIn('"description"', vdf)
+        for key in ('"title"', '"visibility"'):
             self.assertNotIn(key, vdf)
+
+    def test_sync_description_can_be_disabled(self):
+        with open(self.mod / "descriptor.mod", "a") as f:
+            f.write('remote_file_id="123456"\n')
+        self.assertNotIn('"description"', self.vdf(self.publish(SYNC_DESCRIPTION="0").stdout))
 
     def test_stages_exactly_the_mod_files(self):
         (self.mod / ".DS_Store").write_text("junk")

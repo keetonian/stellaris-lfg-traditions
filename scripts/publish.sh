@@ -6,13 +6,13 @@
 # - First upload (no remote_file_id in mod/descriptor.mod) creates a new Workshop item, with
 #   visibility PRIVATE unless VISIBILITY is set, and writes the new remote_file_id back into
 #   mod/descriptor.mod (commit it).
-# - Later uploads update that item. Title/description/visibility on Steam are left alone unless
-#   SYNC_DESCRIPTION=1 / VISIBILITY=... are given.
+# - Later uploads update that item. The Steam description is always replaced with workshop_description.txt
+#   (SYNC_DESCRIPTION=0 to leave Steam's text alone); title/visibility are left alone unless VISIBILITY=... is given.
 # - steamcmd asks for your password and Steam Guard code the first time, then caches the login.
 #   Credentials are never stored by this repo.
 #
 # Env: STEAM_USER (required), VISIBILITY (0 public, 1 friends-only, 2 private, 3 unlisted),
-#      SYNC_DESCRIPTION=1 (push workshop_description.txt), DRY_RUN=1 (stage + print VDF, no upload),
+#      SYNC_DESCRIPTION=0 (don't push workshop_description.txt), DRY_RUN=1 (stage + print VDF, no upload),
 #      ALLOW_DIRTY=1 (skip the clean-git-tree check), STEAMCMD (path to steamcmd).
 set -euo pipefail
 
@@ -79,7 +79,7 @@ VDF="$STAGE/item.vdf"
 	if [ -n "${VISIBILITY:-}" ]; then
 		printf '\t"visibility"\t"%s"\n' "$VISIBILITY"
 	fi
-	if [ "${SYNC_DESCRIPTION:-0}" = 1 ]; then
+	if [ "${SYNC_DESCRIPTION:-1}" = 1 ]; then
 		printf '\t"description"\t"%s"\n' "$(vdf_value < "$DESCRIPTION_FILE")"
 	fi
 	echo '}'
