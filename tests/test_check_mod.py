@@ -292,6 +292,11 @@ class MutationTests(unittest.TestCase):
                   "\t\tshow_only_custom_tooltip = yes\n\t\tmegastructure_build_speed_mult = 0.20\n\t\tplanet_structures_cost_mult = 0.30")
         self.assertFails("tr_lfg_megaforge_priority: show_only_custom_tooltip has no effect here")
 
+    def test_empty_modifiers_log_falls_back_to_snapshot(self):
+        log = self.tmp / "modifiers.log"
+        log.write_text("")
+        self.assertIn("megastructure_build_speed_mult", check_mod.load_modifiers(log))
+
     def test_require_sources_turns_skips_into_failures(self):
         r = check_mod.run(self.mod, None, None, None, require_sources=True)
         self.assertTrue(any("--require-sources" in f for f in r.failures))

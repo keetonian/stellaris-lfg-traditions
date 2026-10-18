@@ -18,7 +18,7 @@ Six new tradition trees, six council agendas, an ascension perk, a policy and a 
 [i]Life on artificial worlds.[/i] Artificial-world origins (including Gigastructural's), or after Orbital Habitats / Ring World.
 [list]
 [*]Every bonus applies on your artificial worlds: habitats, ring segments, Alderson Disk slices and Gigastructural's other habitable megastructures.
-[*]More efficient jobs, less housing usage and more stability there.
+[*]More efficient jobs, less housing usage, more stability and less crime there.
 [*][b]Arc Neighbours:[/b] each artificial world works better for every other one you own in the same system.
 [*][b]Downsides:[/b] slower organic growth and robot assembly; [b]Closed Ecology[/b] makes your people less happy and stable on natural worlds.
 [*][b]Arc Foundries:[/b] +5% megastructure build speed for every artificial world you own, with no cap.

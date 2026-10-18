@@ -54,7 +54,7 @@ megastructures), and megastructure build speed grows with how many you own.
 |---|---|
 | Adopt | Artificial worlds: job efficiency +5% · habitat cost −10% · **organic growth −10%, robot assembly −10%** |
 | 1. Compact Living | Artificial worlds: housing usage −10% |
-| 2. Artificial Gravity | Artificial worlds: stability +3 |
+| 2. Artificial Gravity | Artificial worlds: stability +3, crime −15 |
 | 3. Arc Foundries ⚙ | Megastructure build speed +5% per artificial world owned (no cap) |
 | 4. Closed Ecology | Artificial worlds: job efficiency +10% · **natural worlds: happiness −10%, stability −10%** |
 | 5. Arc Neighbours ⚙ | Each artificial world: job efficiency +3% per other artificial world you own in its system (no cap; a full ring world gives each segment +9%) |

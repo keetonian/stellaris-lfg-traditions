@@ -93,6 +93,7 @@ lfg_shellworld_compact_living = {
 }
 lfg_shellworld_artificial_gravity = {
 	planet_stability_add = 3
+	planet_crime_add = -15
 	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
 	icon_frame = 1
 }

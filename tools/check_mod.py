@@ -495,7 +495,9 @@ def check_sprites(mod: Mod, game: Optional[Path], r: Report) -> None:
 def load_modifiers(log: Optional[Path]) -> Set[str]:
     if log is not None and log.exists():
         text = log.read_text(encoding="utf-8", errors="replace")
-        return set(re.findall(r"^- ([A-Za-z0-9_@]+), Category", text, re.M))
+        names = set(re.findall(r"^- ([A-Za-z0-9_@]+), Category", text, re.M))
+        if names:  # the game empties its logs on launch; fall back to the snapshot then
+            return names
     with gzip.open(SNAPSHOT, "rt", encoding="utf-8") as f:
         return {line.strip() for line in f if line.strip() and not line.startswith("#")}
 
