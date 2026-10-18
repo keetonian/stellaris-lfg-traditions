@@ -78,7 +78,7 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 Tired of drawing repeatables you don't want? Requires [b]Gigastructural Constructs[/b].
 [list]
 [*]Unlocks a [b]Shelve[/b] edict for every repeatable technology, vanilla and Gigastructural (megastructure capacity repeatables are grouped by research area). While it's active, that technology is never offered as a research option.
-[*]Each costs 1,000 unity and 100 influence to enact, plus 150 monthly research of the technology's type, all scaled by empire size.
+[*]Each costs 2,000 unity and 200 influence to enact, plus 300 monthly research of the technology's type, all scaled by empire size.
 [*]Edicts only appear once their technology could show up.
 [/list]
 

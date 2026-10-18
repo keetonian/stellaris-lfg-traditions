@@ -22,6 +22,6 @@
 @lfg_resort_districts_per_district = 0.5
 
 # Curated Progress - Shelve edicts (common/edicts/lfg_shelve_edicts.txt, generated). All scale with value:edict_size_effect.
-@lfg_shelve_unity_cost = 1000
-@lfg_shelve_influence_cost = 100
-@lfg_shelve_research_upkeep = 150
+@lfg_shelve_unity_cost = 2000
+@lfg_shelve_influence_cost = 200
+@lfg_shelve_research_upkeep = 300

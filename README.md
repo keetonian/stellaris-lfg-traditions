@@ -153,7 +153,7 @@ Not every repeatable is worth chasing. **Curated Progress** (`ap_lfg_curated_pro
 
 - **Requires:** the Gigastructural **Gigastructural Constructs** ascension perk (via Giga's `has_gigastructural_constructs`
   trigger). Hidden if Giga's perk is disabled by game rule. The AI never takes it and never enacts the edicts.
-- **Each edict costs** 1,000 unity + 100 influence to enact and **150 monthly research of the shelved tech's type**
+- **Each edict costs** 2,000 unity + 200 influence to enact and **300 monthly research of the shelved tech's type**
   (engineering/physics/society) while active. All of it scales with empire size like vanilla edicts
   (`value:edict_size_effect`: +1% per point of empire size over capacity). Numbers: `@lfg_shelve_*` in
   `mod/common/scripted_variables/lfg_scripted_variables.txt`.
@@ -164,7 +164,8 @@ Not every repeatable is worth chasing. **Curated Progress** (`ap_lfg_curated_pro
 - Gigastructural's ~50 **megastructure capacity** repeatables (+1 cap per megastructure type) share one inline script, so they get
   one edict per research area.
 - The edicts and their localisation are **generated** from the `SHELVE` table in `tools/gen_overrides.py`
-  (`lfg_shelve_edicts.txt`, `lfg_shelve_l_english.yml`); names use the tech's own name ("Shelve: Extraction Patterns").
+  (`lfg_shelve_edicts.txt`, `lfg_shelve_l_english.yml`); names use the tech's own name ("Shelve: Extraction Patterns"), and each description ends with what one level of the
+  tech gives (`SHELVE_EFFECTS`; the generator fails if a tech's value changes, so the text can't go stale).
 
 | Edict | Tech | Research upkeep | Shown once you have |
 |---|---|---|---|

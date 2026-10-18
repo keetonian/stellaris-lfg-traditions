@@ -124,10 +124,11 @@ FAKE_ZONES = "zone_urban = {\n\tzone_sets = {\n\t\turban\n\t}\n}\n" + "".join(
     fake_zone(z) for z, _job, _amount in gen_overrides.RESORT_ZONES)
 
 
-def fake_tech(key):
+def fake_tech(key, evidence=None):
+    modifier = f"\tmodifier = {{ {evidence} }}\n" if evidence else ""
     return f"""{key} = {{
 \tarea = physics
-\tlevels = -1
+{modifier}\tlevels = -1
 #\tweight_modifier = {{ commented out }}
 \tweight_modifier = {{
 \t\tfactor = @repatableTechFactor
@@ -165,12 +166,12 @@ class GenOverridesTests(unittest.TestCase):
         (self.giga / "descriptor.mod").parent.mkdir(parents=True)
         (self.giga / "descriptor.mod").write_text('version="8.8.8"\n')
         techs = {}
-        for _suffix, tech, _area, src, _potential in gen_overrides.SHELVE:
-            techs.setdefault(src, []).append(tech)
+        for suffix, tech, _area, src, _potential in gen_overrides.SHELVE:
+            techs.setdefault(src, []).append((tech, gen_overrides.SHELVE_EFFECTS[suffix][1]))
         for src, keys in techs.items():
             path = (self.giga / src[len(gen_overrides.GIGA):]) if src.startswith(gen_overrides.GIGA) else self.game / src
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text("\n".join(fake_tech(k) for k in keys))
+            path.write_text("\n".join(fake_tech(k, ev) for k, ev in keys))
         (self.giga / "localisation/english").mkdir(parents=True)
         (self.giga / "localisation/english/giga_l_english.yml").write_text(
             '\ufeffl_english:\r\n  origin_great_ring_desc:0 "Lore."\r\n  origin_tooltip_great_ring_effects:0 "Start on a ring.\\n- Hab."\r\n',
@@ -283,6 +284,18 @@ class GenOverridesTests(unittest.TestCase):
     def test_missing_event_fails(self):
         (self.game / "events/machine_age_situation_events_3.txt").write_text(FAKE_EVENTS.replace("4400", "4401"))
         with self.assertRaisesRegex(gen_overrides.GenError, "machine_age.4400"):
+            self.generate()
+
+    def test_shelve_descriptions_say_what_the_tech_does(self):
+        loc = self.generate()[gen_overrides.SHELVE_LOC_FILE]
+        self.assertIn("Each level gives: §G+5%§! mineral output from jobs.", loc)
+        self.assertEqual(loc.count("Each level gives:"), len(gen_overrides.SHELVE) + len(gen_overrides.MEGA_CAP_AREAS))
+
+    def test_changed_tech_value_fails(self):
+        path = self.game / "common/technology/00_eng_tech_repeatable.txt"
+        path.write_text(path.read_text().replace("planet_jobs_minerals_produces_mult = 0.05",
+                                                 "planet_jobs_minerals_produces_mult = 0.10"))
+        with self.assertRaisesRegex(gen_overrides.GenError, "update its SHELVE_EFFECTS"):
             self.generate()
 
     def test_extract_block_ignores_braces_in_comments_and_strings(self):

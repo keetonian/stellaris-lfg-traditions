@@ -246,7 +246,8 @@ bonuses are per-zone overrides (`RESORT_ZONES` in gen_overrides.py).
 
 - To shelve a new repeatable (new game or Giga version): find techs with `levels = -1` in game + Giga `common/technology`
   (skip event techs like `tech_repeatable_lcluster_clue`, `tech_cosmogenesis_thesis`), add a `SHELVE` row (edict suffix,
-  tech, area, source file, potential trigger = the tech's prerequisite), regenerate, and update README's table and the
+  tech, area, source file, potential trigger = the tech's prerequisite) and a `SHELVE_EFFECTS` entry (what one
+  level gives + an evidence string from the tech's `modifier`), regenerate, and update README's table and the
   edict count in `tests/test_check_mod.py`. Techs with `levels = 5` are not repeatables.
 - Blocking = `modifier = { factor = 0 has_edict = ... }` in the tech's `weight_modifier` (country scope). It only stops new draws.
 - Edict cost/upkeep `multiplier = value:edict_size_effect` (vanilla script value), research upkeep in the tech's area
