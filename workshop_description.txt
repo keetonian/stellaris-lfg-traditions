@@ -103,9 +103,9 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 [b]Applied Biosciences[/b] (Materialist, non-machine): Biologists research -1 society, +0.4 physics, +0.4 engineering. Scientist councilor: more efficient Biologists.
 
 [h2]Ascension perks[/h2]
-[b]Mothership[/b] (needs Nanite Armada, A Celestial Armada and Nanotech finished): a [b]Progenitor Forge[/b] around an O star builds Motherships (100M nanites): stronger than a systemcraft, with nanite hangars and a growing swarmer escort.
+[b]Mothership:[/b] build system-sized carriers with a nanite escort.
 
-[b]Nanite Armada[/b] (needs Nanotech): research and build a [b]Swarmforge[/b] around an A or B star or red giant, the only shipyard for designable nanite Attack Moons (500,000 nanites) and Planetcraft (1,000,000).
+[b]Nanite Armada:[/b] build nanite Attack Moons and Planetcraft.
 
 [b]Massed Assault:[/b] +10 ground combat width; every general boosts the armies they lead.
 
