@@ -223,7 +223,10 @@ class GenOverridesTests(unittest.TestCase):
 
     def test_holomuseums_get_holo_museums_block(self):
         out = self.generate()["mod/common/buildings/zz_lfg_building_overrides.txt"]
-        self.assertEqual(out.count("has_active_tradition = tr_lfg_broadcast_holo_museums"), 3)
+        # one planet block (entertainer research) and one country block (specimens) per holomuseum
+        self.assertEqual(out.count("has_active_tradition = tr_lfg_broadcast_holo_museums"), 6)
+        for specimens in ("xeno_geology", "aesthetic_wonder", "historical_item"):
+            self.assertEqual(out.count(f"{specimens}_specimens_produces_mult = @holomuseum_specimen_produces_mult"), 1)
         for research in ("engineering", "physics", "society"):
             self.assertEqual(out.count(f"planet_entertainers_{research}_research_produces_add = 0.25"), 2)
         # upkeep is not doubled

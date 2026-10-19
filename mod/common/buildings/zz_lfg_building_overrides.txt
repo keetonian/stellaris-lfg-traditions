@@ -75,6 +75,15 @@ xeno_geology_holomuseum = {
 		planet_entertainers_consumer_goods_upkeep_add = 0.25
 	}
 	# LFG: added by stellaris-lfg-traditions
+	triggered_country_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_active_tradition = tr_lfg_broadcast_holo_museums
+			}
+		}
+		xeno_geology_specimens_produces_mult = @holomuseum_specimen_produces_mult
+	}
 	triggered_planet_modifier = {
 		potential = {
 			exists = owner
@@ -215,6 +224,15 @@ aesthetic_wonders_holomuseum = {
 		planet_entertainers_consumer_goods_upkeep_add = 0.25
 	}
 	# LFG: added by stellaris-lfg-traditions
+	triggered_country_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_active_tradition = tr_lfg_broadcast_holo_museums
+			}
+		}
+		aesthetic_wonder_specimens_produces_mult = @holomuseum_specimen_produces_mult
+	}
 	triggered_planet_modifier = {
 		potential = {
 			exists = owner
@@ -355,6 +373,15 @@ galactic_history_holomuseum = {
 		planet_entertainers_consumer_goods_upkeep_add = 0.25
 	}
 	# LFG: added by stellaris-lfg-traditions
+	triggered_country_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				has_active_tradition = tr_lfg_broadcast_holo_museums
+			}
+		}
+		historical_item_specimens_produces_mult = @holomuseum_specimen_produces_mult
+	}
 	triggered_planet_modifier = {
 		potential = {
 			exists = owner

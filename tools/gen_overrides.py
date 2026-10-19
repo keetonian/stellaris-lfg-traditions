@@ -130,10 +130,20 @@ def penal_zone_block(jobs: list) -> str:
 ZONE_SETS_ANCHOR = r"^\tzone_sets = \{\n(?:\t\t\w+\n)+\t\}\n"
 
 
-def holomuseum_block(research: str) -> str:
-    """Broadcast - Holo-Museums: the museum's regular-empire entertainer bonuses again (not its upkeep),
-    like vanilla's Archaeoengineers block in the same building."""
-    return f"""\ttriggered_planet_modifier = {{
+def holomuseum_block(research: str, specimens: str) -> str:
+    """Broadcast - Holo-Museums: the museum's base bonuses again (specimen output, and its regular-empire entertainer
+    unity/research but not their upkeep), like vanilla's Archaeoengineers blocks in the same building. Kept here, not in
+    the tradition, so the tradition's tooltip is just its custom text."""
+    return f"""\ttriggered_country_modifier = {{
+\t\tpotential = {{
+\t\t\texists = owner
+\t\t\towner = {{
+\t\t\t\thas_active_tradition = tr_lfg_broadcast_holo_museums
+\t\t\t}}
+\t\t}}
+\t\t{specimens}_specimens_produces_mult = @holomuseum_specimen_produces_mult
+\t}}
+\ttriggered_planet_modifier = {{
 \t\tpotential = {{
 \t\t\texists = owner
 \t\t\towner = {{
@@ -294,9 +304,9 @@ OVERRIDES = {
         for zone, jobs in PENAL_ZONES
     ],
     "mod/common/buildings/zz_lfg_building_overrides.txt": [
-        (HOLOMUSEUMS, "xeno_geology_holomuseum", holomuseum_anchor("engineering"), holomuseum_block("engineering")),
-        (HOLOMUSEUMS, "aesthetic_wonders_holomuseum", holomuseum_anchor("physics"), holomuseum_block("physics")),
-        (HOLOMUSEUMS, "galactic_history_holomuseum", holomuseum_anchor("society"), holomuseum_block("society")),
+        (HOLOMUSEUMS, "xeno_geology_holomuseum", holomuseum_anchor("engineering"), holomuseum_block("engineering", "xeno_geology")),
+        (HOLOMUSEUMS, "aesthetic_wonders_holomuseum", holomuseum_anchor("physics"), holomuseum_block("physics", "aesthetic_wonder")),
+        (HOLOMUSEUMS, "galactic_history_holomuseum", holomuseum_anchor("society"), holomuseum_block("society", "historical_item")),
     ],
     "mod/common/situations/zz_lfg_situation_overrides.txt": [
         ("common/situations/08_machine_age_situations.txt", "situation_synthetic_fertility_digitization",

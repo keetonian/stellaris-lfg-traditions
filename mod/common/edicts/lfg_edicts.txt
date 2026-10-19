@@ -9,6 +9,9 @@ lfg_species_experimentation = {
 	icon = "GFX_edict_type_policy"
 	resources = {
 		category = edicts
+		cost = {
+			unity = 1000
+		}
 	}
 	potential = {
 		has_origin = origin_evolutionary_predators

@@ -66,7 +66,7 @@ lfg_resort_expansion = {
 # Tourism - Galactic Destination: on the resort world while the tradition is active (events/lfg_resorts_events.txt).
 # Civilians there are vanilla's Tourists (civilian job swap_type on resort colonies).
 lfg_galactic_destination = {
-	planet_civilians_trade_produces_add = 1
+	planet_civilians_trade_produces_add = 0.5
 	icon = "gfx/interface/icons/planet_modifiers/pm_resort_planet.dds"
 	icon_frame = 1
 }

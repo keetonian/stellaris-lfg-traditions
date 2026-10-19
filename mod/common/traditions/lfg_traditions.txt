@@ -590,23 +590,10 @@ tr_lfg_broadcast_finish = {
 	}
 }
 
-# Boosts the Grand Archive holomuseums: each one you own gets its specimen bonus doubled (+15% more, same as the
-# building), and its planet's entertainers get the museum's unity and research bonus again (generated building
-# override, common/buildings/zz_lfg_building_overrides.txt).
+# Grand Archive holomuseums grant their base bonuses again (specimen output and entertainer unity/research): all in the
+# generated building override (common/buildings/zz_lfg_building_overrides.txt), so this tooltip is just its text.
 tr_lfg_broadcast_holo_museums = {
 	custom_tooltip = tr_lfg_broadcast_holo_museums_tt
-	triggered_modifier = {
-		potential = { any_owned_planet = { has_building = xeno_geology_holomuseum } }
-		xeno_geology_specimens_produces_mult = @holomuseum_specimen_produces_mult
-	}
-	triggered_modifier = {
-		potential = { any_owned_planet = { has_building = aesthetic_wonders_holomuseum } }
-		aesthetic_wonder_specimens_produces_mult = @holomuseum_specimen_produces_mult
-	}
-	triggered_modifier = {
-		potential = { any_owned_planet = { has_building = galactic_history_holomuseum } }
-		historical_item_specimens_produces_mult = @holomuseum_specimen_produces_mult
-	}
 	ai_weight = { factor = 1000 }
 }
 

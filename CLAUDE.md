@@ -28,7 +28,7 @@ mod/                                  # exactly what ships
   common/tradition_categories/00_<tree name>_lfg.txt         # 8 trees, one per file (sort order, see below)
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
-  common/scripted_variables/lfg_scripted_variables.txt       # @lfg_species_split_* tunables (50 / 50 / -2000)
+  common/scripted_variables/lfg_scripted_variables.txt       # @lfg_species_split_* tunables (50 / 100)
   common/scripted_triggers/lfg_species_split_triggers.txt    # lfg_species_split_eligible (species scope, prev = country)
   common/scripted_effects/lfg_species_split_effects.txt      # lfg_split_species (the split itself)
   common/edicts/lfg_edicts.txt                               # lfg_species_experimentation -> fires lfg_species_split.1
@@ -180,8 +180,7 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
 - Why an edict and a popup: `button_effects` in the species screen run in **country** scope (the selected species isn't
   available), and the user chose an edict over overriding UIOD's species window. Picking happens in the event (4 random
   eligible candidates saved as `event_target:lfg_split_candidate_1..4`, "Show others" re-fires the event).
-- `lfg_split_species` (country scope, needs `event_target:lfg_split_source`): `add_resource = { society_research = -2000 }`
-  (research isn't stockpiled; same as vanilla `paragon.270`), then `while` 50x: `modify_species` with
+- `lfg_split_species` (country scope, needs `event_target:lfg_split_source`): `while` 50x: `modify_species` with
   `change_scoped_species = no` + `add_random_species_trait` (filter copied from vanilla `add_random_trait_evopred`), then
   for every owned pop group of the source species: `colony = { create_pop_group = { size = 0 species = variant
   effect = { transfer_pop_amount = { percentage = value:lfg_species_split_share } } } }` (pattern from vanilla

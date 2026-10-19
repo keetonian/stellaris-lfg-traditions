@@ -1,11 +1,9 @@
 # LFG Traditions - scripted variables.
 
-# Species Experimentation edict (Evolutionary Predators): how many subspecies are made, the minimum population
-# of the species (raw pops, not 100-pop units; half of them die first), and the society research change it applies
-# (negative = cost).
+# Species Experimentation edict (Evolutionary Predators): how many subspecies are made, and the minimum population
+# of the species (raw pops, not 100-pop units; half of them die first).
 @lfg_species_split_count = 50
 @lfg_species_split_min_pops = 100
-@lfg_species_split_society_research_change = -2000
 
 # Council agendas unlocked by LFG tradition finishers (same as vanilla @base_tradition_agenda_cost).
 @lfg_agenda_cost = 7000

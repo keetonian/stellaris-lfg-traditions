@@ -164,7 +164,7 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 | 2. Package Holidays ⚙ | Per 100 Resort Workers (no cap): unity +0.5%, pop happiness +0.25% |
 | 3. Paradise Unbound | Each Accommodation District adds +0.5 max districts to the resort world · unlocks the **Expand the Resort** decision · +1 max Accommodation District, resort district build speed +25% |
 | 4. Tourist Traps | Resort Worker workforce +15% · entertainer/resort worker consumer goods upkeep +0.5 |
-| 5. Galactic Destination ⚙ | On the resort world: **Tourists** +1 trade · diplomatic weight +1% per 1,000 Tourists there (max +30%). The planet part is the `lfg_galactic_destination` modifier, kept on the resort world by the monthly hidden event `lfg_resorts.1`, which also stores the tourist count (`num_assigned_jobs = { job = civilian }`) in `lfg_tourists`; so it can lag up to a month |
+| 5. Galactic Destination ⚙ | On the resort world: **Tourists** +0.5 trade · diplomatic weight +1% per 1,000 Tourists there (max +30%). The planet part is the `lfg_galactic_destination` modifier, kept on the resort world by the monthly hidden event `lfg_resorts.1`, which also stores the tourist count (`num_assigned_jobs = { job = civilian }`) in `lfg_tourists`; so it can lag up to a month |
 | Finish | Resort world: job efficiency +10% (planet modifier `lfg_tourism_finish`, kept by `lfg_resorts.1`) |
 
 **Growing the resort world** (resort worlds start with −25% max districts, and an empire can only have one):
@@ -278,12 +278,12 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
   The edict is hidden until then.
 - **Requires:** a species that is **not your main species or any of its subspecies**, with at least **100 pops** (raw population, not 100-pop units).
   Greyed out until one qualifies.
-- **Cost:** **2000 society research**, charged when you pick the species (deducted from current research progress, like vanilla events).
+- **Cost:** **1000 unity** to activate.
 - **How it works:** activating the edict opens a popup listing up to 4 eligible species ("Show other species" re-rolls).
   Picking one kills 50% of every pop group of that species, then divides the rest 1/50, 1/49, … 1/1 so the shares come
   out equal. Small pop groups round, so some subspecies may end up with fewer pops.
 - **Traits:** positive, organic, and not special/cybernetic/presapient/drawback/genetic-ascension (like the origin's own mutations).
-- Numbers (50 subspecies, 100 pops, −2000 research) are in `mod/common/scripted_variables/lfg_scripted_variables.txt`.
+- Numbers (50 subspecies, 100 pops) are in `mod/common/scripted_variables/lfg_scripted_variables.txt`.
 
 **Unverified:** the most script-heavy part of the mod; test on a save you don't mind losing.
 
@@ -303,7 +303,7 @@ These replace vanilla and Gigastructural definitions. Other mods that change the
 
 | Vanilla definition | Change |
 |---|---|
-| Buildings `xeno_geology_holomuseum`, `aesthetic_wonders_holomuseum`, `galactic_history_holomuseum` | Added: their entertainer unity/research bonus again while the owner has Holo-Museums |
+| Buildings `xeno_geology_holomuseum`, `aesthetic_wonders_holomuseum`, `galactic_history_holomuseum` | Added: their specimen bonus and entertainer unity/research bonus again while the owner has Holo-Museums |
 | District `district_resort` (Accommodation District) | Added: +150 Resort Worker jobs per district (Hospitality Academies) and +0.5 max districts per district (Paradise Unbound) |
 | The 24 repeatable techs in the Curated Progress table (19 vanilla, 5 Giga) | Added to `weight_modifier`: never drawn while their Shelve edict is active |
 | Giga inline script `common/inline_scripts/technology/giga_mega_repeatable.txt` (all megastructure capacity repeatables) | Same, with `has_edict = lfg_shelve_megastructure_capacity_$area$`. Inline scripts can only be replaced as a whole file (same path, this mod loads after Giga) |

@@ -335,7 +335,8 @@ class MutationTests(unittest.TestCase):
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
     def test_unknown_building(self):
-        self.edit(TRADITIONS, "has_building = galactic_history_holomuseum", "has_building = galactic_history_museum")
+        self.edit(TRADITIONS, "potential = { has_policy_flag = lfg_monuments_first }",
+                  "potential = { has_policy_flag = lfg_monuments_first has_building = galactic_history_museum }")
         self.assertFails("has_building = galactic_history_museum is not defined",
                          game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 

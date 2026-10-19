@@ -1,14 +1,11 @@
 # LFG Traditions - species split (Evolutionary Predators edict).
 
 # Scope: country. Expects event_target:lfg_split_source (the species to split).
-# Pays the society research, kills half of every pop group of the source species, then creates @lfg_species_split_count subspecies, each with one extra random
+# Kills half of every pop group of the source species, then creates @lfg_species_split_count subspecies, each with one extra random
 # positive organic trait, and moves an equal share of every pop group of the source species into each one.
 # Equal shares without knowing group sizes: variant k takes 1/(remaining) of what is left (1/50, 1/49, ... 1/1),
 # so the source species ends up empty. Small pop groups round, so some subspecies can end up with fewer pops.
 lfg_split_species = {
-	add_resource = {
-		society_research = @lfg_species_split_society_research_change
-	}
 	# The experiments are lethal: half of the species dies first.
 	every_owned_pop_group = {
 		limit = { is_exact_same_species = event_target:lfg_split_source }
