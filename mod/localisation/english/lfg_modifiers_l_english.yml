@@ -4,3 +4,5 @@
  mod_pop_resort_worker_bonus_workforce_mult:0 "Job Efficiency for [resort_worker.GetNamePlural]"
  mod_planet_district_resort_build_speed_mult:0 "$district_resort$ Build Speed"
  mod_district_resort_max_add:0 "Max $district_resort$s"
+ mod_job_lfg_penal_supertensile_laborer_add:0 "$job_lfg_penal_supertensile_laborer$ Jobs"
+ mod_job_lfg_penal_matter_compactor_add:0 "$job_lfg_penal_matter_compactor$ Jobs"

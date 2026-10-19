@@ -312,6 +312,11 @@ class MutationTests(unittest.TestCase):
         self.edit("localisation/english/lfg_systems_l_english.yml", " NAME_lfg_thalassa:", " NAME_lfg_thalassaz:")
         self.assertFails("name = NAME_lfg_thalassa has no localisation")
 
+    def test_job_add_modifier_needs_a_name(self):
+        self.edit("localisation/english/lfg_modifiers_l_english.yml", " mod_job_lfg_penal_matter_compactor_add:",
+                  " mod_job_lfg_penal_matter_compactor_adz:")
+        self.assertFails("missing localisation: mod_job_lfg_penal_matter_compactor_add")
+
     def test_job_and_zone_need_loc(self):
         self.edit(TRAD_LOC, " job_lfg_penal_supertensile_laborer_plural:", " job_lfg_penal_supertensile_laborer_plurals:")
         self.edit(TRAD_LOC, " zone_lfg_penal_supertensiles_desc:", " zone_lfg_penal_supertensiles_dezc:")

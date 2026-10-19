@@ -103,18 +103,20 @@ penal colony, so the tree scales with it: per 100 unemployed pops there and per 
 
 Layout (like vanilla Statecraft): Wardens' Code → Transportation → Idle Hands, and Prison Industry → Chain Gangs.
 
+"Unemployed" here means **Civilians**: in 4.5 a regular empire's jobless pops take the uncapped Civilian job, so the
+tree counts `num_assigned_jobs = { job = civilian }` (vanilla's `num_unemployed` is always 0 for regular empires).
+
 | Tradition | Effect |
 |---|---|
 | Adopt | Penal colony: worker job efficiency +10%, housing +15% · **worker happiness −5% everywhere** |
-| 1. Wardens' Code | Penal colony: stability +5, enforcer output +25% |
-| 2. Transportation | Crime −10% everywhere · unemployed pops +50% more likely to resettle to the penal colony |
-| 3. Idle Hands ⚙ | **All jobs on the penal colony +1% per 100 unemployed pops there** (no cap) · **with fewer than 100 unemployed: −30% job output there instead** · **riots:** crime +2 per 100 unemployed · **attrition:** 2% of the unemployed there die each month, so they settle at ~50× monthly arrivals (+50% per 100 arrivals/month; ~22% lost per year) |
+| 1. Wardens' Code | Penal colony: stability +5, enforcer job efficiency +25% |
+| 2. Transportation | Crime −10% everywhere · **every month, 10% of the unemployed on each other planet (max 300 per planet) are shipped to the penal colony**, jobs and housing or not (`lfg_penal_ship_unemployed` in `lfg_penal.1`; vanilla resettlement only targets planets with open jobs) |
+| 3. Idle Hands ⚙ | **All jobs on the penal colony +1% per 100 unemployed pops there** (no cap) · **with fewer than 100 unemployed: −75% job output there instead** · **riots:** crime +2 per 100 unemployed · **attrition:** 3% of the unemployed there die each month, so they settle at ~33× monthly arrivals (+33% per 100 arrivals/month; ~31% lost per year) |
 | 4. Prison Industry ⚙ | **+50% jobs from district specializations on the penal colony** (generated additions to the 12 city specializations: Industrial, Foundry, Factory, the research and unity ones, Fortress, Trade; and the Penal Supertensile Works) |
 | 5. Chain Gangs | Penal colony: worker job efficiency +15%, pop upkeep −15%, **happiness −15%** |
-| Finish | **Penal Industries:** each Prison District on the penal colony: +50 **Penal Metallurgist** and +50 **Penal Artisan** jobs (Penal Artificer for Crafters) · with supertensiles on: the **Penal Supertensile Works** specialization in Prison Districts there (+100 **Penal Supertensile Laborer** jobs: 4 minerals + 1 alloy + 1 unity → 1 supertensile each) · with Gigastructural's bulk matter enabled: the **Penal Matter Compactors** specialization (+100 **Penal Matter Compactor** jobs: 180 energy + 30 minerals + 40 alloys + 0.5 dark matter → 0.01 bulk matter each per month, i.e. 18,000 energy + 3,000 minerals + 4,000 alloys + 50 dark matter per matter; Giga's harvesting costs 16,000 energy + 4,000 alloys) |
+| Finish | Unlocks the penal specializations for Prison Districts on the penal colony: with supertensiles on, the **Penal Supertensile Works** specialization in Prison Districts there (+100 **Penal Supertensile Laborer** jobs: 4 minerals + 1 alloy + 1 unity → 1 supertensile each) · with Gigastructural's bulk matter enabled: the **Penal Matter Compactors** specialization (+100 **Penal Matter Compactor** jobs: 180 energy + 30 minerals + 40 alloys + 0.5 dark matter → 0.01 bulk matter each per month, i.e. 18,000 energy + 3,000 minerals + 4,000 alloys + 50 dark matter per matter; Giga's harvesting costs 16,000 energy + 4,000 alloys) |
 
-Penal Metallurgist (3 minerals → 1.5 alloys) and Penal Artisan (3 minerals → 3 consumer goods) are complete vanilla
-worker jobs that nothing in vanilla uses. Planet effects are `lfg_penal_*` modifiers kept on the penal colony by the
+Planet effects are `lfg_penal_*` modifiers kept on the penal colony by the
 monthly hidden event `lfg_penal.1` (also run on adoption), which counts its Prison Districts
 (Prison Industry's modifier is re-added with that count as multiplier) and its unemployed pops (`lfg_penal_idle_hands`,
 multiplier = whole hundreds of unemployed). Changes can lag up to a month. The Penal Supertensile Works zone

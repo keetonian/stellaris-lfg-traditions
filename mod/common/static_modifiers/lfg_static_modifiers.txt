@@ -145,12 +145,7 @@ lfg_penal_adopt = {
 }
 lfg_penal_wardens_code = {
 	planet_stability_add = 5
-	planet_enforcers_produces_mult = 0.25
-	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
-	icon_frame = 2
-}
-lfg_penal_transportation = {
-	planet_resettlement_unemployed_destination_mult = 0.50
+	pop_enforcer_bonus_workforce_mult = 0.25
 	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
 	icon_frame = 2
 }
@@ -161,20 +156,6 @@ lfg_penal_chain_gangs = {
 	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
 	icon_frame = 2
 }
-# Penal Industries (Penitence finisher): added with multiplier = Prison Districts on the planet (lfg_sync_prison_industry).
-lfg_penal_prison_industry = {
-	job_foundry_prison_worker_add = 50
-	job_artisan_prison_worker_add = 50
-	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
-	icon_frame = 2
-}
-lfg_penal_prison_industry_crafter = {
-	job_foundry_prison_worker_add = 50
-	job_artificer_prison_worker_add = 50
-	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
-	icon_frame = 2
-}
-
 # Idle Hands: added to the penal colony with multiplier = whole hundreds of unemployed pops there
 # (lfg_sync_penal_unemployed): every job on the planet produces +1% per 100 unemployed, and riots: crime +2 per 100.
 # Idle Hands: while the penal colony has fewer than 100 unemployed, its jobs slack off (lfg_sync_penal_unemployed).

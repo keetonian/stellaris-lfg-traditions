@@ -1,11 +1,11 @@
 # LFG Traditions - district specializations (zones).
 
 # Penitence - Penal Supertensile Works: a city-slot specialization that only appears in Prison Districts on the
-# penal colony (penal colonies have no City Districts), with supertensiles on and the Penitence finisher
-# ("Penal Industries"). Prison Industry gives +50% of its jobs, like the vanilla specializations (zz_lfg_zone_overrides).
+# penal colony (penal colonies have no City Districts), with supertensiles on and the Penitence finisher.
+# Prison Industry gives +50% of its jobs, like the vanilla specializations (zz_lfg_zone_overrides).
 # Jobs: Penal Supertensile Laborers (common/pop_jobs/lfg_jobs.txt). Modelled on vanilla zone_foundry.
 zone_lfg_penal_supertensiles = {
-	icon = GFX_district_specialization_industrial
+	icon = GFX_giga_district_specialization_supertensiles	# Gigastructural's own (Birch world)
 	base_buildtime = @zone_buildtime
 
 	potential = { # planet scope
@@ -64,7 +64,7 @@ zone_lfg_penal_supertensiles = {
 # Penitence - Penal Matter Compactors: like the Penal Supertensile Works, but for Gigastructural's bulk matter (only
 # while it's enabled: no giga_bulk_matter_cost_disabled flag). Unlocked by the finisher; Prison Industry +50% jobs.
 zone_lfg_penal_bulk_matter = {
-	icon = GFX_district_specialization_minerals
+	icon = GFX_district_specialization_lfg_penal_bulk_matter
 	base_buildtime = @zone_buildtime
 
 	potential = { # planet scope

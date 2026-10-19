@@ -39,7 +39,7 @@ mod/                                  # exactly what ships
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
   events/lfg_synthetic_fertility_events.txt                  # lfg_synthetic_fertility.1: extra Identity Repository uploads (monthly)
   events/lfg_penal_events.txt                                # lfg_penal.1: Penitence penal colony modifiers + counts (monthly)
-  common/scripted_effects/lfg_penal_effects.txt              # lfg_sync_penal_modifier / lfg_sync_prison_industry / lfg_sync_penal_unemployed
+  common/scripted_effects/lfg_penal_effects.txt              # lfg_sync_penal_modifier / lfg_sync_penal_unemployed / lfg_penal_ship_unemployed
   common/zones/lfg_zones.txt                                 # zone_lfg_penal_supertensiles, zone_lfg_penal_bulk_matter
   common/pop_jobs/lfg_jobs.txt                               # lfg_penal_supertensile_laborer, lfg_penal_matter_compactor
   common/economic_categories/lfg_economic_categories.txt     # planet_lfg_penal_laborers (the job's category)
@@ -66,7 +66,8 @@ mod/                                  # exactly what ships
   common/buildings/zz_lfg_building_overrides.txt             # GENERATED (3 holomuseums: Holo-Museums bonus)
   common/zones/zz_lfg_zone_overrides.txt                     # GENERATED (8 resort zones: Hospitality Academies; 12 city zones:
                                                              #   Prison Industry; each +50% jobs on that colony type)
-  interface/lfg_traditions.gfx                               # sprites -> vanilla .dds (no art ships)
+  interface/lfg_traditions.gfx                               # sprites -> vanilla/Giga .dds, plus the bulk matter zone icon
+  gfx/interface/icons/districts/lfg_zone_penal_bulk_matter.dds # 64x64 zone icon (art/make_zone_icons.py, needs Pillow)
   localisation/english/lfg_*_l_english.yml                   # UTF-8 BOM (lfg_modifiers_*: names for unnamed generated modifiers;
                                                              #   lfg_shelve_* is GENERATED)
 tools/pdx.py          # small Paradox-script parser
@@ -99,6 +100,8 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
   - no `planet_jobs_civilian_*`: use `planet_civilians_<res>_produces_add`, `pop_cat_civilian_*`, `job_civilian_*`
   - 4.x growth: `logistic_growth_mult` (organic), `planet_pop_assembly_mult` (robots); the old `pop_growth_*` names are gone
   - `planet_maintenance_drones_produces_mult` doesn't exist
+  - Jobless pops of regular empires are **Civilians** (uncapped `civilian` job), not unemployed: `num_unemployed` is 0
+    for them. Count `num_assigned_jobs = { job = civilian }` (verified: Idle Hands showed no bonus with num_unemployed).
   - Magnitudes: civilian `_produces_add` ~0.1–0.5, `planet_stability_add` 2–5, `planet_amenities_add` is in hundreds (100–500).
 - **Supertensiles** = Giga resource `giga_sr_amb_megaconstruction`. It exists only when global flag `giga_buildcap_j` is set.
   Put supertensile modifiers in `triggered_modifier = { potential = { has_global_flag = giga_buildcap_j } ... }` with a
@@ -268,7 +271,9 @@ job_<key>_add = @scaling_district_1_job }`. A job's icon is `swappable_data.defa
 (checker enforces). Modifiers the game generates for new jobs/categories (`job_<key>_add`, `planet_<category>_*`) aren't in
 modifiers.log until the game has loaded the mod, so don't use them in static modifiers checked against the snapshot.
 **Unverified in game:** the new zone, job and economic category.
-Also unverified: Idle Hands attrition (`lfg_penal_idle_hands_attrition`): `count_owned_pop_amount` exported in planet
+Also unverified: Transportation's shipments (`lfg_penal_ship_unemployed`: `create_pop_group` on another planet based on a
+pop group, then `transfer_pop_amount` with a variable amount). Vanilla resettlement only targets planets with open jobs,
+so a destination modifier can't keep pulling pops to a full planet. Also unverified: Idle Hands attrition (`lfg_penal_idle_hands_attrition`): `count_owned_pop_amount` exported in planet
 scope, variables on pop groups, and `kill_pop_group = { amount = <variable> }` (vanilla does this in refugee_events.txt).
 
 ## Special systems

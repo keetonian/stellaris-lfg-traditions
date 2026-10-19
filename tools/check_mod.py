@@ -69,6 +69,7 @@ ALLOWED_FILES = [
     r"common/solar_system_initializers/[^/]+\.txt",
     r"events/[^/]+\.txt",
     r"interface/[^/]+\.gfx",
+    r"gfx/interface/icons/districts/lfg_[^/]+\.dds",  # art/make_zone_icons.py
     r"localisation/english/[^/]+_l_english\.yml",
     r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
 ]
@@ -314,7 +315,8 @@ def check_edicts(mod: Mod, loc: Dict[str, str], r: Report) -> None:
             if k not in loc:
                 r.fail(f"missing localisation: {k}")
     for key in mod.top("common/pop_jobs"):
-        for k in (f"job_{key}", f"job_{key}_plural", f"job_{key}_desc"):
+        # mod_job_<key>_add names the "+N <job> Jobs" line zones/buildings show (vanilla: "$job_<key>$ Jobs").
+        for k in (f"job_{key}", f"job_{key}_plural", f"job_{key}_desc", f"mod_job_{key}_add"):
             if k not in loc:
                 r.fail(f"missing localisation: {k}")
 

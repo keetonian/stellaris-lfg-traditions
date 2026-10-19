@@ -46,9 +46,9 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [i]Your penal colony runs the economy.[/i] Regular empires, needs Penal Colonies.
 [list]
 [*]Harder-working, better-guarded camps; crime falls everywhere and the unemployed are shipped off to the colony.
-[*][b]Idle Hands:[/b] every job on the colony +1% per 100 unemployed (-30% with none), but they riot and 2% die each month.
+[*][b]Idle Hands:[/b] every job on the colony +1% per 100 unemployed (-75% with none), but they riot and 3% die each month.
 [*][b]Prison Industry:[/b] +50% jobs from the colony's district specializations.
-[*]Finisher, [b]Penal Industries:[/b] penal factory jobs plus supertensile and (ruinously expensive) bulk matter specializations for Prison Districts.
+[*]Finisher: supertensile and (ruinously expensive) bulk matter specializations for Prison Districts.
 [*][b]Downsides:[/b] workers everywhere are less happy, and Chain Gangs make the colony miserable.
 [/list]
 

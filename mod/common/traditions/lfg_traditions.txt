@@ -399,13 +399,10 @@ tr_lfg_penitence_adopt = {
 	}
 }
 
-# Penal Industries: Prison Districts on the penal colony get Penal Metallurgist / Artisan jobs (lfg_sync_prison_industry)
-# and, with supertensiles, the Penal Supertensile Works specialization (zone_lfg_penal_supertensiles).
+# Unlocks the penal district specializations for Prison Districts on the penal colony: Penal Supertensile Works
+# (zone_lfg_penal_supertensiles) and Penal Matter Compactors (zone_lfg_penal_bulk_matter); see common/zones/lfg_zones.txt.
 tr_lfg_penitence_finish = {
 	custom_tooltip = tr_lfg_penitence_finish_tt
-	on_enabled = {
-		hidden_effect = { country_event = { id = lfg_penal.1 } }
-	}
 	modifier = {
 		ascension_perks_add = 1
 	}
@@ -419,7 +416,8 @@ tr_lfg_penitence_wardens_code = {
 	ai_weight = { factor = 1000 }
 }
 
-# Crime goes down everywhere; the unemployed are shipped to the penal colony.
+# Crime goes down everywhere; each month 10% of every other planet's unemployed (max 300 per planet) are shipped to
+# the penal colony by lfg_penal.1 (lfg_penal_ship_unemployed), whether or not it has jobs or housing.
 tr_lfg_penitence_transportation = {
 	possible = {
 		has_tradition = tr_lfg_penitence_wardens_code
@@ -436,8 +434,8 @@ tr_lfg_penitence_transportation = {
 
 # Hook: every job on the penal colony +1% per 100 unemployed pops there (no cap): lfg_penal_idle_hands, re-added by
 # lfg_sync_penal_unemployed with multiplier = whole hundreds of unemployed. Pairs with Transportation.
-# Downsides: riots (crime +2 per 100 unemployed, in the same modifier) and attrition (2% of the unemployed die each
-# month, lfg_penal_idle_hands_attrition), so the unemployed settle at ~50x monthly arrivals.
+# Downsides: riots (crime +2 per 100 unemployed, in the same modifier) and attrition (3% of the unemployed die each
+# month, lfg_penal_idle_hands_attrition), so the unemployed settle at ~33x monthly arrivals.
 tr_lfg_penitence_idle_hands = {
 	possible = {
 		has_tradition = tr_lfg_penitence_transportation

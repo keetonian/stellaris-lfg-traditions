@@ -2,7 +2,7 @@
 namespace = lfg_penal
 
 # Monthly (on_monthly_pulse_country) and when a Penitence tradition is adopted: keep the lfg_penal_* modifiers on the
-# penal colony (and only there), scaling Prison Industry by Prison Districts and Idle Hands by unemployed pops.
+# penal colony (and only there), scaling Idle Hands by Civilians.
 # Countries without the tree cost two lookups; the flag lets one last run clean up after the tree is lost.
 country_event = {
 	id = lfg_penal.1
@@ -25,10 +25,26 @@ country_event = {
 		every_owned_planet = {
 			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_adopt TRADITION = tr_lfg_penitence_adopt }
 			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_wardens_code TRADITION = tr_lfg_penitence_wardens_code }
-			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_transportation TRADITION = tr_lfg_penitence_transportation }
 			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_chain_gangs TRADITION = tr_lfg_penitence_chain_gangs }
-			lfg_sync_prison_industry = yes
 			lfg_sync_penal_unemployed = yes
+		}
+		# Transportation: ship unemployed pops from every other planet to the penal colony (open jobs or not).
+		if = {
+			limit = {
+				has_tradition = tr_lfg_penitence_transportation
+				any_owned_planet = { has_modifier = penal_colony }
+			}
+			random_owned_planet = {
+				limit = { has_modifier = penal_colony }
+				save_event_target_as = lfg_penal_target
+			}
+			every_owned_planet = {
+				limit = {
+					NOT = { has_modifier = penal_colony }
+					num_assigned_jobs = { job = civilian value > 0 }	# jobless pops are Civilians in 4.x
+				}
+				lfg_penal_ship_unemployed = yes
+			}
 		}
 	}
 }

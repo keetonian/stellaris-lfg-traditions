@@ -19,51 +19,9 @@ lfg_sync_penal_modifier = {
 	}
 }
 
-# Planet scope. Penal Industries (Penitence finisher): lfg_penal_prison_industry (or _crafter) with multiplier = Prison Districts here
-# (planet variable lfg_prison_districts). Re-added only when the count changes, like lfg_sync_arc_neighbours.
-lfg_sync_prison_industry = {
-	set_variable = { which = lfg_prison_districts_now value = 0 }
-	if = {
-		limit = {
-			has_modifier = penal_colony
-			owner = { has_tradition = tr_lfg_penitence_finish }
-		}
-		export_trigger_value_to_variable = {
-			trigger = num_districts
-			parameters = {
-				type = district_prison
-			}
-			variable = lfg_prison_districts_now
-		}
-	}
-	if = {
-		limit = {
-			OR = {
-				NOT = { check_variable = { which = lfg_prison_districts value = lfg_prison_districts_now } }
-				AND = {
-					check_variable = { which = lfg_prison_districts_now value > 0 }
-					NOR = {
-						has_modifier = lfg_penal_prison_industry
-						has_modifier = lfg_penal_prison_industry_crafter
-					}
-				}
-			}
-		}
-		remove_modifier = lfg_penal_prison_industry
-		remove_modifier = lfg_penal_prison_industry_crafter
-		set_variable = { which = lfg_prison_districts value = lfg_prison_districts_now }
-		if = {
-			limit = { check_variable = { which = lfg_prison_districts value > 0 } }
-			if = {
-				limit = { owner = { is_crafter_empire = yes } }
-				add_modifier = { modifier = lfg_penal_prison_industry_crafter days = -1 multiplier = lfg_prison_districts }
-			}
-			else = {
-				add_modifier = { modifier = lfg_penal_prison_industry days = -1 multiplier = lfg_prison_districts }
-			}
-		}
-	}
-}
+# "Unemployed" below means Civilians: in 4.x a regular empire's jobless pops take the uncapped Civilian job, so
+# num_unemployed is always 0 for them; count num_assigned_jobs = { job = civilian } instead (as Galactic Destination
+# does for Tourists).
 
 # Planet scope. Idle Hands: lfg_penal_idle_hands with multiplier = whole hundreds of unemployed pops here
 # (planet variable lfg_unemployed_hundreds). Re-added only when that count changes.
@@ -75,7 +33,10 @@ lfg_sync_penal_unemployed = {
 			owner = { has_tradition = tr_lfg_penitence_idle_hands }
 		}
 		export_trigger_value_to_variable = {
-			trigger = num_unemployed
+			trigger = num_assigned_jobs
+			parameters = {
+				job = civilian
+			}
 			variable = lfg_unemployed_hundreds_now
 		}
 		divide_variable = { which = lfg_unemployed_hundreds_now value = 100 }
@@ -98,7 +59,7 @@ lfg_sync_penal_unemployed = {
 			limit = { check_variable = { which = lfg_unemployed_hundreds value > 0 } }
 			add_modifier = { modifier = lfg_penal_idle_hands days = -1 multiplier = lfg_unemployed_hundreds }
 		}
-	}	# Fewer than 100 unemployed while holding Idle Hands: -30% job output instead.
+	}	# Fewer than 100 unemployed while holding Idle Hands: @lfg_idle_hands_empty_penalty job output instead.
 	if = {
 		limit = {
 			has_modifier = penal_colony
@@ -121,7 +82,10 @@ lfg_sync_penal_unemployed = {
 # to that many pops (the jobs they leave are refilled by the unemployed): share = unemployed * attrition / population.
 lfg_penal_idle_hands_attrition = {
 	export_trigger_value_to_variable = {
-		trigger = num_unemployed
+		trigger = num_assigned_jobs
+		parameters = {
+			job = civilian
+		}
 		variable = lfg_attrition_share
 	}
 	export_trigger_value_to_variable = {
@@ -150,6 +114,68 @@ lfg_penal_idle_hands_attrition = {
 				kill_pop_group = {
 					pop_group = this
 					amount = lfg_attrition_kill
+				}
+			}
+		}
+	}
+}
+
+# Planet scope (a planet that isn't the penal colony; event_target:lfg_penal_target = the penal colony). Transportation:
+# ship @lfg_transportation_share of this planet's unemployed (at most @lfg_transportation_max) to the penal colony,
+# whether or not it has jobs or housing. Pop groups mix employed and unemployed pops, so every group sends the same
+# share of its size (the jobs they leave are refilled by the unemployed), adding up to that many pops:
+# share = min(unemployed * 10%, 300) / population. Each group moves into a new group on the penal colony based on it
+# (create_pop_group + transfer_pop_amount, as in lfg_split_species).
+lfg_penal_ship_unemployed = {
+	export_trigger_value_to_variable = {
+		trigger = num_assigned_jobs
+		parameters = {
+			job = civilian
+		}
+		variable = lfg_ship_share
+	}
+	multiply_variable = { which = lfg_ship_share value = @lfg_transportation_share }
+	floor_variable = lfg_ship_share
+	if = {
+		limit = { check_variable = { which = lfg_ship_share value > @lfg_transportation_max } }
+		set_variable = { which = lfg_ship_share value = @lfg_transportation_max }
+	}
+	export_trigger_value_to_variable = {
+		trigger = count_owned_pop_amount
+		parameters = {
+			limit = { always = yes }
+		}
+		variable = lfg_ship_population
+	}
+	if = {
+		limit = {
+			check_variable = { which = lfg_ship_share value > 0 }
+			check_variable = { which = lfg_ship_population value > 0 }
+		}
+		divide_variable = { which = lfg_ship_share value = lfg_ship_population }
+		every_owned_pop_group = {
+			export_trigger_value_to_variable = {
+				trigger = pop_group_size
+				variable = lfg_ship_amount
+			}
+			multiply_variable = { which = lfg_ship_amount value = prev.lfg_ship_share }
+			floor_variable = lfg_ship_amount
+			if = {
+				limit = { check_variable = { which = lfg_ship_amount value > 0 } }
+				save_event_target_as = lfg_ship_source
+				event_target:lfg_penal_target = {
+					create_pop_group = {
+						pop_group = event_target:lfg_ship_source
+						size = 0
+						effect = {
+							set_variable = { which = lfg_ship_amount value = event_target:lfg_ship_source.lfg_ship_amount }
+							transfer_pop_amount = {
+								source = event_target:lfg_ship_source
+								target = this
+								amount = lfg_ship_amount
+							}
+						}
+					}
 				}
 			}
 		}

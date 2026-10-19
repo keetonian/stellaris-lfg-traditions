@@ -1,4 +1,5 @@
-# LFG Traditions - sprites. Every texture is vanilla art (no .dds files ship with this mod).
+# LFG Traditions - sprites. Textures are vanilla / Gigastructural art, except the Penal Matter Compactors icon in mod/gfx
+# (a 64x64 version of Gigastructural's bulk matter resource icon, built by art/make_zone_icons.py).
 # Each tree needs 4 category sprites; each tradition needs GFX_<tradition key>; each ascension perk GFX_<perk key>.
 spriteTypes = {
 	### MEGAFORGE ###
@@ -30,7 +31,7 @@ spriteTypes = {
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_abundance" textureFile = "gfx/interface/traditions/tradition_hex_bg_prosperity.dds" }
 	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_abundance" textureFile = "gfx/interface/tiles/tradition_category_tile_prosperity.dds" }
 	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_abundance" textureFile = "gfx/interface/tiles/tradition_category_tile_prosperity.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
-	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_abundance" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_prosperity.dds" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_abundance" textureFile = "gfx/interface/icons/resources/food_market_large.dds" }
 	spriteType = { name = "GFX_tr_lfg_abundance_tithe_barns" textureFile = "gfx/interface/icons/traditions/tradition_domestication_metabolic_regulation.dds" }
 	spriteType = { name = "GFX_tr_lfg_abundance_seed_vaults" textureFile = "gfx/interface/icons/traditions/tradition_cloning_genomic_growth.dds" }
 	spriteType = { name = "GFX_tr_lfg_abundance_bountiful_fields" textureFile = "gfx/interface/icons/traditions/tradition_adaptability_dietary_enrichment.dds" }
@@ -89,6 +90,8 @@ spriteTypes = {
 	spriteType = { name = "GFX_tr_lfg_penitence_idle_hands" textureFile = "gfx/interface/icons/traditions/tradition_domination_workplace_motivators.dds" }
 	spriteType = { name = "GFX_tr_lfg_penitence_prison_industry" textureFile = "gfx/interface/icons/traditions/tradition_domination_imperious_architecture.dds" }
 	spriteType = { name = "GFX_tr_lfg_penitence_chain_gangs" textureFile = "gfx/interface/icons/traditions/tradition_domination_deviancy_protocols.dds" }
+	### DISTRICT SPECIALIZATIONS ###
+	spriteType = { name = "GFX_district_specialization_lfg_penal_bulk_matter" textureFile = "gfx/interface/icons/districts/lfg_zone_penal_bulk_matter.dds" }
 	### ASCENSION PERKS ###
 	spriteType = { name = "GFX_ap_lfg_massed_assault" textureFile = "gfx/interface/icons/ascension_perks/ap_lord_of_war.dds" }
 	spriteType = { name = "GFX_ap_lfg_curated_progress" textureFile = "gfx/interface/icons/ascension_perks/ap_technological_ascendancy.dds" }

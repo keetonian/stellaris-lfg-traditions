@@ -18,3 +18,10 @@ python3 art/make_thumbnail.py /tmp/thumbs/load_10.png 0.40 mod/thumbnail.png   #
 ```
 
 Keep it under 1 MB (Steam's limit; `tools/check_mod.py` checks it).
+
+# District specialization icons
+
+Penal Supertensile Works uses Gigastructural's own 64x64 specialization icon (`GFX_giga_district_specialization_supertensiles`).
+Gigastructural has none for bulk matter, so `mod/gfx/interface/icons/districts/lfg_zone_penal_bulk_matter.dds` is its
+32x32 bulk matter resource icon upscaled to vanilla's 64x64: `python3 art/make_zone_icons.py` (Pillow). It's the only
+texture the mod ships.
