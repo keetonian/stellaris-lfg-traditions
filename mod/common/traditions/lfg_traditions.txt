@@ -477,7 +477,7 @@ tr_lfg_abundance_adopt = {
 	}
 }
 
-# Hook: organic growth +1% per 1,000 monthly food income (no cap). The Feast of Plenty agenda doubles it while active.
+# Hook: organic growth +1% per 1,000 food produced per month (no cap; trade deals don't count). The Feast of Plenty agenda doubles it while active.
 tr_lfg_abundance_finish = {
 	unlocks_agenda = agenda_lfg_harvest_tithe
 	custom_tooltip = tr_lfg_abundance_finish_tt
@@ -487,12 +487,12 @@ tr_lfg_abundance_finish = {
 	triggered_modifier = {
 		potential = { always = yes }
 		logistic_growth_mult = 0.01
-		mult = value:lfg_food_income_1000s
+		mult = value:lfg_food_produced_1000s
 	}
 	triggered_modifier = {
 		potential = { has_modifier = agenda_lfg_feast_of_plenty_finish }
 		logistic_growth_mult = 0.01
-		mult = value:lfg_food_income_1000s
+		mult = value:lfg_food_produced_1000s
 	}
 }
 
@@ -537,7 +537,7 @@ tr_lfg_abundance_grain_reserves = {
 	}
 	modifier = {
 		country_resource_max_food_add = 100000
-		planet_pops_food_upkeep_mult = 1.0
+		planet_pops_food_upkeep_mult = 2.0
 	}
 	ai_weight = { factor = 1000 }
 }

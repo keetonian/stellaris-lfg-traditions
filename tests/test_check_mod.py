@@ -373,6 +373,12 @@ class MutationTests(unittest.TestCase):
         self.assertNotIn("machine_age.4400", check_mod.mod_event_ids(check_mod.Mod(self.mod, check_mod.Report(False))))
 
     @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
+    def test_unknown_vanilla_fail_text(self):
+        self.edit(PERKS, 'fail_text = "lfg_requires_ascension_perks_4"', 'fail_text = "requires_ascension_perks_4"')
+        self.assertFails("fail_text = requires_ascension_perks_4 is not a localisation key",
+                         game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
+
+    @unittest.skipUnless(GAME_INSTALLED, "Stellaris + Gigastructural not installed")
     def test_hand_edited_override(self):
         self.edit("common/situations/zz_lfg_situation_overrides.txt", "initial_progress = 300", "initial_progress = 0")
         self.assertFails("is stale", game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)

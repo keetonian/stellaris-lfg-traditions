@@ -58,9 +58,9 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [*]Storage for every resource, and much more productive farmers.
 [*][b]Tithe Barns:[/b] 10,000 stored food means stability and faster growth; under 1,000 means unrest and slower growth.
 [*]Up to +20% unity from stored food.
-[*][b]Grain Reserves:[/b] +100,000 food storage, but your people eat twice as much.
+[*][b]Grain Reserves:[/b] +100,000 food storage, but your people eat three times as much.
 [*]Food surpluses buy influence, and farmers gain political power over specialists.
-[*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth for every 1,000 monthly food income, with no cap.
+[*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth for every 1,000 food produced per month, with no cap.
 [/list]
 
 [h3]Broadcast[/h3]

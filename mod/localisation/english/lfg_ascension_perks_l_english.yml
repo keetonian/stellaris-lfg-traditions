@@ -5,3 +5,4 @@
  ap_lfg_massed_assault:0 "Massed Assault"
  ap_lfg_massed_assault_desc:0 "A planet is not taken one regiment at a time. Our doctrine commits every army at once, on every front, until the defenders are simply overwhelmed.\n\nMore of our armies fight at the same time in ground combat, and every general is trained in the doctrine."
  ap_lfg_massed_assault_tt:0 "All our generals gain the §YMassed Assault Doctrine§! trait: armies they lead get damage §G+25%§!, health §G+25%§! and morale §G+50%§!."
+ lfg_requires_ascension_perks_4:0 "$TRIGGER_FAIL$Requires four other Ascension Perks to be selected first."

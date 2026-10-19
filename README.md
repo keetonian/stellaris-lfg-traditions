@@ -133,9 +133,9 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 | 1. Tithe Barns ⚙ | 10,000+ food stored: stability +5, organic growth +10% · under 1,000: stability −5, organic growth −10% |
 | 2. Seed Vaults ⚙ | Unity +1% per 5,000 stored food (max +20%) |
 | 3. Bountiful Fields | Farmer output +20% |
-| 4. Grain Reserves | Food storage +100,000 · pop food upkeep +100% |
+| 4. Grain Reserves | Food storage +100,000 · pop food upkeep +200% |
 | 5. Harvest Courts ⚙ | Worker political power +25% · specialist political power −25% · while food income is positive: influence +10% |
-| Finish ⚙ | **Bumper Crops:** organic growth +1% per 1,000 monthly food income (no cap; doubled during **Feast of Plenty**) · unlocks agenda **The Harvest Tithe** |
+| Finish ⚙ | **Bumper Crops:** organic growth +1% per 1,000 food produced per month (the food tooltip's "Produced" line: trade deals and upkeep don't count; no cap; doubled during **Feast of Plenty**) · unlocks agenda **The Harvest Tithe** |
 
 ### Broadcast: entertainment for the whole galaxy
 **Who:** non-gestalt (gestalts have no entertainers). **Hook:** scales with the empires you know and your commercial pacts; war is prime time; doubles your holomuseums. **Agenda:** Gala Season.
@@ -184,7 +184,7 @@ prepares an agenda over time; when launched, its effect lasts **10 years**.
 |---|---|---|---|
 | The Great Project | Megaforge (on adoption) | Megastructure build speed +5% | With supertensiles on: supertensile output +25%, megastructure build speed +33%, cost −10% · worker output −10%. With supertensiles off (separate version, same name): build speed +33%, cost −20% · worker output −10% |
 | Eureka Season | Polymath | Research speed +3% | Research speed +20% · stability −5 |
-| Feast of Plenty | Granary (on adoption) | Farmer output +5% | For 10 years: doubles the finisher's Bumper Crops (another +1% organic growth per 1,000 monthly food income) |
+| Feast of Plenty | Granary (on adoption) | Farmer output +5% | For 10 years: doubles the finisher's Bumper Crops (another +1% organic growth per 1,000 food produced per month) |
 | The Harvest Tithe | Granary | Farmer output +5% | On launch, if you have 3,000 food: −3,000 food, +150 influence, +2,000 unity. Then food +10%, stability +2 |
 | Gala Season | Broadcast | Entertainer output +5% | Happiness +10%, unity +10% · trade −10% |
 | Grand Tour Season | Tourism (on adoption) | Resort Worker workforce +5% | Happiness +10%, trade +15%, Resort Worker workforce +25% · worker output −5% |
@@ -214,7 +214,7 @@ gas giants are size 62; one base district per size). Initializer: `lfg_emberfall
 trait (`leader_trait_lfg_massed_assault`; given on taking the perk and to every new leader via `on_leader_spawned` →
 `lfg_massed_assault.1`): armies they lead get damage **+25%**, health **+25%**, morale **+50%** (`@lfg_massed_assault_general_*`). Base width is 5 + 0.2 × planet size (size 10: 7,
 size 20: 9, size 25: 10), so this roughly doubles it; the only vanilla source is general traits (+1, +2, Paragon +10).
-No extra requirements. The AI never takes it. Amount: `@lfg_massed_assault_width`.
+Requires **4 other ascension perks** first. The AI never takes it. Amount: `@lfg_massed_assault_width`.
 **Unverified in game:** vanilla only uses `planet_combat_width_add` on generals, so check that the perk's country-wide
 modifier reaches your invasions (the width shown in ground combat).
 

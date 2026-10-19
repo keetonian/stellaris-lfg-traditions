@@ -93,6 +93,6 @@ spriteTypes = {
 	### DISTRICT SPECIALIZATIONS ###
 	spriteType = { name = "GFX_district_specialization_lfg_penal_bulk_matter" textureFile = "gfx/interface/icons/districts/lfg_zone_penal_bulk_matter.dds" }
 	### ASCENSION PERKS ###
-	spriteType = { name = "GFX_ap_lfg_massed_assault" textureFile = "gfx/interface/icons/ascension_perks/ap_lord_of_war.dds" }
+	spriteType = { name = "GFX_ap_lfg_massed_assault" textureFile = "gfx/interface/icons/ascension_perks/ap_boarding_pods.dds" }
 	spriteType = { name = "GFX_ap_lfg_curated_progress" textureFile = "gfx/interface/icons/ascension_perks/ap_technological_ascendancy.dds" }
 }

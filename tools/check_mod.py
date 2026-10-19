@@ -637,6 +637,22 @@ def check_prefixes(mod: Mod, loc: Dict[str, str], r: Report) -> None:
 
 
 # --- needs game / Giga --------------------------------------------------------------------------
+def check_game_loc_references(mod: Mod, loc: Dict[str, str], game: Optional[Path], giga: Optional[Path], r: Report) -> None:
+    """fail_text / custom_tooltip / desc values that aren't ours must be keys the game or Giga define (e.g. vanilla's
+    requires_ascension_perks_N only goes up to 3)."""
+    if game is None or giga is None:
+        r.skip("vanilla/Giga localisation keys used by the mod exist")
+        return
+    known = load_game_loc_keys([game, giga]) | {k.lower() for k in loc}
+    for rel, entries in mod.files.items():
+        if rel in OVERRIDE_FILES:
+            continue
+        for e in pdx.walk(entries):
+            if (e.key in ("fail_text", "custom_tooltip") and not e.is_block and "lfg" not in e.value
+                    and re.fullmatch(r"[A-Za-z0-9_.]+", e.value) and e.value.lower() not in known):
+                r.fail(f"{rel}:{e.line}: {e.key} = {e.value} is not a localisation key in the game, Giga or this mod")
+
+
 def check_loc_parameters(loc: Dict[str, str], game: Optional[Path], giga: Optional[Path], r: Report) -> None:
     """$key$ references in the mod's loc (e.g. tech names in the Shelve edicts) must name an existing loc key."""
     if game is None or giga is None:
@@ -747,6 +763,7 @@ def run(mod_dir: Path, game: Optional[Path], giga: Optional[Path], modifiers_log
     check_modifier_loc(mod, loc, game, giga, r)
     check_show_only_custom_tooltip(mod, r)
     check_loc_parameters(loc, game, giga, r)
+    check_game_loc_references(mod, loc, game, giga, r)
     check_overrides(mod, game, giga, r)
     return r
 
