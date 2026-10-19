@@ -1,0 +1,87 @@
+# LFG Traditions - starbase buildings. The Nanite Forge origin's special nanite harvester, in two stages; neither can be
+# built by hand (only while our events place them, country flag lfg_placing_forge_harvester). Both double the system's
+# nanite deposits every 3 years through lfg_nanite_forge.2 (lfg_forge_harvester_step), independent of vanilla's
+# nanite_harvester and its 5-year cycle. Same energy upkeep as vanilla's: 4 per grown deposit with a mining station.
+
+# Placed on the home starbase a day after game start (lfg_nanite_forge.6). No Nanotech needed; no further than step 7.
+lfg_broken_nanite_harvester = {
+	icon = "GFX_starbase_nanite_harvester"
+	construction_days = 360
+	category = sm_economy_cat
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	possible = {
+		custom_tooltip = {
+			fail_text = lfg_broken_nanite_harvester_not_buildable
+			owner = { has_country_flag = lfg_placing_forge_harvester }
+		}
+	}
+
+	resources = {
+		category = starbase_buildings
+		upkeep = {
+			energy = 4
+			mult = value:nanotech_harvester_deposit_num
+		}
+	}
+
+	# Removing it clears the system's harvester deposits (unless it's being swapped for the Ancient one).
+	on_destroyed = {
+		solar_system = {
+			system_event = { id = lfg_nanite_forge.4 }
+		}
+	}
+
+	custom_tooltip = lfg_broken_nanite_harvester_tooltip
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# Finishing Nanotech swaps the broken one for this (lfg_restore_forge_harvester): carries on to step 14 (409.6 per planet
+# at step 12, 1,638.4 at step 14 on the size 50 forge worlds).
+lfg_ancient_nanite_harvester = {
+	icon = "GFX_starbase_nanite_harvester"
+	construction_days = 360
+	category = sm_economy_cat
+
+	potential = {
+		exists = owner
+		owner = {
+			has_origin = origin_lfg_nanite_forge
+			has_tradition = tr_nanotech_finish
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+			fail_text = lfg_broken_nanite_harvester_not_buildable
+			owner = { has_country_flag = lfg_placing_forge_harvester }
+		}
+	}
+
+	resources = {
+		category = starbase_buildings
+		upkeep = {
+			energy = 4
+			mult = value:nanotech_harvester_deposit_num
+		}
+	}
+
+	on_destroyed = {
+		solar_system = {
+			system_event = { id = lfg_nanite_forge.4 }
+		}
+	}
+
+	custom_tooltip = lfg_ancient_nanite_harvester_tooltip
+
+	ai_weight = {
+		weight = 0
+	}
+}

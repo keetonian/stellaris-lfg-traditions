@@ -7,11 +7,27 @@ on_game_start = {
 	}
 }
 
+on_game_start_country = {
+	events = {
+		lfg_nanite_forge.1	# Nanite Forge origin: broken nanite harvester + home deposits
+	}
+}
+
+# scope: country
+on_tradition_picked = {
+	events = {
+		lfg_nanite_forge.3	# Nanite Forge origin: finishing Nanotech repairs the broken harvester
+	}
+}
+
 on_monthly_pulse_country = {
 	events = {
 		lfg_resorts.1	# Galactic Destination: resort world modifier + tourist count
 		lfg_shellworlders.1	# Shellworlders: artificial world modifiers
 		lfg_penal.1	# Penitence: penal colony modifiers + inmate count
+		lfg_nanite_forge.5	# Nanite Cognition Core: specialist automation modifier
+		lfg_lineage.1	# Every Shore: monthly planet-type count
+		lfg_mothership.1	# Mothership: monthly nanite swarmers / interdictors
 	}
 }
 

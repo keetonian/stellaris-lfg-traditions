@@ -12,6 +12,7 @@ tech overrides that check them can't drift apart.
 from __future__ import annotations
 
 import argparse
+import gzip
 import os
 import re
 import sys
@@ -167,6 +168,95 @@ def holomuseum_anchor(research: str) -> str:
 
 
 HOLOMUSEUMS = "common/buildings/21_grand_archive_buildings.txt"
+
+# Nanite Armada (ap_lfg_nanite_armada): Giga's war moon / planetcraft components (reactors, computers, weapons) check these
+# triggers for the ship size, so our hulls are added to them.
+GIGA_SHIP_TRIGGERS = GIGA + "common/scripted_triggers/giga_scripted_triggers.txt"
+
+# Nanite harvesters (vanilla cybernetics.5054, every 5 years): two more doublings after vanilla's last (51.2), for every
+# harvester. Planets keep nanites_doubled_9 (so vanilla's upkeep value and payouts still see them) and add our
+# lfg_nanites_doubled_10 / _11 flags. Step 10 (size >= 30): 51.2 -> 102.4; step 11 (size >= 35): -> 204.8. Each is
+# 50%, like vanilla's later steps; the other 50% (and any planet past its last step) falls through to vanilla's payout.
+# Step 12 (size >= 40): -> 409.6.
+NANITE_EVENTS = "events/machine_age_events_2.txt"
+NANITE_STEP_ANCHOR = (r"^\t\t\t\t\t\tset_planet_flag = nanites_doubled_9\n\t\t\t\t\t\tremove_planet_flag = nanites_doubled_8\n"
+                      r"\t\t\t\t\t\}\n\t\t\t\t\}\n\t\t\t\}\n")
+NANITE_STEP_BLOCK = """\t\t\telse_if = {
+\t\t\t\tlimit = {
+\t\t\t\t\thas_planet_flag = nanites_doubled_9
+\t\t\t\t\tNOT = { has_planet_flag = lfg_nanites_doubled_10 }
+\t\t\t\t\tplanet_size >= @lfg_nanite_step_10_size
+\t\t\t\t}
+\t\t\t\trandom_list = {
+\t\t\t\t\t50 = {
+\t\t\t\t\t\tnanotech_deposit_nanite_generation = yes
+\t\t\t\t\t}
+\t\t\t\t\t50 = {
+\t\t\t\t\t\tadd_deposit = d_nanite_harvester_deposit_large
+\t\t\t\t\t\tadd_deposit = d_nanite_harvester_deposit_large
+\t\t\t\t\t\tset_planet_flag = lfg_nanites_doubled_10
+\t\t\t\t\t}
+\t\t\t\t}
+\t\t\t}
+\t\t\telse_if = {
+\t\t\t\tlimit = {
+\t\t\t\t\thas_planet_flag = lfg_nanites_doubled_10
+\t\t\t\t\tNOT = { has_planet_flag = lfg_nanites_doubled_11 }
+\t\t\t\t\tplanet_size >= @lfg_nanite_step_11_size
+\t\t\t\t}
+\t\t\t\trandom_list = {
+\t\t\t\t\t50 = {
+\t\t\t\t\t\tnanotech_deposit_nanite_generation = yes
+\t\t\t\t\t}
+\t\t\t\t\t50 = {
+\t\t\t\t\t\tadd_deposit = d_nanite_harvester_deposit_large
+\t\t\t\t\t\tadd_deposit = d_nanite_harvester_deposit_large
+\t\t\t\t\t\tadd_deposit = d_nanite_harvester_deposit_large
+\t\t\t\t\t\tadd_deposit = d_nanite_harvester_deposit_large
+\t\t\t\t\t\tset_planet_flag = lfg_nanites_doubled_11
+\t\t\t\t\t}
+\t\t\t\t}
+\t\t\t}
+\t\t\telse_if = {
+\t\t\t\tlimit = {
+\t\t\t\t\thas_planet_flag = lfg_nanites_doubled_11
+\t\t\t\t\tNOT = { has_planet_flag = lfg_nanites_doubled_12 }
+\t\t\t\t\tplanet_size >= @lfg_nanite_step_12_size
+\t\t\t\t}
+\t\t\t\trandom_list = {
+\t\t\t\t\t50 = {
+\t\t\t\t\t\tnanotech_deposit_nanite_generation = yes
+\t\t\t\t\t}
+\t\t\t\t\t50 = {
+\t\t\t\t\t\twhile = {
+\t\t\t\t\t\t\tcount = 8
+\t\t\t\t\t\t\tadd_deposit = d_nanite_harvester_deposit_large
+\t\t\t\t\t\t}
+\t\t\t\t\t\tset_planet_flag = lfg_nanites_doubled_12
+\t\t\t\t\t}
+\t\t\t\t}
+\t\t\t}
+"""
+# The Nanite Forge origin's own harvester (broken / ancient) keeps its 3-year cycle: vanilla's 5-year doubling skips its
+# system (e.g. a Nomad nanotech waystation there), and vanilla's harvester can't be built on the same starbase.
+NANITE_SKIP_FORGE_ANCHOR = r"^\ttrigger = \{\n"
+NANITE_SKIP_FORGE_BLOCK = """\t\tNOR = {
+\t\t\tAND = { exists = starbase starbase = { has_starbase_building = lfg_broken_nanite_harvester } }
+\t\t\tAND = { exists = starbase starbase = { has_starbase_building = lfg_ancient_nanite_harvester } }
+\t\t}
+"""
+NANITE_HARVESTER_BAN_BLOCK = """\t\tcustom_tooltip = {
+\t\t\tfail_text = lfg_requires_no_ancient_harvester
+\t\t\tNOR = {
+\t\t\t\thas_starbase_building = lfg_broken_nanite_harvester
+\t\t\t\thas_starbase_building = lfg_ancient_nanite_harvester
+\t\t\t}
+\t\t}
+"""
+# Harvester removed (vanilla cybernetics.5051): also clear our step flags.
+NANITE_CLEANUP_ANCHOR = r"^\t\t\tremove_planet_flag = nanites_doubled_9\n"
+NANITE_CLEANUP_BLOCK = ("\t\t\tremove_planet_flag = lfg_nanites_doubled_10\n\t\t\tremove_planet_flag = lfg_nanites_doubled_11\n"
+                        "\t\t\tremove_planet_flag = lfg_nanites_doubled_12\n")
 
 # Xenoarchaeology - Expedition Corps: Archaeo-Engineers are the Biologists on a planet with an Archaeostudies Faculty
 # (vanilla biologist_is_archaeo_engineer_trigger swaps every Biologist there), so their bonus lives in that building.
@@ -330,6 +420,16 @@ OVERRIDES = {
         ("common/situations/08_machine_age_situations.txt", "situation_synthetic_fertility_digitization",
          r"^\t\t\tmachine_age\.3325 #Monthly Progress\n", SYNTH_FERTILITY_UPLOAD),
     ],
+    "mod/common/starbase_buildings/zz_lfg_starbase_building_overrides.txt": [
+        ("common/starbase_buildings/00_starbase_buildings.txt", "nanite_harvester", r"^\tpossible = \{\n",
+         NANITE_HARVESTER_BAN_BLOCK),
+    ],
+    # Nanite Armada: our hulls use Giga's attack moon / planetcraft components.
+    "mod/common/scripted_triggers/zz_lfg_trigger_overrides.txt": [
+        (GIGA_SHIP_TRIGGERS, "giga_ship_uses_war_moon_components", r"^\tOR = \{\n", "\t\tis_ship_size = lfg_nanite_war_moon\n"),
+        (GIGA_SHIP_TRIGGERS, "giga_ship_uses_war_planet_components", r"^\tOR = \{\n", "\t\tis_ship_size = lfg_nanite_planetcraft\n"),
+        (GIGA_SHIP_TRIGGERS, "giga_ship_uses_war_system_components", r"^\tOR = \{\n", "\t\tis_ship_size = lfg_mothership\n"),
+    ],
     # Shelve edicts: vanilla and Gigastructural repeatables. zz_lfg_ sorts after Giga's zz_giga_ tech files.
     "mod/common/technology/zz_lfg_repeatable_overrides.txt": [
         (src, tech, r"^\tweight_modifier = \{\n", shelve_tech_block(shelve_edict(suffix)))
@@ -339,6 +439,9 @@ OVERRIDES = {
     "mod/events/00_lfg_event_overrides.txt": [
         ("events/machine_age_situation_events_3.txt", EVENT + "machine_age.4400",
          r'^\t\tname = "machine_age\.4400\.c"\n', VIRTUALITY_BLOCK),
+        (NANITE_EVENTS, EVENT + "cybernetics.5054", NANITE_SKIP_FORGE_ANCHOR, NANITE_SKIP_FORGE_BLOCK),
+        (NANITE_EVENTS, EVENT + "cybernetics.5054", NANITE_STEP_ANCHOR, NANITE_STEP_BLOCK),
+        (NANITE_EVENTS, EVENT + "cybernetics.5051", NANITE_CLEANUP_ANCHOR, NANITE_CLEANUP_BLOCK),
     ],
     # Inline scripts can only be replaced as a whole file (same path; this mod loads after Giga). key None = whole file.
     "mod/" + MEGA_CAP_SCRIPT: [
@@ -346,7 +449,7 @@ OVERRIDES = {
     ],
 }
 # Lines written after the header of an override file (event files must declare the namespace of their ids).
-PRELUDE = {"mod/events/00_lfg_event_overrides.txt": "\nnamespace = machine_age\n"}
+PRELUDE = {"mod/events/00_lfg_event_overrides.txt": "\nnamespace = machine_age\nnamespace = cybernetics\n"}
 # Localisation overrides: (source loc file, key, text appended to its value). Written to localisation/english/replace/,
 # which the game loads over other mods' keys. Generated from the source so the original text stays current.
 VIRTUALITY_NOTE = "\\n- §RIndividual machine empires can't take the Virtuality path§! (LFG Traditions)."
@@ -356,10 +459,44 @@ LOC_OVERRIDES = [
     (GIGA + "localisation/english/giga_alderson_l_english.yml", "origin_alderson_effects", VIRTUALITY_NOTE),
 ]
 LOC_OVERRIDES_KEYS = [key for _src, key, _extra in LOC_OVERRIDES]
-# Lineage: value:lfg_num_world_types counts the colonizable planet classes (vanilla + Giga planet_classes
-# with `colonizable = yes`) the country owns at least one colony of.
+# Lineage - Every Shore: value:lfg_count_world_types counts the colonizable planet classes (vanilla + Giga planet_classes
+# with `colonizable = yes`) the country owns at least one colony of. ~50 any_owned_planet checks, so lfg_lineage.1 runs it
+# once a month into a country variable that the tradition reads (value:lfg_num_world_types).
 WORLD_TYPES_FILE = "mod/common/script_values/lfg_world_types_values.txt"
 SHELVE_EDICTS_FILE = "mod/common/edicts/lfg_shelve_edicts.txt"
+# Nanite Cognition Core (common/buildings/lfg_buildings.txt): 50% automation of every specialist / complex drone job
+# (vanilla + Giga pop_jobs), as one static modifier with a single tooltip line (the list is ~220 jobs long).
+SPECIALIST_AUTOMATION_FILE = "mod/common/static_modifiers/lfg_specialist_automation.txt"
+MODIFIERS_SNAPSHOT = REPO / "tools/data/modifiers_4.5.txt.gz"
+# Nanite Armada (ap_lfg_nanite_armada): our two hulls reuse Gigastructural's attack moon / planetcraft sections. Copies of
+# every section template of Giga's ship size, with our ship size and keys prefixed lfg_nanite_ (keys must be unique).
+NANITE_HULLS = [  # (Giga section file, Giga ship size, our ship size)
+    (GIGA + "common/section_templates/giga_mooncraft.txt", "giga_war_moon", "lfg_nanite_war_moon"),
+    (GIGA + "common/section_templates/giga_planetcraft.txt", "giga_planet_behemoth", "lfg_nanite_planetcraft"),
+]
+NANITE_SECTIONS_FILE = "mod/common/section_templates/lfg_nanite_section_templates.txt"
+NANITE_SECTIONS_LOC_FILE = "mod/localisation/english/lfg_nanite_sections_l_english.yml"
+# The nanite look (NANITE_ENTITIES_FILE): Giga's moon / planetcraft meshes (and engine particles) with nanite planet
+# textures, wrapped in vanilla's grey goo swarm (gray_goo_planet_effect, the Grey Goo world's cloud) on the mesh root.
+GIGA_WAR_MOON_ASSET = GIGA + "gfx/models/ships/megastructures/war_moon/giga_war_moon.asset"
+GIGA_WAR_PLANET_ASSET = GIGA + "gfx/models/ships/megastructures/war_planet/giga_war_planet.asset"
+NANITE_ENTITIES_FILE = "mod/gfx/models/ships/lfg_nanite_celestials.asset"
+NANITE_TEXTURES = {  # skin -> (diffuse, normal, specular)
+    "grey_goo": ("gray_goo_planet_01_diffuse.dds", "nonormal.dds", "nospec.dds"),
+    "machine_shell": ("city_planet_synthetics_01_diffuse.dds", "city_planet_synthetics_01_normal.dds",
+                      "city_planet_synthetics_01_specular.dds"),
+    "swarm_core": ("ai_01_diffuse.dds", "ai_01_normals.dds", "ai_01_specular.dds"),
+}
+# Moon: Giga's default look (stern sections) becomes Grey Goo; its optional planet skins (mid sections, behind Giga's
+# Aeternite tech) are replaced by our Machine Shell and Swarm Core skins, open to every nanite moon.
+NANITE_MOON_DEFAULT_SKIN = ("giga_moon_thrusters_ai_fe", "grey_goo")
+NANITE_MOON_EXTRA_SKINS = {"machine_shell": "Machine Shell", "swarm_core": "Swarm Core"}
+# Mothership (ap_lfg_mothership): Giga's systemcraft sections for lfg_mothership, whose mid section's extra large guns
+# become hangars (with the sternthrusters' own 25: 45 hangars), and Giga's systemcraft model with its worlds
+# in the three nanite skins (in turn) inside a large swarm.
+MOTHERSHIP_SECTIONS = (GIGA + "common/section_templates/giga_systemcraft.txt", "giga_systemcraft", "lfg_mothership")
+MOTHERSHIP_HANGAR_SLOTS = {"mid": "Nanite Hive Bays"}
+GIGA_WAR_SYSTEM_ASSET = GIGA + "gfx/models/ships/megastructures/war_system/giga_war_system.asset"
 SHELVE_LOC_FILE = "mod/localisation/english/lfg_shelve_l_english.yml"
 
 
@@ -526,14 +663,197 @@ def colonizable_planet_classes(game: Path, giga: Path) -> list[str]:
 def generate_world_types(game: Path, giga: Path) -> str:
     lines = [
         "# GENERATED by tools/gen_overrides.py - do not edit by hand.\n",
-        "# Lineage: number of colonizable planet classes (vanilla + Gigastructural) the country has a colony on.\n",
-        "lfg_num_world_types = {\n",
+        "# Lineage - Every Shore: number of colonizable planet classes (vanilla + Gigastructural) the country has a colony on.\n",
+        "# Expensive (one any_owned_planet per class): only lfg_lineage.1 evaluates it, monthly.\n",
+        "lfg_count_world_types = {\n",
         "\tbase = 0\n",
     ]
     for pc in colonizable_planet_classes(game, giga):
         lines.append(f"\tmodifier = {{ add = 1 any_owned_planet = {{ is_planet_class = {pc} }} }}\n")
     lines.append("}\n")
     return "".join(lines)
+
+
+def specialist_jobs(game: Path, giga: Path) -> list[str]:
+    """Jobs whose category is specialist or complex_drone (the gestalt equivalent), vanilla and Gigastructural, that have
+    an automation modifier (a few event jobs don't; tools/data/modifiers_4.5.txt.gz lists the game's modifiers)."""
+    with gzip.open(MODIFIERS_SNAPSHOT, "rt", encoding="utf-8") as f:
+        modifiers = {line.strip() for line in f}
+    jobs: set[str] = set()
+    for root in (game, giga):
+        for path in sorted((root / "common/pop_jobs").glob("*.txt")):
+            text = path.read_text(encoding="utf-8-sig", errors="replace").replace("\r\n", "\n")
+            for m in re.finditer(r"^(\w+)\s*=\s*\{\s*\n\s*category\s*=\s*(?:specialist|complex_drone)\b", text, re.M):
+                if f"job_{m.group(1)}_automated_workforce_mult" in modifiers:
+                    jobs.add(m.group(1))
+    if not jobs:
+        raise GenError("no specialist jobs found in common/pop_jobs")
+    return sorted(jobs)
+
+
+def generate_specialist_automation(game: Path, giga: Path) -> str:
+    lines = [
+        "# GENERATED by tools/gen_overrides.py - do not edit by hand.\n",
+        "# Nanite Cognition Core: 50% automation of every specialist and complex drone job (vanilla + Gigastructural).\n",
+        "# Kept on planets with the building by lfg_nanite_forge.5 (monthly); one tooltip line instead of one per job.\n",
+        "lfg_nanite_specialist_automation = {\n",
+        "\tshow_only_custom_tooltip = yes\n",
+        "\tcustom_tooltip = lfg_nanite_specialist_automation_tt\n",
+        '\ticon = "gfx/interface/icons/planet_modifiers/pm_nanite_world.dds"\n',
+        "\ticon_frame = 1\n",
+    ]
+    lines += [f"\tjob_{job}_automated_workforce_mult = @lfg_nanite_core_automation\n" for job in specialist_jobs(game, giga)]
+    lines.append("}\n")
+    return "".join(lines)
+
+
+def nanite_sections(game: Path, giga: Path) -> tuple[str, list[tuple[str, str]]]:
+    """Section templates for our hulls and their loc ((key, text) pairs): Giga's, with our ship size, prefixed keys and
+    the nanite look; Giga's planet-skin moon sections are swapped for ours (built from the first of them)."""
+    lines = [
+        "# GENERATED by tools/gen_overrides.py - do not edit by hand.\n",
+        f"# Nanite Armada hulls: Gigastructural's ({giga_version(giga)}) attack moon and planetcraft section templates, copied\n",
+        "# for lfg_nanite_war_moon / lfg_nanite_planetcraft (same slots and utility slots) with the nanite look\n",
+        "# (mod/gfx/models/ships/lfg_nanite_celestials.asset).\n",
+    ]
+    loc: list[tuple[str, str]] = []
+    default_entity, default_skin = NANITE_MOON_DEFAULT_SKIN
+    for src, giga_size, ours in NANITE_HULLS:
+        text = read_source(src, game, giga)
+        found, skin_template = 0, None
+        for m in re.finditer(r"^ship_section_template\s*=\s*\{", text, re.M):
+            block = extract_block(text[m.start():], "ship_section_template", first=True)
+            if not re.search(rf"^\tship_size = {giga_size}\s*$", block, re.M):
+                continue
+            entity = re.search(r'^\tentity = "([^"]+)"', block, re.M)
+            if entity and entity.group(1).startswith("giga_moon_thrusters_") and entity.group(1) != default_entity:
+                skin_template = skin_template or block
+                continue
+            key = re.search(r'^\tkey = "([^"]+)"', block, re.M).group(1)
+            block = re.sub(rf"^(\tship_size = ){giga_size}\s*$", rf"\g<1>{ours}", block, flags=re.M)
+            block = block.replace(f'key = "{key}"', f'key = "lfg_nanite_{key}"', 1)
+            block = block.replace(f'entity = "{default_entity}"', f'entity = "lfg_nanite_moon_{default_skin}_entity"')
+            lines.append(f"\n# from {src.replace(GIGA, 'Gigastructural ')}\n" + block)
+            loc.append((f"lfg_nanite_{key}", f"${key}$"))
+            found += 1
+        if not found:
+            raise GenError(f"no section templates for {giga_size} in {src}")
+        if skin_template:
+            for skin, name in NANITE_MOON_EXTRA_SKINS.items():
+                block = re.sub(rf"^(\tship_size = ){giga_size}\s*$", rf"\g<1>{ours}", skin_template, flags=re.M)
+                block = re.sub(r'^\tkey = "[^"]+"', f'\tkey = "lfg_nanite_moon_{skin}_key"', block, count=1, flags=re.M)
+                block = re.sub(r'^\tentity = "[^"]+"', f'\tentity = "lfg_nanite_moon_{skin}_entity"', block, count=1, flags=re.M)
+                block = re.sub(r"^\tprerequisites = .*\n", "", block, flags=re.M)
+                lines.append(f"\n# nanite skin, slots from Gigastructural's planet-skin sections\n" + block)
+                loc.append((f"lfg_nanite_moon_{skin}_key", name))
+    src, giga_size, ours = MOTHERSHIP_SECTIONS
+    text = read_source(src, game, giga)
+    found = 0
+    for m in re.finditer(r"^ship_section_template\s*=\s*\{", text, re.M):
+        block = extract_block(text[m.start():], "ship_section_template", first=True)
+        if not re.search(rf"^\tship_size = {giga_size}\s*$", block, re.M):
+            continue
+        key = re.search(r'^\tkey = "([^"]+)"', block, re.M).group(1)
+        slot = re.search(r'^\tfits_on_slot = "([^"]+)"', block, re.M).group(1)
+        block = re.sub(rf"^(\tship_size = ){giga_size}\s*$", rf"\g<1>{ours}", block, flags=re.M)
+        block = block.replace(f'key = "{key}"', f'key = "{ours}_{key}"', 1)
+        name = f"${key}$"
+        if slot in MOTHERSHIP_HANGAR_SLOTS:
+            block = block.replace('template = "invisible_extra_large_fixed"', 'template = "large_strike_craft"')
+            block = re.sub(r"^\tai_tags = \{[^}]*\}", "\tai_tags = { carrier }", block, flags=re.M)
+            name = MOTHERSHIP_HANGAR_SLOTS[slot]
+        lines.append(f"\n# from {src.replace(GIGA, 'Gigastructural ')}\n" + block)
+        loc.append((f"{ours}_{key}", name))
+        found += 1
+    if not found:
+        raise GenError(f"no section templates for {giga_size} in {src}")
+    return "".join(lines), loc
+
+
+def generate_nanite_sections(game: Path, giga: Path) -> str:
+    return nanite_sections(game, giga)[0]
+
+
+def generate_nanite_sections_loc(game: Path, giga: Path) -> str:
+    lines = ["\ufeffl_english:\n", " # GENERATED by tools/gen_overrides.py - do not edit by hand. Nanite hull section names.\n"]
+    lines += [f' {key}:0 "{text}"\n' for key, text in nanite_sections(game, giga)[1]]
+    return "".join(lines)
+
+
+def extract_entity(text: str, name: str) -> str:
+    """The `entity = { ... }` block (from a .asset file) whose name is `name`."""
+    m = re.search(rf'^\tname = "{re.escape(name)}"', text, re.M)
+    if not m:
+        raise GenError(f"entity {name} not found")
+    start = text.rfind("\nentity = {", 0, m.start()) + 1
+    return extract_block(text[start:], "entity", first=True)
+
+
+def nanite_entity(block: str, name: str, skin: str, swarm: str) -> str:
+    diffuse, normal, specular = NANITE_TEXTURES[skin]
+    block = re.sub(r'^(\tname = )"[^"]+"', rf'\g<1>"{name}"', block, count=1, flags=re.M)
+    block = re.sub(r'(texture_diffuse = )"[^"]+"', rf'\g<1>"{diffuse}"', block)
+    block = re.sub(r'(texture_normal = )"[^"]+"', rf'\g<1>"{normal}"', block)
+    block = re.sub(r'(texture_specular = )"[^"]+"', rf'\g<1>"{specular}"', block)
+    return re.sub(r"^\tgame_data = \{", f'\tattach = {{ root = "{swarm}" }}\n\n\tgame_data = {{', block, count=1, flags=re.M)
+
+
+NANITE_SWARM_ENTITIES = """
+# The swarm: vanilla's grey goo world cloud particle on a locator, attached to the hull's root node. Its size follows
+# the scale; change @lfg_nanite_swarm_*_scale to fit it around the hull.
+@lfg_nanite_swarm_moon_scale = 3
+@lfg_nanite_swarm_planet_scale = 5
+@lfg_nanite_swarm_mothership_scale = 15
+"""
+for _hull in ("moon", "planet", "mothership"):
+    NANITE_SWARM_ENTITIES += f"""
+entity = {{
+	name = "lfg_nanite_swarm_{_hull}_entity"
+	pdxmesh = "locator_mesh"
+	cull_radius = 10000
+	scale = @lfg_nanite_swarm_{_hull}_scale
+	locator = {{ name = "swarm" position = {{ 0 0 0 }} }}
+	default_state = "idle"
+	state = {{ name = "idle" state_time = 5
+		start_event = {{ node = "swarm" particle = "gray_goo_planet_effect" keep_particle = yes trigger_once = yes }}
+	}}
+	state = {{ name = "moving" state_time = 5
+		start_event = {{ node = "swarm" particle = "gray_goo_planet_effect" keep_particle = yes trigger_once = yes }}
+	}}
+}}
+"""
+
+
+def generate_nanite_entities(game: Path, giga: Path) -> str:
+    moon = read_source(GIGA_WAR_MOON_ASSET, game, giga)
+    planet = read_source(GIGA_WAR_PLANET_ASSET, game, giga)
+    moon_template = extract_entity(moon, NANITE_MOON_DEFAULT_SKIN[0])
+    parts = [
+        "# GENERATED by tools/gen_overrides.py - do not edit by hand.\n",
+        f"# Nanite Armada hulls' look: Gigastructural's ({giga_version(giga)}) moon / planetcraft entities with nanite planet\n",
+        "# textures and a grey goo swarm. Moon skins are picked through the hull sections; the planetcraft has one look.\n",
+        re.search(r"^@war_moon_scale = .*\n", moon, re.M).group(0),
+        re.search(r"^@war_planet_scale = .*\n", planet, re.M).group(0),
+        NANITE_SWARM_ENTITIES,
+    ]
+    for skin in [NANITE_MOON_DEFAULT_SKIN[1], *NANITE_MOON_EXTRA_SKINS]:
+        parts.append("\n" + nanite_entity(moon_template, f"lfg_nanite_moon_{skin}_entity", skin, "lfg_nanite_swarm_moon_entity"))
+    parts.append("\n" + nanite_entity(extract_entity(planet, "synthetics_01_war_planet_complete_entity"),
+                                      "lfg_nanite_planetcraft_entity", "grey_goo", "lfg_nanite_swarm_planet_entity"))
+    # Mothership: the systemcraft's worlds take the nanite skins in turn.
+    system = read_source(GIGA_WAR_SYSTEM_ASSET, game, giga)
+    parts.append(re.search(r"^@war_system_scale = .*\n", system, re.M).group(0))
+    mothership = nanite_entity(extract_entity(system, "war_system_complete_entity"), "lfg_mothership_entity",
+                               "grey_goo", "lfg_nanite_swarm_mothership_entity")
+    skins = list(NANITE_TEXTURES)
+    chunks = re.split(r"(?=^\tmeshsettings = \{)", mothership, flags=re.M)
+    for i in range(1, len(chunks)):
+        diffuse, normal, specular = NANITE_TEXTURES[skins[(i - 1) % len(skins)]]
+        chunks[i] = re.sub(r'(texture_diffuse = )"[^"]+"', rf'\g<1>"{diffuse}"', chunks[i], count=1)
+        chunks[i] = re.sub(r'(texture_normal = )"[^"]+"', rf'\g<1>"{normal}"', chunks[i], count=1)
+        chunks[i] = re.sub(r'(texture_specular = )"[^"]+"', rf'\g<1>"{specular}"', chunks[i], count=1)
+    parts.append("\n" + "".join(chunks))
+    return "".join(parts)
 
 
 def generate(game: Path, giga: Path = DEFAULT_GIGA) -> dict[str, str]:
@@ -576,6 +896,10 @@ def generate(game: Path, giga: Path = DEFAULT_GIGA) -> dict[str, str]:
     out[SHELVE_LOC_FILE] = generate_shelve_loc()
     out[LOC_OVERRIDES_FILE] = generate_loc_overrides(game, giga)
     out[WORLD_TYPES_FILE] = generate_world_types(game, giga)
+    out[SPECIALIST_AUTOMATION_FILE] = generate_specialist_automation(game, giga)
+    out[NANITE_SECTIONS_FILE] = generate_nanite_sections(game, giga)
+    out[NANITE_SECTIONS_LOC_FILE] = generate_nanite_sections_loc(game, giga)
+    out[NANITE_ENTITIES_FILE] = generate_nanite_entities(game, giga)
     return out
 
 

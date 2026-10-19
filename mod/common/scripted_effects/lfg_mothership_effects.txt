@@ -1,0 +1,39 @@
+# LFG Traditions - Mothership escorts (lfg_mothership.2). Scope: the escort fleet.
+
+lfg_mothership_add_escort_ships = {
+	if = {
+		limit = { owner = { has_tradition = tr_nanotech_4 } }
+		lfg_mothership_add_escorts = {
+			SIZE = nanite_swarmer
+			AMOUNT = @lfg_mothership_swarmers_per_month
+			CAP = @lfg_mothership_swarmer_cap
+		}
+	}
+	if = {
+		limit = { owner = { has_tradition = tr_nanotech_5 } }
+		lfg_mothership_add_escorts = {
+			SIZE = nanite_interdictor
+			AMOUNT = @lfg_mothership_interdictors_per_month
+			CAP = @lfg_mothership_interdictor_cap
+		}
+	}
+}
+
+# Adds up to $AMOUNT$ ships of size $SIZE$ (random picks from the owner's designs) to this fleet, stopping at $CAP$.
+lfg_mothership_add_escorts = {
+	while = {
+		count = $AMOUNT$
+		if = {
+			limit = {
+				count_owned_ship = {
+					limit = { is_ship_size = $SIZE$ }
+					count < $CAP$
+				}
+			}
+			create_ship = {
+				name = random
+				random_existing_design = $SIZE$
+			}
+		}
+	}
+}

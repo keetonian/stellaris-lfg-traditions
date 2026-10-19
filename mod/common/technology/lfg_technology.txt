@@ -1,0 +1,83 @@
+# LFG Traditions - technologies.
+
+# Nanite Armada (ap_lfg_nanite_armada): taking the perk adds these three as research options (like Gigastructural's
+# A Celestial Armada does for its celestials); they're never drawn otherwise (weight 0) and need the perk.
+# Swarmforge megastructure (common/megastructures/lfg_megastructures.txt).
+tech_lfg_swarmforge = {
+	cost = @giga_tier6cost3
+	area = engineering
+	tier = 5
+	category = { voidcraft }
+	is_rare = yes
+	weight = 0
+	potential = {
+		has_ascension_perk = ap_lfg_nanite_armada
+	}
+	ai_weight = {
+		factor = 0
+	}
+}
+
+# Nanite Attack Moon hull (common/ship_sizes/lfg_ship_sizes.txt; built only at a Swarmforge).
+tech_lfg_nanite_war_moon = {
+	cost = @giga_tier7cost1
+	area = engineering
+	tier = 5
+	category = { voidcraft }
+	is_rare = yes
+	weight = 0
+	potential = {
+		has_ascension_perk = ap_lfg_nanite_armada
+	}
+	ai_weight = {
+		factor = 0
+	}
+}
+
+# Nanite Planetcraft hull.
+tech_lfg_nanite_planetcraft = {
+	cost = @giga_tier7cost3
+	area = engineering
+	tier = 5
+	category = { voidcraft }
+	is_rare = yes
+	weight = 0
+	potential = {
+		has_ascension_perk = ap_lfg_nanite_armada
+	}
+	ai_weight = {
+		factor = 0
+	}
+}
+
+# Mothership (ap_lfg_mothership): the Progenitor Forge megastructure (common/megastructures/lfg_megastructures.txt).
+tech_lfg_progenitor_forge = {
+	cost = @giga_tier8cost2
+	area = engineering
+	tier = 5
+	category = { voidcraft }
+	is_rare = yes
+	weight = 0
+	potential = {
+		has_ascension_perk = ap_lfg_mothership
+	}
+	ai_weight = {
+		factor = 0
+	}
+}
+
+# Mothership hull (only built at a Progenitor Forge) and its Nanite Swarm hangar.
+tech_lfg_mothership = {
+	cost = @giga_tier9cost1
+	area = engineering
+	tier = 5
+	category = { voidcraft }
+	is_rare = yes
+	weight = 0
+	potential = {
+		has_ascension_perk = ap_lfg_mothership
+	}
+	ai_weight = {
+		factor = 0
+	}
+}

@@ -1,0 +1,210 @@
+# LFG Traditions - megastructures. Nanite Armada (ap_lfg_nanite_armada): the Swarmforge, a giant nanite shipyard around a
+# class A or B star or a red giant. Finished, it's a shipyard (station_modifier shipyard capacity, like vanilla's Mega
+# Shipyard) and the only place the nanite hulls (common/ship_sizes/lfg_ship_sizes.txt) can be built.
+
+lfg_swarmforge_0 = {
+	entity = "construction_platform_entity"
+	construction_entity = "construction_platform_entity"
+	portrait = "GFX_megastructure_construction_background"
+	place_entity_on_planet_plane = no
+	entity_offset = { x = -7 y = -7 }
+	build_time = 1800
+	resources = {
+		category = megastructures
+		cost = {
+			alloys = 10000
+			nanites = 50000
+			influence = 100
+		}
+		upkeep = {
+			energy = 10
+		}
+	}
+
+	prerequisites = { "tech_lfg_swarmforge" }
+
+	potential = {
+		has_ascension_perk = ap_lfg_nanite_armada
+	}
+
+	possible = {
+		hidden_trigger = {
+			exists = starbase
+		}
+		custom_tooltip = {
+			fail_text = "requires_inside_border"
+			is_inside_border = from
+		}
+		custom_tooltip = {
+			fail_text = lfg_requires_swarmforge_star
+			lfg_swarmforge_star = yes
+		}
+		custom_tooltip = {
+			fail_text = "requires_no_existing_megastructure"
+			has_no_non_gate_megastructure = yes
+		}
+	}
+
+	placement_rules = {
+		planet_possible = {
+			custom_tooltip = {
+				fail_text = "must_build_around_star"
+				is_star = yes
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+lfg_swarmforge_ready = {
+	entity = "mega_shipyard_01_stage_3_entity"
+	construction_entity = "mega_shipyard_01_stage_2_entity"
+	portrait = "GFX_megastructure_mega_shipyard_background"
+	place_entity_on_planet_plane = no
+	entity_offset = { x = -27 y = -27 }
+	build_time = 3600
+	upgrade_from = {
+		lfg_swarmforge_0
+	}
+	resources = {
+		category = megastructures
+		cost = {
+			alloys = 25000
+			nanites = 150000
+		}
+		upkeep = {
+			energy = 100
+			nanites = 50
+		}
+	}
+
+	prerequisites = { "tech_lfg_swarmforge" }
+
+	station_modifier = {
+		starbase_shipyard_capacity_add = @lfg_swarmforge_shipyard_capacity
+	}
+
+	on_build_complete = {
+		from = {
+			set_country_flag = has_built_or_repaired_megastructure
+		}
+	}
+}
+
+# Mothership (ap_lfg_mothership): the Progenitor Forge, around an O star (Gigastructural's giga_is_o_star_for_megas:
+# its own O stars and Real Space's). Three stages, 50,000,000 nanites in all (@lfg_progenitor_forge_*_nanites).
+# Finished, it's a shipyard (like the Swarmforge) and the only place Motherships can be built.
+lfg_progenitor_forge_0 = {
+	entity = "construction_platform_entity"
+	construction_entity = "construction_platform_entity"
+	portrait = "GFX_megastructure_construction_background"
+	place_entity_on_planet_plane = no
+	entity_offset = { x = -7 y = -7 }
+	build_time = 1800
+	resources = {
+		category = megastructures
+		cost = {
+			alloys = 50000
+			nanites = @lfg_progenitor_forge_0_nanites
+			influence = 200
+		}
+		upkeep = {
+			energy = 50
+		}
+	}
+
+	prerequisites = { "tech_lfg_progenitor_forge" }
+
+	potential = {
+		has_ascension_perk = ap_lfg_mothership
+	}
+
+	possible = {
+		hidden_trigger = {
+			exists = starbase
+		}
+		custom_tooltip = {
+			fail_text = "requires_inside_border"
+			is_inside_border = from
+		}
+		custom_tooltip = {
+			fail_text = "requires_no_existing_megastructure"
+			has_no_non_gate_megastructure = yes
+		}
+	}
+
+	placement_rules = {
+		planet_possible = {
+			custom_tooltip = {
+				fail_text = lfg_requires_o_star
+				giga_is_o_star_for_megas = yes
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+lfg_progenitor_forge_1 = {
+	entity = "mega_shipyard_01_stage_2_entity"
+	construction_entity = "mega_shipyard_01_stage_1_entity"
+	portrait = "GFX_megastructure_mega_shipyard_background"
+	place_entity_on_planet_plane = no
+	entity_offset = { x = -27 y = -27 }
+	build_time = 3600
+	upgrade_from = {
+		lfg_progenitor_forge_0
+	}
+	resources = {
+		category = megastructures
+		cost = {
+			alloys = 100000
+			nanites = @lfg_progenitor_forge_1_nanites
+		}
+		upkeep = {
+			energy = 200
+		}
+	}
+
+	prerequisites = { "tech_lfg_progenitor_forge" }
+}
+
+lfg_progenitor_forge_2 = {
+	entity = "mega_shipyard_01_stage_3_entity"
+	construction_entity = "mega_shipyard_01_stage_2_entity"
+	portrait = "GFX_megastructure_mega_shipyard_background"
+	place_entity_on_planet_plane = no
+	entity_offset = { x = -27 y = -27 }
+	build_time = 3600
+	upgrade_from = {
+		lfg_progenitor_forge_1
+	}
+	resources = {
+		category = megastructures
+		cost = {
+			alloys = 150000
+			nanites = @lfg_progenitor_forge_2_nanites
+		}
+		upkeep = {
+			energy = 500
+			nanites = 500
+		}
+	}
+
+	prerequisites = { "tech_lfg_progenitor_forge" }
+
+	station_modifier = {
+		starbase_shipyard_capacity_add = 1
+	}
+
+	on_build_complete = {
+		from = {
+			set_country_flag = has_built_or_repaired_megastructure
+		}
+	}
+}

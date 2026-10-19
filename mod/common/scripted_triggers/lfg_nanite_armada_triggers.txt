@@ -1,0 +1,26 @@
+# LFG Traditions - Nanite Armada. Scope: the shipyard (starbase or megastructure) a ship would be built at.
+lfg_is_swarmforge = {
+	custom_tooltip = {
+		fail_text = lfg_requires_swarmforge
+		is_scope_type = megastructure
+		is_megastructure_type = lfg_swarmforge_ready
+	}
+}
+
+# System scope: stars the Swarmforge can be built around (class A, class B, red giant).
+lfg_swarmforge_star = {
+	OR = {
+		is_star_class = sc_a
+		is_star_class = sc_b
+		is_star_class = sc_m_giant
+	}
+}
+
+# Mothership: built only at a finished Progenitor Forge.
+lfg_is_progenitor_forge = {
+	custom_tooltip = {
+		fail_text = lfg_requires_progenitor_forge
+		is_scope_type = megastructure
+		is_megastructure_type = lfg_progenitor_forge_2
+	}
+}

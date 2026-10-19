@@ -28,6 +28,23 @@ mod/                                  # exactly what ships
   common/tradition_categories/00_<tree name>_lfg.txt         # 8 trees, one per file (sort order, see below)
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
   common/governments/civics/lfg_civics.txt                   # civic_lfg_applied_biosciences (Biologists: society -> some physics/engineering)
+  common/megastructures/lfg_megastructures.txt               # Swarmforge (Nanite Armada perk): lfg_swarmforge_0 -> _ready (a shipyard)
+  common/ship_sizes/lfg_ship_sizes.txt                       # lfg_nanite_war_moon / lfg_nanite_planetcraft (only built at a Swarmforge)
+  common/section_templates/lfg_nanite_section_templates.txt  # GENERATED (NANITE_HULLS): Giga's moon / planetcraft sections for our hulls
+  localisation/english/lfg_nanite_sections_l_english.yml     # GENERATED: their section names
+  gfx/models/ships/lfg_nanite_celestials.asset               # GENERATED (NANITE_TEXTURES / _SKINS): nanite skins + grey goo swarm
+  common/scripted_triggers/zz_lfg_trigger_overrides.txt      # GENERATED: Giga's war moon / planet component triggers + our hulls
+  common/component_templates/lfg_components.txt              # LFG_NANITE_SWARM_HANGAR (Mothership only)
+  common/scripted_effects/lfg_mothership_effects.txt         # lfg_mothership_add_escort_ships / _add_escorts
+  events/lfg_mothership_events.txt                           # .1 monthly -> .2 escort fleet (swarmers / interdictors)
+  common/technology/lfg_technology.txt                       # tech_lfg_swarmforge / _nanite_war_moon / _nanite_planetcraft (offered by the perk)
+  common/buildings/lfg_buildings.txt                         # building_lfg_nanite_automation (origin), _nanite_cognition_core, _nanotensile_converter (Nanotech)
+  common/static_modifiers/lfg_specialist_automation.txt      # GENERATED (specialist_jobs in gen_overrides.py): Cognition Core job list
+  common/deposits/lfg_deposits.txt                           # d_lfg_nanite_forge_star (+22 energy), Ancient harvester's huge / vast deposits
+  common/starbase_buildings/zz_lfg_starbase_building_overrides.txt  # GENERATED: vanilla nanite_harvester, not beside ours
+  common/starbase_buildings/lfg_starbase_buildings.txt       # lfg_broken_nanite_harvester -> lfg_ancient_nanite_harvester (Nanite Forge origin; never buildable)
+  common/scripted_effects/lfg_nanite_forge_effects.txt       # lfg_forge_harvester_step (steps 1-14; 8+ only once restored), lfg_restore_forge_harvester, lfg_clear_forge_harvester
+  events/lfg_nanite_forge_events.txt                         # .1 game start, .2 3-year cycle/repair, .3 repair on Nanotech, .4 removal
   common/governments/councilors/lfg_councilors.txt           # councilor_lfg_applied_biosciences (Chief Bioengineer, scientists)
   gfx/interface/icons/governments/civics/civic_lfg_*.dds     # civic icons, all one colour: art/make_civic_icons.py (new civic -> add to ICONS)
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
@@ -45,7 +62,8 @@ mod/                                  # exactly what ships
   events/lfg_shellworlders_events.txt                        # Shellworlders: lfg_shellworld_* modifiers on artificial worlds (monthly)
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
   events/lfg_synthetic_fertility_events.txt                  # lfg_synthetic_fertility.1: extra Identity Repository uploads (monthly)
-  events/lfg_penal_events.txt                                # lfg_penal.1: Penitence penal colony modifiers + counts (monthly)
+  events/lfg_penal_events.txt                                # lfg_penal.1: Penitence penal colony modifiers + counts (monthly; only the penal colony + planets with our modifiers)
+  events/lfg_lineage_events.txt                              # lfg_lineage.1: Every Shore planet-type count (monthly cache)
   common/scripted_effects/lfg_penal_effects.txt              # lfg_sync_penal_modifier / lfg_sync_penal_unemployed / lfg_penal_ship_unemployed
   common/zones/lfg_zones.txt                                 # zone_lfg_penal_supertensiles, zone_lfg_penal_bulk_matter
   common/pop_jobs/lfg_jobs.txt                               # lfg_penal_supertensile_laborer, lfg_penal_matter_compactor
@@ -54,7 +72,7 @@ mod/                                  # exactly what ships
   events/lfg_lone_tide_events.txt                            # lfg_lone_tide.1 (global `event`, on_game_start): 75% spawn
   events/lfg_emberfall_events.txt                            # lfg_emberfall.1 (on_game_start): Emberfall, always, connected
   common/solar_system_initializers/lfg_system_initializers.txt # lfg_lone_tide_init, lfg_emberfall_init (usage_odds = 0)
-  common/script_values/lfg_world_types_values.txt            # GENERATED lfg_num_world_types (colonizable planet classes)
+  common/script_values/lfg_world_types_values.txt            # GENERATED lfg_count_world_types (colonizable planet classes; cached monthly by lfg_lineage.1)
   events/00_lfg_event_overrides.txt                          # GENERATED (machine_age.4400: Virtuality block); 00_ = loads first
   common/council_agendas/lfg_council_agendas.txt             # 7 agendas, unlocked by tree finishers
   common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + per-planet tradition modifiers

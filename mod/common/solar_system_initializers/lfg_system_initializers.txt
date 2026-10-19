@@ -308,3 +308,173 @@ lfg_emberfall_init = {
 		has_ring = no
 	}
 }
+
+# Nanite Forge origin (origin_lfg_nanite_forge): a blue B-class star whose 22-energy deposit (d_lfg_nanite_forge_star,
+# set at game start by lfg_nanite_forge.1) helps pay the harvester's energy upkeep; eight size 60 molten worlds on one wide orbit (every 45 degrees); and many
+# smaller rocky worlds, moons and asteroids. Rocky bodies get the broken harvester's nanite deposits at game start
+# (lfg_nanite_forge.1). Neighbours follow vanilla's random_empire_init_01.
+lfg_nanite_forge_start = {
+	class = "sc_b"
+	usage = origin
+	flags = { empire_home_system lfg_nanite_forge_system }
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 45
+	}
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 205
+	}
+
+	init_effect = {
+		every_neighbor_system = {
+			set_star_flag = empire_cluster
+			every_neighbor_system = {
+				set_star_flag = empire_cluster
+			}
+		}
+		generate_home_system_resources = yes
+	}
+
+	planet = {
+		class = "pc_b_star"
+		orbit_distance = 0
+		orbit_angle = 1
+		size = 30
+		has_ring = no
+		# Its deposit (d_lfg_nanite_forge_star) is set by lfg_nanite_forge.1: vanilla's generate_home_system_resources
+		# clears and re-rolls the star's deposits after this initializer runs.
+	}
+
+	# Inner belt
+	change_orbit = 45
+	planet = {
+		count = 6
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = 60
+		size = { min = 2 max = 4 }
+	}
+
+	planet = {
+		class = pc_molten
+		orbit_distance = 12
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 12 }
+	}
+
+	planet = {
+		class = ideal_planet_class
+		orbit_distance = 18
+		orbit_angle = { min = 90 max = 270 }
+		size = 12	# small homeworld; lfg_nanite_forge.1 also removes 1,500 of its pops
+		starting_planet = yes
+		deposit_blockers = none
+		modifiers = none
+
+		init_effect = {
+			prevent_anomaly = yes
+			generate_empire_home_planet = yes
+		}
+
+		change_orbit = 10
+		moon = {
+			class = pc_barren
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 5 max = 7 }
+		}
+	}
+
+	planet = {
+		class = pc_barren
+		orbit_distance = 22
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+	}
+
+	planet = {
+		class = pc_toxic
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 10 max = 16 }
+
+		change_orbit = 10
+		moon = {
+			class = pc_barren_cold
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 5 max = 7 }
+		}
+	}
+
+	# The forge: eight size 60 molten worlds (big enough for all 16 harvester steps) evenly around one orbit.
+	change_orbit = 60
+	planet = {
+		count = 8
+		class = pc_molten
+		orbit_distance = 0
+		orbit_angle = 45
+		size = 60
+		has_ring = no
+	}
+
+	planet = {
+		class = pc_barren_cold
+		orbit_distance = 40
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 10 max = 16 }
+
+		change_orbit = 10
+		moon = {
+			count = 2
+			class = pc_barren_cold
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+		}
+	}
+
+	planet = {
+		class = pc_frozen
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+	}
+
+	# Outer belt
+	planet = {
+		count = 6
+		class = pc_asteroid
+		orbit_distance = 25
+		orbit_angle = 60
+		size = { min = 2 max = 5 }
+	}
+
+	planet = {
+		class = pc_gas_giant
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = 30
+
+		change_orbit = 10
+		moon = {
+			count = 3
+			class = pc_barren_cold
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 5 max = 9 }
+		}
+	}
+
+	neighbor_system = {
+		trigger = { num_guaranteed_colonies >= 2 }
+		hyperlane_jumps = { min = 1 max = 3 }
+		initializer = "neighbor_t1"
+	}
+	neighbor_system = {
+		trigger = { num_guaranteed_colonies >= 1 }
+		hyperlane_jumps = { min = 1 max = 3 }
+		initializer = "neighbor_t1_first_colony"
+	}
+}

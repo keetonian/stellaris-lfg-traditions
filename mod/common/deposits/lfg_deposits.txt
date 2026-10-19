@@ -1,0 +1,52 @@
+# LFG Traditions - deposits.
+
+# Nanite Forge origin: the home star's energy, enough to cover a good part of the nanite harvester's upkeep. Added to the
+# star at game start by lfg_nanite_forge.1; never generated randomly. Same shape as vanilla's d_energy_10 star deposit.
+d_lfg_nanite_forge_star = {
+	icon = d_binary_stars
+	resources = {
+		category = orbital_mining_deposits
+		produces = {
+			energy = 22
+		}
+	}
+	station = shipclass_mining_station
+	is_for_colonizable = no
+
+	potential = { always = no }
+
+	drop_weight = { weight = 0 }
+}
+
+# Nanite Forge origin: the Ancient Nanite Harvester's steps 13-14 (lfg_forge_harvester_step) use this instead of
+# piling up vanilla's 25.6 deposits: 409.6 = 16 x d_nanite_harvester_deposit_large. Same shape as vanilla's.
+d_lfg_nanite_harvester_deposit_huge = {
+	resources = {
+		category = orbital_mining_deposits
+		produces = {
+			nanites = 409.6
+		}
+	}
+	station = shipclass_mining_station
+	is_for_colonizable = no
+
+	drop_weight = {
+		weight = 0
+	}
+}
+
+# Its steps 15-16: 1,638.4 = 4 x d_lfg_nanite_harvester_deposit_huge.
+d_lfg_nanite_harvester_deposit_vast = {
+	resources = {
+		category = orbital_mining_deposits
+		produces = {
+			nanites = 1638.4
+		}
+	}
+	station = shipclass_mining_station
+	is_for_colonizable = no
+
+	drop_weight = {
+		weight = 0
+	}
+}

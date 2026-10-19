@@ -3,6 +3,7 @@
 # Events: the first definition of an id wins, so the 00_ file name makes these load before (and replace) vanilla's.
 
 namespace = machine_age
+namespace = cybernetics
 
 # from events/machine_age_situation_events_3.txt
 situation_event = { # Tradition 1
@@ -75,5 +76,370 @@ situation_event = { # Tradition 1
 
 	after = {
 		remove_situation_flag = situation_transformation_pause
+	}
+}
+
+# from events/machine_age_events_2.txt
+system_event = {
+	id = cybernetics.5054
+	hide_window = yes
+
+	is_triggered_only = yes
+
+	trigger = {
+		# LFG: added by stellaris-lfg-traditions
+		NOR = {
+			AND = { exists = starbase starbase = { has_starbase_building = lfg_broken_nanite_harvester } }
+			AND = { exists = starbase starbase = { has_starbase_building = lfg_ancient_nanite_harvester } }
+		}
+		OR = {
+			AND = {
+				exists = owner
+				owner = {
+					has_tradition = tr_nanotech_finish
+				}
+				exists = starbase
+				starbase = {
+					has_starbase_building = nanite_harvester
+				}
+			}
+			AND = {
+				any_ship_in_system = {
+					owner = {
+						has_tradition = tr_nanotech_finish
+					}
+					is_waystation_ship = yes
+					starbase = {
+						has_starbase_module = waystation_nanotech_module
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				exists = owner
+				owner = {
+					has_tradition = tr_nanotech_finish
+				}
+				exists = starbase
+				starbase = {
+					has_starbase_building = nanite_harvester
+				}
+			}
+			owner = {
+				save_event_target_as = nanotech_country
+			}
+		}
+
+		if = {
+			limit = {
+				any_ship_in_system = {
+					owner = {
+						has_tradition = tr_nanotech_finish
+					}
+					is_waystation_ship = yes
+					starbase = {
+						has_starbase_module = waystation_nanotech_module
+					}
+				}
+			}
+			random_ship_in_system = {
+				limit = {
+					is_waystation_ship = yes
+					starbase = {
+						has_starbase_module = waystation_nanotech_module
+					}
+				}
+				owner = {
+					save_event_target_as = nanotech_country
+				}
+			}
+		}
+
+		every_system_planet = {
+			limit = {
+				OR = {
+					has_deposit = d_nanite_harvester_deposit
+					has_planet_flag = nanites_doubled_1
+					has_planet_flag = nanites_doubled_2
+					has_planet_flag = nanites_doubled_3
+					has_planet_flag = nanites_doubled_4
+					has_planet_flag = nanites_doubled_5
+					has_planet_flag = nanites_doubled_6
+					has_planet_flag = nanites_doubled_7
+					has_planet_flag = nanites_doubled_8
+					has_planet_flag = nanites_doubled_9
+				}
+				OR = {
+					has_mining_station = yes
+					AND = {
+						solar_system = {
+							any_ship_in_system = {
+								owner = {
+									has_tradition = tr_nanotech_finish
+								}
+								is_waystation_ship = yes
+								starbase = {
+									has_starbase_module = waystation_nanotech_module
+								}
+							}
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOR = {
+						has_planet_flag = nanites_doubled_1
+						has_planet_flag = nanites_doubled_2
+						has_planet_flag = nanites_doubled_3
+						has_planet_flag = nanites_doubled_4
+						has_planet_flag = nanites_doubled_5
+						has_planet_flag = nanites_doubled_6
+						has_planet_flag = nanites_doubled_7
+						has_planet_flag = nanites_doubled_8
+						has_planet_flag = nanites_doubled_9
+					}
+				}
+				add_deposit = d_nanite_harvester_deposit
+				set_planet_flag = nanites_doubled_1
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_1
+					planet_size >= 3
+				}
+				add_deposit = d_nanite_harvester_deposit
+				add_deposit = d_nanite_harvester_deposit
+				set_planet_flag = nanites_doubled_2
+				remove_planet_flag = nanites_doubled_1
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_2
+					planet_size > 6
+				}
+				add_deposit = d_nanite_harvester_deposit
+				add_deposit = d_nanite_harvester_deposit
+				add_deposit = d_nanite_harvester_deposit
+				add_deposit = d_nanite_harvester_deposit
+				set_planet_flag = nanites_doubled_3
+				remove_planet_flag = nanites_doubled_2
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_3
+					planet_size >= 9
+				}
+				every_deposit = {
+					limit = {
+						is_deposit_type = d_nanite_harvester_deposit
+					}
+					remove_deposit = yes
+				}
+				add_deposit = d_nanite_harvester_deposit_regular
+				set_planet_flag = nanites_doubled_4
+				remove_planet_flag = nanites_doubled_3
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_4
+					planet_size >= 12
+				}
+				random_list = {
+					50 = {
+						nanotech_deposit_nanite_generation = yes
+					}
+					50 = {
+						add_deposit = d_nanite_harvester_deposit_regular
+						set_planet_flag = nanites_doubled_5
+						remove_planet_flag = nanites_doubled_4
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_5
+					planet_size >= 15
+				}
+				random_list = {
+					50 = {
+						nanotech_deposit_nanite_generation = yes
+					}
+					50 = {
+						add_deposit = d_nanite_harvester_deposit_regular
+						add_deposit = d_nanite_harvester_deposit_regular
+						set_planet_flag = nanites_doubled_6
+						remove_planet_flag = nanites_doubled_5
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_6
+					planet_size >= 18
+				}
+				random_list = {
+					50 = {
+						nanotech_deposit_nanite_generation = yes
+					}
+					50 = {
+						add_deposit = d_nanite_harvester_deposit_regular
+						add_deposit = d_nanite_harvester_deposit_regular
+						add_deposit = d_nanite_harvester_deposit_regular
+						add_deposit = d_nanite_harvester_deposit_regular
+						set_planet_flag = nanites_doubled_7
+						remove_planet_flag = nanites_doubled_6
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_7
+					planet_size >= 21
+				}
+				random_list = {
+					50 = {
+						nanotech_deposit_nanite_generation = yes
+					}
+					50 = {
+						every_deposit = {
+							limit = {
+								is_deposit_type = d_nanite_harvester_deposit_regular
+							}
+							remove_deposit = yes
+						}
+						add_deposit = d_nanite_harvester_deposit_large
+						set_planet_flag = nanites_doubled_8
+						remove_planet_flag = nanites_doubled_7
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_8
+					planet_size >= 25
+				}
+				random_list = {
+					50 = {
+						nanotech_deposit_nanite_generation = yes
+					}
+					50 = {
+						add_deposit = d_nanite_harvester_deposit_large
+						set_planet_flag = nanites_doubled_9
+						remove_planet_flag = nanites_doubled_8
+					}
+				}
+			}
+			# LFG: added by stellaris-lfg-traditions
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_9
+					NOT = { has_planet_flag = lfg_nanites_doubled_10 }
+					planet_size >= @lfg_nanite_step_10_size
+				}
+				random_list = {
+					50 = {
+						nanotech_deposit_nanite_generation = yes
+					}
+					50 = {
+						add_deposit = d_nanite_harvester_deposit_large
+						add_deposit = d_nanite_harvester_deposit_large
+						set_planet_flag = lfg_nanites_doubled_10
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = lfg_nanites_doubled_10
+					NOT = { has_planet_flag = lfg_nanites_doubled_11 }
+					planet_size >= @lfg_nanite_step_11_size
+				}
+				random_list = {
+					50 = {
+						nanotech_deposit_nanite_generation = yes
+					}
+					50 = {
+						add_deposit = d_nanite_harvester_deposit_large
+						add_deposit = d_nanite_harvester_deposit_large
+						add_deposit = d_nanite_harvester_deposit_large
+						add_deposit = d_nanite_harvester_deposit_large
+						set_planet_flag = lfg_nanites_doubled_11
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = lfg_nanites_doubled_11
+					NOT = { has_planet_flag = lfg_nanites_doubled_12 }
+					planet_size >= @lfg_nanite_step_12_size
+				}
+				random_list = {
+					50 = {
+						nanotech_deposit_nanite_generation = yes
+					}
+					50 = {
+						while = {
+							count = 8
+							add_deposit = d_nanite_harvester_deposit_large
+						}
+						set_planet_flag = lfg_nanites_doubled_12
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_planet_flag = nanites_doubled_9
+				}
+				nanotech_deposit_nanite_generation = yes
+			}
+		}
+	}
+}
+
+# from events/machine_age_events_2.txt
+system_event = {
+	id = cybernetics.5051
+	hide_window = yes
+	location = FROM
+
+	is_triggered_only = yes
+
+	immediate = {
+		every_system_planet = {
+			limit = {
+				OR = {
+					has_deposit = d_nanite_harvester_deposit
+					has_deposit = d_nanite_harvester_deposit_regular
+					has_deposit = d_nanite_harvester_deposit_large
+				}
+			}
+			every_deposit = {
+				limit = {
+					OR = {
+						is_deposit_type = d_nanite_harvester_deposit
+						is_deposit_type = d_nanite_harvester_deposit_regular
+						is_deposit_type = d_nanite_harvester_deposit_large
+					}
+				}
+				remove_deposit = yes
+			}
+			remove_planet_flag = nanites_doubled_1
+			remove_planet_flag = nanites_doubled_2
+			remove_planet_flag = nanites_doubled_3
+			remove_planet_flag = nanites_doubled_4
+			remove_planet_flag = nanites_doubled_5
+			remove_planet_flag = nanites_doubled_6
+			remove_planet_flag = nanites_doubled_7
+			remove_planet_flag = nanites_doubled_8
+			remove_planet_flag = nanites_doubled_9
+			# LFG: added by stellaris-lfg-traditions
+			remove_planet_flag = lfg_nanites_doubled_10
+			remove_planet_flag = lfg_nanites_doubled_11
+			remove_planet_flag = lfg_nanites_doubled_12
+		}
 	}
 }

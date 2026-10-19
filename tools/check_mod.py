@@ -62,6 +62,14 @@ ALLOWED_FILES = [
     r"common/scripted_effects/[^/]+\.txt",
     r"common/edicts/[^/]+\.txt",
     r"common/artifact_actions/[^/]+\.txt",
+    r"common/starbase_buildings/[^/]+\.txt",
+    r"common/deposits/[^/]+\.txt",
+    r"common/megastructures/[^/]+\.txt",
+    r"common/ship_sizes/[^/]+\.txt",
+    r"common/section_templates/[^/]+\.txt",
+    r"common/component_templates/[^/]+\.txt",
+    r"common/technology/lfg_[^/]+\.txt",
+    r"common/buildings/lfg_[^/]+\.txt",
     r"common/council_agendas/[^/]+\.txt",
     r"common/static_modifiers/[^/]+\.txt",
     r"common/on_actions/[^/]+\.txt",
@@ -73,14 +81,15 @@ ALLOWED_FILES = [
     r"interface/[^/]+\.gfx",
     r"gfx/interface/icons/districts/lfg_[^/]+\.dds",  # art/make_zone_icons.py
     r"gfx/interface/icons/governments/civics/civic_lfg_[^/]+\.dds",  # art/make_civic_icons.py
+    r"gfx/models/ships/lfg_[^/]+\.asset",  # generated: nanite hulls' look
     r"localisation/english/[^/]+_l_english\.yml",
     r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
-KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "councilor_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
+KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "origin_lfg_", "tech_lfg_", "building_lfg_", "d_lfg_", "councilor_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
                 "@lfg_")
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
-PREFIX_EXEMPT_FOLDERS = ("common/on_actions/",)
+PREFIX_EXEMPT_FOLDERS = ("common/on_actions/", "common/section_templates/", "common/component_templates/")  # sections: ship_section_template, keyed inside
 # Single-category values used by vanilla policies (common/policies/00_policies.txt, 4.5).
 POLICY_CATEGORIES = {"diplomacy", "economy", "military", "research", "society"}
 STATIC_MODIFIER_NON_MODIFIERS = {"icon", "icon_frame", "custom_tooltip", "hide_in_tooltip", "show_only_custom_tooltip"}
@@ -285,7 +294,9 @@ def check_civics(mod: Mod, loc: Dict[str, str], r: Report) -> None:
         for key in (ck, f"{ck}_desc"):
             if key not in loc:
                 r.fail(f"missing localisation: {key}")
-        if civ.is_block and pdx.first(civ.value, "modifier") is None:
+        # Origins work through their start system and events; they don't need a modifier.
+        is_origin = civ.is_block and getattr(pdx.first(civ.value, "is_origin"), "value", None) == "yes"
+        if civ.is_block and not is_origin and pdx.first(civ.value, "modifier") is None:
             r.fail(f"{ck}: has no modifier block")
     # Council positions: <key>, <key>_desc; a `civic` of ours must exist (vanilla ones are checked against the game).
     for key, pos in mod.top("common/governments/councilors").items():
@@ -647,7 +658,7 @@ def check_prefixes(mod: Mod, loc: Dict[str, str], r: Report) -> None:
                 r.fail(f"{rel}:{e.line}: top-level key {e.key} lacks an lfg prefix")
     replaced = set(gen_overrides.LOC_OVERRIDES_KEYS)
     for key in loc:
-        if "lfg" not in key and not key.startswith("mod_") and key not in replaced:  # mod_<modifier>: loc for modifiers vanilla left unnamed
+        if "lfg" not in key.lower() and not key.startswith("mod_") and key not in replaced:  # LFG_*: component keys  # mod_<modifier>: loc for modifiers vanilla left unnamed
             r.fail(f"localisation key {key} lacks an lfg prefix (could overwrite vanilla/other mods)")
 
 

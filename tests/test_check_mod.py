@@ -49,15 +49,18 @@ class RealModTests(unittest.TestCase):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
         self.assertEqual(len(mod.top("common/tradition_categories")), 8)
         self.assertEqual(len(mod.top("common/traditions")), 8 * 7)
-        self.assertEqual(set(mod.top("common/governments/civics")), {"civic_lfg_applied_biosciences"})
+        self.assertEqual(set(mod.top("common/governments/civics")), {"civic_lfg_applied_biosciences", "origin_lfg_nanite_forge"})
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_xenoarchaeology.1", "lfg_xenoarchaeology.2", "lfg_xenoarchaeology.3",
                                                             "lfg_resorts.1", "lfg_shellworlders.1",
                                                             "lfg_planet.1", "lfg_lone_tide.1",
                                                             "lfg_synthetic_fertility.1", "lfg_penal.1",
-                                                            "lfg_massed_assault.1", "lfg_emberfall.1"})
+                                                            "lfg_massed_assault.1", "lfg_emberfall.1",
+                                                            "lfg_nanite_forge.1", "lfg_nanite_forge.2", "lfg_nanite_forge.3", "lfg_nanite_forge.5",
+                                                            "lfg_nanite_forge.4", "lfg_nanite_forge.6",
+                                                            "lfg_lineage.1", "lfg_mothership.1", "lfg_mothership.2"})
         self.assertEqual(len(mod.top("common/council_agendas")), 7)
-        self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress", "ap_lfg_massed_assault"})
+        self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress", "ap_lfg_massed_assault", "ap_lfg_nanite_armada", "ap_lfg_mothership"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
         self.assertEqual(len(shelve), 24 + 3)  # one per repeatable tech + megastructure capacity per research area
 

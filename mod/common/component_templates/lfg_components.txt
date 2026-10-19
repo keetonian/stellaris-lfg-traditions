@@ -1,0 +1,70 @@
+# LFG Traditions - ship components.
+
+# Mothership (ap_lfg_mothership): Nanite Swarm hangar, Motherships only. Strike craft can be buggy, so few but strong,
+# far beyond ACOT's Alpha-tier hangars (its best fighters: 8 craft, 12-34 damage every 2 days, 17 health, 35 shields;
+# bombers: 4 craft, 423-507 every 14 days): 2 craft per hangar (45 hangars: 90 craft), 250-450 damage every 1.5 days,
+# 400 health, 200 armour, 500 shields, full shield penetration. Paid in nanites.
+strike_craft_component_template = {
+	key = "LFG_NANITE_SWARM_HANGAR"
+	size = LARGE
+	entity = "bomber_entity"
+
+	weapon_type = point_defence
+	projectile_gfx = "strike_craft_laser_3"
+
+	power = -100
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = 2500
+		}
+		upkeep = {
+			energy = 5
+			nanites = 2
+		}
+	}
+	potential = {
+		is_ship_size = lfg_mothership
+	}
+
+	count = 2
+	regeneration_per_day = 1
+	launch_time = 1
+
+	damage = { min = 250 max = 450 }
+	cooldown = 1.5
+	range = 20
+	engagement_range = 300
+	accuracy = 1.00
+	tracking = 1.00
+
+	health = 400
+	armor = 200
+	shield = 500
+	evasion = 0.85
+
+	speed = 1000
+	rotation_speed = 1
+	acceleration = 1
+
+	hull_damage = 1.5
+	armor_penetration = 0.5
+	armor_damage = 2.0
+	shield_penetration = 1.0
+	shield_damage = 2.0
+
+	ship_behavior = "fighters_behavior"
+
+	icon = "GFX_ship_part_strike_craft_fighter_3"
+	icon_frame = 1
+	component_set = "LFG_NANITE_SWARM_HANGAR"
+	prerequisites = { "tech_lfg_mothership" }
+
+	tags = {
+		weapon_type_strike_craft
+	}
+	ai_tags = {
+		weapon_role_point_defense
+		carrier
+	}
+}

@@ -1,0 +1,246 @@
+# LFG Traditions - Nanite Forge origin: the broken nanite harvester (common/starbase_buildings/lfg_starbase_buildings.txt).
+namespace = lfg_nanite_forge
+
+# Game start (on_game_start_country): shrink the homeworld's population, replace the home star's deposits (vanilla's generate_home_system_resources gives it
+# +5 energy) with its +22 energy one, give the home system's rocky bodies their 0.1 nanite deposits (same rule as
+# vanilla's cybernetics.5050), start with Starholds researched and the home starbase upgraded to one, then place the
+# broken harvester and start the 3-year cycle (lfg_nanite_forge.6, tried at once and again a day later in case the
+# game's own starbase setup overwrote it).
+country_event = {
+	id = lfg_nanite_forge.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_lfg_nanite_forge
+		exists = capital_scope
+	}
+
+	immediate = {
+		# A small homeworld: 1,500 fewer pops, taken 100 at a time from its largest pop group.
+		capital_scope = {
+			while = {
+				count = @lfg_nanite_forge_pops_removed_hundreds
+				ordered_owned_pop_group = {
+					order_by = trigger:pop_group_size
+					remove_pop_amount = 100
+				}
+			}
+		}
+		give_technology = { tech = tech_starbase_2 message = no }
+		give_technology = { tech = tech_starbase_3 message = no }
+		capital_scope.solar_system = {
+			if = {
+				limit = { exists = starbase }
+				starbase = { set_starbase_size = starbase_starhold }
+			}
+		}
+		country_event = { id = lfg_nanite_forge.6 }
+		country_event = { id = lfg_nanite_forge.6 days = 1 }
+		capital_scope.solar_system = {
+			system_star = {
+				clear_deposits = yes
+				add_deposit = d_lfg_nanite_forge_star
+			}
+			every_system_planet = {
+				limit = {
+					can_have_mineral_deposits = yes
+					NOT = {
+						has_deposit_for = shipclass_research_station
+						has_deposit = d_nanite_harvester_deposit
+					}
+				}
+				add_deposit = d_nanite_harvester_deposit
+			}
+			system_event = { id = lfg_nanite_forge.2 days = @lfg_broken_harvester_days }
+		}
+	}
+}
+
+# Game start (and again a day later, if it isn't there yet): put the broken harvester in the home starbase's first free building slot (buildings fill
+# slots from 1, so that's slot count + 1; the starbase may already have a building at game start), remember the slot
+# for the restoration (star flag lfg_broken_harvester_slot_<n>; a retry clears the old one). lfg_nanite_forge.1 starts
+# the 3-year cycle once.
+country_event = {
+	id = lfg_nanite_forge.6
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = capital_scope
+		capital_scope.solar_system = {
+			exists = starbase
+			starbase = {
+				NOR = {
+					has_starbase_building = lfg_broken_nanite_harvester
+					has_starbase_building = lfg_ancient_nanite_harvester
+				}
+			}
+		}
+	}
+
+	immediate = {
+		set_country_flag = lfg_placing_forge_harvester
+		capital_scope.solar_system = {
+			remove_star_flag = lfg_broken_harvester_slot_1
+			remove_star_flag = lfg_broken_harvester_slot_2
+			remove_star_flag = lfg_broken_harvester_slot_3
+			remove_star_flag = lfg_broken_harvester_slot_4
+			remove_star_flag = lfg_broken_harvester_slot_5
+			remove_star_flag = lfg_broken_harvester_slot_6
+			starbase = {
+				if = {
+					limit = { count_starbase_buildings = { count = 0 } }
+					set_starbase_building = { slot = 1 building = lfg_broken_nanite_harvester }
+					solar_system = { set_star_flag = lfg_broken_harvester_slot_1 }
+				}
+				else_if = {
+					limit = { count_starbase_buildings = { count = 1 } }
+					set_starbase_building = { slot = 2 building = lfg_broken_nanite_harvester }
+					solar_system = { set_star_flag = lfg_broken_harvester_slot_2 }
+				}
+				else_if = {
+					limit = { count_starbase_buildings = { count = 2 } }
+					set_starbase_building = { slot = 3 building = lfg_broken_nanite_harvester }
+					solar_system = { set_star_flag = lfg_broken_harvester_slot_3 }
+				}
+				else_if = {
+					limit = { count_starbase_buildings = { count = 3 } }
+					set_starbase_building = { slot = 4 building = lfg_broken_nanite_harvester }
+					solar_system = { set_star_flag = lfg_broken_harvester_slot_4 }
+				}
+				else_if = {
+					limit = { count_starbase_buildings = { count = 4 } }
+					set_starbase_building = { slot = 5 building = lfg_broken_nanite_harvester }
+					solar_system = { set_star_flag = lfg_broken_harvester_slot_5 }
+				}
+				else_if = {
+					limit = { count_starbase_buildings = { count = 5 } }
+					set_starbase_building = { slot = 6 building = lfg_broken_nanite_harvester }
+					solar_system = { set_star_flag = lfg_broken_harvester_slot_6 }
+				}
+			}
+		}
+		remove_country_flag = lfg_placing_forge_harvester
+	}
+}
+
+# Every 3 years while the system has the origin's harvester (broken or ancient): one doubling step for each deposit planet
+# with a mining station (lfg_forge_harvester_step). If the broken one's owner has finished Nanotech, swap it for the
+# Ancient Nanite Harvester first. Re-schedules itself; stops when the harvester is gone.
+system_event = {
+	id = lfg_nanite_forge.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = starbase
+		starbase = {
+			exists = owner
+			OR = {
+				has_starbase_building = lfg_broken_nanite_harvester
+				has_starbase_building = lfg_ancient_nanite_harvester
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				starbase = {
+					has_starbase_building = lfg_broken_nanite_harvester
+					owner = { has_tradition = tr_nanotech_finish }
+				}
+			}
+			starbase = { lfg_restore_forge_harvester = yes }
+		}
+		starbase.owner = { save_event_target_as = nanotech_country }
+		every_system_planet = {
+			limit = {
+				has_mining_station = yes
+				OR = {
+					has_deposit = d_nanite_harvester_deposit
+					has_planet_flag = nanites_doubled_1
+					has_planet_flag = nanites_doubled_2
+					has_planet_flag = nanites_doubled_3
+					has_planet_flag = nanites_doubled_4
+					has_planet_flag = nanites_doubled_5
+					has_planet_flag = nanites_doubled_6
+					has_planet_flag = nanites_doubled_7
+					has_planet_flag = nanites_doubled_8
+					has_planet_flag = nanites_doubled_9
+				}
+			}
+			lfg_forge_harvester_step = yes
+		}
+		system_event = { id = lfg_nanite_forge.2 days = @lfg_broken_harvester_days }
+	}
+}
+
+# Finishing Nanotech (on_tradition_picked): turn our broken harvesters into Ancient ones right away.
+country_event = {
+	id = lfg_nanite_forge.3
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_tradition = tr_nanotech_finish
+		any_owned_starbase = { has_starbase_building = lfg_broken_nanite_harvester }
+	}
+
+	immediate = {
+		every_owned_starbase = {
+			limit = { has_starbase_building = lfg_broken_nanite_harvester }
+			lfg_restore_forge_harvester = yes
+		}
+	}
+}
+
+# The harvester was removed (on_destroyed): clear the system's harvester deposits and step flags, unless it was just
+# swapped for the Ancient one.
+system_event = {
+	id = lfg_nanite_forge.4
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_star_flag = lfg_nanite_harvester_swapping }
+	}
+
+	immediate = {
+		lfg_clear_forge_harvester = yes
+	}
+}
+
+# Monthly (on_monthly_pulse_country): keep lfg_nanite_specialist_automation (Nanite Cognition Core) on our planets that
+# have the building, and only there. Only countries that finished Nanotech, or had the modifier applied, loop planets.
+country_event = {
+	id = lfg_nanite_forge.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_tradition = tr_nanotech_finish
+			has_country_flag = lfg_nanite_core_applied
+		}
+	}
+
+	immediate = {
+		remove_country_flag = lfg_nanite_core_applied
+		every_owned_planet = {
+			if = {
+				limit = { has_building = building_lfg_nanite_cognition_core }
+				if = {
+					limit = { NOT = { has_modifier = lfg_nanite_specialist_automation } }
+					add_modifier = { modifier = lfg_nanite_specialist_automation days = -1 }
+				}
+				owner = { set_country_flag = lfg_nanite_core_applied }
+			}
+			else_if = {
+				limit = { has_modifier = lfg_nanite_specialist_automation }
+				remove_modifier = lfg_nanite_specialist_automation
+			}
+		}
+	}
+}

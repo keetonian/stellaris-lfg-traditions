@@ -86,6 +86,17 @@ def fake_holomuseum(key, research):
 """
 
 
+FAKE_NANITE_EVENTS = (
+    "namespace = cybernetics\n\n"
+    "system_event = {\n\tid = cybernetics.5051\n\timmediate = {\n\t\tevery_system_planet = {\n"
+    "\t\t\tremove_planet_flag = nanites_doubled_9\n\t\t}\n\t}\n}\n\n"
+    "system_event = {\n\tid = cybernetics.5054\n\ttrigger = {\n\t\talways = yes\n\t}\n\timmediate = {\n\t\tevery_system_planet = {\n"
+    "\t\t\telse_if = {\n\t\t\t\trandom_list = {\n\t\t\t\t\t50 = {\n"
+    "\t\t\t\t\t\tset_planet_flag = nanites_doubled_9\n\t\t\t\t\t\tremove_planet_flag = nanites_doubled_8\n"
+    "\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n"
+    "\t\t\telse_if = {\n\t\t\t\tlimit = {\n\t\t\t\t\thas_planet_flag = nanites_doubled_9\n\t\t\t\t}\n"
+    "\t\t\t\tnanotech_deposit_nanite_generation = yes\n\t\t\t}\n\t\t}\n\t}\n}\n")
+
 FAKE_RESEARCH_BUILDINGS = (
     "building_archaeostudies_faculty = {\n\tbase_buildtime = 360\n\n\tplanet_modifier = {\n"
     "\t\tplanet_biologists_society_research_produces_add = 0.25\n\t}\n}\n")
@@ -178,6 +189,49 @@ class GenOverridesTests(unittest.TestCase):
         (self.game / "common/zones").mkdir()
         (self.game / "common/zones/00_zones.txt").write_text(FAKE_ZONES)
         (self.game / "events/machine_age_situation_events_3.txt").write_text(FAKE_EVENTS)
+        (self.game / "events/machine_age_events_2.txt").write_text(FAKE_NANITE_EVENTS)
+        (self.game / "common/starbase_buildings").mkdir()
+        (self.game / "common/starbase_buildings/00_starbase_buildings.txt").write_text(
+            "nanite_harvester = {\n\tpossible = {\n\t\talways = yes\n\t}\n}\n")
+        (self.game / "common/pop_jobs").mkdir()
+        (self.game / "common/pop_jobs/02_specialist_jobs.txt").write_text(
+            "physicist = {\n\tcategory = specialist\n}\nminer = {\n\tcategory = worker\n}\n"
+            "not_a_real_job = {\n\tcategory = specialist\n}\n")
+        (self.tmp / "giga/common/pop_jobs").mkdir(parents=True)
+        (self.tmp / "giga/common/section_templates").mkdir(parents=True)
+        (self.tmp / "giga/common/section_templates/giga_systemcraft.txt").write_text(
+            'ship_section_template = {\r\n\tkey = "sc_mid"\r\n\tship_size = giga_systemcraft\r\n\tfits_on_slot = "mid"\r\n'
+            '\tcomponent_slot = { name = "X" template = "invisible_extra_large_fixed" locatorname = "x" }\r\n'
+            '\tai_tags = { artillery }\r\n}\r\n'
+            'ship_section_template = {\r\n\tkey = "sc_bow"\r\n\tship_size = giga_systemcraft\r\n\tfits_on_slot = "bow"\r\n'
+            '\tcomponent_slot = { name = "Y" template = "invisible_extra_large_fixed" locatorname = "y" }\r\n}\r\n')
+        for name, size in (("giga_mooncraft", "giga_war_moon"), ("giga_planetcraft", "giga_planet_behemoth")):
+            (self.tmp / f"giga/common/section_templates/{name}.txt").write_text(
+                f'ship_section_template = {{\r\n\tkey = "{size}_bow"\r\n\tship_size = {size}\r\n}}\r\n'
+                f'ship_section_template = {{\r\n\tkey = "{size}_stern"\r\n\tship_size = {size}\r\n'
+                f'\tentity = "giga_moon_thrusters_ai_fe"\r\n}}\r\n'
+                f'ship_section_template = {{\r\n\tkey = "{size}_skin"\r\n\tship_size = {size}\r\n'
+                f'\tentity = "giga_moon_thrusters_frozen"\r\n\tprerequisites = {{ giga_tech_aeternite_weaponry }}\r\n}}\r\n'
+                f'ship_section_template = {{\r\n\tkey = "other_bow"\r\n\tship_size = {size}_kaiser\r\n}}\r\n')
+        mega = self.tmp / "giga/gfx/models/ships/megastructures"
+        (mega / "war_moon").mkdir(parents=True)
+        (mega / "war_planet").mkdir(parents=True)
+        (mega / "war_system").mkdir(parents=True)
+        skin = ('entity = {{\r\n\tname = "{}"\r\n\tpdxmesh = "{}"\r\n\tgame_data = {{\r\n\t\tsize = 100.0\r\n\t}}\r\n'
+                '\tmeshsettings = {{\r\n\t\ttexture_diffuse = "a.dds"\r\n\t\ttexture_normal = "b.dds"\r\n'
+                '\t\ttexture_specular = "c.dds"\r\n\t}}\r\n}}\r\n')
+        (mega / "war_moon/giga_war_moon.asset").write_text(
+            "@war_moon_scale = 0.8\r\n" + skin.format("giga_moon_thrusters_ai_fe", "war_moon_complete_mesh"))
+        (mega / "war_planet/giga_war_planet.asset").write_text(
+            "@war_planet_scale = 0.33\r\n" + skin.format("synthetics_01_war_planet_complete_entity", "war_planet_complete_mesh"))
+        (mega / "war_system/giga_war_system.asset").write_text(
+            "@war_system_scale = 1.5\r\n" + skin.format("war_system_complete_entity", "war_system_complete_mesh"))
+        (self.tmp / "giga/common/scripted_triggers").mkdir(parents=True)
+        (self.tmp / "giga/common/scripted_triggers/giga_scripted_triggers.txt").write_text(
+            "giga_ship_uses_war_moon_components = {\r\n\tOR = {\r\n\t\tis_ship_size = giga_war_moon\r\n\t}\r\n}\r\n"
+            "giga_ship_uses_war_planet_components = {\r\n\tOR = {\r\n\t\tis_ship_size = giga_planet_behemoth\r\n\t}\r\n}\r\n"
+            "giga_ship_uses_war_system_components = {\r\n\tOR = {\r\n\t\tis_ship_size = giga_systemcraft\r\n\t}\r\n}\r\n")
+        (self.tmp / "giga/common/pop_jobs/giga_amb_jobs.txt").write_text("giga_megaengineer_drone = {\r\n\tcategory = complex_drone\r\n}\r\n")
         self.giga = self.tmp / "giga"
         (self.giga / "descriptor.mod").parent.mkdir(parents=True, exist_ok=True)
         (self.giga / "descriptor.mod").write_text('version="8.8.8"\n')
@@ -225,6 +279,71 @@ class GenOverridesTests(unittest.TestCase):
         # the vanilla block comes first, unchanged
         self.assertLess(districts.index("job_resort_worker_add = @special_district_jobs"),
                         districts.index("job_resort_worker_add = @lfg_resort_extra_district_jobs"))
+
+    def test_nanite_harvesters_get_two_more_steps_before_the_payout(self):
+        out = self.generate()["mod/events/00_lfg_event_overrides.txt"]
+        self.assertIn("namespace = cybernetics", out)
+        step = gen_overrides.extract_event(out, "cybernetics.5054")
+        self.assertLess(step.index("set_planet_flag = lfg_nanites_doubled_10"), step.index("set_planet_flag = lfg_nanites_doubled_11"))
+        self.assertLess(step.index("set_planet_flag = lfg_nanites_doubled_11"),
+                        step.index("has_planet_flag = nanites_doubled_9\n\t\t\t\t}\n\t\t\t\tnanotech_deposit_nanite_generation"))
+        cleanup = gen_overrides.extract_event(out, "cybernetics.5051")
+        self.assertIn("remove_planet_flag = lfg_nanites_doubled_11", cleanup)
+
+    def test_specialist_automation_lists_specialist_and_complex_drone_jobs(self):
+        out = self.generate()[gen_overrides.SPECIALIST_AUTOMATION_FILE]
+        self.assertIn("show_only_custom_tooltip = yes", out)
+        self.assertIn("job_physicist_automated_workforce_mult = @lfg_nanite_core_automation", out)
+        self.assertIn("job_giga_megaengineer_drone_automated_workforce_mult", out)
+        self.assertNotIn("job_miner_", out)  # workers aren't specialists
+        self.assertNotIn("not_a_real_job", out)  # no such modifier in the game
+
+    def test_nanite_hulls_copy_giga_sections_and_join_its_component_triggers(self):
+        out = self.generate()
+        sections = out[gen_overrides.NANITE_SECTIONS_FILE]
+        self.assertIn('key = "lfg_nanite_giga_war_moon_bow"\n\tship_size = lfg_nanite_war_moon\n', sections)
+        self.assertIn('key = "lfg_nanite_giga_planet_behemoth_bow"\n\tship_size = lfg_nanite_planetcraft\n', sections)
+        self.assertNotIn("other_bow", sections)  # other ship sizes' sections aren't copied
+        triggers = out["mod/common/scripted_triggers/zz_lfg_trigger_overrides.txt"]
+        self.assertIn("is_ship_size = lfg_nanite_war_moon\n\t\tis_ship_size = giga_war_moon", triggers)
+        self.assertIn("is_ship_size = lfg_nanite_planetcraft\n\t\tis_ship_size = giga_planet_behemoth", triggers)
+
+    def test_nanite_hulls_get_the_nanite_look(self):
+        out = self.generate()
+        sections = out[gen_overrides.NANITE_SECTIONS_FILE]
+        self.assertIn('entity = "lfg_nanite_moon_grey_goo_entity"', sections)
+        self.assertNotIn("giga_moon_thrusters_", sections)  # Giga's skins are swapped for ours
+        self.assertIn('key = "lfg_nanite_moon_machine_shell_key"', sections)
+        self.assertNotIn("giga_tech_aeternite_weaponry", sections)  # our skins need no tech
+        loc = out[gen_overrides.NANITE_SECTIONS_LOC_FILE]
+        self.assertTrue(loc.startswith("\ufeffl_english:\n"))
+        self.assertIn(' lfg_nanite_giga_war_moon_bow:0 "$giga_war_moon_bow$"', loc)
+        self.assertIn(' lfg_nanite_moon_swarm_core_key:0 "Swarm Core"', loc)
+        entities = out[gen_overrides.NANITE_ENTITIES_FILE]
+        for name in ("lfg_nanite_moon_grey_goo_entity", "lfg_nanite_moon_machine_shell_entity",
+                     "lfg_nanite_moon_swarm_core_entity", "lfg_nanite_planetcraft_entity"):
+            self.assertIn(f'name = "{name}"', entities)
+        self.assertIn('texture_diffuse = "gray_goo_planet_01_diffuse.dds"', entities)
+        self.assertEqual(entities.count('attach = { root = "lfg_nanite_swarm_'), 5)  # 3 moon skins, planetcraft, mothership
+
+    def test_forge_harvester_keeps_vanilla_harvesting_away(self):
+        out = self.generate()
+        step = gen_overrides.extract_event(out["mod/events/00_lfg_event_overrides.txt"], "cybernetics.5054")
+        self.assertIn("has_starbase_building = lfg_ancient_nanite_harvester", step.split("immediate")[0])
+        ban = out["mod/common/starbase_buildings/zz_lfg_starbase_building_overrides.txt"]
+        self.assertIn("fail_text = lfg_requires_no_ancient_harvester", ban)
+
+    def test_mothership_gets_systemcraft_sections_with_hangars(self):
+        out = self.generate()
+        sections = out[gen_overrides.NANITE_SECTIONS_FILE]
+        mid = sections[sections.index('key = "lfg_mothership_sc_mid"'):]
+        self.assertIn('template = "large_strike_craft"', mid.split("}\n", 2)[0] + mid)
+        self.assertIn("ai_tags = { carrier }", mid)
+        bow = sections[sections.index('key = "lfg_mothership_sc_bow"'):]
+        self.assertIn('template = "invisible_extra_large_fixed"', bow)  # only mid / stern become hangars
+        self.assertIn(' lfg_mothership_sc_mid:0 "Nanite Hive Bays"', out[gen_overrides.NANITE_SECTIONS_LOC_FILE])
+        self.assertIn('name = "lfg_mothership_entity"', out[gen_overrides.NANITE_ENTITIES_FILE])
+        self.assertIn("is_ship_size = lfg_mothership", out["mod/common/scripted_triggers/zz_lfg_trigger_overrides.txt"])
 
     def test_archaeostudies_faculty_gets_expedition_corps_block(self):
         out = self.generate()["mod/common/buildings/zz_lfg_building_overrides.txt"]
@@ -302,6 +421,7 @@ class GenOverridesTests(unittest.TestCase):
 
     def test_world_types_count_colonizable_classes(self):
         out = self.generate()[gen_overrides.WORLD_TYPES_FILE]
+        self.assertIn("lfg_count_world_types = {\n", out)
         for pc in ("pc_desert", "pc_ocean", "pc_flat_world"):
             self.assertIn(f"\tmodifier = {{ add = 1 any_owned_planet = {{ is_planet_class = {pc} }} }}\n", out)
         self.assertNotIn("pc_barren", out)
@@ -324,7 +444,7 @@ class GenOverridesTests(unittest.TestCase):
         self.assertIn("has_origin = origin_great_ring", out)
         self.assertIn("has_origin = origin_alderson", out)
         self.assertIn("is_individual_machine = yes", out)
-        self.assertEqual(out.count("# LFG: added"), 1)
+        self.assertEqual(gen_overrides.extract_event(out, "machine_age.4400").count("# LFG: added"), 1)
 
     def test_missing_event_fails(self):
         (self.game / "events/machine_age_situation_events_3.txt").write_text(FAKE_EVENTS.replace("4400", "4401"))

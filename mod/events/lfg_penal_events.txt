@@ -22,7 +22,18 @@ country_event = {
 			limit = { has_tradition = tr_lfg_penitence_adopt }
 			set_country_flag = lfg_penal_applied
 		}
+		# Only the penal colony, and planets still carrying our modifiers (cleanup after losing penal status or the tree).
 		every_owned_planet = {
+			limit = {
+				OR = {
+					has_modifier = penal_colony
+					has_modifier = lfg_penal_adopt
+					has_modifier = lfg_penal_wardens_code
+					has_modifier = lfg_penal_chain_gangs
+					has_modifier = lfg_penal_idle_hands
+					has_modifier = lfg_penal_no_idle_hands
+				}
+			}
 			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_adopt TRADITION = tr_lfg_penitence_adopt }
 			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_wardens_code TRADITION = tr_lfg_penitence_wardens_code }
 			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_chain_gangs TRADITION = tr_lfg_penitence_chain_gangs }

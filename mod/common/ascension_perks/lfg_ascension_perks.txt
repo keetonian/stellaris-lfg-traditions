@@ -42,3 +42,60 @@ ap_lfg_massed_assault = {
 		factor = 0
 	}
 }
+
+# Nanite Armada: like Gigastructural's A Celestial Armada (ap_celestial_printing, same requirements plus the Nanotech
+# traditions adopted, for nanite income), but nanite-made.
+# Adds three engineering research options (common/technology/lfg_technology.txt): the Swarmforge megastructure
+# (common/megastructures/lfg_megastructures.txt) and the nanite Attack Moon / Planetcraft hulls
+# (common/ship_sizes/lfg_ship_sizes.txt), built only at a Swarmforge and paid in nanites (nanite storage has no cap).
+ap_lfg_nanite_armada = {
+	on_enabled = {
+		custom_tooltip = ap_lfg_nanite_armada_tt
+		hidden_effect = {
+			if = { limit = { NOT = { has_technology = tech_lfg_swarmforge } }			add_research_option = tech_lfg_swarmforge }
+			if = { limit = { NOT = { has_technology = tech_lfg_nanite_war_moon } }		add_research_option = tech_lfg_nanite_war_moon }
+			if = { limit = { NOT = { has_technology = tech_lfg_nanite_planetcraft } }	add_research_option = tech_lfg_nanite_planetcraft }
+		}
+	}
+	possible = {
+		custom_tooltip = { fail_text = "requires_ap_gigastructural_constructs"	has_gigastructural_constructs = yes }
+		custom_tooltip = { fail_text = "requires_ascension_perks_3"				num_ascension_perks > 2 }
+		custom_tooltip = { fail_text = "requires_war_planets"					has_technology = giga_tech_war_planet }
+		custom_tooltip = { fail_text = "requires_tetraengineering"				has_technology = giga_tech_tetradimensional_engineering }
+		custom_tooltip = { fail_text = "lfg_requires_nanotech_adopted"			has_tradition = tr_nanotech_adopt }	# nanite income
+	}
+	potential = {
+		NOT = { has_ascension_perk = ap_lfg_nanite_armada }
+		is_nomadic = no
+	}
+	ai_weight = {
+		factor = 0
+	}
+}
+
+# Mothership: needs both celestial perks (our Nanite Armada and Gigastructural's A Celestial Armada) and the Nanotech
+# traditions finished (its escort's Swarmers / Interdictors need the 4th / 5th). Adds two engineering
+# research options (common/technology/lfg_technology.txt): the Progenitor Forge megastructure (around an O star) and the
+# Mothership hull (common/ship_sizes/lfg_ship_sizes.txt), built only there and carrying the Nanite Swarm hangar
+# (common/component_templates/lfg_components.txt).
+ap_lfg_mothership = {
+	on_enabled = {
+		custom_tooltip = ap_lfg_mothership_tt
+		hidden_effect = {
+			if = { limit = { NOT = { has_technology = tech_lfg_progenitor_forge } }	add_research_option = tech_lfg_progenitor_forge }
+			if = { limit = { NOT = { has_technology = tech_lfg_mothership } }			add_research_option = tech_lfg_mothership }
+		}
+	}
+	possible = {
+		custom_tooltip = { fail_text = "lfg_requires_ap_nanite_armada"		has_ascension_perk = ap_lfg_nanite_armada }
+		custom_tooltip = { fail_text = "lfg_requires_ap_celestial_armada"	has_ascension_perk = ap_celestial_printing }
+		custom_tooltip = { fail_text = "lfg_requires_nanotech_finished"		has_tradition = tr_nanotech_finish }	# full escort
+	}
+	potential = {
+		NOT = { has_ascension_perk = ap_lfg_mothership }
+		is_nomadic = no
+	}
+	ai_weight = {
+		factor = 0
+	}
+}

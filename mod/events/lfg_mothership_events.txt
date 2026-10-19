@@ -1,0 +1,69 @@
+# LFG Traditions - Mothership (ap_lfg_mothership): nanite escorts.
+namespace = lfg_mothership
+
+# Monthly (on_monthly_pulse_country): every fleet with a Mothership tops up its escort (lfg_mothership.2).
+# Countries without the perk: one lookup.
+country_event = {
+	id = lfg_mothership.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_ascension_perk = ap_lfg_mothership
+	}
+
+	immediate = {
+		every_owned_fleet = {
+			limit = { any_owned_ship = { is_ship_size = lfg_mothership } }
+			fleet_event = { id = lfg_mothership.2 }
+		}
+	}
+}
+
+# ROOT = a fleet with a Mothership. Its escort is a separate fleet (fleet flag lfg_escort_of_@ROOT, like Giga's defense
+# squadrons) that follows it, takes no naval capacity, and gains up to @lfg_mothership_swarmers_per_month Nanite
+# Swarmers and @lfg_mothership_interdictors_per_month Nanite Interdictors a month (random picks from the owner's designs),
+# up to @lfg_mothership_swarmer_cap / _interdictor_cap. Vanilla only gives designs for these with the Nanotech traditions
+# (Swarmers: 4th, Interdictors: 5th); without them that type isn't added. If the Mothership is lost, the escort stays.
+fleet_event = {
+	id = lfg_mothership.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		save_event_target_as = lfg_mothership_fleet
+		owner = { save_event_target_as = lfg_escort_owner }
+		if = {
+			limit = {
+				owner = { any_owned_fleet = { has_fleet_flag = lfg_escort_of_@ROOT } }
+			}
+			owner = {
+				every_owned_fleet = {
+					limit = { has_fleet_flag = lfg_escort_of_@ROOT }
+					lfg_mothership_add_escort_ships = yes
+					auto_follow_fleet = { target = event_target:lfg_mothership_fleet }
+				}
+			}
+		}
+		else = {
+			create_fleet = {
+				name = "lfg_mothership_escort_fleet"
+				settings = {
+					spawn_debris = no
+					uses_naval_capacity = no
+					can_upgrade = no
+					can_change_leader = no
+				}
+				effect = {
+					set_owner = event_target:lfg_escort_owner
+					set_fleet_flag = lfg_mothership_escort
+					set_fleet_flag = lfg_escort_of_@ROOT
+					set_location = event_target:lfg_mothership_fleet
+					set_fleet_stance = aggressive
+					lfg_mothership_add_escort_ships = yes
+					auto_follow_fleet = { target = event_target:lfg_mothership_fleet }
+				}
+			}
+		}
+	}
+}

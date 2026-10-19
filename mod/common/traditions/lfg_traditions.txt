@@ -364,12 +364,16 @@ tr_lfg_lineage_branching_lineages = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: per planet type we have a colony on (value:lfg_num_world_types, generated): diplomatic weight +1%.
+# Hook: per planet type we have a colony on: diplomatic weight +1%. value:lfg_num_world_types reads the monthly count
+# (lfg_lineage.1, also fired on adoption) of the generated value:lfg_count_world_types.
 tr_lfg_lineage_every_shore = {
 	possible = {
 		has_tradition = tr_lfg_lineage_migratory_instinct
 	}
 	custom_tooltip = tr_lfg_lineage_every_shore_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_lineage.1 } }
+	}
 	triggered_modifier = {
 		potential = { always = yes }
 		diplo_weight_mult = 0.01

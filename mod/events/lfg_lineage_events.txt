@@ -1,0 +1,19 @@
+# LFG Traditions - Lineage events.
+namespace = lfg_lineage
+
+# Monthly (on_monthly_pulse_country) and when Every Shore is adopted: count the planet types we have a colony on into the
+# country variable lfg_world_types (read by value:lfg_num_world_types). The count is ~50 planet checks, so once a month
+# instead of whenever the game re-evaluates the tradition's modifier. Countries without Every Shore: one lookup.
+country_event = {
+	id = lfg_lineage.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_tradition = tr_lfg_lineage_every_shore
+	}
+
+	immediate = {
+		set_variable = { which = lfg_world_types value = value:lfg_count_world_types }
+	}
+}

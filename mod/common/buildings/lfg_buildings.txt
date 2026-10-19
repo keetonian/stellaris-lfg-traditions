@@ -1,0 +1,117 @@
+# LFG Traditions - buildings (new ones; edits to vanilla buildings are generated in zz_lfg_building_overrides.txt).
+
+# Nanite Forge origin: like vanilla's Technician / Miner / Farmer automation buildings (01_pop_assembly_buildings.txt),
+# but one building for all three jobs (and their drone versions), in any of their district specializations. Upkeep is
+# nanites per resource district on the planet (value:lfg_resource_districts). Automated jobs still pay vanilla's own
+# automation upkeep.
+building_lfg_nanite_automation = {
+	base_buildtime = @b2_time
+	planet_limit = 1
+	category = pop_assembly
+	icon = building_automation_2
+
+	building_sets = {
+		generator_automation
+		mining_automation
+		farming_automation
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	planet_modifier = {
+		job_technician_automated_workforce_mult = @lfg_nanite_hub_automation
+		job_technician_drone_automated_workforce_mult = @lfg_nanite_hub_automation
+		job_miner_automated_workforce_mult = @lfg_nanite_hub_automation
+		job_mining_drone_automated_workforce_mult = @lfg_nanite_hub_automation
+		job_farmer_automated_workforce_mult = @lfg_nanite_hub_automation
+		job_agri_drone_automated_workforce_mult = @lfg_nanite_hub_automation
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = @b2_minerals
+			nanites = 100
+		}
+		upkeep = {
+			nanites = @lfg_nanite_hub_upkeep_per_district
+			mult = value:lfg_resource_districts
+		}
+	}
+}
+
+# Finishing Nanotech (any empire): 50% automation of every specialist / complex drone job on the planet, through the
+# generated static modifier lfg_nanite_specialist_automation (one tooltip line), kept on planets with this building by
+# lfg_nanite_forge.5. Nanite upkeep per district of any kind on the planet.
+building_lfg_nanite_cognition_core = {
+	base_buildtime = @b3_time
+	planet_limit = 1
+	category = pop_assembly
+	icon = building_nanite_transmuter
+
+	building_sets = {
+		government
+		urban
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_tradition = tr_nanotech_finish }
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			alloys = 1000
+			nanites = 500
+		}
+		upkeep = {
+			nanites = @lfg_nanite_core_upkeep_per_district
+			mult = value:lfg_all_districts
+		}
+	}
+
+	triggered_desc = {
+		text = building_lfg_nanite_cognition_core_effects
+	}
+}
+
+# Finishing Nanotech, with Gigastructural's supertensiles on (global flag giga_buildcap_j): turns energy and nanites into
+# supertensiles (Giga's resource giga_sr_amb_megaconstruction). No limit per planet; same slots as Giga's megaworkshops.
+building_lfg_nanotensile_converter = {
+	base_buildtime = @b2_time
+	category = manufacturing
+	icon = building_giga_megaworkshop
+
+	building_sets = {
+		industrial
+		factory
+		foundry
+		government
+		giga_supertensile
+	}
+
+	potential = {
+		has_global_flag = giga_buildcap_j
+		exists = owner
+		owner = { has_tradition = tr_nanotech_finish }
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			alloys = 500
+			nanites = 250
+		}
+		produces = {
+			giga_sr_amb_megaconstruction = @lfg_nanotensile_supertensiles
+		}
+		upkeep = {
+			energy = @lfg_nanotensile_energy
+			nanites = @lfg_nanotensile_nanites
+		}
+	}
+}

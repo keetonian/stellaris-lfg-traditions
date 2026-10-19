@@ -33,3 +33,23 @@ civic_lfg_applied_biosciences = {
 		}
 	}
 }
+
+# Machine origin (individual or gestalt: species archetype MACHINE). Home system lfg_nanite_forge_start (B star with a
+# 22-energy deposit, eight size 40 molten worlds); unlocks building_lfg_nanite_automation; a broken nanite harvester on the home starbase doubles the system's nanite deposits every 3 years up
+# to step 7 until Nanotech is finished (common/starbase_buildings, events/lfg_nanite_forge_events.txt). Needs Machine Age
+# (nanites and the Nanotech tree).
+origin_lfg_nanite_forge = {
+	is_origin = yes
+	playable = { host_has_dlc = "The Machine Age" }
+	ai_playable = { host_has_dlc = "The Machine Age" }
+	icon = "gfx/interface/icons/origins/origin_arc_welders.dds"
+	picture = GFX_origin_arc_welders
+	flags = { custom_start_screen }
+	initializers = { lfg_nanite_forge_start }
+	possible = {
+		species_archetype = { value = MACHINE }
+		is_nomadic = no
+	}
+	description = "origin_tooltip_lfg_nanite_forge_effects"
+	random_weight = { base = 1 }
+}

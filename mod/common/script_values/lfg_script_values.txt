@@ -241,3 +241,146 @@ lfg_entertainer_thousands = {
 	divide = 1000
 	max = 30
 }
+
+# Nanite Forge - Nanite Automation Hub upkeep (planet scope): districts whose jobs it automates (energy, mining and
+# food districts, including habitat, ring world, machine, hive and ark versions).
+lfg_resource_districts = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_generator
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_mining
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_farming
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_hab_energy
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_hab_mining
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_rw_generator
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_rw_farming
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_ring_world_energy
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_ring_world_food
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_nexus_energy
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_nexus_mining
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_hive_energy
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_hive_mining
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_hive_food
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_ark_generator
+		}
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = district_ark_food
+		}
+		mode = add
+	}
+}
+
+# Nanite Cognition Core upkeep (planet scope): districts of any kind on the planet.
+lfg_all_districts = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = num_districts
+		parameters = {
+			type = any
+		}
+		mode = add
+	}
+}
+
+# Lineage - Every Shore: planet types we have a colony on, as counted monthly by lfg_lineage.1 (value:lfg_count_world_types,
+# generated) into the country variable lfg_world_types, so the tradition's modifier doesn't recount ~50 classes.
+lfg_num_world_types = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = check_variable
+		parameters = {
+			which = lfg_world_types
+		}
+		mode = add
+	}
+}

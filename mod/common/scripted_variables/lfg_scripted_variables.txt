@@ -65,3 +65,48 @@
 @lfg_anomaly_minor_artifacts = 5
 # Xenoarchaeology - Commissioned Digs: minor artifact cost (artifact_lfg_commission_dig; loc says 2,000).
 @lfg_commission_dig_cost = 2000
+
+# Nanite harvesters: planet size needed for the two extra doublings (generated cybernetics.5054 override; vanilla's
+# last step needs 25).
+@lfg_nanite_step_10_size = 30
+@lfg_nanite_step_11_size = 35
+@lfg_nanite_step_12_size = 40
+# Steps 13 to 16: only the Nanite Forge origin's Ancient Nanite Harvester (lfg_forge_harvester_step).
+@lfg_nanite_step_13_size = 45
+@lfg_nanite_step_14_size = 50
+@lfg_nanite_step_15_size = 55
+@lfg_nanite_step_16_size = 60
+# Nanite Forge origin: days between the broken harvester's doublings (lfg_nanite_forge.2; vanilla harvesters: 5 years).
+@lfg_broken_harvester_days = 1095
+# Nanite Forge origin: pops removed from the homeworld at game start, in hundreds (15 = 1,500).
+@lfg_nanite_forge_pops_removed_hundreds = 15
+
+# Nanite Forge origin buildings (common/buildings/lfg_buildings.txt).
+# Nanite Automation Hub: share of Technician / Miner / Farmer jobs (and drone versions) automated, and nanite upkeep per
+# resource district on the planet (value:lfg_resource_districts).
+@lfg_nanite_hub_automation = 0.5
+@lfg_nanite_hub_upkeep_per_district = 30
+# Nanite Cognition Core (after Nanotech): share of every specialist / complex drone job automated, and nanite upkeep per
+# district of any kind on the planet (value:lfg_all_districts).
+@lfg_nanite_core_automation = 0.5
+@lfg_nanite_core_upkeep_per_district = 500
+# Nanotensile Converter (after Nanotech, supertensiles on): monthly energy + nanites in, supertensiles out.
+@lfg_nanotensile_energy = 40
+@lfg_nanotensile_nanites = 80
+@lfg_nanotensile_supertensiles = 20
+
+# Nanite Armada ascension perk: nanite hull costs and Swarmforge shipyard capacity.
+@lfg_nanite_war_moon_cost = 500000
+@lfg_nanite_planetcraft_cost = 1000000
+@lfg_swarmforge_shipyard_capacity = 2
+
+# Mothership ascension perk: Progenitor Forge stages (50,000,000 nanites in all) and the Mothership's nanite cost.
+@lfg_progenitor_forge_0_nanites = 5000000
+@lfg_progenitor_forge_1_nanites = 15000000
+@lfg_progenitor_forge_2_nanites = 30000000
+@lfg_mothership_cost = 100000000
+# Mothership: nanite escorts added to its fleet each month, and the most it holds (events/lfg_mothership_events.txt).
+@lfg_mothership_swarmers_per_month = 80
+@lfg_mothership_interdictors_per_month = 20
+@lfg_mothership_swarmer_cap = 200
+@lfg_mothership_interdictor_cap = 100
