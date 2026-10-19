@@ -109,7 +109,7 @@ tr_lfg_megaforge_foundries = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: scales with every megastructure we own (value:lfg_num_megastructures, no cap). Adopting this unlocks the
+# Hook: scales with every megastructure we own (value:lfg_num_megastructures). Adopting this unlocks the
 # lfg_monument_economy policy (common/policies), whose flag picks the direction:
 #   Balanced (default): nothing
 #   Monuments First: +1% megastructure output, -0.5% job output per megastructure
@@ -176,7 +176,7 @@ tr_lfg_shellworlders_artificial_gravity = {
 	}
 	ai_weight = { factor = 1000 }
 }
-# Hook: megastructure build speed +5% per artificial world owned (no cap).
+# Hook: megastructure build speed +5% per artificial world owned.
 tr_lfg_shellworlders_arc_foundries = {
 	custom_tooltip = tr_lfg_shellworlders_arc_foundries_tt
 	triggered_modifier = {
@@ -212,81 +212,79 @@ tr_lfg_shellworlders_arc_neighbours = {
 }
 
 #####################################################################
-# POLYMATH COMMONS - hook: research from everyone; scales with species and rivals; agenda "Eureka Season"
+# XENOARCHAEOLOGY - hook: scales with anomalies studied (since adoption) and relics owned; minor artifacts buy new
+# anomalies, dig sites and astral rifts; agenda "Grand Expedition".
+# Anomalies are counted by events/lfg_xenoarchaeology_events.txt (on_action anomaly_success).
 #####################################################################
 
-tr_lfg_polymathy_adopt = {
+# Adopting starts the anomaly count for Anomaly Studies (lfg_xenoarchaeology.1). Downside: scientists cost more.
+tr_lfg_xenoarchaeology_adopt = {
 	modifier = {
-		all_technology_research_speed = 0.05
-		planet_researchers_upkeep_mult = 0.05
+		ship_anomaly_generation_chance_mult = 0.10
+		leader_scientists_upkeep_mult = 0.10
 	}
 }
 
-tr_lfg_polymathy_finish = {
-	unlocks_agenda = agenda_lfg_eureka_season
+tr_lfg_xenoarchaeology_finish = {
+	unlocks_agenda = agenda_lfg_grand_expedition
 	modifier = {
 		ascension_perks_add = 1
 		ship_anomaly_generation_chance_mult = 0.15
 	}
 }
 
-# Hook: research speed +1% per species in the empire (max +30%).
-tr_lfg_polymathy_many_minds = {
-	custom_tooltip = tr_lfg_polymathy_many_minds_tt
+tr_lfg_xenoarchaeology_field_expeditions = {
+	modifier = {
+		science_ship_survey_speed = 0.25
+		ship_anomaly_research_speed_mult = 0.15
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: research speed +0.25% per anomaly studied since adopting the tree (value:lfg_anomalies_studied).
+# Every anomaly researched also yields @lfg_anomaly_minor_artifacts minor artifacts (lfg_xenoarchaeology.1).
+tr_lfg_xenoarchaeology_anomaly_studies = {
+	custom_tooltip = tr_lfg_xenoarchaeology_anomaly_studies_tt
 	triggered_modifier = {
 		potential = { always = yes }
-		all_technology_research_speed = 0.01
-		mult = value:lfg_num_species
+		all_technology_research_speed = 0.0025
+		mult = value:lfg_anomalies_studied
 	}
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: research speed +4% per rival (max +16%), but -5% with no rivals at all.
-tr_lfg_polymathy_rival_laboratories = {
-	custom_tooltip = tr_lfg_polymathy_rival_laboratories_tt
-	triggered_modifier = {
-		potential = { always = yes }
-		all_technology_research_speed = 0.04
-		mult = value:lfg_num_rivals
-	}
-	triggered_modifier = {
-		potential = { NOT = { num_rivals > 0 } }
-		all_technology_research_speed = -0.05
-	}
+# Unlocks the Commission a Dig minor artifact action (common/artifact_actions/lfg_artifact_actions.txt).
+tr_lfg_xenoarchaeology_commissioned_digs = {
+	custom_tooltip = tr_lfg_xenoarchaeology_commissioned_digs_tt
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_polymathy_open_journals = {
-	modifier = {
-		all_technology_research_speed = 0.10
-		diplo_weight_mult = -0.10
-	}
-	ai_weight = { factor = 1000 }
-}
-
-# Hook: research from jobs +15%, but each year a colony may have a lab accident or a breakthrough
-# (on_yearly_pulse_country -> events/lfg_polymath_events.txt).
-tr_lfg_polymathy_reckless_experimentation = {
+tr_lfg_xenoarchaeology_expedition_corps = {
 	possible = {
-		has_tradition = tr_lfg_polymathy_many_minds
-		has_tradition = tr_lfg_polymathy_rival_laboratories
-	}
-	custom_tooltip = tr_lfg_polymathy_reckless_experimentation_tt
-	modifier = {
-		planet_jobs_physics_research_produces_mult = 0.15
-		planet_jobs_society_research_produces_mult = 0.15
-		planet_jobs_engineering_research_produces_mult = 0.15
-	}
-	ai_weight = { factor = 1000 }
-}
-
-tr_lfg_polymathy_interdisciplinary_seminars = {
-	possible = {
-		has_tradition = tr_lfg_polymathy_open_journals
+		has_tradition = tr_lfg_xenoarchaeology_field_expeditions
+		has_tradition = tr_lfg_xenoarchaeology_anomaly_studies
 	}
 	modifier = {
-		num_tech_alternatives_add = 1
 		country_scientist_cap_add = 1
+		scientist_exp_gain = 0.15
+		ship_anomaly_research_speed_mult = 0.15
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: research speed +3% per relic owned (value:lfg_num_relics); archaeotech weapons hit harder.
+tr_lfg_xenoarchaeology_reverse_engineering = {
+	possible = {
+		has_tradition = tr_lfg_xenoarchaeology_commissioned_digs
+	}
+	custom_tooltip = tr_lfg_xenoarchaeology_reverse_engineering_tt
+	modifier = {
+		weapon_archaeotech_weapon_damage_mult = 0.10
+	}
+	triggered_modifier = {
+		potential = { always = yes }
+		all_technology_research_speed = 0.03
+		mult = value:lfg_num_relics
 	}
 	ai_weight = { factor = 1000 }
 }
@@ -316,7 +314,7 @@ tr_lfg_lineage_finish = {
 	}
 }
 
-# Hook: per negative trait of our main species: organic pop growth +5% and pop assembly +5% (no cap).
+# Hook: per negative trait of our main species: organic pop growth +5% and pop assembly +5%.
 tr_lfg_lineage_hardship = {
 	custom_tooltip = tr_lfg_lineage_hardship_tt
 	triggered_modifier = {
@@ -328,7 +326,7 @@ tr_lfg_lineage_hardship = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: per positive trait of our main species: job efficiency +1% (no cap).
+# Hook: per positive trait of our main species: job efficiency +1%.
 tr_lfg_lineage_honed_strengths = {
 	custom_tooltip = tr_lfg_lineage_honed_strengths_tt
 	triggered_modifier = {
@@ -339,7 +337,7 @@ tr_lfg_lineage_honed_strengths = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: per species in the empire: ship speed +1% (no cap).
+# Hook: per species in the empire: ship speed +1%.
 tr_lfg_lineage_migratory_instinct = {
 	custom_tooltip = tr_lfg_lineage_migratory_instinct_tt
 	triggered_modifier = {
@@ -350,7 +348,7 @@ tr_lfg_lineage_migratory_instinct = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: per subspecies of our main species: society research +2% (no cap).
+# Hook: per subspecies of our main species: society research +2%.
 tr_lfg_lineage_branching_lineages = {
 	possible = {
 		has_tradition = tr_lfg_lineage_hardship
@@ -365,7 +363,7 @@ tr_lfg_lineage_branching_lineages = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: per planet type we have a colony on (value:lfg_num_world_types, generated): diplomatic weight +1% (no cap).
+# Hook: per planet type we have a colony on (value:lfg_num_world_types, generated): diplomatic weight +1%.
 tr_lfg_lineage_every_shore = {
 	possible = {
 		has_tradition = tr_lfg_lineage_migratory_instinct
@@ -432,7 +430,7 @@ tr_lfg_penitence_transportation = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: every job on the penal colony +1% per 100 unemployed pops there (no cap): lfg_penal_idle_hands, re-added by
+# Hook: every job on the penal colony +1% per 100 unemployed pops there: lfg_penal_idle_hands, re-added by
 # lfg_sync_penal_unemployed with multiplier = whole hundreds of unemployed. Pairs with Transportation.
 # Downsides: riots (crime +2 per 100 unemployed, in the same modifier) and attrition (3% of the unemployed die each
 # month, lfg_penal_idle_hands_attrition), so the unemployed settle at ~33x monthly arrivals.
@@ -477,7 +475,7 @@ tr_lfg_abundance_adopt = {
 	}
 }
 
-# Hook: organic growth +1% per 1,000 food produced per month (no cap; trade deals don't count). The Feast of Plenty agenda doubles it while active.
+# Hook: organic growth +1% per 1,000 food produced per month (trade deals don't count). The Feast of Plenty agenda doubles it while active.
 tr_lfg_abundance_finish = {
 	unlocks_agenda = agenda_lfg_harvest_tithe
 	custom_tooltip = tr_lfg_abundance_finish_tt
@@ -631,7 +629,7 @@ tr_lfg_broadcast_ratings_war = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: entertainers produce +0.5 trade (per 100 entertainers, i.e. per job) for each commercial pact (no cap).
+# Hook: entertainers produce +0.5 trade (per 100 entertainers, i.e. per job) for each commercial pact.
 tr_lfg_broadcast_syndication_deals = {
 	possible = {
 		has_tradition = tr_lfg_broadcast_propaganda_serials
@@ -651,7 +649,7 @@ tr_lfg_broadcast_syndication_deals = {
 }
 
 #####################################################################
-# THE GRAND TOUR - hook: scales with Resort Workers employed (per 100, no cap); agenda "Grand Tour Season"
+# THE GRAND TOUR - hook: scales with Resort Workers employed (per 100); agenda "Grand Tour Season"
 #####################################################################
 
 tr_lfg_tourism_adopt = {
@@ -683,7 +681,7 @@ tr_lfg_tourism_hospitality_academies = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: per 100 Resort Workers (no cap): unity +0.5%, pop happiness +0.25%.
+# Hook: per 100 Resort Workers: unity +0.5%, pop happiness +0.25%.
 tr_lfg_tourism_package_holidays = {
 	custom_tooltip = tr_lfg_tourism_package_holidays_tt
 	triggered_modifier = {
@@ -718,7 +716,7 @@ tr_lfg_tourism_tourist_traps = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: Tourists on the resort world produce more; diplomatic weight +1% per 1,000 Tourists (no cap).
+# Hook: Tourists on the resort world produce more; diplomatic weight +1% per 1,000 Tourists.
 tr_lfg_tourism_galactic_destination = {
 	possible = {
 		has_tradition = tr_lfg_tourism_wonders_of_the_galaxy

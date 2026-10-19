@@ -41,7 +41,7 @@ Supertensile bonuses need Gigastructural's job-based build mode (`giga_buildcap_
 | 2. Supertensile Lattices | Supertensile upkeep −20%, supertensile storage +10,000 (else megastructure upkeep −15% and resource storage +100,000) |
 | 3. Grand Works Priority | Megastructure build speed +20%, infrastructure (building and district) build speed +20% · infrastructure cost +30% |
 | 4. Orbital Foundries | Supertensiles Technicians +0.25 supertensiles and +1 alloy upkeep each, Megaconstruction Directors +1.5 supertensiles and +3 alloy upkeep each (else megastructure cost −10%, alloys −5%) · minerals −10% |
-| 5. Monument Economy ⚙ | Unlocks the **Monument Economy** policy. Per megastructure owned (kilostructures count, ruins don't; no cap): *Balanced* (default) no effect, *Monuments First* megastructure output +1% · job output −0.5%, or *People First* job output +0.5% · megastructure output −1%. Monthly supertensiles +10 |
+| 5. Monument Economy ⚙ | Unlocks the **Monument Economy** policy. Per megastructure owned (kilostructures count, ruins don't): *Balanced* (default) no effect, *Monuments First* megastructure output +1% · job output −0.5%, or *People First* job output +0.5% · megastructure output −1%. Monthly supertensiles +10 |
 | Finish | +1 Megaconstruction Logistics Hub limit (else +1 megastructure build limit) |
 
 ### Shellworlders: life on artificial worlds
@@ -55,9 +55,9 @@ megastructures), and megastructure build speed grows with how many you own.
 | Adopt | Artificial worlds: job efficiency +5% · habitat cost −10% · **organic growth −10%, robot assembly −10%** |
 | 1. Compact Living | Artificial worlds: housing usage −10% |
 | 2. Artificial Gravity | Artificial worlds: stability +3, crime −15 |
-| 3. Arc Foundries ⚙ | Megastructure build speed +5% per artificial world owned (no cap) |
+| 3. Arc Foundries ⚙ | Megastructure build speed +5% per artificial world owned |
 | 4. Closed Ecology | Artificial worlds: job efficiency +10% · **natural worlds: happiness −10%, stability −10%** |
-| 5. Arc Neighbours ⚙ | Each artificial world: job efficiency +3% per other artificial world you own in its system (no cap; a full ring world gives each segment +9%) |
+| 5. Arc Neighbours ⚙ | Each artificial world: job efficiency +3% per other artificial world you own in its system (a full ring world gives each segment +9%) |
 | Finish | +1 max districts on artificial worlds |
 
 Tradition modifiers are empire-wide, so the planet effects are static modifiers (`lfg_shellworld_*`, one per tradition)
@@ -67,18 +67,33 @@ re-adds its modifier with the neighbour count as multiplier when the count chang
 When a planet changes owner, `lfg_planet.1` (`on_colony_transfer`/`on_colony_ownerless`) strips all these per-planet modifiers
 (and Galactic Destination's); the new owner's sync re-adds its own. The finisher uses vanilla's `planet_artificial_max_districts_add`, which applies instantly.
 
-### Polymathy: research from everyone
-**Who:** any empire. **Hook:** research scales with species and rivals; experiments go wrong. **Agenda:** Eureka Season.
+### Xenoarchaeology: scientists hunt anomalies and relics
+**Who:** empires with the Ancient Relics DLC (minor artifacts and relics). **Hook:** research grows with every anomaly studied and every relic owned (uncapped); minor artifacts buy new dig sites, anomalies and astral rifts. **Agenda:** Grand Expedition.
+Vanilla Archivism already covers specimens, so this tree doesn't.
 
 | Tradition | Effect |
 |---|---|
-| Adopt | Research speed +5% · researcher upkeep +5% |
-| 1. Many Minds ⚙ | Research speed +1% per species in the empire (max +30%) |
-| 2. Rival Laboratories ⚙ | Research speed +4% per rival (max +16%); −5% with no rivals |
-| 3. Open Journals | Research speed +10% · diplomatic weight −10% |
-| 4. Reckless Experimentation ⚙ | Research output from jobs +15% (physics, society, engineering) · each year on a random colony: 5% chance of a **Lab Accident** (stability −10, researcher output −25% there for 5 years) and 15% chance of a **Lab Breakthrough** (stability +5, researcher output +25% there for 5 years) |
-| 5. Interdisciplinary Seminars | +1 research option, scientist cap +1 |
-| Finish | Anomaly discovery chance +15% · unlocks agenda **Eureka Season** |
+| Adopt | Anomaly discovery chance +10% · scientist upkeep +10% · starts counting anomalies for Anomaly Studies |
+| 1. Field Expeditions | Survey speed +25% · anomaly research speed +15% |
+| 2. Anomaly Studies ⚙ | Research speed +0.25% per anomaly researched since adopting the tree (uncapped) · every anomaly researched gives +5 minor artifacts |
+| 3. Commissioned Digs | Unlocks the minor artifact action **Commission a Dig** (1,500 minor artifacts): a popup lets you choose a new **archaeological site**, **anomaly** or (with Astral Planes) **astral rift** within your borders |
+| 4. Expedition Corps | Scientist cap +1 · scientist experience gain +15% · anomaly research speed +15% |
+| 5. Reverse Engineering ⚙ | Archaeotech weapon damage +10% · research speed +3% per relic owned (uncapped) |
+| Finish | Anomaly discovery chance +15% · unlocks agenda **Grand Expedition** |
+
+Anomalies are counted by the hidden ship event `lfg_xenoarchaeology.1`, fired from vanilla's `anomaly_success` on_action: it increments the country variable `lfg_anomalies_studied` (read by `value:lfg_anomalies_studied`) and, with Anomaly Studies, adds the minor artifacts.
+Relics are counted with `num_owned_relics` (`value:lfg_num_relics`).
+
+**Commission a Dig** (`artifact_lfg_commission_dig`, `common/artifact_actions/`) charges the minor artifacts and opens the popup
+`lfg_xenoarchaeology.2`. Each option is greyed out when impossible, and "Not now" refunds the cost:
+- **Dig Site:** `create_archaeological_site = random` on a planet within your borders that passes `can_spawn_random_archaeological_site`.
+- **Anomaly:** `spawn_random_anomaly` on an uncolonized planet within your borders without one, with any of your science ships as the
+  surveyor (the effect requires one; vanilla's deep scan does the same).
+- **Astral Rift:** only shown with Astral Planes; `spawn_astral_rift` in a system that passes vanilla's `can_spawn_astral_rift`
+  (no rift or scar in or next to it), like vanilla's Astral Splitting.
+
+`lfg_xenoarchaeology.3` then says where it is. If no spot fits after all, the cost is refunded.
+**Unverified in game:** that `spawn_random_anomaly` works on already-surveyed planets, and the option `allow` tooltips.
 
 ### Lineage: every trait is an advantage
 **Who:** any empire. **Hook:** scales with your main species' traits, your species and subspecies, and the planet types you live on (all uncapped).
@@ -111,7 +126,7 @@ tree counts `num_assigned_jobs = { job = civilian }` (vanilla's `num_unemployed`
 | Adopt | Penal colony: worker job efficiency +10%, housing +25% · **worker happiness −5% everywhere** |
 | 1. Wardens' Code | Penal colony: stability +5, enforcer job efficiency +20% |
 | 2. Transportation | Crime −10% everywhere · **every month, 10% of the unemployed on each other planet (max 300 per planet) are shipped to the penal colony**, jobs and housing or not (`lfg_penal_ship_unemployed` in `lfg_penal.1`; vanilla resettlement only targets planets with open jobs) |
-| 3. Idle Hands ⚙ | **All jobs on the penal colony +1% per 100 unemployed pops there** (no cap) · **with fewer than 100 unemployed: −75% job output there instead** · **riots:** crime +2 per 100 unemployed · **attrition:** 3% of the unemployed there die each month, so they settle at ~33× monthly arrivals (+33% per 100 arrivals/month; ~31% lost per year) |
+| 3. Idle Hands ⚙ | **All jobs on the penal colony +1% per 100 unemployed pops there** · **with fewer than 100 unemployed: −75% job output there instead** · **riots:** crime +2 per 100 unemployed · **attrition:** 3% of the unemployed there die each month, so they settle at ~33× monthly arrivals (+33% per 100 arrivals/month; ~31% lost per year) |
 | 4. Prison Industry ⚙ | **+50% jobs from district specializations on the penal colony** (generated additions to the 12 city specializations: Industrial, Foundry, Factory, the research and unity ones, Fortress, Trade; and the Penal Supertensile Works) |
 | 5. Chain Gangs | Penal colony: worker job efficiency +15%, pop upkeep −15%, **happiness −15%** |
 | Finish | Unlocks the penal specializations for Prison Districts on the penal colony: with supertensiles on, the **Penal Supertensile Works** specialization in Prison Districts there (+100 **Penal Supertensile Laborer** jobs: 4 minerals + 1 alloy + 1 unity → 1 supertensile each) · with Gigastructural's bulk matter enabled: the **Penal Matter Compactors** specialization (+100 **Penal Matter Compactor** jobs: 180 energy + 30 minerals + 40 alloys + 0.5 dark matter → 0.01 bulk matter each per month, i.e. 18,000 energy + 3,000 minerals + 4,000 alloys + 50 dark matter per matter; Giga's harvesting costs 16,000 energy + 4,000 alloys) · **Expand the Cell Blocks** decision on the penal colony: +1,500 housing per use, up to 10 times; costs (400 minerals + 200 alloys) × (uses + 1) + 25 influence, 180 days |
@@ -135,7 +150,7 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 | 3. Bountiful Fields | Farmer output +20% |
 | 4. Grain Reserves | Food storage +100,000 · pop food upkeep +200% |
 | 5. Harvest Courts ⚙ | Worker political power +25% · specialist political power −25% · while food income is positive: influence +10% |
-| Finish ⚙ | **Bumper Crops:** organic growth +1% per 1,000 food produced per month (the food tooltip's "Produced" line: trade deals and upkeep don't count; no cap; doubled during **Feast of Plenty**) · unlocks agenda **The Harvest Tithe** |
+| Finish ⚙ | **Bumper Crops:** organic growth +1% per 1,000 food produced per month (the food tooltip's "Produced" line: trade deals and upkeep don't count; doubled during **Feast of Plenty**) · unlocks agenda **The Harvest Tithe** |
 
 ### Broadcast: entertainment for the whole galaxy
 **Who:** non-gestalt (gestalts have no entertainers). **Hook:** scales with the empires you know and your commercial pacts; war is prime time; doubles your holomuseums. **Agenda:** Gala Season.
@@ -147,7 +162,7 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 | 2. Celebrity Council | Council agenda speed +15%, entertainer unity +0.25 |
 | 3. Propaganda Serials | Diplomatic weight +10% · government ethic attraction −15% |
 | 4. Ratings War ⚙ | Envoys harming relations +50% · while at war: war exhaustion gain −20%, entertainer output +20% |
-| 5. Syndication Deals ⚙ | Per commercial pact (no cap): entertainers +0.5 trade per 100 entertainers · +1 envoy, envoys improving relations +25% · researcher output −5% |
+| 5. Syndication Deals ⚙ | Per commercial pact: entertainers +0.5 trade per 100 entertainers · +1 envoy, envoys improving relations +25% · researcher output −5% |
 | Finish ⚙ | **Star Power:** diplomatic weight +1% per 1,000 entertainers employed (max +30%; `value:lfg_entertainer_thousands`) · unlocks agenda **Gala Season** |
 
 ### Tourism: resort worlds as showpieces
@@ -161,7 +176,7 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 |---|---|
 | Adopt | Resort Worker workforce +10%, resort district build speed +25% · unlocks agenda **Grand Tour Season** |
 | 1. Hospitality Academies | Each **Accommodation District** gives +150 Resort Worker jobs (+50%; via a generated `district_resort` override), and every resort-world **district specialization** gives +50% jobs: Resort (+50 Resort Workers), Entertainment (+50 Entertainers), and the attractions Zoo (+100 Biologists), Grand Museum and Spiritual Retreat (+100 Bureaucrats), Hunting Ground (+100 Wranglers), Restoration Enclave (+100 Healthcare), Proving Grounds (+100 Entertainers). Generated zone overrides, modelled on vanilla's Commercial Enterprise |
-| 2. Package Holidays ⚙ | Per 100 Resort Workers (no cap): unity +0.5%, pop happiness +0.25% |
+| 2. Package Holidays ⚙ | Per 100 Resort Workers: unity +0.5%, pop happiness +0.25% |
 | 3. Paradise Unbound | Each Accommodation District adds +0.5 max districts to the resort world · unlocks the **Expand the Resort** decision · +1 max Accommodation District, resort district build speed +25% |
 | 4. Tourist Traps | Resort Worker workforce +15% · entertainer/resort worker consumer goods upkeep +0.5 |
 | 5. Galactic Destination ⚙ | On the resort world: **Tourists** +0.5 trade · diplomatic weight +1% per 1,000 Tourists there (max +30%). The planet part is the `lfg_galactic_destination` modifier, kept on the resort world by the monthly hidden event `lfg_resorts.1`, which also stores the tourist count (`num_assigned_jobs = { job = civilian }`) in `lfg_tourists`; so it can lag up to a month |
@@ -183,7 +198,7 @@ prepares an agenda over time; when launched, its effect lasts **10 years**.
 | Agenda | Tree | While preparing | Launch / 10-year effect |
 |---|---|---|---|
 | The Great Project | Megaforge (on adoption) | Megastructure build speed +5% | With supertensiles on: supertensile output +25%, megastructure build speed +33%, cost −10% · worker output −10%. With supertensiles off (separate version, same name): build speed +33%, cost −20% · worker output −10% |
-| Eureka Season | Polymath | Research speed +3% | Research speed +20% · stability −5 |
+| Grand Expedition | Xenoarchaeology | Anomaly research speed +10% · research speed −5% | Anomaly research, survey and excavation speed +50% · research speed −10% |
 | Feast of Plenty | Granary (on adoption) | Farmer output +5% | For 10 years: doubles the finisher's Bumper Crops (another +1% organic growth per 1,000 food produced per month) |
 | The Harvest Tithe | Granary | Farmer output +5% | On launch, if you have 3,000 food: −3,000 food, +150 influence, +2,000 unity. Then food +10%, stability +2 |
 | Gala Season | Broadcast | Entertainer output +5% | Happiness +10%, unity +10% · trade −10% |
@@ -376,10 +391,10 @@ CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't nee
 - Curated Progress: shown after Gigastructural Constructs; Shelve edicts appear with the tech's name, charge research upkeep,
   and a shelved tech (including a megastructure capacity repeatable) stops appearing in new research options.
 - Each tree appears only for the right empires.
-- Hooks: scaled bonuses (per species, rival, contact, megastructure, artificial world, stored food, food income,
-  Resort Worker, Tourist) apply as described; agendas appear after finishing their tree; Reckless Experimentation's lab accident fires.
+- Hooks: scaled bonuses (per anomaly, relic, species, contact, megastructure, artificial world, stored food, food income,
+  Resort Worker, Tourist) apply as described; agendas appear after finishing their tree; each anomaly researched with Anomaly Studies gives 5 minor artifacts.
 - Species Experimentation: only Evolutionary Predators who finished Mutation see it; your main species and its subspecies are never offered;
-  under 100 pops it's greyed out; picking a species kills half of it, creates 50 subspecies and deducts 2000 society research.
+  under 100 pops it's greyed out; picking a species kills half of it, creates 50 subspecies and costs 1000 unity.
 - `~/Documents/Paradox Interactive/Stellaris/logs/error.log` has no `lfg` errors.
 
 ## Publish to the Steam Workshop

@@ -33,7 +33,11 @@ mod/                                  # exactly what ships
   common/scripted_effects/lfg_species_split_effects.txt      # lfg_split_species (the split itself)
   common/edicts/lfg_edicts.txt                               # lfg_species_experimentation -> fires lfg_species_split.1
   events/lfg_species_split_events.txt                        # species picker event
-  events/lfg_polymath_events.txt                             # Reckless Experimentation lab accident (yearly)
+  events/lfg_xenoarchaeology_events.txt                      # Xenoarchaeology: .1 anomaly count + minor artifacts (anomaly_success),
+                                                             #   .2 Commission a Dig choice popup, .3 result
+  common/artifact_actions/lfg_artifact_actions.txt           # artifact_lfg_commission_dig (Commissioned Digs) -> lfg_xenoarchaeology.2
+  common/scripted_effects/lfg_xenoarchaeology_effects.txt    # lfg_commission_dig_site / _anomaly / _rift (refund if no spot)
+  common/scripted_triggers/lfg_xenoarchaeology_triggers.txt  # lfg_can_commission_anomaly / _astral_rift, lfg_commission_anomaly_planet
   events/lfg_resorts_events.txt                              # Galactic Destination: resort world modifier + tourist count (monthly)
   events/lfg_shellworlders_events.txt                        # Shellworlders: lfg_shellworld_* modifiers on artificial worlds (monthly)
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
@@ -50,8 +54,8 @@ mod/                                  # exactly what ships
   common/script_values/lfg_world_types_values.txt            # GENERATED lfg_num_world_types (colonizable planet classes)
   events/00_lfg_event_overrides.txt                          # GENERATED (machine_age.4400: Virtuality block); 00_ = loads first
   common/council_agendas/lfg_council_agendas.txt             # 7 agendas, unlocked by tree finishers
-  common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + lfg_lab_accident
-  common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1 + lfg_shellworlders.1, yearly -> lfg_polymath.1,
+  common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + per-planet tradition modifiers
+  common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1 + lfg_shellworlders.1, anomaly_success -> lfg_xenoarchaeology.1,
                                                              #   colony transfer/ownerless -> lfg_planet.1
   common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (Paradise Unbound), decision_lfg_expand_cell_blocks (Penitence finisher)
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)

@@ -16,16 +16,16 @@ spriteTypes = {
 
 
 
-	### POLYMATH ###
-	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_polymathy" textureFile = "gfx/interface/traditions/tradition_hex_bg_purple.dds" }
-	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_polymathy" textureFile = "gfx/interface/tiles/tradition_category_tile_discovery.dds" }
-	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_polymathy" textureFile = "gfx/interface/tiles/tradition_category_tile_discovery.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
-	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_polymathy" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_discovery.dds" }
-	spriteType = { name = "GFX_tr_lfg_polymathy_many_minds" textureFile = "gfx/interface/icons/traditions/tradition_aptitude_psychological_profiling.dds" }
-	spriteType = { name = "GFX_tr_lfg_polymathy_rival_laboratories" textureFile = "gfx/interface/icons/traditions/tradition_enmity_outpace.dds" }
-	spriteType = { name = "GFX_tr_lfg_polymathy_open_journals" textureFile = "gfx/interface/icons/traditions/tradition_discovery_polytechnic_education.dds" }
-	spriteType = { name = "GFX_tr_lfg_polymathy_reckless_experimentation" textureFile = "gfx/interface/icons/traditions/tradition_discovery_science_division.dds" }
-	spriteType = { name = "GFX_tr_lfg_polymathy_interdisciplinary_seminars" textureFile = "gfx/interface/icons/traditions/tradition_aptitude_specialist_training.dds" }
+	### XENOARCHAEOLOGY ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_xenoarchaeology" textureFile = "gfx/interface/traditions/tradition_hex_bg_purple.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_xenoarchaeology" textureFile = "gfx/interface/tiles/tradition_category_tile_discovery.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_xenoarchaeology" textureFile = "gfx/interface/tiles/tradition_category_tile_discovery.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_xenoarchaeology" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_discovery.dds" }
+	spriteType = { name = "GFX_tr_lfg_xenoarchaeology_field_expeditions" textureFile = "gfx/interface/icons/traditions/tradition_discovery_to_boldly_go.dds" }
+	spriteType = { name = "GFX_tr_lfg_xenoarchaeology_anomaly_studies" textureFile = "gfx/interface/icons/traditions/tradition_discovery_planetary_survey_corps.dds" }
+	spriteType = { name = "GFX_tr_lfg_xenoarchaeology_commissioned_digs" textureFile = "gfx/interface/icons/traditions/tradition_archivism_xeno_paleontology.dds" }
+	spriteType = { name = "GFX_tr_lfg_xenoarchaeology_expedition_corps" textureFile = "gfx/interface/icons/traditions/tradition_discovery_science_division.dds" }
+	spriteType = { name = "GFX_tr_lfg_xenoarchaeology_reverse_engineering" textureFile = "gfx/interface/icons/traditions/tradition_archivism_frontier_archaeology.dds" }
 
 	### GRANARY ###
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_abundance" textureFile = "gfx/interface/traditions/tradition_hex_bg_prosperity.dds" }

@@ -1,0 +1,24 @@
+# LFG Traditions - Xenoarchaeology triggers (Commissioned Digs). Scope: country.
+
+# An anomaly needs one of our science ships as the surveyor (spawn_random_anomaly), and an unowned planet within our
+# borders that has none.
+lfg_can_commission_anomaly = {
+	any_owned_ship = { is_ship_class = shipclass_science_ship }
+	any_planet_within_border = {
+		lfg_commission_anomaly_planet = yes
+	}
+}
+
+# Scope: planet.
+lfg_commission_anomaly_planet = {
+	NOT = { exists = owner }
+	has_anomaly = no
+	is_preventing_anomaly = no
+}
+
+# Astral rifts need Astral Planes and a system that may hold one (vanilla can_spawn_astral_rift: no rift or scar in it
+# or next to it).
+lfg_can_commission_astral_rift = {
+	has_astral_planes_dlc = yes
+	any_system_within_border = { can_spawn_astral_rift = yes }
+}

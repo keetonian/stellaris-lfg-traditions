@@ -20,17 +20,18 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [*]On your artificial worlds (habitats, ring segments, Alderson slices, Gigastructural worlds): more efficient jobs, less housing usage, more stability, less crime.
 [*][b]Arc Neighbours:[/b] each artificial world works better for every other one you own in the same system.
 [*][b]Downsides:[/b] slower organic growth and robot assembly; [b]Closed Ecology[/b] makes your people less happy and stable on natural worlds.
-[*][b]Arc Foundries:[/b] +5% megastructure build speed for every artificial world you own, with no cap.
+[*][b]Arc Foundries:[/b] +5% megastructure build speed for every artificial world you own.
 [*]Finisher: +1 max districts on artificial worlds.
 [/list]
 
-[h3]Polymathy[/h3]
-[i]Research from everyone.[/i] Any empire.
+[h3]Xenoarchaeology[/h3]
+[i]Scientists hunt anomalies and relics.[/i] Needs Ancient Relics.
 [list]
-[*][b]Many Minds:[/b] +1% research speed per species in your empire (up to +30%).
-[*][b]Rival Laboratories:[/b] +4% research speed per rival, but -5% with none.
-[*][b]Reckless Experimentation:[/b] +15% research from jobs; each year a colony may have a [b]Lab Accident[/b] (5%) or [b]Breakthrough[/b] (15%).
-[*]Finisher: +15% anomaly discovery chance.
+[*]More anomalies, faster anomaly research and surveys.
+[*][b]Anomaly Studies:[/b] +0.25% research speed per anomaly researched; each yields minor artifacts.
+[*][b]Commissioned Digs:[/b] spend 1,500 minor artifacts on a new dig site, anomaly or astral rift in your borders.
+[*][b]Reverse Engineering:[/b] +3% research speed per relic you own.
+[*][b]Downside:[/b] scientists cost more.
 [/list]
 
 [h3]Lineage[/h3]
@@ -38,7 +39,7 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [list]
 [*][b]Strength Through Hardship:[/b] every negative trait of your main species speeds up pop growth and assembly.
 [*][b]Honed Strengths:[/b] every positive trait makes jobs more efficient.
-[*]Ship speed per species, society research per genetic variant of your main species, and diplomatic weight per planet type you live on. No caps.
+[*]Ship speed per species, society research per genetic variant of your main species, and diplomatic weight per planet type you live on.
 [*]Cheaper species modification; the finisher gives an ascension perk slot, an extra species trait point and an extra trait pick.
 [/list]
 
@@ -60,7 +61,7 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [*]Up to +20% unity from stored food.
 [*][b]Grain Reserves:[/b] +100,000 food storage, but your people eat three times as much.
 [*]Food surpluses buy influence, and farmers gain political power over specialists.
-[*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth for every 1,000 food produced per month, with no cap.
+[*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth for every 1,000 food produced per month.
 [/list]
 
 [h3]Broadcast[/h3]
@@ -77,7 +78,7 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [i]Your resort world as the jewel of the galaxy.[/i] Regular empires, needs Resort Colonies. Works for Pleasure Worlds too.
 [list]
 [*][b]Hospitality Academies:[/b] +50% Resort Worker jobs in every Accommodation District, and +50% jobs from every resort district specialization.
-[*][b]Package Holidays:[/b] unity and pop happiness grow with every 100 Resort Workers you employ, with no cap.
+[*][b]Package Holidays:[/b] unity and pop happiness grow with every 100 Resort Workers you employ.
 [*][b]Galactic Destination:[/b] Tourists produce extra trade, and every 1,000 Tourists add diplomatic weight (up to +30%).
 [*][b]Paradise Unbound:[/b] Accommodation Districts make room for more districts, plus the [b]Expand the Resort[/b] decision: up to 5 × +2 max districts.
 [*]Finisher: +10% job efficiency on the resort world.
@@ -87,7 +88,7 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [list]
 [*][b]The Great Project[/b] (Megaforge): much faster, cheaper megastructures (and more supertensiles); workers produce less.
-[*][b]Eureka Season[/b] (Polymath): +20% research speed; -5 stability.
+[*][b]Grand Expedition[/b] (Xenoarchaeology): +50% anomaly research, survey and excavation speed; less research.
 [*][b]Feast of Plenty[/b] (Granary): doubles Bumper Crops' growth.
 [*][b]The Harvest Tithe[/b] (Granary): turns 3,000 food into influence and unity, then more food and stability.
 [*][b]Gala Season[/b] (Broadcast): happiness and unity; trade suffers.

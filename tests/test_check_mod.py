@@ -20,7 +20,7 @@ SPLIT_EFFECTS = "common/scripted_effects/lfg_species_split_effects.txt"
 SPECIES_LOC = "localisation/english/lfg_species_l_english.yml"
 AGENDA_LOC = "localisation/english/lfg_agendas_l_english.yml"
 STATICS = "common/static_modifiers/lfg_static_modifiers.txt"
-POLYMATH_EVENTS = "events/lfg_polymath_events.txt"
+RESORT_EVENTS = "events/lfg_resorts_events.txt"
 ON_ACTIONS = "common/on_actions/lfg_on_actions.txt"
 POLICY_LOC = "localisation/english/lfg_policies_l_english.yml"
 PERKS = "common/ascension_perks/lfg_ascension_perks.txt"
@@ -49,7 +49,7 @@ class RealModTests(unittest.TestCase):
         self.assertEqual(len(mod.top("common/traditions")), 8 * 7)
         self.assertEqual(mod.top("common/governments/civics"), {})
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
-        self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_polymath.1", "lfg_polymath.2", "lfg_polymath.3",
+        self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_xenoarchaeology.1", "lfg_xenoarchaeology.2", "lfg_xenoarchaeology.3",
                                                             "lfg_resorts.1", "lfg_shellworlders.1",
                                                             "lfg_planet.1", "lfg_lone_tide.1",
                                                             "lfg_synthetic_fertility.1", "lfg_penal.1",
@@ -147,8 +147,8 @@ class MutationTests(unittest.TestCase):
         self.assertFails("missing sprite GFX_tr_lfg_abundance_tithe_barns")
 
     def test_missing_category_sprite(self):
-        self.edit(GFX, 'name = "GFX_tradition_hex_bg_tradition_lfg_polymathy"', 'name = "GFX_x"')
-        self.assertFails("missing sprite GFX_tradition_hex_bg_tradition_lfg_polymathy")
+        self.edit(GFX, 'name = "GFX_tradition_hex_bg_tradition_lfg_xenoarchaeology"', 'name = "GFX_x"')
+        self.assertFails("missing sprite GFX_tradition_hex_bg_tradition_lfg_xenoarchaeology")
 
     def test_unprefixed_key(self):
         self.edit(EDICTS, "lfg_species_experimentation = {", "species_experimentation = {")
@@ -243,28 +243,32 @@ class MutationTests(unittest.TestCase):
                          game=check_mod.DEFAULT_GAME, giga=check_mod.DEFAULT_GIGA)
 
     def test_agenda_loc_missing(self):
-        self.edit(AGENDA_LOC, " council_agenda_agenda_lfg_eureka_season_desc:", " council_agenda_agenda_lfg_eureka_season_dezc:")
-        self.assertFails("missing localisation: council_agenda_agenda_lfg_eureka_season_desc")
+        self.edit(AGENDA_LOC, " council_agenda_agenda_lfg_grand_expedition_desc:", " council_agenda_agenda_lfg_grand_expedition_dezc:")
+        self.assertFails("missing localisation: council_agenda_agenda_lfg_grand_expedition_desc")
 
     def test_unknown_agenda(self):
-        self.edit(TRADITIONS, "unlocks_agenda = agenda_lfg_eureka_season", "unlocks_agenda = agenda_lfg_eureka_seasonn")
-        self.assertFails("unlocks_agenda agenda_lfg_eureka_seasonn is not defined")
+        self.edit(TRADITIONS, "unlocks_agenda = agenda_lfg_grand_expedition", "unlocks_agenda = agenda_lfg_grand_expeditionn")
+        self.assertFails("unlocks_agenda agenda_lfg_grand_expeditionn is not defined")
 
     def test_agenda_finish_modifier_missing(self):
         self.edit(STATICS, "agenda_lfg_gala_season_finish = {", "agenda_lfg_gala_seasons_finish = {")
         self.assertFails("finish_modifier agenda_lfg_gala_season_finish is not defined")
 
     def test_static_modifier_unknown_modifier(self):
-        self.edit(STATICS, "planet_researchers_produces_mult = -0.25", "planet_researcher_produces_mult = -0.25")
-        self.assertFails("static modifier lfg_lab_accident: unknown modifier planet_researcher_produces_mult")
+        self.edit(STATICS, "science_ship_survey_speed = 0.50", "science_ship_survey_speedz = 0.50")
+        self.assertFails("static modifier agenda_lfg_grand_expedition_finish: unknown modifier science_ship_survey_speedz")
 
     def test_add_modifier_undefined(self):
-        self.edit(POLYMATH_EVENTS, "modifier = lfg_lab_accident ", "modifier = lfg_lab_accidents ")
-        self.assertFails("add_modifier lfg_lab_accidents is not defined")
+        self.edit(RESORT_EVENTS, "{ modifier = lfg_tourism_finish ", "{ modifier = lfg_tourism_finishes ")
+        self.assertFails("add_modifier lfg_tourism_finishes is not defined")
+
+    def test_artifact_action_loc_missing(self):
+        self.edit(TRAD_LOC, " artifact_lfg_commission_dig_desc:", " artifact_lfg_commission_dig_dezc:")
+        self.assertFails("missing localisation: artifact_lfg_commission_dig_desc")
 
     def test_on_action_event_missing(self):
-        self.edit(ON_ACTIONS, "lfg_polymath.1", "lfg_polymath.9")
-        self.assertFails("on_yearly_pulse_country fires lfg_polymath.9, which is not defined")
+        self.edit(ON_ACTIONS, "lfg_xenoarchaeology.1", "lfg_xenoarchaeology.9")
+        self.assertFails("anomaly_success fires lfg_xenoarchaeology.9, which is not defined")
 
     def test_policy_flag_not_set(self):
         self.edit(TRADITIONS, "potential = { has_policy_flag = lfg_people_first }", "potential = { has_policy_flag = lfg_peoples_first }")

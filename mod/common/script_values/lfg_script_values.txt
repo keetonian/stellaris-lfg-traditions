@@ -20,24 +20,26 @@ lfg_species_split_share = {
 # Tradition scaling. Used as `mult = value:<name>` in triggered_modifiers; each is capped with `max`.
 #####################################################################
 
-# Polymathy - Many Minds: species in the empire (genetic variants don't count), max 30.
-lfg_num_species = {
+# Xenoarchaeology - Anomaly Studies: anomalies researched since adopting the tree (country variable
+# lfg_anomalies_studied, counted by lfg_xenoarchaeology.1). Uncapped.
+lfg_anomalies_studied = {
 	base = 0
 	complex_trigger_modifier = {
-		trigger = num_species
+		trigger = check_variable
+		parameters = {
+			which = lfg_anomalies_studied
+		}
 		mode = add
 	}
-	max = 30
 }
 
-# Polymathy - Rival Laboratories / Broadcast - Ratings War: current rivals, max 4.
-lfg_num_rivals = {
+# Xenoarchaeology - Relic Vaults / Reverse Engineering: relics owned. Uncapped.
+lfg_num_relics = {
 	base = 0
 	complex_trigger_modifier = {
-		trigger = num_rivals
+		trigger = num_owned_relics
 		mode = add
 	}
-	max = 4
 }
 
 # Broadcast: empires we have communications with, max 20.
@@ -173,7 +175,7 @@ lfg_num_artificial_worlds = {
 }
 
 # Lineage: our main species' negative / positive traits (trait cost < 0 / > 0), every species in the
-# empire (uncapped, unlike lfg_num_species), and subspecies of our main species. All uncapped.
+# empire, and subspecies of our main species. All uncapped.
 lfg_num_negative_traits = {
 	base = 0
 	complex_trigger_modifier = {

@@ -60,6 +60,7 @@ ALLOWED_FILES = [
     r"common/scripted_triggers/[^/]+\.txt",
     r"common/scripted_effects/[^/]+\.txt",
     r"common/edicts/[^/]+\.txt",
+    r"common/artifact_actions/[^/]+\.txt",
     r"common/council_agendas/[^/]+\.txt",
     r"common/static_modifiers/[^/]+\.txt",
     r"common/on_actions/[^/]+\.txt",
@@ -74,7 +75,7 @@ ALLOWED_FILES = [
     r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
-KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
+KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
                 "@lfg_")
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/",)
@@ -302,8 +303,10 @@ def check_system_names(mod: Mod, loc: Dict[str, str], r: Report) -> None:
 
 
 def check_edicts(mod: Mod, loc: Dict[str, str], r: Report) -> None:
-    # Edicts are localised as edict_<key>; decisions, traits and ascension perks as <key> (vanilla conventions).
+    # Edicts are localised as edict_<key>; decisions, traits, ascension perks and minor artifact actions as <key>
+    # (vanilla conventions).
     names = ([f"edict_{k}" for k in mod.top("common/edicts")] + list(mod.top("common/decisions"))
+             + list(mod.top("common/artifact_actions"))
              + list(mod.top("common/traits")) + list(mod.top("common/ascension_perks")))
     for key in names:
         for k in (key, f"{key}_desc"):

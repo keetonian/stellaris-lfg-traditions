@@ -1,0 +1,39 @@
+# LFG Traditions - minor artifact actions (Ancient Relics). Scope: country.
+
+# Xenoarchaeology - Commissioned Digs: spend minor artifacts to create a new anomaly, archaeological site or (with
+# Astral Planes) astral rift within our borders. The player picks which in the popup lfg_xenoarchaeology.2 (which can
+# also refund the cost).
+artifact_lfg_commission_dig = {
+	resources = {
+		category = artifact_actions
+		cost = {
+			minor_artifacts = @lfg_commission_dig_cost
+		}
+	}
+
+	ai_weight = {
+		weight = 50
+	}
+
+	potential = {
+		has_tradition = tr_lfg_xenoarchaeology_commissioned_digs
+	}
+
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_commission_dig_no_target
+			OR = {
+				lfg_can_commission_anomaly = yes
+				any_planet_within_border = { can_spawn_random_archaeological_site = yes }
+				lfg_can_commission_astral_rift = yes
+			}
+		}
+	}
+
+	effect = {
+		custom_tooltip = artifact_lfg_commission_dig_effect
+		hidden_effect = {
+			country_event = { id = lfg_xenoarchaeology.2 }
+		}
+	}
+}

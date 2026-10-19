@@ -15,9 +15,10 @@ on_monthly_pulse_country = {
 	}
 }
 
-on_yearly_pulse_country = {
+# this = ship, from = planet
+anomaly_success = {
 	events = {
-		lfg_polymath.1	# Reckless Experimentation: yearly lab accident chance
+		lfg_xenoarchaeology.1	# Xenoarchaeology: minor artifacts + anomaly count
 	}
 }
 

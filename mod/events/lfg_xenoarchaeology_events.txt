@@ -1,0 +1,97 @@
+# LFG Traditions - Xenoarchaeology events.
+namespace = lfg_xenoarchaeology
+
+# Every anomaly a science ship finishes (on_action anomaly_success; this = ship, from = planet): with Xenoarchaeology
+# adopted, the owner counts the anomaly in the country variable lfg_anomalies_studied (read by Anomaly Studies through
+# value:lfg_anomalies_studied; anomalies before adoption don't count), and with Anomaly Studies gets minor artifacts.
+ship_event = {
+	id = lfg_xenoarchaeology.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = owner
+		owner = { has_tradition = tr_lfg_xenoarchaeology_adopt }
+	}
+
+	immediate = {
+		owner = {
+			change_variable = { which = lfg_anomalies_studied value = 1 }
+			if = {
+				limit = { has_tradition = tr_lfg_xenoarchaeology_anomaly_studies }
+				add_resource = { minor_artifacts = @lfg_anomaly_minor_artifacts }
+			}
+		}
+	}
+}
+
+# Commissioned Digs (artifact_lfg_commission_dig, cost already paid): choose what to create within our borders. Options
+# are greyed out when impossible (Astral Rift is hidden without Astral Planes); "Not now" refunds the cost. The spawn
+# effects (common/scripted_effects/lfg_xenoarchaeology_effects.txt) refund too if they find no spot after all.
+country_event = {
+	id = lfg_xenoarchaeology.2
+	title = lfg_xenoarchaeology.2.name
+	desc = lfg_xenoarchaeology.2.desc
+	picture = GFX_evt_ancient_alien_temple
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_xenoarchaeology.2.site
+		allow = {
+			custom_tooltip = {
+				fail_text = lfg_commission_dig_no_site
+				any_planet_within_border = { can_spawn_random_archaeological_site = yes }
+			}
+		}
+		lfg_commission_dig_site = yes
+	}
+	option = {
+		name = lfg_xenoarchaeology.2.anomaly
+		allow = {
+			custom_tooltip = {
+				fail_text = lfg_commission_dig_no_anomaly
+				lfg_can_commission_anomaly = yes
+			}
+		}
+		lfg_commission_dig_anomaly = yes
+	}
+	option = {
+		name = lfg_xenoarchaeology.2.rift
+		trigger = { has_astral_planes_dlc = yes }
+		allow = {
+			custom_tooltip = {
+				fail_text = lfg_commission_dig_no_rift
+				lfg_can_commission_astral_rift = yes
+			}
+		}
+		lfg_commission_dig_rift = yes
+	}
+	option = {
+		name = lfg_xenoarchaeology.2.cancel
+		add_resource = { minor_artifacts = @lfg_commission_dig_cost }
+	}
+}
+
+# Result: where the new anomaly / site / rift is (event_target:lfg_dig_location, flag lfg_dig_<type> set by the effect).
+country_event = {
+	id = lfg_xenoarchaeology.3
+	title = lfg_xenoarchaeology.3.name
+	desc = {
+		trigger = { has_country_flag = lfg_dig_anomaly }
+		text = lfg_xenoarchaeology.3.desc_anomaly
+	}
+	desc = {
+		trigger = { has_country_flag = lfg_dig_site }
+		text = lfg_xenoarchaeology.3.desc_site
+	}
+	desc = {
+		trigger = { has_country_flag = lfg_dig_rift }
+		text = lfg_xenoarchaeology.3.desc_rift
+	}
+	picture = GFX_evt_ancient_alien_temple
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_xenoarchaeology.3.a
+	}
+}
