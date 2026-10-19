@@ -107,31 +107,31 @@ lfg_shellworld_adopt = {
 }
 lfg_shellworld_compact_living = {
 	pop_housing_usage_mult = -0.10
-	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon = "gfx/interface/icons/planet_modifiers/pm_colony_settlement.dds"
 	icon_frame = 1
 }
 lfg_shellworld_artificial_gravity = {
 	planet_stability_add = 3
 	planet_crime_add = -15
-	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon = "gfx/interface/icons/planet_modifiers/pm_low_gravity.dds"
 	icon_frame = 1
 }
 # Closed Ecology downside: on every owned natural (non-artificial) world while the tradition is held.
 lfg_shellworld_natural_world = {
 	pop_happiness = -0.10
 	planet_stability_mult = -0.10
-	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon = "gfx/interface/icons/planet_modifiers/pm_resentful_population.dds"
 	icon_frame = 3
 }
 lfg_shellworld_closed_ecology = {
 	pop_bonus_workforce_mult = 0.10
-	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon = "gfx/interface/icons/planet_modifiers/pm_symbiotic_link.dds"
 	icon_frame = 1
 }
 # Added with multiplier = other artificial worlds we own in the same system.
 lfg_shellworld_arc_neighbours = {
 	pop_bonus_workforce_mult = 0.03
-	icon = "gfx/interface/icons/planet_modifiers/pm_arcology_project.dds"
+	icon = "gfx/interface/icons/planet_modifiers/pm_satellite_in_orbit.dds"
 	icon_frame = 1
 }
 
@@ -139,21 +139,21 @@ lfg_shellworld_arc_neighbours = {
 # held, by lfg_penal.1. One per tradition, so the planet view shows where each bonus comes from.
 lfg_penal_adopt = {
 	pop_cat_worker_bonus_workforce_mult = 0.10
-	planet_housing_mult = 0.15
+	planet_housing_mult = 0.25
 	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
 	icon_frame = 2
 }
 lfg_penal_wardens_code = {
 	planet_stability_add = 5
-	pop_enforcer_bonus_workforce_mult = 0.25
-	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
+	pop_enforcer_bonus_workforce_mult = 0.20
+	icon = "gfx/interface/icons/planet_modifiers/pm_thought_police.dds"
 	icon_frame = 2
 }
 lfg_penal_chain_gangs = {
 	pop_cat_worker_bonus_workforce_mult = 0.15
 	planet_pops_upkeep_mult = -0.15
 	pop_happiness = -0.15
-	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
+	icon = "gfx/interface/icons/planet_modifiers/pm_slave_colony.dds"
 	icon_frame = 2
 }
 # Idle Hands: added to the penal colony with multiplier = whole hundreds of unemployed pops there
@@ -161,12 +161,19 @@ lfg_penal_chain_gangs = {
 # Idle Hands: while the penal colony has fewer than 100 unemployed, its jobs slack off (lfg_sync_penal_unemployed).
 lfg_penal_no_idle_hands = {
 	planet_jobs_produces_mult = @lfg_idle_hands_empty_penalty
-	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
+	icon = "gfx/interface/icons/planet_modifiers/pm_hunger_strike.dds"
 	icon_frame = 3
 }
 lfg_penal_idle_hands = {
 	planet_jobs_produces_mult = 0.01
 	planet_crime_add = @lfg_idle_hands_crime_per_hundred
-	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
+	icon = "gfx/interface/icons/planet_modifiers/pm_slave_riots.dds"
 	icon_frame = 2
+}
+
+# Penitence finisher - Expand the Cell Blocks decision: added with multiplier = expansions made (planet variable lfg_cell_blocks).
+lfg_penal_cell_blocks = {
+	planet_housing_add = 1500
+	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
+	icon_frame = 1
 }

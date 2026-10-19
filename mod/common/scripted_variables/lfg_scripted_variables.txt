@@ -59,3 +59,6 @@
 # is shipped to the penal colony (lfg_penal_ship_unemployed), jobs and housing or not.
 @lfg_transportation_share = 0.10
 @lfg_transportation_max = 300
+
+# Penitence finisher - Expand the Cell Blocks decision: maximum uses on the penal colony.
+@lfg_cell_blocks_max = 10

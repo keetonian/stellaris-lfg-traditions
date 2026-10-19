@@ -108,13 +108,13 @@ tree counts `num_assigned_jobs = { job = civilian }` (vanilla's `num_unemployed`
 
 | Tradition | Effect |
 |---|---|
-| Adopt | Penal colony: worker job efficiency +10%, housing +15% · **worker happiness −5% everywhere** |
-| 1. Wardens' Code | Penal colony: stability +5, enforcer job efficiency +25% |
+| Adopt | Penal colony: worker job efficiency +10%, housing +25% · **worker happiness −5% everywhere** |
+| 1. Wardens' Code | Penal colony: stability +5, enforcer job efficiency +20% |
 | 2. Transportation | Crime −10% everywhere · **every month, 10% of the unemployed on each other planet (max 300 per planet) are shipped to the penal colony**, jobs and housing or not (`lfg_penal_ship_unemployed` in `lfg_penal.1`; vanilla resettlement only targets planets with open jobs) |
 | 3. Idle Hands ⚙ | **All jobs on the penal colony +1% per 100 unemployed pops there** (no cap) · **with fewer than 100 unemployed: −75% job output there instead** · **riots:** crime +2 per 100 unemployed · **attrition:** 3% of the unemployed there die each month, so they settle at ~33× monthly arrivals (+33% per 100 arrivals/month; ~31% lost per year) |
 | 4. Prison Industry ⚙ | **+50% jobs from district specializations on the penal colony** (generated additions to the 12 city specializations: Industrial, Foundry, Factory, the research and unity ones, Fortress, Trade; and the Penal Supertensile Works) |
 | 5. Chain Gangs | Penal colony: worker job efficiency +15%, pop upkeep −15%, **happiness −15%** |
-| Finish | Unlocks the penal specializations for Prison Districts on the penal colony: with supertensiles on, the **Penal Supertensile Works** specialization in Prison Districts there (+100 **Penal Supertensile Laborer** jobs: 4 minerals + 1 alloy + 1 unity → 1 supertensile each) · with Gigastructural's bulk matter enabled: the **Penal Matter Compactors** specialization (+100 **Penal Matter Compactor** jobs: 180 energy + 30 minerals + 40 alloys + 0.5 dark matter → 0.01 bulk matter each per month, i.e. 18,000 energy + 3,000 minerals + 4,000 alloys + 50 dark matter per matter; Giga's harvesting costs 16,000 energy + 4,000 alloys) |
+| Finish | Unlocks the penal specializations for Prison Districts on the penal colony: with supertensiles on, the **Penal Supertensile Works** specialization in Prison Districts there (+100 **Penal Supertensile Laborer** jobs: 4 minerals + 1 alloy + 1 unity → 1 supertensile each) · with Gigastructural's bulk matter enabled: the **Penal Matter Compactors** specialization (+100 **Penal Matter Compactor** jobs: 180 energy + 30 minerals + 40 alloys + 0.5 dark matter → 0.01 bulk matter each per month, i.e. 18,000 energy + 3,000 minerals + 4,000 alloys + 50 dark matter per matter; Giga's harvesting costs 16,000 energy + 4,000 alloys) · **Expand the Cell Blocks** decision on the penal colony: +1,500 housing per use, up to 10 times; costs (400 minerals + 200 alloys) × (uses + 1) + 25 influence, 180 days |
 
 Planet effects are `lfg_penal_*` modifiers kept on the penal colony by the
 monthly hidden event `lfg_penal.1` (also run on adoption), which counts its Prison Districts

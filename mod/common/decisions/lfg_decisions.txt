@@ -49,3 +49,52 @@ decision_lfg_expand_resort = {
 		weight = 10
 	}
 }
+
+# Penitence finisher: Expand the Cell Blocks on the penal colony (one per empire). Each use adds +1500 housing
+# (lfg_penal_cell_blocks, stacked via the planet variable lfg_cell_blocks), up to @lfg_cell_blocks_max times.
+# Cost: (400 minerals + 200 alloys) x (expansions made + 1) (value:lfg_cell_blocks_cost_mult), plus a flat 25 influence.
+# Same pattern as decision_lfg_expand_resort (verified in game).
+decision_lfg_expand_cell_blocks = {
+	owned_planets_only = yes
+	enactment_time = 180
+	icon = decision_penal_colony
+	resources = {
+		category = decisions
+		cost = {
+			minerals = 400
+			alloys = 200
+			multiplier = value:lfg_cell_blocks_cost_mult
+		}
+		cost = {
+			influence = 25
+		}
+	}
+	potential = {
+		has_modifier = penal_colony
+		owner = { has_tradition = tr_lfg_penitence_finish }
+	}
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_decision_expand_cell_blocks_maxed
+			NOT = { check_variable = { which = lfg_cell_blocks value >= @lfg_cell_blocks_max } }
+		}
+	}
+	effect = {
+		custom_tooltip = lfg_decision_expand_cell_blocks_effect_tt
+		hidden_effect = {
+			if = {
+				limit = { NOT = { is_variable_set = lfg_cell_blocks } }
+				set_variable = { which = lfg_cell_blocks value = 0 }
+			}
+			change_variable = { which = lfg_cell_blocks value = 1 }
+			remove_modifier = lfg_penal_cell_blocks
+			add_modifier = {
+				modifier = lfg_penal_cell_blocks
+				multiplier = lfg_cell_blocks
+			}
+		}
+	}
+	ai_weight = {
+		weight = 10
+	}
+}

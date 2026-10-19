@@ -53,7 +53,7 @@ mod/                                  # exactly what ships
   common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + lfg_lab_accident
   common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1 + lfg_shellworlders.1, yearly -> lfg_polymath.1,
                                                              #   colony transfer/ownerless -> lfg_planet.1
-  common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (resort world, Paradise Unbound)
+  common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (Paradise Unbound), decision_lfg_expand_cell_blocks (Penitence finisher)
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)
   common/traits/lfg_leader_traits.txt                        # leader_trait_lfg_massed_assault (given by events/lfg_massed_assault_events.txt)
   common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy)

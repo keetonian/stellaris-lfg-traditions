@@ -1,7 +1,7 @@
 # LFG Traditions - economic categories.
 
 # Penitence: own category for the Penal Supertensile Laborer, so its output can be scaled on its own
-# (planet_lfg_penal_laborers_produces_mult; Prison Industry scales it per 1,000 unemployed on the penal colony).
+# (planet_lfg_penal_laborers_*). Kept separate from Gigastructural's supertensile job categories on purpose.
 planet_lfg_penal_laborers = {
 	parent = planet_jobs_worker
 	modifier_category = colony

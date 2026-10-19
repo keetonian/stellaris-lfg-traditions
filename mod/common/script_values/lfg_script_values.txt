@@ -200,3 +200,15 @@ lfg_num_subspecies = {
 		mode = add
 	}
 }
+
+# Penitence - Expand the Cell Blocks cost multiplier (planet scope): 1 + expansions already made (planet variable lfg_cell_blocks).
+lfg_cell_blocks_cost_mult = {
+	base = 1
+	complex_trigger_modifier = {
+		trigger = check_variable
+		parameters = {
+			which = lfg_cell_blocks
+		}
+		mode = add
+	}
+}
