@@ -198,10 +198,12 @@ lfg_num_species_uncapped = {
 	}
 }
 
+# Lineage - Branching Lineages: subspecies of our main species that have pops in the empire. count_owned_pop_species
+# iterates only species of the country's owned pops (count_owned_species can include species without pops).
 lfg_num_subspecies = {
 	base = 0
 	complex_trigger_modifier = {
-		trigger = count_owned_species
+		trigger = count_owned_pop_species
 		parameters = {
 			limit = {
 				is_subspecies = root.owner_species
