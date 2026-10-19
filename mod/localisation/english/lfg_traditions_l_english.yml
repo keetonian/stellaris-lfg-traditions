@@ -135,7 +135,7 @@
  tr_lfg_tourism_galactic_destination:0 "Galactic Destination"
  tr_lfg_tourism_galactic_destination_desc:0 "Visitors from across the galaxy flock to our resort world, and every one of them goes home with a good word for us."
  tr_lfg_tourism_galactic_destination_delayed:0 "Peace talks are so much easier by the pool."
- tr_lfg_tourism_galactic_destination_tt:0 "On our resort world: §YTourists§! produce §G+1§! £trade£ Trade and §G+1§! £unity£ Unity, and unemployed pops are §G+50%§! more likely to move there.\nDiplomatic weight §G+1%§! for every §Y1,000§! §YTourists§! on our resort world (max §G+30%§!)."
+ tr_lfg_tourism_galactic_destination_tt:0 "On our resort world: §YTourists§! produce §G+1§! £trade£ Trade.\nDiplomatic weight §G+1%§! for every §Y1,000§! §YTourists§! on our resort world (max §G+30%§!)."
  # ======================= Shellworlders =======================
  tradition_lfg_shellworlders:0 "Shellworlders"
  tradition_lfg_shellworlders_desc:0 "Natural planets are an accident of geology. Our people live on worlds that were designed: habitats, rings, Alderson slices and stranger shells. Every bonus of this tree applies on our §Yartificial worlds§!, and the more of them we hold, the faster we build.\n\nAvailable to empires with an artificial-world origin, or after researching §YOrbital Habitats§! or §YRing World§!."

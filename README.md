@@ -162,7 +162,7 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 | 2. Package Holidays ⚙ | Per 100 Resort Workers (no cap): unity +0.5%, pop happiness +0.25% |
 | 3. Paradise Unbound | Each Accommodation District adds +0.5 max districts to the resort world · unlocks the **Expand the Resort** decision · +1 max Accommodation District, resort district build speed +25% |
 | 4. Tourist Traps | Resort Worker workforce +15% · entertainer/resort worker consumer goods upkeep +0.5 |
-| 5. Galactic Destination ⚙ | On the resort world: **Tourists** +1 trade and +1 unity, unemployed pops +50% more likely to move there · diplomatic weight +1% per 1,000 Tourists there (max +30%). The planet part is the `lfg_galactic_destination` modifier, kept on the resort world by the monthly hidden event `lfg_resorts.1`, which also stores the tourist count (`num_assigned_jobs = { job = civilian }`) in `lfg_tourists`; so it can lag up to a month |
+| 5. Galactic Destination ⚙ | On the resort world: **Tourists** +1 trade · diplomatic weight +1% per 1,000 Tourists there (max +30%). The planet part is the `lfg_galactic_destination` modifier, kept on the resort world by the monthly hidden event `lfg_resorts.1`, which also stores the tourist count (`num_assigned_jobs = { job = civilian }`) in `lfg_tourists`; so it can lag up to a month |
 | Finish | Resort world: job efficiency +10% (planet modifier `lfg_tourism_finish`, kept by `lfg_resorts.1`) |
 
 **Growing the resort world** (resort worlds start with −25% max districts, and an empire can only have one):

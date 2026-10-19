@@ -77,7 +77,7 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [list]
 [*][b]Hospitality Academies:[/b] +50% Resort Worker jobs in every Accommodation District, and +50% jobs from every resort district specialization.
 [*][b]Package Holidays:[/b] unity and pop happiness grow with every 100 Resort Workers you employ, with no cap.
-[*][b]Galactic Destination:[/b] Tourists produce extra trade and unity, unemployed pops move there, and every 1,000 Tourists add diplomatic weight (up to +30%).
+[*][b]Galactic Destination:[/b] Tourists produce extra trade, and every 1,000 Tourists add diplomatic weight (up to +30%).
 [*][b]Paradise Unbound:[/b] Accommodation Districts make room for more districts, plus the [b]Expand the Resort[/b] decision: up to 5 × +2 max districts.
 [*]Finisher: +10% job efficiency on the resort world.
 [/list]
