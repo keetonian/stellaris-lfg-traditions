@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Eight new tradition trees, six council agendas, two ascension perks, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Eight new tradition trees, six council agendas, two ascension perks, a civic, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
@@ -11,7 +11,6 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [*][b]Grand Works Priority:[/b] megastructures and all infrastructure build faster, but infrastructure costs 30% more.
 [*][b]Monument Economy:[/b] +10 monthly supertensiles and a policy: per megastructure you own, [i]Monuments First[/i] (+1% megastructure output, -0.5% job output), [i]People First[/i] (the reverse) or [i]Balanced[/i].
 [*]Finisher: +1 Megaconstruction Logistics Hub (or +1 megastructure under construction).
-[*]Costs: minerals, alloys and infrastructure cost.
 [/list]
 
 [h3]Shellworlders[/h3]
@@ -46,7 +45,7 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [h3]Penitence[/h3]
 [i]Your penal colony runs the economy.[/i] Regular empires, needs Penal Colonies.
 [list]
-[*]Harder-working, better-guarded camps; crime falls everywhere and the unemployed are shipped off to the colony.
+[*]Harder-working, better-guarded camps; less crime; the unemployed are shipped to the colony.
 [*][b]Idle Hands:[/b] every job on the colony +1% per 100 unemployed (-75% with none), but they riot and 3% die each month.
 [*][b]Prison Industry:[/b] +50% jobs from the colony's district specializations.
 [*]Finisher: supertensile and (ruinously expensive) bulk matter specializations for Prison Districts, and a decision to expand the cell blocks (+1,500 housing, up to 10 times).
@@ -60,7 +59,7 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [*][b]Tithe Barns:[/b] 10,000 stored food means stability and faster growth; under 1,000 means unrest and slower growth.
 [*]Up to +20% unity from stored food.
 [*][b]Grain Reserves:[/b] +100,000 food storage, but your people eat three times as much.
-[*]Food surpluses buy influence, and farmers gain political power over specialists.
+[*]Food surpluses buy influence; farmers gain political power.
 [*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth for every 1,000 food produced per month.
 [/list]
 
@@ -69,7 +68,7 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [list]
 [*]+1% trade for every empire you have contact with (up to +20%).
 [*][b]Holo-Museums:[/b] every Grand Archive holomuseum you own grants its base bonuses again.
-[*][b]Ratings War:[/b] war is prime time: less war exhaustion and more entertainer output while at war.
+[*][b]Ratings War:[/b] less war exhaustion and more entertainer output while at war.
 [*][b]Syndication Deals:[/b] entertainers earn more trade for every commercial pact you have.
 [*]Finisher, [b]Star Power:[/b] +1% diplomatic weight per 1,000 entertainers (up to +30%).
 [/list]
@@ -95,6 +94,9 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [*][b]Grand Tour Season[/b] (Tourism): happiness, trade and much harder-working resort workers.
 [/list]
 
+[h2]Civic[/h2]
+[b]Applied Biosciences[/b] (Materialist, non-machine): Biologists research -1 society, +0.4 physics, +0.4 engineering. Scientist councilor: more efficient Biologists.
+
 [h2]Ascension perks[/h2]
 [b]Massed Assault:[/b] +10 ground combat width; every general boosts the armies they lead.
 
@@ -107,7 +109,7 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [h2]Changes to vanilla content[/h2]
 [list]
 [*][b]Synthetic Fertility[/b]: the uploading situation gains +1 monthly progress per year passed, and uploads that many more pops to the Identity Repository.
-[*]The [b]Accommodation District[/b], the resort district specializations and the three [b]holomuseums[/b] gain extra blocks for Tourism and Broadcast.
+[*]The [b]Accommodation District[/b], the resort district specializations and the [b]holomuseums[/b] and the [b]Archaeostudies Faculty[/b] gain extra blocks for our trees.
 [*]Repeatable technologies (vanilla and Gigastructural) check their Shelve edicts.
 [*][b]Virtuality[/b] can't be chosen as the Synthetic Age path by individual machine empires with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin (their origin descriptions say so).
 [/list]
@@ -118,6 +120,6 @@ These replace those vanilla and Gigastructural definitions; other mods that chan
 [*]Stellaris 4.5, [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237]Gigastructural Engineering & More[/url] (load this mod after it).
 [*]Recommended: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981]A Lot of Traditions - 24 Tradition Slots[/url] (vanilla allows 7 trees).
 [*]Compatible with Expanded Stellaris Traditions and More Traditions.
-[*]Changes the game checksum: everyone in a multiplayer game needs it.
+[*]Changes the checksum: everyone in multiplayer needs it.
 [*]Balance is a first draft; feedback welcome!
 [/list]

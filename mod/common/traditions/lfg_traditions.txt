@@ -262,15 +262,16 @@ tr_lfg_xenoarchaeology_commissioned_digs = {
 	ai_weight = { factor = 1000 }
 }
 
+# Archaeo-Engineer output +25%: in the generated Archaeostudies Faculty override (common/buildings/zz_lfg_building_overrides.txt).
 tr_lfg_xenoarchaeology_expedition_corps = {
 	possible = {
 		has_tradition = tr_lfg_xenoarchaeology_field_expeditions
 		has_tradition = tr_lfg_xenoarchaeology_anomaly_studies
 	}
+	custom_tooltip = tr_lfg_xenoarchaeology_expedition_corps_tt
 	modifier = {
 		country_scientist_cap_add = 1
 		scientist_exp_gain = 0.15
-		ship_anomaly_research_speed_mult = 0.15
 	}
 	ai_weight = { factor = 1000 }
 }

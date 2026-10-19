@@ -1,0 +1,19 @@
+# LFG Traditions - council positions unlocked by our civics. `modifier` is multiplied by the councilor's level; the
+# position shows its civic's icon.
+
+# Applied Biosciences: scientists only. Biologist job efficiency +3% per level (level 10: +30%), which scales the
+# civic's physics and engineering along with the society research. Not more physics per Biologist: vanilla's
+# Technocracy councilor (also Materialist) already does that.
+councilor_lfg_applied_biosciences = {
+	leader_class = { scientist }
+	is_leader_possible = {
+		leader_class = scientist
+	}
+	civic = civic_lfg_applied_biosciences
+	modifier = {
+		pop_biologist_bonus_workforce_mult = 0.03
+	}
+	ai_hiring_weight = {
+		inline_script = councilor_leader_weights
+	}
+}

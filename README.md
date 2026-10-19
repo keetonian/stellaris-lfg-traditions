@@ -5,8 +5,9 @@ A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games th
 - **8 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
 - **6 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
 - **2 ascension perks:** **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
+- **1 civic, Applied Biosciences** (materialist, non-machine species): Biologists research less society but some physics and engineering.
 - **1 edict, Species Experimentation** (Evolutionary Predators, after finishing Mutation): half of a secondary species dies, the rest splits into 50 subspecies, each with a random positive and a random negative trait.
-- **Overrides** of vanilla/Gigastructural definitions (generated, see [Overrides](#overrides-of-vanilla-and-gigastructural-content)): Synthetic Fertility's situation speeds up every year, two trees extend the Accommodation District and holomuseums, and the repeatable techs check the Shelve edicts.
+- **Overrides** of vanilla/Gigastructural definitions (generated, see [Overrides](#overrides-of-vanilla-and-gigastructural-content)): Synthetic Fertility's situation speeds up every year, three trees extend the Accommodation District, holomuseums and the Archaeostudies Faculty, and the repeatable techs check the Shelve edicts.
 
 This is a gameplay mod (it adds `common/` files), so it **changes the game checksum**. Everyone in a multiplayer game needs it.
 
@@ -77,7 +78,7 @@ Vanilla Archivism already covers specimens, so this tree doesn't.
 | 1. Field Expeditions | Survey speed +25% · anomaly research speed +15% |
 | 2. Anomaly Studies ⚙ | Research speed +0.25% per anomaly researched since adopting the tree (uncapped) · every anomaly researched gives +5 minor artifacts |
 | 3. Reverse Engineering ⚙ | Archaeotech weapon damage +10% · research speed +5% per relic owned (uncapped) |
-| 4. Expedition Corps | Scientist cap +1 · scientist experience gain +15% · anomaly research speed +15% |
+| 4. Expedition Corps | Scientist cap +1 · scientist experience gain +15% · **Archaeo-Engineer** output +25% (Biologists on a planet with an Archaeostudies Faculty; generated `building_archaeostudies_faculty` override) |
 | 5. Commissioned Digs | Unlocks the minor artifact action **Commission a Dig** (2,000 minor artifacts): a popup lets you choose a new **archaeological site**, **anomaly** or (with Astral Planes) **astral rift** within your borders |
 | Finish | Anomaly discovery chance +15% · unlocks agenda **Grand Expedition** |
 
@@ -223,6 +224,16 @@ system (not in an empire's or Fallen Empire's starting cluster), connected by hy
 It has a single blue **B-class** star and one planet: **Crucible**, a **size 60 molten world** (vanilla's largest
 gas giants are size 62; one base district per size). Initializer: `lfg_emberfall_init`.
 
+## Civic: Applied Biosciences
+
+**Who:** Materialist or Fanatic Materialist empires whose species isn't a machine (gestalts can't be materialist).
+**Effect:** per Biologist job: society research **−1** (3 → 2), physics **+0.4**, engineering **+0.4** (vanilla's
+`planet_biologists_*_research_produces_add`, so Biologist bonuses and job efficiency apply to all of it). The Biologist job's
+variants (Rangers, Xeno-Zoo Keepers, Stratovent Researchers, Archaeo-Engineers) count too. Icon: vanilla Genetic Identification
+recoloured to the mod's amber civic colour (`art/make_civic_icons.py`; every civic from this mod uses it).
+**Council position:** **Chief Bioengineer** (scientists only; `councilor_lfg_applied_biosciences`): Biologist job efficiency
+**+3% per level**. Not more physics per Biologist, because vanilla's Technocracy councilor (also Materialist) already gives that.
+
 ## Ascension perk: Massed Assault
 
 **+10 ground combat width**: more armies fight at the same time. **Every general** also gets the **Massed Assault Doctrine**
@@ -321,6 +332,7 @@ These replace vanilla and Gigastructural definitions. Other mods that change the
 | Vanilla definition | Change |
 |---|---|
 | Buildings `xeno_geology_holomuseum`, `aesthetic_wonders_holomuseum`, `galactic_history_holomuseum` | Added: their specimen bonus and entertainer unity/research bonus again while the owner has Holo-Museums |
+| Building `building_archaeostudies_faculty` | Added: Biologist (Archaeo-Engineer) output +25% on its planet while the owner has Expedition Corps |
 | District `district_resort` (Accommodation District) | Added: +150 Resort Worker jobs per district (Hospitality Academies) and +0.5 max districts per district (Paradise Unbound) |
 | The 24 repeatable techs in the Curated Progress table (19 vanilla, 5 Giga) | Added to `weight_modifier`: never drawn while their Shelve edict is active |
 | Giga inline script `common/inline_scripts/technology/giga_mega_repeatable.txt` (all megastructure capacity repeatables) | Same, with `has_edict = lfg_shelve_megastructure_capacity_$area$`. Inline scripts can only be replaced as a whole file (same path, this mod loads after Giga) |

@@ -168,6 +168,20 @@ def holomuseum_anchor(research: str) -> str:
 
 HOLOMUSEUMS = "common/buildings/21_grand_archive_buildings.txt"
 
+# Xenoarchaeology - Expedition Corps: Archaeo-Engineers are the Biologists on a planet with an Archaeostudies Faculty
+# (vanilla biologist_is_archaeo_engineer_trigger swaps every Biologist there), so their bonus lives in that building.
+ARCHAEO_FACULTY_ANCHOR = r"^\tplanet_modifier = \{\n\t\tplanet_biologists_society_research_produces_add = 0\.25\n\t\}\n"
+ARCHAEO_FACULTY_BLOCK = """\ttriggered_planet_modifier = {
+\t\tpotential = {
+\t\t\texists = owner
+\t\t\towner = {
+\t\t\t\thas_active_tradition = tr_lfg_xenoarchaeology_expedition_corps
+\t\t\t}
+\t\t}
+\t\tplanet_biologists_produces_mult = 0.25
+\t}
+"""
+
 # Synthetic Age transformation, stage 4 path choice: individual machines with Giga's ring-megastructure origins
 # can't pick Virtuality (option c). `allow` greys the option out with the reason.
 VIRTUALITY_BLOCK = """\t\tallow = {
@@ -307,6 +321,8 @@ OVERRIDES = {
         (HOLOMUSEUMS, "xeno_geology_holomuseum", holomuseum_anchor("engineering"), holomuseum_block("engineering", "xeno_geology")),
         (HOLOMUSEUMS, "aesthetic_wonders_holomuseum", holomuseum_anchor("physics"), holomuseum_block("physics", "aesthetic_wonder")),
         (HOLOMUSEUMS, "galactic_history_holomuseum", holomuseum_anchor("society"), holomuseum_block("society", "historical_item")),
+        ("common/buildings/05_research_buildings.txt", "building_archaeostudies_faculty", ARCHAEO_FACULTY_ANCHOR,
+         ARCHAEO_FACULTY_BLOCK),
     ],
     "mod/common/situations/zz_lfg_situation_overrides.txt": [
         ("common/situations/08_machine_age_situations.txt", "situation_synthetic_fertility_digitization",

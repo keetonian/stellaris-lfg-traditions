@@ -46,6 +46,7 @@ ALLOWED_FILES = [
     r"common/tradition_categories/[^/]+\.txt",
     r"common/traditions/[^/]+\.txt",
     r"common/governments/civics/[^/]+\.txt",
+    r"common/governments/councilors/[^/]+\.txt",
     r"common/ascension_perks/[^/]+\.txt",
     r"common/technology/zz_lfg_[^/]+\.txt",
     r"common/inline_scripts/technology/giga_mega_repeatable\.txt",  # generated whole-file override of Giga's
@@ -71,11 +72,12 @@ ALLOWED_FILES = [
     r"events/[^/]+\.txt",
     r"interface/[^/]+\.gfx",
     r"gfx/interface/icons/districts/lfg_[^/]+\.dds",  # art/make_zone_icons.py
+    r"gfx/interface/icons/governments/civics/civic_lfg_[^/]+\.dds",  # art/make_civic_icons.py
     r"localisation/english/[^/]+_l_english\.yml",
     r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
-KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
+KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "councilor_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
                 "@lfg_")
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/",)
@@ -278,12 +280,21 @@ def check_traditions(mod: Mod, loc: Dict[str, str], templates: Set[str], r: Repo
 
 
 def check_civics(mod: Mod, loc: Dict[str, str], r: Report) -> None:
-    for ck, civ in mod.top("common/governments/civics").items():
+    civics = mod.top("common/governments/civics")
+    for ck, civ in civics.items():
         for key in (ck, f"{ck}_desc"):
             if key not in loc:
                 r.fail(f"missing localisation: {key}")
         if civ.is_block and pdx.first(civ.value, "modifier") is None:
             r.fail(f"{ck}: has no modifier block")
+    # Council positions: <key>, <key>_desc; a `civic` of ours must exist (vanilla ones are checked against the game).
+    for key, pos in mod.top("common/governments/councilors").items():
+        for k in (key, f"{key}_desc"):
+            if k not in loc:
+                r.fail(f"missing localisation: {k}")
+        civic = pdx.first(pos.value, "civic") if pos.is_block else None
+        if civic is not None and civic.value.startswith("civic_lfg_") and civic.value not in civics:
+            r.fail(f"{key}: civic {civic.value} is not defined in this mod")
 
 
 def check_loc_references(mod: Mod, loc: Dict[str, str], r: Report) -> None:
@@ -537,7 +548,8 @@ def load_modifiers(log: Optional[Path]) -> Set[str]:
 
 
 def modifier_keys(mod: Mod):
-    for folder in ("common/traditions", "common/governments/civics", "common/council_agendas"):
+    for folder in ("common/traditions", "common/governments/civics", "common/governments/councilors",
+                   "common/council_agendas"):
         for key, e in mod.top(folder).items():
             if not e.is_block:
                 continue
@@ -664,6 +676,9 @@ def check_loc_parameters(loc: Dict[str, str], game: Optional[Path], giga: Option
     known = load_game_loc_keys([game, giga]) | {k.lower() for k in loc}
     for key, value in loc.items():
         for ref in re.findall(r"\$([A-Za-z0-9_.]+)\$", value):
+            # The game fills these in itself: $TITLE$ is the council position's name in its _desc (vanilla does the same).
+            if ref == "TITLE" and key.startswith("councilor_"):
+                continue
             if ref.lower() not in known:
                 r.fail(f"localisation {key}: ${ref}$ is not a localisation key in the game, Giga or this mod")
 

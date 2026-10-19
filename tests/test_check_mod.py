@@ -13,6 +13,8 @@ GAME_INSTALLED = check_mod.DEFAULT_GAME.exists() and check_mod.DEFAULT_GIGA.exis
 TRADITIONS = "common/traditions/lfg_traditions.txt"
 CATEGORIES = "common/tradition_categories/00_abundance_lfg.txt"
 TRAD_LOC = "localisation/english/lfg_traditions_l_english.yml"
+CIVIC_LOC = "localisation/english/lfg_civics_l_english.yml"
+COUNCILORS = "common/governments/councilors/lfg_councilors.txt"
 GFX = "interface/lfg_traditions.gfx"
 EVENTS = "events/lfg_species_split_events.txt"
 EDICTS = "common/edicts/lfg_edicts.txt"
@@ -47,7 +49,7 @@ class RealModTests(unittest.TestCase):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
         self.assertEqual(len(mod.top("common/tradition_categories")), 8)
         self.assertEqual(len(mod.top("common/traditions")), 8 * 7)
-        self.assertEqual(mod.top("common/governments/civics"), {})
+        self.assertEqual(set(mod.top("common/governments/civics")), {"civic_lfg_applied_biosciences"})
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_xenoarchaeology.1", "lfg_xenoarchaeology.2", "lfg_xenoarchaeology.3",
                                                             "lfg_resorts.1", "lfg_shellworlders.1",
@@ -265,6 +267,14 @@ class MutationTests(unittest.TestCase):
     def test_artifact_action_loc_missing(self):
         self.edit(TRAD_LOC, " artifact_lfg_commission_dig_desc:", " artifact_lfg_commission_dig_dezc:")
         self.assertFails("missing localisation: artifact_lfg_commission_dig_desc")
+
+    def test_councilor_loc_missing(self):
+        self.edit(CIVIC_LOC, " councilor_lfg_applied_biosciences_desc:", " councilor_lfg_applied_biosciences_dezc:")
+        self.assertFails("missing localisation: councilor_lfg_applied_biosciences_desc")
+
+    def test_councilor_unknown_modifier(self):
+        self.edit(COUNCILORS, "pop_biologist_bonus_workforce_mult = 0.03", "pop_biologists_bonus_workforce_mult = 0.03")
+        self.assertFails("pop_biologists_bonus_workforce_mult")
 
     def test_on_action_event_missing(self):
         self.edit(ON_ACTIONS, "lfg_xenoarchaeology.1", "lfg_xenoarchaeology.9")

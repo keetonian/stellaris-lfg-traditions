@@ -27,6 +27,9 @@ Python 3.9+ stdlib only. Always run with `-I`.
 mod/                                  # exactly what ships
   common/tradition_categories/00_<tree name>_lfg.txt         # 8 trees, one per file (sort order, see below)
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
+  common/governments/civics/lfg_civics.txt                   # civic_lfg_applied_biosciences (Biologists: society -> some physics/engineering)
+  common/governments/councilors/lfg_councilors.txt           # councilor_lfg_applied_biosciences (Chief Bioengineer, scientists)
+  gfx/interface/icons/governments/civics/civic_lfg_*.dds     # civic icons, all one colour: art/make_civic_icons.py (new civic -> add to ICONS)
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
   common/scripted_variables/lfg_scripted_variables.txt       # @lfg_species_split_* tunables (50 / 100)
   common/scripted_triggers/lfg_species_split_triggers.txt    # lfg_species_split_eligible (species scope, prev = country)
@@ -67,7 +70,7 @@ mod/                                  # exactly what ships
   common/inline_scripts/technology/giga_mega_repeatable.txt  # GENERATED whole-file override of Giga's inline script
   common/situations/zz_lfg_situation_overrides.txt           # GENERATED
   common/districts/zz_lfg_district_overrides.txt             # GENERATED (district_resort: Hospitality Academies jobs)
-  common/buildings/zz_lfg_building_overrides.txt             # GENERATED (3 holomuseums: Holo-Museums bonus)
+  common/buildings/zz_lfg_building_overrides.txt             # GENERATED (3 holomuseums: Holo-Museums bonus; Archaeostudies Faculty: Expedition Corps)
   common/zones/zz_lfg_zone_overrides.txt                     # GENERATED (8 resort zones: Hospitality Academies; 12 city zones:
                                                              #   Prison Industry; each +50% jobs on that colony type)
   interface/lfg_traditions.gfx                               # sprites -> vanilla/Giga .dds, plus the bulk matter zone icon

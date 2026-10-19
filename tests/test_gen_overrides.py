@@ -86,6 +86,10 @@ def fake_holomuseum(key, research):
 """
 
 
+FAKE_RESEARCH_BUILDINGS = (
+    "building_archaeostudies_faculty = {\n\tbase_buildtime = 360\n\n\tplanet_modifier = {\n"
+    "\t\tplanet_biologists_society_research_produces_add = 0.25\n\t}\n}\n")
+
 FAKE_BUILDINGS = "".join(fake_holomuseum(k, r) for k, r in (
     ("xeno_geology_holomuseum", "engineering"), ("aesthetic_wonders_holomuseum", "physics"),
     ("galactic_history_holomuseum", "society")))
@@ -160,6 +164,7 @@ class GenOverridesTests(unittest.TestCase):
         (self.game / "common/districts").mkdir(parents=True)
         (self.game / "common/buildings").mkdir(parents=True)
         (self.game / "common/buildings/21_grand_archive_buildings.txt").write_text(FAKE_BUILDINGS)
+        (self.game / "common/buildings/05_research_buildings.txt").write_text(FAKE_RESEARCH_BUILDINGS)
         (self.game / "common/districts/00_urban_districts.txt").write_text(FAKE_DISTRICTS)
         (self.game / "common/ascension_perks/00_ascension_paths.txt").write_text(FAKE_APS)
         (self.game / "common/situations/08_machine_age_situations.txt").write_text(FAKE_SITUATIONS)
@@ -220,6 +225,12 @@ class GenOverridesTests(unittest.TestCase):
         # the vanilla block comes first, unchanged
         self.assertLess(districts.index("job_resort_worker_add = @special_district_jobs"),
                         districts.index("job_resort_worker_add = @lfg_resort_extra_district_jobs"))
+
+    def test_archaeostudies_faculty_gets_expedition_corps_block(self):
+        out = self.generate()["mod/common/buildings/zz_lfg_building_overrides.txt"]
+        block = gen_overrides.extract_block(out, "building_archaeostudies_faculty")
+        self.assertIn("has_active_tradition = tr_lfg_xenoarchaeology_expedition_corps", block)
+        self.assertIn("planet_biologists_produces_mult = 0.25", block)
 
     def test_holomuseums_get_holo_museums_block(self):
         out = self.generate()["mod/common/buildings/zz_lfg_building_overrides.txt"]

@@ -1,0 +1,35 @@
+# LFG Traditions - civics. Every civic here uses our own icon from art/make_civic_icons.py: a vanilla glyph recoloured
+# to the mod's civic colour, so they all match.
+
+# Biologists research less society but some physics and engineering (per Biologist job: 3 society -> 2 society
+# + 0.4 physics + 0.4 engineering). Covers the Biologist job swaps too (Rangers, Xeno-Zoo Keepers, Stratovent
+# Researchers, Archaeo-Engineers). Materialist, non-machine species; the materialist ethic already rules out gestalts.
+civic_lfg_applied_biosciences = {
+	icon = "gfx/interface/icons/governments/civics/civic_lfg_applied_biosciences.dds"
+	potential = {
+		ethics = { NOT = { value = ethic_gestalt_consciousness } }
+	}
+	possible = {
+		ethics = {
+			OR = {
+				text = civic_tooltip_materialist
+				value = ethic_materialist
+				value = ethic_fanatic_materialist
+			}
+		}
+		species_archetype = { NOT = { value = MACHINE } }
+	}
+	modifier = {
+		planet_biologists_society_research_produces_add = -1
+		planet_biologists_physics_research_produces_add = 0.4
+		planet_biologists_engineering_research_produces_add = 0.4
+	}
+	random_weight = { base = @civic_default_random_weight }
+	ai_weight = {
+		base = @ai_civic_default_base_weight
+		modifier = {
+			factor = @ai_civic_personality_match_factor
+			has_ai_personality = erudite_explorers
+		}
+	}
+}

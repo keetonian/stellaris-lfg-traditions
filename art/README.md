@@ -23,5 +23,11 @@ Keep it under 1 MB (Steam's limit; `tools/check_mod.py` checks it).
 
 Penal Supertensile Works uses Gigastructural's own 64x64 specialization icon (`GFX_giga_district_specialization_supertensiles`).
 Gigastructural has none for bulk matter, so `mod/gfx/interface/icons/districts/lfg_zone_penal_bulk_matter.dds` is its
-32x32 bulk matter resource icon upscaled to vanilla's 64x64: `python3 art/make_zone_icons.py` (Pillow). It's the only
-texture the mod ships.
+32x32 bulk matter resource icon upscaled to vanilla's 64x64: `python3 art/make_zone_icons.py` (Pillow).
+
+# Civic icons
+
+Every civic from this mod has the same colour: `python3 art/make_civic_icons.py` (Pillow) takes a vanilla civic icon
+(listed in `ICONS`) and recolours it to `CIVIC_COLOR` (amber; vanilla's are teal), keeping its shading.
+Output: `mod/gfx/interface/icons/governments/civics/civic_lfg_<name>.dds`, referenced by the civic's `icon`.
+A new civic needs an entry in `ICONS`.
