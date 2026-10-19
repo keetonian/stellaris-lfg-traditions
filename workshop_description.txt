@@ -67,9 +67,10 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [i]Entertainment for the whole galaxy.[/i] Non-gestalt empires.
 [list]
 [*]+1% trade for every empire you have contact with (up to +20%).
-[*][b]Holo-Museums:[/b] every Grand Archive holomuseum you own is twice as effective.
+[*][b]Holo-Museums:[/b] every Grand Archive holomuseum you own grants its base bonuses again.
 [*][b]Ratings War:[/b] war is prime time: less war exhaustion and more entertainer output while at war.
 [*][b]Syndication Deals:[/b] entertainers earn more trade for every commercial pact you have.
+[*]Finisher, [b]Star Power:[/b] +1% diplomatic weight per 1,000 entertainers (up to +30%).
 [/list]
 
 [h3]Tourism[/h3]

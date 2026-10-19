@@ -576,10 +576,17 @@ tr_lfg_broadcast_adopt = {
 	}
 }
 
+# Star Power: diplomatic weight +1% per 1,000 entertainers employed (value:lfg_entertainer_thousands, max +30%).
 tr_lfg_broadcast_finish = {
 	unlocks_agenda = agenda_lfg_gala_season
+	custom_tooltip = tr_lfg_broadcast_finish_tt
 	modifier = {
 		ascension_perks_add = 1
+	}
+	triggered_modifier = {
+		potential = { always = yes }
+		diplo_weight_mult = 0.01
+		mult = value:lfg_entertainer_thousands
 	}
 }
 

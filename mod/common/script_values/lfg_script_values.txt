@@ -222,3 +222,18 @@ lfg_cell_blocks_cost_mult = {
 		mode = add
 	}
 }
+
+# Broadcast finisher - Star Power: entertainers employed across the empire / 1000, max 30. Same country-scope
+# num_assigned_jobs count as lfg_resort_worker_hundreds.
+lfg_entertainer_thousands = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = num_assigned_jobs
+		parameters = {
+			job = entertainer
+		}
+		mode = add
+	}
+	divide = 1000
+	max = 30
+}

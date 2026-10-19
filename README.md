@@ -143,12 +143,12 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 | Tradition | Effect |
 |---|---|
 | Adopt ⚙ | Trade +1% per empire in contact (max +20%), entertainer output +5% |
-| 1. Holo-Museums | Every Grand Archive holomuseum you own is twice as effective: specimen bonus doubled, and its planet's entertainers get its +0.25 unity and +0.25 research again (generated building override) |
+| 1. Holo-Museums | Every Grand Archive holomuseum you own grants its base bonuses again (stacks with other sources): specimen bonus +15% more, and its planet's entertainers get its +0.25 unity and +0.25 research again (generated building override) |
 | 2. Celebrity Council | Council agenda speed +15%, entertainer unity +0.25 |
 | 3. Propaganda Serials | Diplomatic weight +10% · government ethic attraction −15% |
 | 4. Ratings War ⚙ | Envoys harming relations +50% · while at war: war exhaustion gain −20%, entertainer output +20% |
 | 5. Syndication Deals ⚙ | Per commercial pact (no cap): entertainers +0.5 trade per 100 entertainers · +1 envoy, envoys improving relations +25% · researcher output −5% |
-| Finish | Unlocks agenda **Gala Season** |
+| Finish ⚙ | **Star Power:** diplomatic weight +1% per 1,000 entertainers employed (max +30%; `value:lfg_entertainer_thousands`) · unlocks agenda **Gala Season** |
 
 ### Tourism: resort worlds as showpieces
 **Who:** regular empires. **Adopt requires:** *Resort Colonies*. **Hook:** an empire can only have **one** resort world, so bonuses scale with how built-up it is: per 100 Resort Workers employed and per 1,000 Tourists there (diplomatic weight capped at +30%).
