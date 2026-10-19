@@ -2,7 +2,7 @@
 
 # Scope: country. Expects event_target:lfg_split_source (the species to split).
 # Kills half of every pop group of the source species, then creates @lfg_species_split_count subspecies, each with one extra random
-# positive organic trait, and moves an equal share of every pop group of the source species into each one.
+# positive and one extra random negative organic trait, and moves an equal share of every pop group of the source species into each one.
 # Equal shares without knowing group sizes: variant k takes 1/(remaining) of what is left (1/50, 1/49, ... 1/1),
 # so the source species ends up empty. Small pop groups round, so some subspecies can end up with fewer pops.
 lfg_split_species = {
@@ -22,6 +22,17 @@ lfg_split_species = {
 			change_scoped_species = no
 			add_random_species_trait = {
 				trait_has_all_tags = { organic positive }
+				NOT = { trait_has_any_tag = { special cybernetic presapient drawbacks genetic_ascension lfg_predator_only } }
+			}
+			effect = { save_event_target_as = lfg_split_variant }
+		}
+		# Then a random negative trait: a second modify_species on the new variant (one add_random_species_trait per block
+		# is the only form vanilla uses). The positive-only intermediate species is left with no pops.
+		modify_species = {
+			species = event_target:lfg_split_variant
+			change_scoped_species = no
+			add_random_species_trait = {
+				trait_has_all_tags = { organic negative }
 				NOT = { trait_has_any_tag = { special cybernetic presapient drawbacks genetic_ascension lfg_predator_only } }
 			}
 			effect = { save_event_target_as = lfg_split_variant }

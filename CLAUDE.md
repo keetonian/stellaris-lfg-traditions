@@ -181,7 +181,7 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
   available), and the user chose an edict over overriding UIOD's species window. Picking happens in the event (4 random
   eligible candidates saved as `event_target:lfg_split_candidate_1..4`, "Show others" re-fires the event).
 - `lfg_split_species` (country scope, needs `event_target:lfg_split_source`): `while` 50x: `modify_species` with
-  `change_scoped_species = no` + `add_random_species_trait` (filter copied from vanilla `add_random_trait_evopred`), then
+  `change_scoped_species = no` + `add_random_species_trait` (filter copied from vanilla `add_random_trait_evopred`), then a second `modify_species` on that variant for a random `organic negative` trait (leaves a pop-less intermediate species; opposites unfiltered), then
   for every owned pop group of the source species: `colony = { create_pop_group = { size = 0 species = variant
   effect = { transfer_pop_amount = { percentage = value:lfg_species_split_share } } } }` (pattern from vanilla
   `02_machine_age_effects.txt` cyberization). The share is 1/remaining (1/50 ... 1/1); `percentage` is a 0-1 fraction.

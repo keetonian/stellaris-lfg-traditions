@@ -5,7 +5,7 @@ A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games th
 - **8 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
 - **6 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
 - **2 ascension perks:** **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
-- **1 edict, Species Experimentation** (Evolutionary Predators, after finishing Mutation): half of a secondary species dies, the rest splits into 50 random-trait subspecies.
+- **1 edict, Species Experimentation** (Evolutionary Predators, after finishing Mutation): half of a secondary species dies, the rest splits into 50 subspecies, each with a random positive and a random negative trait.
 - **Overrides** of vanilla/Gigastructural definitions (generated, see [Overrides](#overrides-of-vanilla-and-gigastructural-content)): Synthetic Fertility's situation speeds up every year, two trees extend the Accommodation District and holomuseums, and the repeatable techs check the Shelve edicts.
 
 This is a gameplay mod (it adds `common/` files), so it **changes the game checksum**. Everyone in a multiplayer game needs it.
@@ -272,7 +272,7 @@ Not every repeatable is worth chasing. **Curated Progress** (`ap_lfg_curated_pro
 ## Edict: Species Experimentation (Evolutionary Predators)
 
 Subject one of your secondary species to brutal experiments: **half of it dies**, and the survivors are split into
-**50 subspecies**, each with **one extra random positive organic trait**, with the population divided evenly between them.
+**50 subspecies**, each with **one extra random positive and one extra random negative organic trait**, with the population divided evenly between them.
 
 - **Who:** empires with the **Evolutionary Predators** origin that have **finished the vanilla Mutation tradition tree**.
   The edict is hidden until then.
@@ -282,7 +282,9 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
 - **How it works:** activating the edict opens a popup listing up to 4 eligible species ("Show other species" re-rolls).
   Picking one kills 50% of every pop group of that species, then divides the rest 1/50, 1/49, … 1/1 so the shares come
   out equal. Small pop groups round, so some subspecies may end up with fewer pops.
-- **Traits:** positive, organic, and not special/cybernetic/presapient/drawback/genetic-ascension (like the origin's own mutations).
+- **Traits:** one positive and one negative, both organic and not special/cybernetic/presapient/drawback/genetic-ascension (like the origin's own mutations).
+  The negative trait is added by a second `modify_species` on the new variant, so each subspecies leaves behind an empty intermediate species.
+  Opposite traits (e.g. Strong + Weak) aren't filtered out.
 - Numbers (50 subspecies, 100 pops) are in `mod/common/scripted_variables/lfg_scripted_variables.txt`.
 
 **Unverified:** the most script-heavy part of the mod; test on a save you don't mind losing.
