@@ -63,5 +63,5 @@
 
 # Xenoarchaeology: minor artifacts per anomaly researched (lfg_xenoarchaeology.1; tooltip tr_lfg_xenoarchaeology_anomaly_studies_tt says 5).
 @lfg_anomaly_minor_artifacts = 5
-# Xenoarchaeology - Commissioned Digs: minor artifact cost (artifact_lfg_commission_dig; loc says 1,500).
-@lfg_commission_dig_cost = 1500
+# Xenoarchaeology - Commissioned Digs: minor artifact cost (artifact_lfg_commission_dig; loc says 2,000).
+@lfg_commission_dig_cost = 2000
