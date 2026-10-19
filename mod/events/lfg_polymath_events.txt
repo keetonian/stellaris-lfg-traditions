@@ -1,4 +1,4 @@
-# LFG Traditions - Polymath Commons events.
+# LFG Traditions - Polymathy events.
 namespace = lfg_polymath
 
 # Yearly (on_yearly_pulse_country): with Reckless Experimentation, 5% chance of a lab accident and 15% chance of a
@@ -9,7 +9,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_tradition = tr_lfg_polymath_reckless_experimentation
+		has_tradition = tr_lfg_polymathy_reckless_experimentation
 		any_owned_planet = { is_capital = no }
 	}
 

@@ -1,6 +1,6 @@
 # LFG Traditions - jobs.
 
-# Hard Labour: inmates untangle supertensiles by hand (modelled on Gigastructural's giga_supertensiles_extractor and
+# Penitence: inmates untangle supertensiles by hand (modelled on Gigastructural's giga_supertensiles_extractor and
 # vanilla's foundry_prison_worker). Provided only by zone_lfg_penal_supertensiles, which needs supertensiles
 # (global flag giga_buildcap_j), a penal colony and Prison Industry.
 lfg_penal_supertensile_laborer = {
@@ -39,7 +39,6 @@ lfg_penal_supertensile_laborer = {
 		upkeep = {
 			minerals = @lfg_penal_supertensile_mineral_upkeep
 			alloys = @lfg_penal_supertensile_alloys_upkeep
-			energy = @lfg_penal_supertensile_energy_upkeep
 			unity = @lfg_penal_supertensile_unity_upkeep
 		}
 	}
@@ -54,9 +53,9 @@ lfg_penal_supertensile_laborer = {
 	}
 }
 
-# Hard Labour: inmates compact rubble into Gigastructural's bulk matter, at a ruinous price: per job, 0.01 matter for
-# 180 energy + 30 minerals + 40 alloys + 1 dark matter a month, i.e. 18,000 energy + 3,000 minerals + 4,000 alloys +
-# 100 dark matter per matter (Giga's
+# Penitence: inmates compact rubble into Gigastructural's bulk matter, at a ruinous price: per job, 0.01 matter for
+# 180 energy + 30 minerals + 40 alloys + 0.5 dark matter a month, i.e. 18,000 energy + 3,000 minerals + 4,000 alloys +
+# 50 dark matter per matter (Giga's
 # harvesting costs 16,000 energy + 4,000 alloys, @planet_harvest_cost_*). Provided only by zone_lfg_penal_bulk_matter (bulk matter enabled, penal colony, finisher).
 lfg_penal_matter_compactor = {
 	category = worker

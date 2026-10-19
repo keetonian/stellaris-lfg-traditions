@@ -7,17 +7,17 @@
 
 # Every flaw and gift of our species is an advantage: scales with our main species' negative and positive traits,
 # the species in the empire, their subspecies and the world types we live on. Any empire.
-tradition_lfg_evolution = {
-	desc = tradition_lfg_evolution_desc
+tradition_lfg_lineage = {
+	desc = tradition_lfg_lineage_desc
 	tree_template = "tree_21_11"
-	adoption_bonus = "tr_lfg_evolution_adopt"
-	finish_bonus = "tr_lfg_evolution_finish"
+	adoption_bonus = "tr_lfg_lineage_adopt"
+	finish_bonus = "tr_lfg_lineage_finish"
 	traditions = {
-		"tr_lfg_evolution_hardship"
-		"tr_lfg_evolution_honed_strengths"
-		"tr_lfg_evolution_migratory_instinct"
-		"tr_lfg_evolution_branching_lineages"
-		"tr_lfg_evolution_every_shore"
+		"tr_lfg_lineage_hardship"
+		"tr_lfg_lineage_honed_strengths"
+		"tr_lfg_lineage_migratory_instinct"
+		"tr_lfg_lineage_branching_lineages"
+		"tr_lfg_lineage_every_shore"
 	}
 	ai_weight = {
 		factor = 1

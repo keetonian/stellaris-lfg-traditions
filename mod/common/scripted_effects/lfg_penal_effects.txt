@@ -1,4 +1,4 @@
-# LFG Traditions - Hard Labour effects.
+# LFG Traditions - Penitence effects.
 
 # Planet scope. Keeps static modifier $MODIFIER$ on this planet exactly while it is the owner's penal colony and the
 # owner has $TRADITION$.
@@ -19,14 +19,14 @@ lfg_sync_penal_modifier = {
 	}
 }
 
-# Planet scope. Penal Industries (Hard Labour finisher): lfg_penal_prison_industry (or _crafter) with multiplier = Prison Districts here
+# Planet scope. Penal Industries (Penitence finisher): lfg_penal_prison_industry (or _crafter) with multiplier = Prison Districts here
 # (planet variable lfg_prison_districts). Re-added only when the count changes, like lfg_sync_arc_neighbours.
 lfg_sync_prison_industry = {
 	set_variable = { which = lfg_prison_districts_now value = 0 }
 	if = {
 		limit = {
 			has_modifier = penal_colony
-			owner = { has_tradition = tr_lfg_penal_finish }
+			owner = { has_tradition = tr_lfg_penitence_finish }
 		}
 		export_trigger_value_to_variable = {
 			trigger = num_districts
@@ -72,7 +72,7 @@ lfg_sync_penal_unemployed = {
 	if = {
 		limit = {
 			has_modifier = penal_colony
-			owner = { has_tradition = tr_lfg_penal_idle_hands }
+			owner = { has_tradition = tr_lfg_penitence_idle_hands }
 		}
 		export_trigger_value_to_variable = {
 			trigger = num_unemployed
@@ -102,7 +102,7 @@ lfg_sync_penal_unemployed = {
 	if = {
 		limit = {
 			has_modifier = penal_colony
-			owner = { has_tradition = tr_lfg_penal_idle_hands }
+			owner = { has_tradition = tr_lfg_penitence_idle_hands }
 			check_variable = { which = lfg_unemployed_hundreds_now value < 1 }
 		}
 		if = {

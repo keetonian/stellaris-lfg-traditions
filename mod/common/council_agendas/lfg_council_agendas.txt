@@ -40,7 +40,7 @@ agenda_lfg_great_project_classic = {
 agenda_lfg_eureka_season = {
 	agenda_cost = @lfg_agenda_cost
 	allow = {
-		has_tradition = tr_lfg_polymath_finish
+		has_tradition = tr_lfg_polymathy_finish
 	}
 	potential = {
 		has_paragon_dlc = yes
@@ -54,7 +54,7 @@ agenda_lfg_eureka_season = {
 agenda_lfg_harvest_tithe = {
 	agenda_cost = @lfg_agenda_cost
 	allow = {
-		has_tradition = tr_lfg_granary_finish
+		has_tradition = tr_lfg_abundance_finish
 	}
 	potential = {
 		has_paragon_dlc = yes
@@ -94,7 +94,7 @@ agenda_lfg_gala_season = {
 agenda_lfg_grand_tour_season = {
 	agenda_cost = @lfg_agenda_cost
 	allow = {
-		has_tradition = tr_lfg_resorts_adopt
+		has_tradition = tr_lfg_tourism_adopt
 	}
 	potential = {
 		has_paragon_dlc = yes
@@ -106,12 +106,12 @@ agenda_lfg_grand_tour_season = {
 	finish_modifier = agenda_lfg_grand_tour_season_finish
 }
 
-# Granary Kings (unlocked on adoption). Doubles the Granary Kings finisher's growth bonus while its finish modifier
-# is active (the scaling lives in tr_lfg_granary_finish, keyed on agenda_lfg_feast_of_plenty_finish).
+# Abundance (unlocked on adoption). Doubles the Abundance finisher's growth bonus while its finish modifier
+# is active (the scaling lives in tr_lfg_abundance_finish, keyed on agenda_lfg_feast_of_plenty_finish).
 agenda_lfg_feast_of_plenty = {
 	agenda_cost = @lfg_agenda_cost
 	allow = {
-		has_tradition = tr_lfg_granary_adopt
+		has_tradition = tr_lfg_abundance_adopt
 	}
 	potential = {
 		has_paragon_dlc = yes

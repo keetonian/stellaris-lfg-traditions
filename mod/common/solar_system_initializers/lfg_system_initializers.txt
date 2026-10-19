@@ -1,39 +1,79 @@
 # LFG Traditions - special systems.
 
-# Lone Tide: a system beyond the galactic rim with no hyperlanes, home to a pre-FTL civilization on a huge ocean world.
+# Lone Tide: a trinary system (B + A + F, vanilla sc_trinary_2) beyond the galactic rim with no hyperlanes, with
+# sixteen planets (nine with moons, 17 moons) and a pre-FTL civilization on a huge ocean world, Thalassa.
 # Never placed by map generation (usage_odds = 0); events/lfg_lone_tide_events.txt spawns it at game start
 # (75% of games). Only reachable by jump drives and similar.
 lfg_lone_tide_init = {
 	name = "NAME_lfg_lone_tide"
-	class = "sc_g"
+	class = "sc_trinary_2"
 
 	usage = misc_system_init
 	usage_odds = 0
 
 	flags = { lfg_lone_tide }
 
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 246
+	}
+
+	# The three stars sit apart on a ring 60 out from the empty centre, 120 degrees apart (vanilla's sc_trinary_2
+	# L-Cluster layout, distantstars_init_05): each `class = star` takes the next star of the trinary class, and
+	# orbit_distance / orbit_angle add up from the previous body.
 	planet = {
-		name = "NAME_lfg_lone_tide"
-		class = "pc_g_star"
-		orbit_distance = 0
-		orbit_angle = 1
+		name = "NAME_lfg_lone_tide_a"
+		class = star
+		orbit_distance = 60
+		orbit_angle = 90
 		size = 30
 		has_ring = no
 	}
+	planet = {
+		name = "NAME_lfg_lone_tide_b"
+		class = star
+		orbit_distance = 0
+		orbit_angle = 120
+		size = 26
+		has_ring = no
+	}
+	planet = {
+		name = "NAME_lfg_lone_tide_c"
+		class = star
+		orbit_distance = 0
+		orbit_angle = 120
+		size = 22
+		has_ring = no
+	}
 
+	change_orbit = 45
 	planet = {
 		class = "pc_molten"
-		orbit_distance = 35
-		orbit_angle = 60
+		orbit_distance = 0
+		orbit_angle = 40
 		size = 10
 		has_ring = no
 	}
 
 	planet = {
+		class = "pc_toxic"
+		orbit_distance = 20
+		orbit_angle = 160
+		size = 15
+		has_ring = no
+		moon = {
+			class = "pc_barren"
+			size = 5
+			orbit_angle = 90
+			orbit_distance = 6
+		}
+	}
+
+	planet = {
 		name = "NAME_lfg_thalassa"
 		class = "pc_ocean"
-		orbit_distance = 35
-		orbit_angle = 140
+		orbit_distance = 25
+		orbit_angle = 290
 		size = 35
 		has_ring = no
 
@@ -41,21 +81,230 @@ lfg_lone_tide_init = {
 			prevent_anomaly = yes
 			generate_pre_ftls_on_planet = yes	# vanilla: random age, population sized by age
 		}
+
+		moon = {
+			class = "pc_barren"
+			size = 7
+			orbit_angle = 60
+			orbit_distance = 8
+		}
+		moon = {
+			class = "pc_frozen"
+			size = 5
+			orbit_angle = 230
+			orbit_distance = 5
+		}
+	}
+
+	planet = {
+		class = "pc_arid"
+		orbit_distance = 22
+		orbit_angle = 70
+		size = 16
+		has_ring = no
+		moon = {
+			class = "pc_barren_cold"
+			size = 5
+			orbit_angle = 180
+			orbit_distance = 6
+		}
 	}
 
 	planet = {
 		class = "pc_gas_giant"
-		orbit_distance = 40
-		orbit_angle = 250
-		size = 28
+		orbit_distance = 30
+		orbit_angle = 200
+		size = 30
 		has_ring = yes
+		moon = {
+			class = "pc_frozen"
+			size = 8
+			orbit_angle = 30
+			orbit_distance = 7
+		}
+		moon = {
+			class = "pc_barren"
+			size = 6
+			orbit_angle = 150
+			orbit_distance = 5
+		}
+		moon = {
+			class = "pc_toxic"
+			size = 7
+			orbit_angle = 270
+			orbit_distance = 6
+		}
+	}
+
+	planet = {
+		class = "pc_gas_giant"
+		orbit_distance = 30
+		orbit_angle = 330
+		size = 25
+		has_ring = no
+		moon = {
+			class = "pc_frozen"
+			size = 6
+			orbit_angle = 100
+			orbit_distance = 6
+		}
+		moon = {
+			class = "pc_molten"
+			size = 5
+			orbit_angle = 260
+			orbit_distance = 5
+		}
+	}
+
+	planet = {
+		class = "pc_barren_cold"
+		orbit_distance = 28
+		orbit_angle = 120
+		size = 10
+		has_ring = no
 	}
 
 	planet = {
 		class = "pc_frozen"
-		orbit_distance = 30
-		orbit_angle = 30
+		orbit_distance = 25
+		orbit_angle = 15
 		size = 14
+		has_ring = no
+		moon = {
+			class = "pc_barren_cold"
+			size = 4
+			orbit_angle = 200
+			orbit_distance = 5
+		}
+	}
+
+	planet = {
+		class = "pc_ice_asteroid"
+		orbit_distance = 20
+		orbit_angle = 250
+		size = 4
+		has_ring = no
+	}
+
+	planet = {
+		class = "pc_tundra"
+		orbit_distance = 25
+		orbit_angle = 140
+		size = 14
+		has_ring = no
+		moon = {
+			class = "pc_barren"
+			size = 5
+			orbit_angle = 300
+			orbit_distance = 5
+		}
+	}
+
+	planet = {
+		class = "pc_gas_giant"
+		orbit_distance = 35
+		orbit_angle = 280
+		size = 32
+		has_ring = yes
+		moon = {
+			class = "pc_frozen"
+			size = 9
+			orbit_angle = 20
+			orbit_distance = 8
+		}
+		moon = {
+			class = "pc_barren_cold"
+			size = 6
+			orbit_angle = 110
+			orbit_distance = 6
+		}
+		moon = {
+			class = "pc_toxic"
+			size = 6
+			orbit_angle = 200
+			orbit_distance = 7
+		}
+		moon = {
+			class = "pc_molten"
+			size = 4
+			orbit_angle = 290
+			orbit_distance = 5
+		}
+	}
+
+	planet = {
+		class = "pc_toxic"
+		orbit_distance = 28
+		orbit_angle = 50
+		size = 12
+		has_ring = no
+	}
+
+	planet = {
+		class = "pc_frozen"
+		orbit_distance = 25
+		orbit_angle = 190
+		size = 18
+		has_ring = yes
+		moon = {
+			class = "pc_barren_cold"
+			size = 5
+			orbit_angle = 80
+			orbit_distance = 6
+		}
+		moon = {
+			class = "pc_frozen"
+			size = 4
+			orbit_angle = 250
+			orbit_distance = 5
+		}
+	}
+
+	planet = {
+		class = "pc_barren_cold"
+		orbit_distance = 22
+		orbit_angle = 320
+		size = 8
+		has_ring = no
+	}
+
+	planet = {
+		count = 2
+		class = "pc_ice_asteroid"
+		orbit_distance = 12
+		orbit_angle = 100
+		size = 3
+		has_ring = no
+	}
+}
+
+# Emberfall: a single blue B-class star with one world, Crucible, a size 60 molten planet (as big as vanilla's largest
+# gas giants; one base district per size). Spawned in every game by events/lfg_emberfall_events.txt next to a random
+# system, connected by hyperlanes. usage_odds = 0 so map generation never places it.
+lfg_emberfall_init = {
+	name = "NAME_lfg_emberfall"
+	class = "sc_b"
+
+	usage = misc_system_init
+	usage_odds = 0
+
+	flags = { lfg_emberfall }
+
+	planet = {
+		name = "NAME_lfg_emberfall"
+		class = "pc_b_star"
+		orbit_distance = 0
+		orbit_angle = 1
+		size = 30
+		has_ring = no
+	}
+
+	planet = {
+		name = "NAME_lfg_crucible"
+		class = "pc_molten"
+		orbit_distance = 80
+		orbit_angle = 135
+		size = 60
 		has_ring = no
 	}
 }

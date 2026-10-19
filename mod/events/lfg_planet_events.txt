@@ -16,6 +16,7 @@ planet_event = {
 		remove_modifier = lfg_shellworld_arc_neighbours
 		remove_modifier = lfg_shellworld_natural_world
 		remove_modifier = lfg_galactic_destination
+		remove_modifier = lfg_tourism_finish
 		remove_modifier = lfg_penal_adopt
 		remove_modifier = lfg_penal_wardens_code
 		remove_modifier = lfg_penal_transportation

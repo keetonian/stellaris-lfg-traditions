@@ -1,4 +1,4 @@
-# LFG Traditions - The Grand Tour events.
+# LFG Traditions - Tourism events.
 namespace = lfg_resorts
 
 # Monthly (on_monthly_pulse_country) and when Galactic Destination is adopted: keep the lfg_galactic_destination
@@ -12,18 +12,35 @@ country_event = {
 
 	trigger = {
 		OR = {
-			has_tradition = tr_lfg_resorts_galactic_destination
+			has_tradition = tr_lfg_tourism_galactic_destination
 			has_country_flag = lfg_galactic_destination_applied
 		}
 	}
 
 	immediate = {
+		# Tourism finisher (needs Galactic Destination, so this event runs): +10% job efficiency on the resort world.
+		every_owned_planet = {
+			if = {
+				limit = {
+					has_modifier = resort_colony
+					owner = { has_tradition = tr_lfg_tourism_finish }
+				}
+				if = {
+					limit = { NOT = { has_modifier = lfg_tourism_finish } }
+					add_modifier = { modifier = lfg_tourism_finish days = -1 }
+				}
+			}
+			else_if = {
+				limit = { has_modifier = lfg_tourism_finish }
+				remove_modifier = lfg_tourism_finish
+			}
+		}
 		every_owned_planet = {
 			limit = {
 				has_modifier = lfg_galactic_destination
 				NAND = {
 					has_modifier = resort_colony
-					owner = { has_tradition = tr_lfg_resorts_galactic_destination }
+					owner = { has_tradition = tr_lfg_tourism_galactic_destination }
 				}
 			}
 			remove_modifier = lfg_galactic_destination
@@ -31,7 +48,7 @@ country_event = {
 		set_variable = { which = lfg_tourists value = 0 }
 		remove_country_flag = lfg_galactic_destination_applied
 		if = {
-			limit = { has_tradition = tr_lfg_resorts_galactic_destination }
+			limit = { has_tradition = tr_lfg_tourism_galactic_destination }
 			set_country_flag = lfg_galactic_destination_applied
 			every_owned_planet = {
 				limit = { has_modifier = resort_colony }

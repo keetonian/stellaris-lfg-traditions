@@ -6,17 +6,17 @@
 # among vanilla's regular trees (00_<tree>.txt) instead of after the ascension trees (01_*).
 
 # Research from everyone: diversity and rivalry drive it, and it's a little dangerous.
-tradition_lfg_polymath = {
-	desc = tradition_lfg_polymath_desc
+tradition_lfg_polymathy = {
+	desc = tradition_lfg_polymathy_desc
 	tree_template = "tree_21_11"
-	adoption_bonus = "tr_lfg_polymath_adopt"
-	finish_bonus = "tr_lfg_polymath_finish"
+	adoption_bonus = "tr_lfg_polymathy_adopt"
+	finish_bonus = "tr_lfg_polymathy_finish"
 	traditions = {
-		"tr_lfg_polymath_many_minds"
-		"tr_lfg_polymath_rival_laboratories"
-		"tr_lfg_polymath_open_journals"
-		"tr_lfg_polymath_reckless_experimentation"
-		"tr_lfg_polymath_interdisciplinary_seminars"
+		"tr_lfg_polymathy_many_minds"
+		"tr_lfg_polymathy_rival_laboratories"
+		"tr_lfg_polymathy_open_journals"
+		"tr_lfg_polymathy_reckless_experimentation"
+		"tr_lfg_polymathy_interdisciplinary_seminars"
 	}
 	ai_weight = {
 		factor = 5

@@ -3,6 +3,7 @@
 on_game_start = {
 	events = {
 		lfg_lone_tide.1	# 75%: spawn the Lone Tide system beyond the rim
+		lfg_emberfall.1	# spawn the Emberfall system somewhere in the galaxy
 	}
 }
 
@@ -10,7 +11,7 @@ on_monthly_pulse_country = {
 	events = {
 		lfg_resorts.1	# Galactic Destination: resort world modifier + tourist count
 		lfg_shellworlders.1	# Shellworlders: artificial world modifiers
-		lfg_penal.1	# Hard Labour: penal colony modifiers + inmate count
+		lfg_penal.1	# Penitence: penal colony modifiers + inmate count
 	}
 }
 

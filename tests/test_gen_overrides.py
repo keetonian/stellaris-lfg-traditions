@@ -215,7 +215,7 @@ class GenOverridesTests(unittest.TestCase):
         districts = out["mod/common/districts/zz_lfg_district_overrides.txt"]
         self.assertNotIn("district_city", districts)
         self.assertIn("\t# LFG: added by stellaris-lfg-traditions\n\ttriggered_planet_modifier = {", districts)
-        self.assertIn("has_active_tradition = tr_lfg_resorts_hospitality_academies", districts)
+        self.assertIn("has_active_tradition = tr_lfg_tourism_hospitality_academies", districts)
         self.assertIn("planet_max_districts_add = @lfg_resort_districts_per_district", districts)
         # the vanilla block comes first, unchanged
         self.assertLess(districts.index("job_resort_worker_add = @special_district_jobs"),
@@ -272,7 +272,7 @@ class GenOverridesTests(unittest.TestCase):
             block = gen_overrides.extract_block(out, zone)
             self.assertIn("\t\tresort\n\t}\n\t# LFG: added by stellaris-lfg-traditions\n\ttriggered_district_planet_modifier = {", block)
             self.assertIn(f"\t\tjob_{job}_add = {amount}\n\t\tmult = 0.5\n", block)
-            self.assertIn("has_active_tradition = tr_lfg_resorts_hospitality_academies", block)
+            self.assertIn("has_active_tradition = tr_lfg_tourism_hospitality_academies", block)
 
     def test_origin_texts_mention_virtuality_block(self):
         loc = self.generate()[gen_overrides.LOC_OVERRIDES_FILE]
@@ -296,7 +296,7 @@ class GenOverridesTests(unittest.TestCase):
         out = self.generate()["mod/common/zones/zz_lfg_zone_overrides.txt"]
         for zone, jobs in gen_overrides.PENAL_ZONES:
             block = gen_overrides.extract_block(out, zone)
-            self.assertIn("has_tradition = tr_lfg_penal_prison_industry", block)
+            self.assertIn("has_tradition = tr_lfg_penitence_prison_industry", block)
             self.assertIn("has_modifier = penal_colony", block)
             for job, amount in jobs:
                 self.assertIn(f"\t\tjob_{job}_add = {amount}\n", block)

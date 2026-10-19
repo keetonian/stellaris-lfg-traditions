@@ -11,7 +11,7 @@ import check_mod  # noqa: E402
 
 GAME_INSTALLED = check_mod.DEFAULT_GAME.exists() and check_mod.DEFAULT_GIGA.exists()
 TRADITIONS = "common/traditions/lfg_traditions.txt"
-CATEGORIES = "common/tradition_categories/00_granary_kings_lfg.txt"
+CATEGORIES = "common/tradition_categories/00_abundance_lfg.txt"
 TRAD_LOC = "localisation/english/lfg_traditions_l_english.yml"
 GFX = "interface/lfg_traditions.gfx"
 EVENTS = "events/lfg_species_split_events.txt"
@@ -53,7 +53,7 @@ class RealModTests(unittest.TestCase):
                                                             "lfg_resorts.1", "lfg_shellworlders.1",
                                                             "lfg_planet.1", "lfg_lone_tide.1",
                                                             "lfg_synthetic_fertility.1", "lfg_penal.1",
-                                                            "lfg_massed_assault.1"})
+                                                            "lfg_massed_assault.1", "lfg_emberfall.1"})
         self.assertEqual(len(mod.top("common/council_agendas")), 7)
         self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress", "ap_lfg_massed_assault"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
@@ -92,37 +92,37 @@ class MutationTests(unittest.TestCase):
         self.assertFails("parse error")
 
     def test_missing_tradition_definition(self):
-        self.edit(CATEGORIES, '"tr_lfg_granary_tithe_barns"', '"tr_lfg_granary_tithe_barnz"')
-        self.assertFails("tr_lfg_granary_tithe_barnz is not defined")
+        self.edit(CATEGORIES, '"tr_lfg_abundance_tithe_barns"', '"tr_lfg_abundance_tithe_barnz"')
+        self.assertFails("tr_lfg_abundance_tithe_barnz is not defined")
 
     def test_tradition_not_in_any_tree(self):
-        self.edit(CATEGORIES, '\t\t"tr_lfg_granary_tithe_barns"\n', "")
-        self.assertFails("tr_lfg_granary_tithe_barns: defined but not part of any tradition category")
+        self.edit(CATEGORIES, '\t\t"tr_lfg_abundance_tithe_barns"\n', "")
+        self.assertFails("tr_lfg_abundance_tithe_barns: defined but not part of any tradition category")
         self.assertFails("expected 5 traditions, found 4")
 
     def test_prerequisite_outside_tree(self):
-        self.edit(TRADITIONS, "has_tradition = tr_lfg_megaforge_priority", "has_tradition = tr_lfg_granary_tithe_barns")
-        self.assertFails("requires tr_lfg_granary_tithe_barns, which is not in tradition_lfg_megaforge")
+        self.edit(TRADITIONS, "has_tradition = tr_lfg_megaforge_priority", "has_tradition = tr_lfg_abundance_tithe_barns")
+        self.assertFails("requires tr_lfg_abundance_tithe_barns, which is not in tradition_lfg_megaforge")
 
     def test_prerequisite_wrong_shape(self):
-        self.edit(TRADITIONS, "\t\thas_tradition = tr_lfg_granary_seed_vaults\n", "")
+        self.edit(TRADITIONS, "\t\thas_tradition = tr_lfg_abundance_seed_vaults\n", "")
         self.assertFails("should require slots [1, 2]")
 
     def test_chain_layout_prerequisites(self):
-        self.edit(TRADITIONS, "\t\thas_tradition = tr_lfg_penal_transportation\n", "\t\thas_tradition = tr_lfg_penal_wardens_code\n")
-        self.assertFails("tr_lfg_penal_idle_hands")
+        self.edit(TRADITIONS, "\t\thas_tradition = tr_lfg_penitence_transportation\n", "\t\thas_tradition = tr_lfg_penitence_wardens_code\n")
+        self.assertFails("tr_lfg_penitence_idle_hands")
 
     def test_unknown_tree_template(self):
         self.edit(CATEGORIES, 'tree_template = "tree_21_11"', 'tree_template = "tree_99"')
         self.assertFails("unknown tree_template")
 
     def test_missing_loc_key(self):
-        self.edit(TRAD_LOC, " tr_lfg_granary_tithe_barns_delayed:", " tr_lfg_granary_tithe_barnsXX_delayed:")
-        self.assertFails("missing localisation: tr_lfg_granary_tithe_barns_delayed")
+        self.edit(TRAD_LOC, " tr_lfg_abundance_tithe_barns_delayed:", " tr_lfg_abundance_tithe_barnsXX_delayed:")
+        self.assertFails("missing localisation: tr_lfg_abundance_tithe_barns_delayed")
 
     def test_duplicate_loc_key(self):
-        self.edit(TRAD_LOC, " tr_lfg_granary_tithe_barns_delayed:", " tr_lfg_granary_tithe_barns_desc:")
-        self.assertFails("duplicate localisation key tr_lfg_granary_tithe_barns_desc")
+        self.edit(TRAD_LOC, " tr_lfg_abundance_tithe_barns_delayed:", " tr_lfg_abundance_tithe_barns_desc:")
+        self.assertFails("duplicate localisation key tr_lfg_abundance_tithe_barns_desc")
 
     def test_loc_without_bom(self):
         path = self.mod / TRAD_LOC
@@ -130,7 +130,7 @@ class MutationTests(unittest.TestCase):
         self.assertFails("missing UTF-8 BOM")
 
     def test_malformed_loc_line(self):
-        self.edit(TRAD_LOC, ' tradition_lfg_granary:0 "Granary Kings"', ' tradition_lfg_granary:0 Granary Kings')
+        self.edit(TRAD_LOC, ' tradition_lfg_abundance:0 "Abundance"', ' tradition_lfg_abundance:0 Granary Kings')
         self.assertFails("malformed localisation line")
 
     def test_unbalanced_colour_code(self):
@@ -143,12 +143,12 @@ class MutationTests(unittest.TestCase):
         self.assertFails("has no localisation")
 
     def test_missing_sprite(self):
-        self.edit(GFX, 'name = "GFX_tr_lfg_granary_tithe_barns"', 'name = "GFX_tr_lfg_granary_tithe_barnz"')
-        self.assertFails("missing sprite GFX_tr_lfg_granary_tithe_barns")
+        self.edit(GFX, 'name = "GFX_tr_lfg_abundance_tithe_barns"', 'name = "GFX_tr_lfg_abundance_tithe_barnz"')
+        self.assertFails("missing sprite GFX_tr_lfg_abundance_tithe_barns")
 
     def test_missing_category_sprite(self):
-        self.edit(GFX, 'name = "GFX_tradition_hex_bg_tradition_lfg_polymath"', 'name = "GFX_x"')
-        self.assertFails("missing sprite GFX_tradition_hex_bg_tradition_lfg_polymath")
+        self.edit(GFX, 'name = "GFX_tradition_hex_bg_tradition_lfg_polymathy"', 'name = "GFX_x"')
+        self.assertFails("missing sprite GFX_tradition_hex_bg_tradition_lfg_polymathy")
 
     def test_unprefixed_key(self):
         self.edit(EDICTS, "lfg_species_experimentation = {", "species_experimentation = {")
@@ -156,10 +156,10 @@ class MutationTests(unittest.TestCase):
 
     def test_tree_file_must_be_named_after_the_tree(self):
         (self.mod / CATEGORIES).rename(self.mod / "common/tradition_categories/lfg_granary.txt")
-        self.assertFails("rename to 00_granary_kings_lfg.txt")
+        self.assertFails("rename to 00_abundance_lfg.txt")
 
     def test_one_tree_per_file(self):
-        other = self.mod / "common/tradition_categories/00_grand_tour_lfg.txt"
+        other = self.mod / "common/tradition_categories/00_tourism_lfg.txt"
         with open(self.mod / CATEGORIES, "a") as f:
             f.write(other.read_text())
         other.unlink()
@@ -167,6 +167,7 @@ class MutationTests(unittest.TestCase):
 
     def test_tree_file_name(self):
         self.assertEqual(check_mod.tree_file_name("The Grand Tour"), "00_grand_tour_lfg.txt")
+        self.assertEqual(check_mod.tree_file_name("Tourism"), "00_tourism_lfg.txt")
         self.assertEqual(check_mod.tree_file_name("Megaforge Doctrine"), "00_megaforge_doctrine_lfg.txt")
 
     def test_unexpected_file(self):

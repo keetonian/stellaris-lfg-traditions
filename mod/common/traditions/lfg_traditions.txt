@@ -215,14 +215,14 @@ tr_lfg_shellworlders_arc_neighbours = {
 # POLYMATH COMMONS - hook: research from everyone; scales with species and rivals; agenda "Eureka Season"
 #####################################################################
 
-tr_lfg_polymath_adopt = {
+tr_lfg_polymathy_adopt = {
 	modifier = {
 		all_technology_research_speed = 0.05
 		planet_researchers_upkeep_mult = 0.05
 	}
 }
 
-tr_lfg_polymath_finish = {
+tr_lfg_polymathy_finish = {
 	unlocks_agenda = agenda_lfg_eureka_season
 	modifier = {
 		ascension_perks_add = 1
@@ -231,8 +231,8 @@ tr_lfg_polymath_finish = {
 }
 
 # Hook: research speed +1% per species in the empire (max +30%).
-tr_lfg_polymath_many_minds = {
-	custom_tooltip = tr_lfg_polymath_many_minds_tt
+tr_lfg_polymathy_many_minds = {
+	custom_tooltip = tr_lfg_polymathy_many_minds_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		all_technology_research_speed = 0.01
@@ -242,8 +242,8 @@ tr_lfg_polymath_many_minds = {
 }
 
 # Hook: research speed +4% per rival (max +16%), but -5% with no rivals at all.
-tr_lfg_polymath_rival_laboratories = {
-	custom_tooltip = tr_lfg_polymath_rival_laboratories_tt
+tr_lfg_polymathy_rival_laboratories = {
+	custom_tooltip = tr_lfg_polymathy_rival_laboratories_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		all_technology_research_speed = 0.04
@@ -256,7 +256,7 @@ tr_lfg_polymath_rival_laboratories = {
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_polymath_open_journals = {
+tr_lfg_polymathy_open_journals = {
 	modifier = {
 		all_technology_research_speed = 0.10
 		diplo_weight_mult = -0.10
@@ -266,12 +266,12 @@ tr_lfg_polymath_open_journals = {
 
 # Hook: research from jobs +15%, but each year a colony may have a lab accident or a breakthrough
 # (on_yearly_pulse_country -> events/lfg_polymath_events.txt).
-tr_lfg_polymath_reckless_experimentation = {
+tr_lfg_polymathy_reckless_experimentation = {
 	possible = {
-		has_tradition = tr_lfg_polymath_many_minds
-		has_tradition = tr_lfg_polymath_rival_laboratories
+		has_tradition = tr_lfg_polymathy_many_minds
+		has_tradition = tr_lfg_polymathy_rival_laboratories
 	}
-	custom_tooltip = tr_lfg_polymath_reckless_experimentation_tt
+	custom_tooltip = tr_lfg_polymathy_reckless_experimentation_tt
 	modifier = {
 		planet_jobs_physics_research_produces_mult = 0.15
 		planet_jobs_society_research_produces_mult = 0.15
@@ -280,9 +280,9 @@ tr_lfg_polymath_reckless_experimentation = {
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_polymath_interdisciplinary_seminars = {
+tr_lfg_polymathy_interdisciplinary_seminars = {
 	possible = {
-		has_tradition = tr_lfg_polymath_open_journals
+		has_tradition = tr_lfg_polymathy_open_journals
 	}
 	modifier = {
 		num_tech_alternatives_add = 1
@@ -296,29 +296,29 @@ tr_lfg_polymath_interdisciplinary_seminars = {
 # species and subspecies we have and the planet types we live on. Any empire.
 #####################################################################
 
-tr_lfg_evolution_adopt = {
+tr_lfg_lineage_adopt = {
 	modifier = {
 		modify_species_cost_mult = -0.25
 	}
 }
 
-tr_lfg_evolution_finish = {
+# The +1 trait point / pick for every species type would be eight tooltip lines, so they live in the static modifier
+# lfg_lineage_finish (show_only_custom_tooltip; that is ignored in tradition modifier blocks), added on adoption.
+tr_lfg_lineage_finish = {
+	custom_tooltip = tr_lfg_lineage_finish_tt
+	on_enabled = {
+		hidden_effect = {
+			add_modifier = { modifier = lfg_lineage_finish days = -1 }
+		}
+	}
 	modifier = {
 		ascension_perks_add = 1
-		BIOLOGICAL_species_trait_points_add = 1
-		LITHOID_species_trait_points_add = 1
-		ROBOT_species_trait_points_add = 1
-		MACHINE_species_trait_points_add = 1
-		BIOLOGICAL_species_trait_picks_add = 1
-		LITHOID_species_trait_picks_add = 1
-		ROBOT_species_trait_picks_add = 1
-		MACHINE_species_trait_picks_add = 1
 	}
 }
 
 # Hook: per negative trait of our main species: organic pop growth +5% and pop assembly +5% (no cap).
-tr_lfg_evolution_hardship = {
-	custom_tooltip = tr_lfg_evolution_hardship_tt
+tr_lfg_lineage_hardship = {
+	custom_tooltip = tr_lfg_lineage_hardship_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		logistic_growth_mult = 0.05
@@ -329,8 +329,8 @@ tr_lfg_evolution_hardship = {
 }
 
 # Hook: per positive trait of our main species: job efficiency +1% (no cap).
-tr_lfg_evolution_honed_strengths = {
-	custom_tooltip = tr_lfg_evolution_honed_strengths_tt
+tr_lfg_lineage_honed_strengths = {
+	custom_tooltip = tr_lfg_lineage_honed_strengths_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		pop_bonus_workforce_mult = 0.01
@@ -340,8 +340,8 @@ tr_lfg_evolution_honed_strengths = {
 }
 
 # Hook: per species in the empire: ship speed +1% (no cap).
-tr_lfg_evolution_migratory_instinct = {
-	custom_tooltip = tr_lfg_evolution_migratory_instinct_tt
+tr_lfg_lineage_migratory_instinct = {
+	custom_tooltip = tr_lfg_lineage_migratory_instinct_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		ship_speed_mult = 0.01
@@ -351,12 +351,12 @@ tr_lfg_evolution_migratory_instinct = {
 }
 
 # Hook: per subspecies of our main species: society research +2% (no cap).
-tr_lfg_evolution_branching_lineages = {
+tr_lfg_lineage_branching_lineages = {
 	possible = {
-		has_tradition = tr_lfg_evolution_hardship
-		has_tradition = tr_lfg_evolution_honed_strengths
+		has_tradition = tr_lfg_lineage_hardship
+		has_tradition = tr_lfg_lineage_honed_strengths
 	}
-	custom_tooltip = tr_lfg_evolution_branching_lineages_tt
+	custom_tooltip = tr_lfg_lineage_branching_lineages_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		country_society_research_produces_mult = 0.02
@@ -366,11 +366,11 @@ tr_lfg_evolution_branching_lineages = {
 }
 
 # Hook: per planet type we have a colony on (value:lfg_num_world_types, generated): diplomatic weight +1% (no cap).
-tr_lfg_evolution_every_shore = {
+tr_lfg_lineage_every_shore = {
 	possible = {
-		has_tradition = tr_lfg_evolution_migratory_instinct
+		has_tradition = tr_lfg_lineage_migratory_instinct
 	}
-	custom_tooltip = tr_lfg_evolution_every_shore_tt
+	custom_tooltip = tr_lfg_lineage_every_shore_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		diplo_weight_mult = 0.01
@@ -386,11 +386,11 @@ tr_lfg_evolution_every_shore = {
 #####################################################################
 
 # Downside: workers everywhere fear the camps (worker happiness -5%).
-tr_lfg_penal_adopt = {
+tr_lfg_penitence_adopt = {
 	possible = {
 		has_technology = tech_penal_colonies
 	}
-	custom_tooltip = tr_lfg_penal_adopt_tt
+	custom_tooltip = tr_lfg_penitence_adopt_tt
 	on_enabled = {
 		hidden_effect = { country_event = { id = lfg_penal.1 } }
 	}
@@ -401,8 +401,8 @@ tr_lfg_penal_adopt = {
 
 # Penal Industries: Prison Districts on the penal colony get Penal Metallurgist / Artisan jobs (lfg_sync_prison_industry)
 # and, with supertensiles, the Penal Supertensile Works specialization (zone_lfg_penal_supertensiles).
-tr_lfg_penal_finish = {
-	custom_tooltip = tr_lfg_penal_finish_tt
+tr_lfg_penitence_finish = {
+	custom_tooltip = tr_lfg_penitence_finish_tt
 	on_enabled = {
 		hidden_effect = { country_event = { id = lfg_penal.1 } }
 	}
@@ -411,8 +411,8 @@ tr_lfg_penal_finish = {
 	}
 }
 
-tr_lfg_penal_wardens_code = {
-	custom_tooltip = tr_lfg_penal_wardens_code_tt
+tr_lfg_penitence_wardens_code = {
+	custom_tooltip = tr_lfg_penitence_wardens_code_tt
 	on_enabled = {
 		hidden_effect = { country_event = { id = lfg_penal.1 } }
 	}
@@ -420,11 +420,11 @@ tr_lfg_penal_wardens_code = {
 }
 
 # Crime goes down everywhere; the unemployed are shipped to the penal colony.
-tr_lfg_penal_transportation = {
+tr_lfg_penitence_transportation = {
 	possible = {
-		has_tradition = tr_lfg_penal_wardens_code
+		has_tradition = tr_lfg_penitence_wardens_code
 	}
-	custom_tooltip = tr_lfg_penal_transportation_tt
+	custom_tooltip = tr_lfg_penitence_transportation_tt
 	on_enabled = {
 		hidden_effect = { country_event = { id = lfg_penal.1 } }
 	}
@@ -438,11 +438,11 @@ tr_lfg_penal_transportation = {
 # lfg_sync_penal_unemployed with multiplier = whole hundreds of unemployed. Pairs with Transportation.
 # Downsides: riots (crime +2 per 100 unemployed, in the same modifier) and attrition (3% of the unemployed die each
 # month, lfg_penal_idle_hands_attrition), so the unemployed settle at ~33x monthly arrivals.
-tr_lfg_penal_idle_hands = {
+tr_lfg_penitence_idle_hands = {
 	possible = {
-		has_tradition = tr_lfg_penal_transportation
+		has_tradition = tr_lfg_penitence_transportation
 	}
-	custom_tooltip = tr_lfg_penal_idle_hands_tt
+	custom_tooltip = tr_lfg_penitence_idle_hands_tt
 	on_enabled = {
 		hidden_effect = { country_event = { id = lfg_penal.1 } }
 	}
@@ -450,17 +450,17 @@ tr_lfg_penal_idle_hands = {
 }
 
 # +50% jobs from every district specialization on the penal colony (generated zone overrides + our own zone).
-tr_lfg_penal_prison_industry = {
-	custom_tooltip = tr_lfg_penal_prison_industry_tt
+tr_lfg_penitence_prison_industry = {
+	custom_tooltip = tr_lfg_penitence_prison_industry_tt
 	ai_weight = { factor = 1000 }
 }
 
 # Penal colony: workers +15% efficiency, pop upkeep -15%, but happiness -15% there.
-tr_lfg_penal_chain_gangs = {
+tr_lfg_penitence_chain_gangs = {
 	possible = {
-		has_tradition = tr_lfg_penal_prison_industry
+		has_tradition = tr_lfg_penitence_prison_industry
 	}
-	custom_tooltip = tr_lfg_penal_chain_gangs_tt
+	custom_tooltip = tr_lfg_penitence_chain_gangs_tt
 	on_enabled = {
 		hidden_effect = { country_event = { id = lfg_penal.1 } }
 	}
@@ -471,7 +471,7 @@ tr_lfg_penal_chain_gangs = {
 # GRANARY KINGS - hook: the food stockpile is political power; agendas "Feast of Plenty" (adopt), "The Harvest Tithe" (finish)
 #####################################################################
 
-tr_lfg_granary_adopt = {
+tr_lfg_abundance_adopt = {
 	unlocks_agenda = agenda_lfg_feast_of_plenty
 	modifier = {
 		country_resource_max_add = 10000
@@ -480,9 +480,9 @@ tr_lfg_granary_adopt = {
 }
 
 # Hook: organic growth +1% per 1,000 monthly food income (no cap). The Feast of Plenty agenda doubles it while active.
-tr_lfg_granary_finish = {
+tr_lfg_abundance_finish = {
 	unlocks_agenda = agenda_lfg_harvest_tithe
-	custom_tooltip = tr_lfg_granary_finish_tt
+	custom_tooltip = tr_lfg_abundance_finish_tt
 	modifier = {
 		ascension_perks_add = 1
 	}
@@ -499,8 +499,8 @@ tr_lfg_granary_finish = {
 }
 
 # Hook: full granaries (10,000+ food) bring stability and growth; nearly empty ones (under 1,000) bring unrest and slower growth.
-tr_lfg_granary_tithe_barns = {
-	custom_tooltip = tr_lfg_granary_tithe_barns_tt
+tr_lfg_abundance_tithe_barns = {
+	custom_tooltip = tr_lfg_abundance_tithe_barns_tt
 	triggered_modifier = {
 		potential = { resource_stockpile_compare = { resource = food value >= 10000 } }
 		planet_stability_add = 5
@@ -515,8 +515,8 @@ tr_lfg_granary_tithe_barns = {
 }
 
 # Hook: unity +1% per 5,000 stored food (max +20% at 100,000).
-tr_lfg_granary_seed_vaults = {
-	custom_tooltip = tr_lfg_granary_seed_vaults_tt
+tr_lfg_abundance_seed_vaults = {
+	custom_tooltip = tr_lfg_abundance_seed_vaults_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		country_unity_produces_mult = 0.01
@@ -525,17 +525,17 @@ tr_lfg_granary_seed_vaults = {
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_granary_bountiful_fields = {
+tr_lfg_abundance_bountiful_fields = {
 	modifier = {
 		planet_farmers_produces_mult = 0.20
 	}
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_granary_grain_reserves = {
+tr_lfg_abundance_grain_reserves = {
 	possible = {
-		has_tradition = tr_lfg_granary_tithe_barns
-		has_tradition = tr_lfg_granary_seed_vaults
+		has_tradition = tr_lfg_abundance_tithe_barns
+		has_tradition = tr_lfg_abundance_seed_vaults
 	}
 	modifier = {
 		country_resource_max_food_add = 100000
@@ -545,11 +545,11 @@ tr_lfg_granary_grain_reserves = {
 }
 
 # Hook: while food income is positive, the farmers' courts add influence.
-tr_lfg_granary_harvest_courts = {
+tr_lfg_abundance_harvest_courts = {
 	possible = {
-		has_tradition = tr_lfg_granary_bountiful_fields
+		has_tradition = tr_lfg_abundance_bountiful_fields
 	}
-	custom_tooltip = tr_lfg_granary_harvest_courts_tt
+	custom_tooltip = tr_lfg_abundance_harvest_courts_tt
 	modifier = {
 		pop_cat_worker_political_power = 0.25
 		pop_cat_specialist_political_power = -0.25
@@ -662,7 +662,7 @@ tr_lfg_broadcast_syndication_deals = {
 # THE GRAND TOUR - hook: scales with Resort Workers employed (per 100, no cap); agenda "Grand Tour Season"
 #####################################################################
 
-tr_lfg_resorts_adopt = {
+tr_lfg_tourism_adopt = {
 	unlocks_agenda = agenda_lfg_grand_tour_season
 	possible = {
 		has_technology = tech_resort_colonies
@@ -673,23 +673,27 @@ tr_lfg_resorts_adopt = {
 	}
 }
 
-tr_lfg_resorts_finish = {
+# Job efficiency +10% on the resort world: planet modifier lfg_tourism_finish, kept there by lfg_resorts.1.
+tr_lfg_tourism_finish = {
+	custom_tooltip = tr_lfg_tourism_finish_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_resorts.1 } }
+	}
 	modifier = {
 		ascension_perks_add = 1
-		pop_resort_worker_bonus_workforce_mult = 0.10
 	}
 }
 
 # More resort workers per Accommodation District: implemented in the generated district_resort override
 # (common/districts/zz_lfg_district_overrides.txt), mirroring vanilla's Commercial Enterprise / Public Works pattern.
-tr_lfg_resorts_hospitality_academies = {
-	custom_tooltip = tr_lfg_resorts_hospitality_academies_tt
+tr_lfg_tourism_hospitality_academies = {
+	custom_tooltip = tr_lfg_tourism_hospitality_academies_tt
 	ai_weight = { factor = 1000 }
 }
 
 # Hook: per 100 Resort Workers (no cap): unity +0.5%, pop happiness +0.25%.
-tr_lfg_resorts_package_holidays = {
-	custom_tooltip = tr_lfg_resorts_package_holidays_tt
+tr_lfg_tourism_package_holidays = {
+	custom_tooltip = tr_lfg_tourism_package_holidays_tt
 	triggered_modifier = {
 		potential = { always = yes }
 		country_unity_produces_mult = 0.005
@@ -701,8 +705,8 @@ tr_lfg_resorts_package_holidays = {
 
 # Grows the (one) resort world: each Accommodation District adds +0.5 max districts to its planet (generated
 # district_resort override) and unlocks the Expand the Resort decision (common/decisions/lfg_decisions.txt).
-tr_lfg_resorts_wonders_of_the_galaxy = {
-	custom_tooltip = tr_lfg_resorts_wonders_of_the_galaxy_tt
+tr_lfg_tourism_wonders_of_the_galaxy = {
+	custom_tooltip = tr_lfg_tourism_wonders_of_the_galaxy_tt
 	modifier = {
 		district_resort_max_add = 1
 		planet_district_resort_build_speed_mult = 0.25
@@ -710,10 +714,10 @@ tr_lfg_resorts_wonders_of_the_galaxy = {
 	ai_weight = { factor = 1000 }
 }
 
-tr_lfg_resorts_tourist_traps = {
+tr_lfg_tourism_tourist_traps = {
 	possible = {
-		has_tradition = tr_lfg_resorts_hospitality_academies
-		has_tradition = tr_lfg_resorts_package_holidays
+		has_tradition = tr_lfg_tourism_hospitality_academies
+		has_tradition = tr_lfg_tourism_package_holidays
 	}
 	modifier = {
 		pop_resort_worker_bonus_workforce_mult = 0.15
@@ -723,13 +727,13 @@ tr_lfg_resorts_tourist_traps = {
 }
 
 # Hook: Tourists on the resort world produce more; diplomatic weight +1% per 1,000 Tourists (no cap).
-tr_lfg_resorts_galactic_destination = {
+tr_lfg_tourism_galactic_destination = {
 	possible = {
-		has_tradition = tr_lfg_resorts_wonders_of_the_galaxy
+		has_tradition = tr_lfg_tourism_wonders_of_the_galaxy
 	}
 	# Tourists = civilians on the resort world. The planet part is the static modifier lfg_galactic_destination, kept on
 	# the resort world by lfg_resorts.1 (monthly), which also counts its tourists into the country variable lfg_tourists.
-	custom_tooltip = tr_lfg_resorts_galactic_destination_tt
+	custom_tooltip = tr_lfg_tourism_galactic_destination_tt
 	on_enabled = {
 		hidden_effect = { country_event = { id = lfg_resorts.1 } }
 	}

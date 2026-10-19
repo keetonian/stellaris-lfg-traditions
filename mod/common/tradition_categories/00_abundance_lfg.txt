@@ -6,27 +6,27 @@
 # among vanilla's regular trees (00_<tree>.txt) instead of after the ascension trees (01_*).
 
 # The food stockpile as political power. Only for empires whose main species eats food (lfg_main_species_eats_food).
-tradition_lfg_granary = {
+tradition_lfg_abundance = {
 	desc = {
 		trigger = { is_hive_empire = no }
-		text = tradition_lfg_granary_desc
+		text = tradition_lfg_abundance_desc
 	}
 	desc = {
 		trigger = { is_hive_empire = yes }
-		text = tradition_lfg_granary_hive_desc
+		text = tradition_lfg_abundance_hive_desc
 	}
 	potential = {
 		lfg_main_species_eats_food = yes
 	}
 	tree_template = "tree_21_11"
-	adoption_bonus = "tr_lfg_granary_adopt"
-	finish_bonus = "tr_lfg_granary_finish"
+	adoption_bonus = "tr_lfg_abundance_adopt"
+	finish_bonus = "tr_lfg_abundance_finish"
 	traditions = {
-		"tr_lfg_granary_tithe_barns"
-		"tr_lfg_granary_seed_vaults"
-		"tr_lfg_granary_bountiful_fields"
-		"tr_lfg_granary_grain_reserves"
-		"tr_lfg_granary_harvest_courts"
+		"tr_lfg_abundance_tithe_barns"
+		"tr_lfg_abundance_seed_vaults"
+		"tr_lfg_abundance_bountiful_fields"
+		"tr_lfg_abundance_grain_reserves"
+		"tr_lfg_abundance_harvest_courts"
 	}
 	ai_weight = {
 		factor = 4

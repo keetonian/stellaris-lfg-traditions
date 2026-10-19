@@ -38,7 +38,7 @@ zone_resort = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 			has_modifier = resort_colony
 		}
@@ -103,7 +103,7 @@ zone_resort_entertainment = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 			has_modifier = resort_colony
 		}
@@ -182,7 +182,7 @@ zone_resort_zoo = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 			has_modifier = resort_colony
 		}
@@ -256,7 +256,7 @@ zone_resort_grand_museum = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 			has_modifier = resort_colony
 		}
@@ -333,7 +333,7 @@ zone_resort_hunting_ground = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 			has_modifier = resort_colony
 		}
@@ -411,7 +411,7 @@ zone_resort_spiritual_retreat = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 			has_modifier = resort_colony
 		}
@@ -487,7 +487,7 @@ zone_resort_restoration_enclave = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 			has_modifier = resort_colony
 		}
@@ -567,7 +567,7 @@ zone_resort_proving_grounds = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 			has_modifier = resort_colony
 		}
@@ -619,7 +619,7 @@ zone_industrial = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -652,7 +652,7 @@ zone_foundry = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -683,7 +683,7 @@ zone_factory = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -738,7 +738,7 @@ zone_research_unity = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -800,7 +800,7 @@ zone_research = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -838,7 +838,7 @@ zone_research_physics = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -876,7 +876,7 @@ zone_research_society = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -914,7 +914,7 @@ zone_research_engineering = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -948,7 +948,7 @@ zone_unity = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -983,7 +983,7 @@ zone_unity_spiritualist = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -1017,7 +1017,7 @@ zone_fortress = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}
@@ -1047,7 +1047,7 @@ zone_trade = {
 		potential = {
 			exists = owner
 			owner = {
-				has_tradition = tr_lfg_penal_prison_industry
+				has_tradition = tr_lfg_penitence_prison_industry
 			}
 			has_modifier = penal_colony
 		}

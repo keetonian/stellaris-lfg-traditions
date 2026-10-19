@@ -1,7 +1,7 @@
-# LFG Traditions - Hard Labour events.
+# LFG Traditions - Penitence events.
 namespace = lfg_penal
 
-# Monthly (on_monthly_pulse_country) and when a Hard Labour tradition is adopted: keep the lfg_penal_* modifiers on the
+# Monthly (on_monthly_pulse_country) and when a Penitence tradition is adopted: keep the lfg_penal_* modifiers on the
 # penal colony (and only there), scaling Prison Industry by Prison Districts and Idle Hands by unemployed pops.
 # Countries without the tree cost two lookups; the flag lets one last run clean up after the tree is lost.
 country_event = {
@@ -11,7 +11,7 @@ country_event = {
 
 	trigger = {
 		OR = {
-			has_tradition = tr_lfg_penal_adopt
+			has_tradition = tr_lfg_penitence_adopt
 			has_country_flag = lfg_penal_applied
 		}
 	}
@@ -19,14 +19,14 @@ country_event = {
 	immediate = {
 		remove_country_flag = lfg_penal_applied
 		if = {
-			limit = { has_tradition = tr_lfg_penal_adopt }
+			limit = { has_tradition = tr_lfg_penitence_adopt }
 			set_country_flag = lfg_penal_applied
 		}
 		every_owned_planet = {
-			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_adopt TRADITION = tr_lfg_penal_adopt }
-			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_wardens_code TRADITION = tr_lfg_penal_wardens_code }
-			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_transportation TRADITION = tr_lfg_penal_transportation }
-			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_chain_gangs TRADITION = tr_lfg_penal_chain_gangs }
+			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_adopt TRADITION = tr_lfg_penitence_adopt }
+			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_wardens_code TRADITION = tr_lfg_penitence_wardens_code }
+			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_transportation TRADITION = tr_lfg_penitence_transportation }
+			lfg_sync_penal_modifier = { MODIFIER = lfg_penal_chain_gangs TRADITION = tr_lfg_penitence_chain_gangs }
 			lfg_sync_prison_industry = yes
 			lfg_sync_penal_unemployed = yes
 		}

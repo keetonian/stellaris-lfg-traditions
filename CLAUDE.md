@@ -38,14 +38,15 @@ mod/                                  # exactly what ships
   events/lfg_shellworlders_events.txt                        # Shellworlders: lfg_shellworld_* modifiers on artificial worlds (monthly)
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
   events/lfg_synthetic_fertility_events.txt                  # lfg_synthetic_fertility.1: extra Identity Repository uploads (monthly)
-  events/lfg_penal_events.txt                                # lfg_penal.1: Hard Labour penal colony modifiers + counts (monthly)
+  events/lfg_penal_events.txt                                # lfg_penal.1: Penitence penal colony modifiers + counts (monthly)
   common/scripted_effects/lfg_penal_effects.txt              # lfg_sync_penal_modifier / lfg_sync_prison_industry / lfg_sync_penal_unemployed
   common/zones/lfg_zones.txt                                 # zone_lfg_penal_supertensiles, zone_lfg_penal_bulk_matter
   common/pop_jobs/lfg_jobs.txt                               # lfg_penal_supertensile_laborer, lfg_penal_matter_compactor
   common/economic_categories/lfg_economic_categories.txt     # planet_lfg_penal_laborers (the job's category)
   events/lfg_planet_events.txt                               # lfg_planet.1: strip per-planet modifiers on owner change
   events/lfg_lone_tide_events.txt                            # lfg_lone_tide.1 (global `event`, on_game_start): 75% spawn
-  common/solar_system_initializers/lfg_system_initializers.txt # lfg_lone_tide_init (usage_odds = 0: never map-generated)
+  events/lfg_emberfall_events.txt                            # lfg_emberfall.1 (on_game_start): Emberfall, always, connected
+  common/solar_system_initializers/lfg_system_initializers.txt # lfg_lone_tide_init, lfg_emberfall_init (usage_odds = 0)
   common/script_values/lfg_world_types_values.txt            # GENERATED lfg_num_world_types (colonizable planet classes)
   events/00_lfg_event_overrides.txt                          # GENERATED (machine_age.4400: Virtuality block); 00_ = loads first
   common/council_agendas/lfg_council_agendas.txt             # 7 agendas, unlocked by tree finishers
@@ -116,7 +117,7 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
 
 ## How the pieces connect (adding a tree)
 
-1. `common/tradition_categories/00_<English tree name>_lfg.txt` (one tree per file; e.g. "The Grand Tour" ->
+1. `common/tradition_categories/00_<English tree name>_lfg.txt` (one tree per file; e.g. "Tourism" ->
    `00_grand_tour_lfg.txt`). The traditions window lists trees in load order = file name order, so this sorts the tree
    alphabetically among vanilla's `00_<tree>.txt` regular trees instead of after the `01_*` ascension trees (More
    Traditions does the same). The checker enforces the name. Then `tradition_lfg_<name> = { desc, potential, tree_template = "tree_21_11",
@@ -124,7 +125,7 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
    Include the `@ap_pending_tradition_suppress` modifier, as vanilla does.
 2. `common/traditions/lfg_traditions.txt`: `_adopt` (optional `possible`), `_finish` (`ascension_perks_add = 1`), 5 traditions.
    With `tree_21_11`, slot 4 needs `possible = { has_tradition = <slot1> has_tradition = <slot2> }` and slot 5 needs `<slot3>`.
-   Hard Labour uses `tree_111_11` (two chains: 2 needs 1, 3 needs 2, 5 needs 4). No vanilla layout draws "three into one".
+   Penitence uses `tree_111_11` (two chains: 2 needs 1, 3 needs 2, 5 needs 4). No vanilla layout draws "three into one".
    Other layouts: see `interface/topbar_traditions_view.gui` in the game, and add their prerequisite shapes to `TEMPLATE_PREREQS` in `check_mod.py`.
 3. `interface/lfg_traditions.gfx`: `GFX_tradition_hex_bg_<cat>`, `GFX_tradition_category_bg_<cat>`,
    `GFX_tradition_category_tile_<cat>` (`corneredTileSpriteType`, `borderSize = { x = 140 y = 140 }`),
@@ -254,7 +255,7 @@ Prefer a real planet-class modifier when one exists (e.g. `planet_artificial_max
 ## Resort and Pleasure Worlds
 
 A Pleasure World (`col_pleasure`, Shroud + `bliss_accord` flag) is a resort colony with another designation. Always
-check `has_modifier = resort_colony`, never `has_designation = col_resort`, so The Grand Tour covers both. District
+check `has_modifier = resort_colony`, never `has_designation = col_resort`, so Tourism covers both. District
 specializations are zones (`common/zones`, sets `resort` / `resort_attraction`); there's no zone-jobs modifier, so zone
 bonuses are per-zone overrides (`RESORT_ZONES` in gen_overrides.py).
 
@@ -294,6 +295,7 @@ places them. Pre-FTLs: `init_effect = { generate_pre_ftls_on_planet = yes }` (va
 ## Steam page: easter eggs stay secret
 
 `workshop_description.txt` must explain every feature **except** the Evolutionary Predators content: the
-Inherited Genius trait and the Species Experimentation edict are easter eggs (user's decision). Don't mention them,
+Inherited Genius trait and the Species Experimentation edict are easter eggs (user's decision). So is the **Lone Tide** special
+system: don't mention it (or a hidden/special system) on the Steam page either. Don't mention them,
 Evolutionary Predators or subspecies on the Steam page (the Shelve edicts are public); `tests/test_workshop_description.py` enforces it.
 The README (private repo) documents them normally. When features change, update the Steam page too.

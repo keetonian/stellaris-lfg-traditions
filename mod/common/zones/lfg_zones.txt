@@ -1,7 +1,7 @@
 # LFG Traditions - district specializations (zones).
 
-# Hard Labour - Penal Supertensile Works: a city-slot specialization that only appears in Prison Districts on the
-# penal colony (penal colonies have no City Districts), with supertensiles on and the Hard Labour finisher
+# Penitence - Penal Supertensile Works: a city-slot specialization that only appears in Prison Districts on the
+# penal colony (penal colonies have no City Districts), with supertensiles on and the Penitence finisher
 # ("Penal Industries"). Prison Industry gives +50% of its jobs, like the vanilla specializations (zz_lfg_zone_overrides).
 # Jobs: Penal Supertensile Laborers (common/pop_jobs/lfg_jobs.txt). Modelled on vanilla zone_foundry.
 zone_lfg_penal_supertensiles = {
@@ -12,7 +12,7 @@ zone_lfg_penal_supertensiles = {
 		has_modifier = penal_colony
 		has_global_flag = giga_buildcap_j
 		exists = owner
-		owner = { has_tradition = tr_lfg_penal_finish }
+		owner = { has_tradition = tr_lfg_penitence_finish }
 	}
 
 	unlock = { # planet scope
@@ -44,7 +44,7 @@ zone_lfg_penal_supertensiles = {
 	triggered_district_planet_modifier = {
 		potential = {
 			exists = owner
-			owner = { has_tradition = tr_lfg_penal_prison_industry }
+			owner = { has_tradition = tr_lfg_penitence_prison_industry }
 		}
 		job_lfg_penal_supertensile_laborer_add = @scaling_district_1_job
 		mult = 0.5
@@ -61,7 +61,7 @@ zone_lfg_penal_supertensiles = {
 	ai_priority = 5
 }
 
-# Hard Labour - Penal Matter Compactors: like the Penal Supertensile Works, but for Gigastructural's bulk matter (only
+# Penitence - Penal Matter Compactors: like the Penal Supertensile Works, but for Gigastructural's bulk matter (only
 # while it's enabled: no giga_bulk_matter_cost_disabled flag). Unlocked by the finisher; Prison Industry +50% jobs.
 zone_lfg_penal_bulk_matter = {
 	icon = GFX_district_specialization_minerals
@@ -71,7 +71,7 @@ zone_lfg_penal_bulk_matter = {
 		has_modifier = penal_colony
 		NOT = { has_global_flag = giga_bulk_matter_cost_disabled }
 		exists = owner
-		owner = { has_tradition = tr_lfg_penal_finish }
+		owner = { has_tradition = tr_lfg_penitence_finish }
 	}
 
 	unlock = { # planet scope
@@ -103,7 +103,7 @@ zone_lfg_penal_bulk_matter = {
 	triggered_district_planet_modifier = {
 		potential = {
 			exists = owner
-			owner = { has_tradition = tr_lfg_penal_prison_industry }
+			owner = { has_tradition = tr_lfg_penitence_prison_industry }
 		}
 		job_lfg_penal_matter_compactor_add = @scaling_district_1_job
 		mult = 0.5

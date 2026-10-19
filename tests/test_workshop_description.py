@@ -1,10 +1,12 @@
-"""The Steam page (workshop_description.txt) must not reveal the Evolutionary Predators easter eggs."""
+"""The Steam page (workshop_description.txt) must not reveal the easter eggs (Evolutionary Predators content, Lone Tide)."""
 import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 SECRETS = ("Evolutionary Predators", "Species Experimentation", "Inherited Genius", "lfg_species_experimentation",
-           "trait_lfg_inherited_genius", "subspecies")
+           "trait_lfg_inherited_genius", "subspecies",
+           # The Lone Tide special system is a surprise too.
+           "Lone Tide", "Thalassa", "special system", "hidden system", "lfg_lone_tide")
 
 
 class WorkshopDescriptionTests(unittest.TestCase):

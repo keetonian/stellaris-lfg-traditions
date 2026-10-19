@@ -1,6 +1,6 @@
 # LFG Traditions - planet decisions.
 
-# The Grand Tour - Wonders of the Galaxy: expand the resort world (an empire can only have one).
+# Tourism - Wonders of the Galaxy: expand the resort world (an empire can only have one).
 # Each use adds +2 max districts on the planet (lfg_resort_expansion, stacked via a planet variable), up to
 # @lfg_resort_expansions_max times. Cost: (500 alloys + 500 minerals + 1000 unity) x (expansions made + 1), i.e.
 # +500 / +500 / +1000 per previous expansion (value:lfg_resort_expansion_cost_mult), plus a flat 100 influence.
@@ -22,7 +22,7 @@ decision_lfg_expand_resort = {
 	}
 	potential = {
 		has_modifier = resort_colony
-		owner = { has_tradition = tr_lfg_resorts_wonders_of_the_galaxy }
+		owner = { has_tradition = tr_lfg_tourism_wonders_of_the_galaxy }
 	}
 	allow = {
 		custom_tooltip = {

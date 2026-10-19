@@ -111,7 +111,7 @@ district_resort = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_hospitality_academies
+				has_active_tradition = tr_lfg_tourism_hospitality_academies
 			}
 		}
 		modifier = {
@@ -123,7 +123,7 @@ district_resort = {
 			exists = owner
 			owner = {
 				is_regular_empire = yes
-				has_active_tradition = tr_lfg_resorts_wonders_of_the_galaxy
+				has_active_tradition = tr_lfg_tourism_wonders_of_the_galaxy
 			}
 		}
 		modifier = {

@@ -1,6 +1,6 @@
 # LFG Traditions - policies.
 
-# Monument Economy (Megaforge Doctrine slot 5): choose which side of the economy each megastructure feeds.
+# Monument Economy (Megaforge slot 5): choose which side of the economy each megastructure feeds.
 # The policy only sets a flag; the scaling bonuses live in tr_lfg_megaforge_monuments (common/traditions), which
 # reads the flag and multiplies by value:lfg_num_megastructures. The first option (Balanced, no effect) is the default.
 lfg_monument_economy = {

@@ -6,20 +6,20 @@
 # among vanilla's regular trees (00_<tree>.txt) instead of after the ascension trees (01_*).
 
 # Resort worlds as the empire's showpieces. Regular empires only (resort colonies and resort workers are non-gestalt).
-tradition_lfg_resorts = {
-	desc = tradition_lfg_resorts_desc
+tradition_lfg_tourism = {
+	desc = tradition_lfg_tourism_desc
 	potential = {
 		is_regular_empire = yes
 	}
 	tree_template = "tree_21_11"
-	adoption_bonus = "tr_lfg_resorts_adopt"
-	finish_bonus = "tr_lfg_resorts_finish"
+	adoption_bonus = "tr_lfg_tourism_adopt"
+	finish_bonus = "tr_lfg_tourism_finish"
 	traditions = {
-		"tr_lfg_resorts_hospitality_academies"
-		"tr_lfg_resorts_package_holidays"
-		"tr_lfg_resorts_wonders_of_the_galaxy"
-		"tr_lfg_resorts_tourist_traps"
-		"tr_lfg_resorts_galactic_destination"
+		"tr_lfg_tourism_hospitality_academies"
+		"tr_lfg_tourism_package_holidays"
+		"tr_lfg_tourism_wonders_of_the_galaxy"
+		"tr_lfg_tourism_tourist_traps"
+		"tr_lfg_tourism_galactic_destination"
 	}
 	ai_weight = {
 		factor = 3

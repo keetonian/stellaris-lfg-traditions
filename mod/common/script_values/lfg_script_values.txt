@@ -20,7 +20,7 @@ lfg_species_split_share = {
 # Tradition scaling. Used as `mult = value:<name>` in triggered_modifiers; each is capped with `max`.
 #####################################################################
 
-# Polymath Commons - Many Minds: species in the empire (genetic variants don't count), max 30.
+# Polymathy - Many Minds: species in the empire (genetic variants don't count), max 30.
 lfg_num_species = {
 	base = 0
 	complex_trigger_modifier = {
@@ -30,7 +30,7 @@ lfg_num_species = {
 	max = 30
 }
 
-# Polymath Commons - Rival Laboratories / Galactic Broadcast - Ratings War: current rivals, max 4.
+# Polymathy - Rival Laboratories / Broadcast - Ratings War: current rivals, max 4.
 lfg_num_rivals = {
 	base = 0
 	complex_trigger_modifier = {
@@ -40,7 +40,7 @@ lfg_num_rivals = {
 	max = 4
 }
 
-# Galactic Broadcast: empires we have communications with, max 20.
+# Broadcast: empires we have communications with, max 20.
 lfg_num_contacts = {
 	base = 0
 	complex_trigger_modifier = {
@@ -50,7 +50,7 @@ lfg_num_contacts = {
 	max = 20
 }
 
-# Granary Kings - Bumper Crops (and its Feast of Plenty doubling): monthly food income (net, as vanilla's
+# Abundance - Bumper Crops (and its Feast of Plenty doubling): monthly food income (net, as vanilla's
 # has_monthly_income reads it) in units of 1,000, never negative. Pattern from vanilla income_mult (01_script_values_paragon.txt).
 lfg_food_income_1000s = {
 	base = 0
@@ -65,7 +65,7 @@ lfg_food_income_1000s = {
 	min = 0
 }
 
-# Megaforge Doctrine - Monument Economy: megastructures owned, including Gigastructural kilostructures but not
+# Megaforge - Monument Economy: megastructures owned, including Gigastructural kilostructures but not
 # ruined (unrepaired) megastructures (Giga's is_ruined_mega, giga_mega_categories.txt). Uncapped.
 lfg_num_megastructures = {
 	base = 0
@@ -80,7 +80,7 @@ lfg_num_megastructures = {
 	}
 }
 
-# The Grand Tour: hundreds of Resort Workers employed, uncapped. An empire can only have one
+# Tourism: hundreds of Resort Workers employed, uncapped. An empire can only have one
 # resort world (vanilla decision_resort_colony_only_one), so this measures how built-up it is.
 # Pattern from vanilla num_active_haruspex (04_script_values_machine_age.txt).
 lfg_resort_worker_hundreds = {
@@ -95,7 +95,7 @@ lfg_resort_worker_hundreds = {
 	divide = 100
 }
 
-# The Grand Tour - Galactic Destination: tourists (civilians) on the resort world / 1000, uncapped. Country variable
+# Tourism - Galactic Destination: tourists (civilians) on the resort world / 1000, max 30. Country variable
 # lfg_tourists is refreshed monthly by lfg_resorts.1.
 lfg_tourist_thousands = {
 	base = 0
@@ -107,9 +107,10 @@ lfg_tourist_thousands = {
 		mode = add
 	}
 	divide = 1000
+	max = 30	# diplomatic weight +1% each: capped at +30%
 }
 
-# The Grand Tour - Expand the Resort decision cost multiplier (planet scope): 1, 2, 3, 4, 5 for the
+# Tourism - Expand the Resort decision cost multiplier (planet scope): 1, 2, 3, 4, 5 for the
 # 1st..5th expansion, i.e. 1 + expansions already made (planet variable lfg_resort_expansions).
 lfg_resort_expansion_cost_mult = {
 	base = 1
@@ -124,7 +125,7 @@ lfg_resort_expansion_cost_mult = {
 
 
 
-# Granary Kings finisher: food stored in units of 5,000, max 20 (100,000 food).
+# Abundance finisher: food stored in units of 5,000, max 20 (100,000 food).
 lfg_food_stored_5000s = {
 	base = 0
 	complex_trigger_modifier = {
@@ -138,7 +139,7 @@ lfg_food_stored_5000s = {
 	max = 20
 }
 
-# Galactic Broadcast - Syndication Deals: commercial pacts. Uncapped.
+# Broadcast - Syndication Deals: commercial pacts. Uncapped.
 lfg_num_commercial_pacts = {
 	base = 0
 	complex_trigger_modifier = {
@@ -161,7 +162,7 @@ lfg_num_artificial_worlds = {
 	}
 }
 
-# Evolutionary Perfection: our main species' negative / positive traits (trait cost < 0 / > 0), every species in the
+# Lineage: our main species' negative / positive traits (trait cost < 0 / > 0), every species in the
 # empire (uncapped, unlike lfg_num_species), and subspecies of our main species. All uncapped.
 lfg_num_negative_traits = {
 	base = 0

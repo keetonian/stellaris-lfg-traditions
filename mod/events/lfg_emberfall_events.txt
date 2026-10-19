@@ -1,0 +1,30 @@
+# LFG Traditions - Emberfall system.
+namespace = lfg_emberfall
+
+# on_game_start: spawn Emberfall (lfg_emberfall_init) 20-50 units from a random system that isn't part of an empire's
+# or Fallen Empire's starting cluster, connected by hyperlanes (spawn_system's default). Same pattern as vanilla's
+# Sealed System entrance (distar.290).
+event = {
+	id = lfg_emberfall.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_spawn_system_batch = begin
+		random_system = {
+			limit = {
+				NOR = {
+					is_fe_cluster = yes
+					has_star_flag = empire_cluster
+					has_star_flag = lfg_lone_tide
+				}
+			}
+			spawn_system = {
+				min_distance >= 20
+				max_distance <= 50
+				initializer = lfg_emberfall_init
+			}
+		}
+		set_spawn_system_batch = end
+	}
+}

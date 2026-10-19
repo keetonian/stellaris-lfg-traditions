@@ -7,20 +7,20 @@
 # The penal colony (vanilla decision_penal_colony, one per empire, modifier penal_colony) as the engine of the economy.
 # Regular empires only, like penal colonies. Planet effects: lfg_penal_* static modifiers kept on the penal colony by
 # lfg_penal.1 (monthly + on_enabled).
-tradition_lfg_penal = {
-	desc = tradition_lfg_penal_desc
+tradition_lfg_penitence = {
+	desc = tradition_lfg_penitence_desc
 	potential = {
 		is_regular_empire = yes
 	}
 	tree_template = "tree_111_11"
-	adoption_bonus = "tr_lfg_penal_adopt"
-	finish_bonus = "tr_lfg_penal_finish"
+	adoption_bonus = "tr_lfg_penitence_adopt"
+	finish_bonus = "tr_lfg_penitence_finish"
 	traditions = {
-		"tr_lfg_penal_wardens_code"
-		"tr_lfg_penal_transportation"
-		"tr_lfg_penal_idle_hands"
-		"tr_lfg_penal_prison_industry"
-		"tr_lfg_penal_chain_gangs"
+		"tr_lfg_penitence_wardens_code"
+		"tr_lfg_penitence_transportation"
+		"tr_lfg_penitence_idle_hands"
+		"tr_lfg_penitence_prison_industry"
+		"tr_lfg_penitence_chain_gangs"
 	}
 	ai_weight = {
 		factor = 1
