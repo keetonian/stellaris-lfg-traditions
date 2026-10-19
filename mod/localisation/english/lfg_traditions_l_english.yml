@@ -52,7 +52,7 @@
  tr_lfg_xenoarchaeology_reverse_engineering:0 "Reverse Engineering"
  tr_lfg_xenoarchaeology_reverse_engineering_desc:0 "Every relic is taken apart, carefully, to learn how its makers thought."
  tr_lfg_xenoarchaeology_reverse_engineering_delayed:0 "It still works. We just don't know why."
- tr_lfg_xenoarchaeology_reverse_engineering_tt:0 "Archaeotech weapon damage §G+10%§!\nResearch speed §G+3%§! for each relic we own."
+ tr_lfg_xenoarchaeology_reverse_engineering_tt:0 "Archaeotech weapon damage §G+10%§!\nResearch speed §G+5%§! for each relic we own."
 
  # ======================= Abundance =======================
  tradition_lfg_abundance:0 "Abundance"

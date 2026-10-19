@@ -18,9 +18,9 @@ tradition_lfg_xenoarchaeology = {
 	traditions = {
 		"tr_lfg_xenoarchaeology_field_expeditions"
 		"tr_lfg_xenoarchaeology_anomaly_studies"
-		"tr_lfg_xenoarchaeology_commissioned_digs"
-		"tr_lfg_xenoarchaeology_expedition_corps"
 		"tr_lfg_xenoarchaeology_reverse_engineering"
+		"tr_lfg_xenoarchaeology_expedition_corps"
+		"tr_lfg_xenoarchaeology_commissioned_digs"
 	}
 	ai_weight = {
 		factor = 5

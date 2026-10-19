@@ -76,9 +76,9 @@ Vanilla Archivism already covers specimens, so this tree doesn't.
 | Adopt | Anomaly discovery chance +10% · scientist upkeep +10% · starts counting anomalies for Anomaly Studies |
 | 1. Field Expeditions | Survey speed +25% · anomaly research speed +15% |
 | 2. Anomaly Studies ⚙ | Research speed +0.25% per anomaly researched since adopting the tree (uncapped) · every anomaly researched gives +5 minor artifacts |
-| 3. Commissioned Digs | Unlocks the minor artifact action **Commission a Dig** (1,500 minor artifacts): a popup lets you choose a new **archaeological site**, **anomaly** or (with Astral Planes) **astral rift** within your borders |
+| 3. Reverse Engineering ⚙ | Archaeotech weapon damage +10% · research speed +5% per relic owned (uncapped) |
 | 4. Expedition Corps | Scientist cap +1 · scientist experience gain +15% · anomaly research speed +15% |
-| 5. Reverse Engineering ⚙ | Archaeotech weapon damage +10% · research speed +3% per relic owned (uncapped) |
+| 5. Commissioned Digs | Unlocks the minor artifact action **Commission a Dig** (1,500 minor artifacts): a popup lets you choose a new **archaeological site**, **anomaly** or (with Astral Planes) **astral rift** within your borders |
 | Finish | Anomaly discovery chance +15% · unlocks agenda **Grand Expedition** |
 
 Anomalies are counted by the hidden ship event `lfg_xenoarchaeology.1`, fired from vanilla's `anomaly_success` on_action: it increments the country variable `lfg_anomalies_studied` (read by `value:lfg_anomalies_studied`) and, with Anomaly Studies, adds the minor artifacts.

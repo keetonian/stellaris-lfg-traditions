@@ -255,6 +255,9 @@ tr_lfg_xenoarchaeology_anomaly_studies = {
 
 # Unlocks the Commission a Dig minor artifact action (common/artifact_actions/lfg_artifact_actions.txt).
 tr_lfg_xenoarchaeology_commissioned_digs = {
+	possible = {
+		has_tradition = tr_lfg_xenoarchaeology_reverse_engineering
+	}
 	custom_tooltip = tr_lfg_xenoarchaeology_commissioned_digs_tt
 	ai_weight = { factor = 1000 }
 }
@@ -272,18 +275,15 @@ tr_lfg_xenoarchaeology_expedition_corps = {
 	ai_weight = { factor = 1000 }
 }
 
-# Hook: research speed +3% per relic owned (value:lfg_num_relics); archaeotech weapons hit harder.
+# Hook: research speed +5% per relic owned (value:lfg_num_relics); archaeotech weapons hit harder.
 tr_lfg_xenoarchaeology_reverse_engineering = {
-	possible = {
-		has_tradition = tr_lfg_xenoarchaeology_commissioned_digs
-	}
 	custom_tooltip = tr_lfg_xenoarchaeology_reverse_engineering_tt
 	modifier = {
 		weapon_archaeotech_weapon_damage_mult = 0.10
 	}
 	triggered_modifier = {
 		potential = { always = yes }
-		all_technology_research_speed = 0.03
+		all_technology_research_speed = 0.05
 		mult = value:lfg_num_relics
 	}
 	ai_weight = { factor = 1000 }

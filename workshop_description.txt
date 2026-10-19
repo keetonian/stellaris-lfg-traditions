@@ -29,8 +29,8 @@ Eight new tradition trees, six council agendas, two ascension perks, a policy an
 [list]
 [*]More anomalies, faster anomaly research and surveys.
 [*][b]Anomaly Studies:[/b] +0.25% research speed per anomaly researched; each yields minor artifacts.
+[*][b]Reverse Engineering:[/b] +5% research speed per relic you own.
 [*][b]Commissioned Digs:[/b] spend 1,500 minor artifacts on a new dig site, anomaly or astral rift in your borders.
-[*][b]Reverse Engineering:[/b] +3% research speed per relic you own.
 [*][b]Downside:[/b] scientists cost more.
 [/list]
 
