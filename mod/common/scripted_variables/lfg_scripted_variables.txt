@@ -43,7 +43,7 @@
 
 # Penitence - Idle Hands downsides: share of the penal colony's unemployed that die each month (attrition; the
 # unemployed settle at monthly arrivals / this share), and crime per 100 unemployed (riots).
-@lfg_idle_hands_attrition = 0.03
+@lfg_idle_hands_attrition = 0.02
 @lfg_idle_hands_crime_per_hundred = 2
 # ...and job output on the penal colony while it has fewer than 100 unemployed.
 @lfg_idle_hands_empty_penalty = -0.30

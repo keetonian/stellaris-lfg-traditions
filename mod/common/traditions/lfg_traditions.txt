@@ -436,8 +436,8 @@ tr_lfg_penitence_transportation = {
 
 # Hook: every job on the penal colony +1% per 100 unemployed pops there (no cap): lfg_penal_idle_hands, re-added by
 # lfg_sync_penal_unemployed with multiplier = whole hundreds of unemployed. Pairs with Transportation.
-# Downsides: riots (crime +2 per 100 unemployed, in the same modifier) and attrition (3% of the unemployed die each
-# month, lfg_penal_idle_hands_attrition), so the unemployed settle at ~33x monthly arrivals.
+# Downsides: riots (crime +2 per 100 unemployed, in the same modifier) and attrition (2% of the unemployed die each
+# month, lfg_penal_idle_hands_attrition), so the unemployed settle at ~50x monthly arrivals.
 tr_lfg_penitence_idle_hands = {
 	possible = {
 		has_tradition = tr_lfg_penitence_transportation
