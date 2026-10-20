@@ -102,9 +102,9 @@ decision_lfg_expand_cell_blocks = {
 # Nanotech: the Nanite Pulse, from a star whose system has a nanite harvester (vanilla's, or the Nanite Forge origin's
 # broken / ancient one) on its starbase. Costs @lfg_nanite_pulse_cost_per_body nanites per celestial body in the system
 # (value:lfg_nanite_pulse_bodies); then once per @lfg_nanite_pulse_cooldown_days days for that star (timed star flag).
-# 50/50: the harvester's deposits grow one step (our harvester: lfg_forge_harvester_grow; vanilla's: its own step event
-# cybernetics.5054), or @lfg_nanite_pulse_nanites_per_body nanites per body (always this when no world can grow).
-# lfg_nanite_pulse.1 / .2 report what happened: the system, the worlds grown or the nanites gained.
+# Then a coin for every body in the system: heads, a world that can grow (a mining station on a harvested deposit) grows
+# one harvester step (lfg_forge_harvester_step, also for vanilla's harvester); tails, or no growth,
+# @lfg_nanite_pulse_payout_mult x that body's monthly harvester nanites (so early pulses cost more than they return). lfg_nanite_pulse.1 reports it all: worlds grown, nanites, cost.
 decision_lfg_nanite_pulse = {
 	owned_planets_only = no
 	enactment_time = 0
@@ -149,69 +149,80 @@ decision_lfg_nanite_pulse = {
 			set_variable = { which = lfg_pulse_bodies value = value:lfg_nanite_pulse_bodies }
 			set_timed_planet_flag = { flag = lfg_nanite_pulse_cooldown days = @lfg_nanite_pulse_cooldown_days }
 			solar_system = { save_event_target_as = lfg_pulse_system }
-			# What it cost (for the popups): @lfg_nanite_pulse_cost_per_body per body.
 			from = {
+				save_event_target_as = lfg_pulse_country
+				save_event_target_as = nanotech_country	# lfg_forge_harvester_step reads it
 				set_variable = { which = lfg_pulse_cost value = prev.lfg_pulse_bodies }
 				multiply_variable = { which = lfg_pulse_cost value = @lfg_nanite_pulse_cost_per_body }
 				set_variable = { which = lfg_pulse_bodies value = prev.lfg_pulse_bodies }
+				set_variable = { which = lfg_pulse_planets value = 0 }
+				set_variable = { which = lfg_pulse_nanites value = 0 }
+				# Mining station nanite multiplier (1 + the empire's station / nanite output modifiers), for the payouts.
+				set_variable = { which = lfg_pulse_station_mult value = 1 }
+				export_modifier_to_variable = { modifier = station_gatherers_produces_mult variable = lfg_pulse_mod }
+				change_variable = { which = lfg_pulse_station_mult value = lfg_pulse_mod }
+				export_modifier_to_variable = { modifier = station_gatherers_nanites_produces_mult variable = lfg_pulse_mod }
+				change_variable = { which = lfg_pulse_station_mult value = lfg_pulse_mod }
+				export_modifier_to_variable = { modifier = stations_produces_mult variable = lfg_pulse_mod }
+				change_variable = { which = lfg_pulse_station_mult value = lfg_pulse_mod }
+				export_modifier_to_variable = { modifier = stations_nanites_produces_mult variable = lfg_pulse_mod }
+				change_variable = { which = lfg_pulse_station_mult value = lfg_pulse_mod }
+				export_modifier_to_variable = { modifier = country_nanites_produces_mult variable = lfg_pulse_mod }
+				change_variable = { which = lfg_pulse_station_mult value = lfg_pulse_mod }
+				clear_variable = lfg_pulse_mod
 			}
-			# Worlds that can grow: a mining station on a harvested deposit (what both harvesters' steps need); vanilla's
-			# harvester only grows them once Nanotech is finished.
-			from = { set_variable = { which = lfg_pulse_planets value = 0 } }
+			# A coin for every body: heads, a world with a mining station on a harvested deposit grows one harvester step
+			# (counted only if its step count went up); tails, or no growth, @lfg_nanite_pulse_payout_mult x the body's monthly
+			# harvester nanites (value:lfg_pulse_deposit_nanites; nothing without a harvested deposit), with the empire's mining
+			# station nanite modifiers (lfg_pulse_station_mult).
 			solar_system = {
 				every_system_planet = {
-					limit = {
-						has_mining_station = yes
-						OR = {
-							has_deposit = d_nanite_harvester_deposit
-							has_planet_flag = nanites_doubled_1
-						}
-					}
-					from = { change_variable = { which = lfg_pulse_planets value = 1 } }
-				}
-			}
-			if = {
-				limit = {
-					solar_system.starbase = { has_starbase_building = nanite_harvester }
-					NOT = { from = { has_tradition = tr_nanotech_finish } }
-				}
-				from = { set_variable = { which = lfg_pulse_planets value = 0 } }
-			}
-			random_list = {
-				50 = {
-					modifier = {
-						factor = 0
-						from = { check_variable = { which = lfg_pulse_planets value = 0 } }
-					}
-					solar_system = {
-						if = {
-							limit = {
-								starbase = {
+					set_planet_flag = lfg_pulse_pays
+					random_list = {
+						50 = {
+							if = {
+								limit = {
+									has_mining_station = yes
 									OR = {
-										has_starbase_building = lfg_broken_nanite_harvester
-										has_starbase_building = lfg_ancient_nanite_harvester
+										has_deposit = d_nanite_harvester_deposit
+										has_planet_flag = nanites_doubled_1
 									}
 								}
+								lfg_count_nanite_steps = { VAR = lfg_pulse_before }
+								lfg_forge_harvester_step = yes
+								lfg_count_nanite_steps = { VAR = lfg_pulse_after }
+								if = {
+									limit = { check_variable = { which = lfg_pulse_after value > lfg_pulse_before } }
+									remove_planet_flag = lfg_pulse_pays
+									event_target:lfg_pulse_country = { change_variable = { which = lfg_pulse_planets value = 1 } }
+								}
+								clear_variable = lfg_pulse_before
+								clear_variable = lfg_pulse_after
 							}
-							lfg_forge_harvester_grow = yes
 						}
-						else = {
-							system_event = { id = cybernetics.5054 }
-						}
+						50 = { }
 					}
-					from = { country_event = { id = lfg_nanite_pulse.1 } }
-				}
-				50 = {
-					from = {
-						set_variable = { which = lfg_pulse_nanites value = prev.lfg_pulse_bodies }
-						multiply_variable = { which = lfg_pulse_nanites value = @lfg_nanite_pulse_nanites_per_body }
-						add_resource = {
-							nanites = 1
-							mult = lfg_pulse_nanites
+					if = {
+						limit = { has_planet_flag = lfg_pulse_pays }
+						remove_planet_flag = lfg_pulse_pays
+						set_variable = { which = lfg_pulse_pay value = value:lfg_pulse_deposit_nanites }
+						multiply_variable = { which = lfg_pulse_pay value = @lfg_nanite_pulse_payout_mult }
+						event_target:lfg_pulse_country = {
+							set_variable = { which = lfg_pulse_pay value = prev.lfg_pulse_pay }
+							multiply_variable = { which = lfg_pulse_pay value = lfg_pulse_station_mult }
+							change_variable = { which = lfg_pulse_nanites value = lfg_pulse_pay }
+							clear_variable = lfg_pulse_pay
 						}
-						country_event = { id = lfg_nanite_pulse.2 }
+						clear_variable = lfg_pulse_pay
 					}
 				}
+			}
+			from = {
+				add_resource = {
+					nanites = 1
+					mult = lfg_pulse_nanites
+				}
+				country_event = { id = lfg_nanite_pulse.1 }
 			}
 		}
 	}

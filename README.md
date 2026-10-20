@@ -290,10 +290,10 @@ grown deposit with a mining station; the star's 22 energy covers about 5), then 
   of the (doubled) largest vanilla deposit) and steps 15-16 our `d_lfg_nanite_harvester_deposit_vast` (3,276.8) instead of dozens of
   deposits. Fully grown, the eight forge worlds make about **104,900 nanites a month** before modifiers.
   **Its upkeep is higher than vanilla's harvester**: **6 energy** per upkeep unit (vanilla: 4; `@lfg_ancient_harvester_energy`),
-  and the units keep growing past vanilla's last step: vanilla's count (1, 2, 4 ... 256 per step reached, 511 per planet at
-  step 9) **+256 per planet for each of steps 10-16** (`value:lfg_ancient_harvester_upkeep_units`,
-  `@lfg_ancient_harvester_units_per_step`). Fully grown: 2,303 units, **about 13,800 energy a month per forge world**
-  (~110,000 for all eight) against ~13,100 nanites each. The broken harvester keeps vanilla's 4 per unit.
+  and the units keep growing past vanilla's last step: vanilla's count (by the step a planet is on: 1, 2, 4 ... 256 at
+  step 9; vanilla's steps replace their flag) **+256 per planet for each of steps 10-16** (`value:lfg_ancient_harvester_upkeep_units`,
+  `@lfg_ancient_harvester_units_per_step`; our step flags add up). Fully grown: 2,048 units, **about 12,300 energy a month
+  per forge world** (~98,000 for all eight) against ~13,100 nanites each. The broken harvester keeps vanilla's 4 per unit.
 - Dismantling either clears the system's harvester deposits and step flags (`lfg_nanite_forge.4` →
   `lfg_clear_forge_harvester`), except during the swap (timed star flag `lfg_nanite_harvester_swapping`).
 Neither can be built by hand: their `possible` only passes while our events place them (country flag
@@ -346,8 +346,8 @@ keeps on planets with the building. Tunables: `@lfg_nanite_core_*`, `@lfg_nanite
 `building_lfg_nanotensile_converter`: any empire that has **finished Nanotech**, only while Gigastructural's job-based
 supertensiles are on (global flag `giga_buildcap_j`); any number per planet, in the same slots as Gigastructural's megaworkshops
 (industrial, factory, foundry, capital and supertensile specializations). Costs 500 alloys + 250 nanites; each month turns
-**40 energy + 80 nanites into 20 supertensiles** (`@lfg_nanotensile_*`). **Upgrades once** to the **Nanotensile Foundry**
-(`building_lfg_nanotensile_converter_2`: 1,000 alloys + 500 nanites; **80 energy + 160 nanites into 40 supertensiles**,
+**40 energy + 80 nanites into 8 supertensiles** (`@lfg_nanotensile_*`). **Upgrades once** to the **Nanotensile Foundry**
+(`building_lfg_nanotensile_converter_2`: 1,000 alloys + 500 nanites; **80 energy + 160 nanites into 16 supertensiles**,
 `@lfg_nanotensile_2_*`). Icons (`art/make_building_icons.py`): Gigastructural's megaworkshop with the nanite and
 supertensile symbols side by side; the Foundry's glows.
 
@@ -380,14 +380,19 @@ size 30+ (vanilla's largest rocky worlds are smaller; the Nanite Forge's molten 
 `decision_lfg_nanite_pulse`, for any empire that has **adopted Nanotech**, taken **from a star** (Gigastructural's pattern:
 `owned_planets_only = no`, `is_star = yes`, the system is ours) whose system's starbase has a **nanite harvester**
 (vanilla's, or the Nanite Forge's broken / Ancient one). Costs **10,000 nanites per celestial body** in the system
-(`value:lfg_nanite_pulse_bodies`, every system planet, the star included); the star can pulse again after **1,000 days**
-(timed planet flag). Then, 50/50: the harvester's deposits **grow one step** (our harvester: `lfg_forge_harvester_grow`,
-shared with its 3-year cycle; vanilla's: its own step event `cybernetics.5054`, which also needs Nanotech finished), or
-**20,000 nanites per body** (`@lfg_nanite_pulse_*`). `lfg_nanite_pulse.1` / `.2` report what happened: the system, the worlds grown or nanites gained, and what the pulse
-cost (and for how many bodies). With no world that can grow (none with a mining station on a harvested deposit, or
-vanilla's harvester before Nanotech is finished), the pulse always pays nanites. Icon: vanilla's pulsar
-decision icon in nanite cyan (`art/make_megastructure_icons.py`). **Unverified in game:** the decision showing on stars,
-and the per-body cost (`count_system_planet` as a script value from the star).
+(`value:lfg_nanite_pulse_bodies`: `count_system_planet` with `trigger_scope = solar_system`, the star included); the star can
+pulse again after **1,000 days** (timed planet flag). Then **a coin for every body**: heads, a world that can grow (a mining
+station on a harvested deposit) **grows one harvester step** (`lfg_forge_harvester_step`; with vanilla's harvester it may
+take steps 8-12 too, steps 13-16 stay the Ancient harvester's); tails, or a world that didn't grow (no station, or already
+at its last step), **12 months of that body's harvested nanites** (the in-game text only says it's based on deposit size) (`value:lfg_pulse_deposit_nanites` × `@lfg_nanite_pulse_payout_mult`:
+its harvester deposits counted with `count_deposits`, at the doubled amounts; nothing without one), times the empire's
+mining station nanite multiplier (1 + `station_gatherers_produces_mult`, `station_gatherers_nanites_produces_mult`,
+`stations_produces_mult`, `stations_nanites_produces_mult`, `country_nanites_produces_mult`, read with
+`export_modifier_to_variable`). Modifiers on a single station or planet aren't included. So early pulses cost
+more than they return, and pulses on grown systems pay back. A world counts as grown only if its step count went up
+(`lfg_count_nanite_steps`: the highest step flag, before and after; vanilla's steps replace their flag). One popup (`lfg_nanite_pulse.1`) reports the worlds grown, the nanites paid
+back and the cost. Icon: vanilla's pulsar decision icon in nanite cyan (`art/make_megastructure_icons.py`). **Unverified in
+game:** the decision showing on stars.
 
 ## Civic: Applied Biosciences
 

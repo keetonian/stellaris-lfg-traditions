@@ -6,7 +6,7 @@
 # d_lfg_nanite_harvester_deposit_huge instead of 32 vanilla deposits), 14 (size >= 50: 1,638.4), 15 (size >= 55: 2 x
 # 1,638.4 = 3,276.8, in d_lfg_nanite_harvester_deposit_vast) and 16 (size >= 60: 6,553.6).
 # Broken (before Nanotech): no further than step 7. Steps 8+ need the star flag lfg_nanite_harvester_restored (set when
-# it becomes the Ancient Nanite Harvester); planets on step 9+ that can't grow pay out like vanilla's.
+# it becomes the Ancient Nanite Harvester), or for steps 8-12 vanilla's harvester (the Nanite Pulse steps single worlds); planets on step 9+ that can't grow pay out like vanilla's.
 # Planets keep nanites_doubled_9 from step 9 on, so vanilla's harvester upkeep value counts them.
 lfg_forge_harvester_step = {
 	if = {
@@ -111,7 +111,12 @@ lfg_forge_harvester_step = {
 		limit = {
 			has_planet_flag = nanites_doubled_7
 			planet_size >= 21
-			solar_system = { has_star_flag = lfg_nanite_harvester_restored }
+			solar_system = {
+				OR = {
+					has_star_flag = lfg_nanite_harvester_restored
+					starbase = { has_starbase_building = nanite_harvester }	# vanilla's harvester, through the Nanite Pulse
+				}
+			}
 		}
 		random_list = {
 			50 = { nanotech_deposit_nanite_generation = yes }
@@ -130,7 +135,12 @@ lfg_forge_harvester_step = {
 		limit = {
 			has_planet_flag = nanites_doubled_8
 			planet_size >= 25
-			solar_system = { has_star_flag = lfg_nanite_harvester_restored }
+			solar_system = {
+				OR = {
+					has_star_flag = lfg_nanite_harvester_restored
+					starbase = { has_starbase_building = nanite_harvester }	# vanilla's harvester, through the Nanite Pulse
+				}
+			}
 		}
 		random_list = {
 			50 = { nanotech_deposit_nanite_generation = yes }
@@ -146,7 +156,12 @@ lfg_forge_harvester_step = {
 			has_planet_flag = nanites_doubled_9
 			NOT = { has_planet_flag = lfg_nanites_doubled_10 }
 			planet_size >= @lfg_nanite_step_10_size
-			solar_system = { has_star_flag = lfg_nanite_harvester_restored }
+			solar_system = {
+				OR = {
+					has_star_flag = lfg_nanite_harvester_restored
+					starbase = { has_starbase_building = nanite_harvester }	# vanilla's harvester, through the Nanite Pulse
+				}
+			}
 		}
 		random_list = {
 			50 = { nanotech_deposit_nanite_generation = yes }
@@ -162,7 +177,12 @@ lfg_forge_harvester_step = {
 			has_planet_flag = lfg_nanites_doubled_10
 			NOT = { has_planet_flag = lfg_nanites_doubled_11 }
 			planet_size >= @lfg_nanite_step_11_size
-			solar_system = { has_star_flag = lfg_nanite_harvester_restored }
+			solar_system = {
+				OR = {
+					has_star_flag = lfg_nanite_harvester_restored
+					starbase = { has_starbase_building = nanite_harvester }	# vanilla's harvester, through the Nanite Pulse
+				}
+			}
 		}
 		random_list = {
 			50 = { nanotech_deposit_nanite_generation = yes }
@@ -180,7 +200,12 @@ lfg_forge_harvester_step = {
 			has_planet_flag = lfg_nanites_doubled_11
 			NOT = { has_planet_flag = lfg_nanites_doubled_12 }
 			planet_size >= @lfg_nanite_step_12_size
-			solar_system = { has_star_flag = lfg_nanite_harvester_restored }
+			solar_system = {
+				OR = {
+					has_star_flag = lfg_nanite_harvester_restored
+					starbase = { has_starbase_building = nanite_harvester }	# vanilla's harvester, through the Nanite Pulse
+				}
+			}
 		}
 		random_list = {
 			50 = { nanotech_deposit_nanite_generation = yes }
@@ -365,4 +390,26 @@ lfg_forge_harvester_grow = {
 		}
 		lfg_forge_harvester_step = yes
 	}
+}
+
+# Planet scope: the highest harvester step this world has reached, into planet variable $VAR$ (vanilla's steps replace
+# their flag, nanites_doubled_1 -> _2 ...; our steps 10-16 add theirs while it keeps nanites_doubled_9).
+lfg_count_nanite_steps = {
+	set_variable = { which = $VAR$ value = 0 }
+	if = { limit = { has_planet_flag = nanites_doubled_1 } set_variable = { which = $VAR$ value = 1 } }
+	if = { limit = { has_planet_flag = nanites_doubled_2 } set_variable = { which = $VAR$ value = 2 } }
+	if = { limit = { has_planet_flag = nanites_doubled_3 } set_variable = { which = $VAR$ value = 3 } }
+	if = { limit = { has_planet_flag = nanites_doubled_4 } set_variable = { which = $VAR$ value = 4 } }
+	if = { limit = { has_planet_flag = nanites_doubled_5 } set_variable = { which = $VAR$ value = 5 } }
+	if = { limit = { has_planet_flag = nanites_doubled_6 } set_variable = { which = $VAR$ value = 6 } }
+	if = { limit = { has_planet_flag = nanites_doubled_7 } set_variable = { which = $VAR$ value = 7 } }
+	if = { limit = { has_planet_flag = nanites_doubled_8 } set_variable = { which = $VAR$ value = 8 } }
+	if = { limit = { has_planet_flag = nanites_doubled_9 } set_variable = { which = $VAR$ value = 9 } }
+	if = { limit = { has_planet_flag = lfg_nanites_doubled_10 } set_variable = { which = $VAR$ value = 10 } }
+	if = { limit = { has_planet_flag = lfg_nanites_doubled_11 } set_variable = { which = $VAR$ value = 11 } }
+	if = { limit = { has_planet_flag = lfg_nanites_doubled_12 } set_variable = { which = $VAR$ value = 12 } }
+	if = { limit = { has_planet_flag = lfg_nanites_doubled_13 } set_variable = { which = $VAR$ value = 13 } }
+	if = { limit = { has_planet_flag = lfg_nanites_doubled_14 } set_variable = { which = $VAR$ value = 14 } }
+	if = { limit = { has_planet_flag = lfg_nanites_doubled_15 } set_variable = { which = $VAR$ value = 15 } }
+	if = { limit = { has_planet_flag = lfg_nanites_doubled_16 } set_variable = { which = $VAR$ value = 16 } }
 }

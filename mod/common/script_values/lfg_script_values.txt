@@ -402,6 +402,7 @@ lfg_disassembler_nanites = {
 lfg_nanite_pulse_bodies = {
 	base = 0
 	complex_trigger_modifier = {
+		trigger_scope = solar_system	# count_system_planet counts a system's planets: without this it counted 0 from the star
 		trigger = count_system_planet
 		parameters = {
 			limit = { always = yes }
@@ -499,6 +500,52 @@ lfg_ancient_harvester_upkeep_units = {
 			}
 		}
 		mult = @lfg_ancient_harvester_units_per_step
+		mode = add
+	}
+}
+
+# Nanite Pulse (decision_lfg_nanite_pulse): a body's monthly nanites from harvester deposits (planet scope), at this
+# mod's doubled amounts (zz_lfg_deposit_overrides.txt): vanilla's 0.1 / 1.6 / 25.6 deposits x2, our huge / vast as they are.
+lfg_pulse_deposit_nanites = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = count_deposits
+		parameters = {
+			limit = { is_deposit_type = d_nanite_harvester_deposit }
+		}
+		mult = 0.2
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = count_deposits
+		parameters = {
+			limit = { is_deposit_type = d_nanite_harvester_deposit_regular }
+		}
+		mult = 3.2
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = count_deposits
+		parameters = {
+			limit = { is_deposit_type = d_nanite_harvester_deposit_large }
+		}
+		mult = 51.2
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = count_deposits
+		parameters = {
+			limit = { is_deposit_type = d_lfg_nanite_harvester_deposit_huge }
+		}
+		mult = 819.2
+		mode = add
+	}
+	complex_trigger_modifier = {
+		trigger = count_deposits
+		parameters = {
+			limit = { is_deposit_type = d_lfg_nanite_harvester_deposit_vast }
+		}
+		mult = 3276.8
 		mode = add
 	}
 }

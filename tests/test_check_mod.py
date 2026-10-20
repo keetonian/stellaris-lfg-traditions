@@ -62,7 +62,7 @@ class RealModTests(unittest.TestCase):
                                                             "lfg_mothership.3", "lfg_mothership.4", "lfg_mothership.5",
                                                             "lfg_mothership.6", "lfg_mothership.7", "lfg_mothership.8", "lfg_mothership.9", "lfg_mothership.10",
                                                             "lfg_mothership.11", "lfg_mothership.12", "lfg_mothership.13", "lfg_mothership.14",
-                                                            "lfg_nanite_pulse.1", "lfg_nanite_pulse.2"})
+                                                            "lfg_nanite_pulse.1"})
         self.assertEqual(len(mod.top("common/council_agendas")), 7)
         self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress", "ap_lfg_massed_assault", "ap_lfg_nanite_armada", "ap_lfg_mothership"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
