@@ -288,7 +288,7 @@
  tradition_lfg_stationcraft_desc:0 "Our wealth hangs in orbit. Every starbase, every kilostructure, every megastructure feeds a network of stations that mine and study the galaxy, while the planets below matter less and less."
  tr_lfg_stationcraft_adopt:0 "Stationcraft Traditions"
  tr_lfg_stationcraft_adopt_desc:0 "The empire turns its eyes to orbit."
- tr_lfg_stationcraft_adopt_tt:0 "Orbital station output (mining and research stations):\n- §G+2%§! for each starbase we own\n- §G+5%§! for each kilostructure we own\n- §G+10%§! for each megastructure we own\nResources from jobs §R-35%§!"
+ tr_lfg_stationcraft_adopt_tt:0 "Orbital station output (mining and research stations):\n- §G+3%§! for each colony we own\n- §G+2%§! for each starbase we own\n- §G+5%§! for each kilostructure we own\n- §G+10%§! for each megastructure we own\nResources from jobs §R-35%§!"
  tr_lfg_stationcraft_finish:0 "Stationcraft Traditions Finished"
  tr_lfg_stationcraft_finish_desc:0 "Ascension Perks Unlocked: §G+1§!"
  tr_lfg_stationcraft_orbital_logistics:0 "Orbital Logistics"

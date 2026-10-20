@@ -107,7 +107,7 @@ kilostructure (+5%) and megastructure (+10%) you own, uncapped, but **jobs produ
 
 | Tradition | Effect |
 |---|---|
-| Adopt ⚙ | Station output +2% per starbase, +5% per kilostructure, +10% per megastructure · resources from jobs −35% |
+| Adopt ⚙ | Station output +3% per colony, +2% per starbase, +5% per kilostructure, +10% per megastructure · resources from jobs −35% |
 | 1. Orbital Logistics | Starbase capacity +3 · starbase upkeep −25% · starbase influence cost −25% |
 | 2. Kilostructure Doctrine | Megastructure build speed +20% · megastructure cost −10% |
 | 3. Bastion Starbases (needs 1) | Starbase hull and armour +25% · +3 defense platforms · starbase build speed +50% |
@@ -118,7 +118,7 @@ kilostructure (+5%) and megastructure (+10%) you own, uncapped, but **jobs produ
 The counts are taken **once a month** (and on adoption) by `lfg_stationcraft.1` into country variables (`lfg_sc_*`, read
 by `value:lfg_stationcraft_*`), so the bonus can lag a month but never recounts on its own. Kilostructures are
 Gigastructural's `is_kilostructure`; megastructures are every other owned megastructure that isn't ruined or technical
-(Giga's `is_ruined_mega` / `is_technical_mega`); starbases include outposts.
+(Giga's `is_ruined_mega` / `is_technical_mega`); starbases include outposts. Colonies are every owned planet (`every_owned_planet`).
 
 ### Lineage: every trait is an advantage
 **Who:** any empire. **Hook:** scales with your main species' traits, your species and subspecies, and the planet types you live on (all uncapped).

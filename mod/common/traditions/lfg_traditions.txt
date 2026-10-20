@@ -757,6 +757,12 @@ tr_lfg_stationcraft_adopt = {
 	}
 	triggered_modifier = {
 		potential = { always = yes }
+		station_gatherers_produces_mult = 0.03
+		station_researchers_produces_mult = 0.03
+		mult = value:lfg_stationcraft_colonies
+	}
+	triggered_modifier = {
+		potential = { always = yes }
 		station_gatherers_produces_mult = 0.02
 		station_researchers_produces_mult = 0.02
 		mult = value:lfg_stationcraft_starbases

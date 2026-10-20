@@ -36,7 +36,7 @@ Nine new tradition trees, six council agendas, four ascension perks, an origin, 
 [h3]Stationcraft[/h3]
 [i]Your wealth hangs in orbit.[/i] Any empire.
 [list]
-[*]Mining and research stations produce more for every starbase, kilostructure and megastructure you own; jobs produce 35% less.
+[*]Mining and research stations produce more for every colony, starbase, kilostructure and megastructure you own; jobs −35%.
 [*]More, cheaper and tougher starbases; faster, cheaper megastructures with less upkeep.
 [/list]
 

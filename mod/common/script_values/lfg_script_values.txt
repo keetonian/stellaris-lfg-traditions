@@ -387,6 +387,18 @@ lfg_num_world_types = {
 	}
 }
 
+# Stationcraft: colonies owned, as counted monthly by lfg_stationcraft.1 into the country variable lfg_sc_colonies.
+lfg_stationcraft_colonies = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = check_variable
+		parameters = {
+			which = lfg_sc_colonies
+		}
+		mode = add
+	}
+}
+
 # Stationcraft: starbases owned, as counted monthly by lfg_stationcraft.1 into the country variable lfg_sc_starbases.
 lfg_stationcraft_starbases = {
 	base = 0

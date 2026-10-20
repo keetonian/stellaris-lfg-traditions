@@ -1,8 +1,8 @@
 # LFG Traditions - Stationcraft events.
 namespace = lfg_stationcraft
 
-# Monthly (on_monthly_pulse_country) and on adoption: count our starbases, kilostructures and megastructures into country
-# variables (read by value:lfg_stationcraft_*), so the tradition's modifier reads three numbers instead of recounting
+# Monthly (on_monthly_pulse_country) and on adoption: count our colonies, starbases, kilostructures and megastructures into
+# country variables (read by value:lfg_stationcraft_*), so the tradition's modifier reads four numbers instead of recounting
 # whenever the game re-evaluates it. Countries without the tree: one lookup.
 country_event = {
 	id = lfg_stationcraft.1
@@ -14,9 +14,13 @@ country_event = {
 	}
 
 	immediate = {
+		set_variable = { which = lfg_sc_colonies value = 0 }
 		set_variable = { which = lfg_sc_starbases value = 0 }
 		set_variable = { which = lfg_sc_kilostructures value = 0 }
 		set_variable = { which = lfg_sc_megastructures value = 0 }
+		every_owned_planet = {
+			prev = { change_variable = { which = lfg_sc_colonies value = 1 } }
+		}
 		every_owned_starbase = {
 			prev = { change_variable = { which = lfg_sc_starbases value = 1 } }
 		}
