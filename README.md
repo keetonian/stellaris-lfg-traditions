@@ -255,7 +255,7 @@ gas giants are size 62; one base district per size). Initializer: `lfg_emberfall
 
 ## Origin: Nanite Forge (machines)
 
-**Who:** machine species, individual or gestalt (`species_archetype = MACHINE`), not nomadic. **Orbital stations** (mining and research) **+30%** output. The homeworld gets a planetary
+**Who:** machine species, individual or gestalt (`species_archetype = MACHINE`), not nomadic. The homeworld gets a planetary
 **Nanite Vein** deposit (`d_lfg_nanite_vein`, +15 nanites; not orbital), **50 nanites** to start with, and the founder species the **Nanite Substrate**
 trait (`trait_lfg_nanite_substrate`, can't be added, removed or merged by species modification): pops **+20% job
 efficiency** and **+0.3 nanites upkeep** (per 100 pops); mechanical pop assembly speed **−30%** where they're assembled (there is

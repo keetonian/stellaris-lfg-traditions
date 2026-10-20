@@ -57,10 +57,6 @@ origin_lfg_nanite_forge = {
 	traits = {
 		trait = trait_lfg_nanite_substrate
 	}
-	# Orbital stations (mining and research) +30%. The pop assembly downside is on the Nanite Substrate trait.
-	modifier = {
-		station_gatherers_produces_mult = 0.30
-		station_researchers_produces_mult = 0.30
-	}
+	# No modifier of its own; the pop assembly downside is on the Nanite Substrate trait.
 	random_weight = { base = 1 }
 }
