@@ -28,3 +28,9 @@ lfg_is_progenitor_forge = {
 		is_megastructure_type = lfg_progenitor_forge_2
 	}
 }
+
+# Nanite Disassembler (LFG_NANITE_DISASSEMBLER): the game looks up can_destroy_planet_with_<component key>; it cracks
+# whatever vanilla's World Cracker can (as Gigastructural does for its systemcraft crackers).
+can_destroy_planet_with_LFG_NANITE_DISASSEMBLER = {
+	can_destroy_planet_with_PLANET_KILLER_CRACKER = yes
+}

@@ -1,0 +1,235 @@
+# LFG Traditions - the Nanite Armada hulls' models (common/ship_sizes/lfg_ship_sizes.txt), our own designs around
+# Gigastructural's moon / planet meshes (their nanite skins are generated in lfg_nanite_celestials.asset):
+#   - Nanite Attack Moon: the grey goo moon (or its Machine Shell / Swarm Core skin; the moon's stern sections) with an
+#     escort: a tilted ring of 8 Nanite Swarmers and a crossing ring of 4 Nanite Interdictors
+#   - Nanite Planetcraft: the grey goo world with an equatorial ring of 12 Nanite Interdictors, a tilted ring of 16
+#     Nanite Swarmers, nanite hive stations capping both poles, and the grey goo swarm
+# Units are the meshes' (moon ~80 across, planet ~440); sizes are first guesses: tune in game.
+# The planetcraft's look sits in its mid section (lfg_nanite_planetcraft_mid_entity, with Giga's weapon locators) so the
+# ship designer shows it; its hull model (lfg_nanite_planetcraft_entity) is an invisible frame at Giga's scale.
+
+@lfg_planetcraft_scale = 0.33	# Gigastructural's @war_planet_scale
+@lfg_moon_swarmer_scale = 1.4
+@lfg_moon_interdictor_scale = 0.9
+@lfg_pc_interdictor_scale = 2.2
+@lfg_pc_swarmer_scale = 3
+@lfg_pc_cap_scale = 2.5
+
+##### NANITE ATTACK MOON: escort rings #####
+
+entity = {
+	name = "lfg_nanite_moon_swarmer_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_cruiser_section_entity" }
+	scale = @lfg_moon_swarmer_scale
+}
+
+entity = {
+	name = "lfg_nanite_moon_swarmer_two_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 -70 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 70 } rotation = { 0 270 0 } }
+	attach = { "loc101" = "lfg_nanite_moon_swarmer_entity" }
+	attach = { "loc102" = "lfg_nanite_moon_swarmer_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_nanite_moon_swarmer_ring_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 45 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 135 0 } }
+	attach = { "loc101" = "lfg_nanite_moon_swarmer_two_entity" }
+	attach = { "loc102" = "lfg_nanite_moon_swarmer_two_entity" }
+	attach = { "loc103" = "lfg_nanite_moon_swarmer_two_entity" }
+	attach = { "loc104" = "lfg_nanite_moon_swarmer_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_nanite_moon_interdictor_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_mothership_section_entity" }
+	scale = @lfg_moon_interdictor_scale
+}
+
+entity = {
+	name = "lfg_nanite_moon_interdictor_two_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 -85 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 85 } rotation = { 0 270 0 } }
+	attach = { "loc101" = "lfg_nanite_moon_interdictor_entity" }
+	attach = { "loc102" = "lfg_nanite_moon_interdictor_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_nanite_moon_interdictor_ring_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 90 0 } }
+	attach = { "loc101" = "lfg_nanite_moon_interdictor_two_entity" }
+	attach = { "loc102" = "lfg_nanite_moon_interdictor_two_entity" }
+	scale = 1
+}
+
+# Attached at the moon skins' root (generated in lfg_nanite_celestials.asset).
+entity = {
+	name = "lfg_nanite_moon_escort_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 20 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 45 90 } }
+	attach = { "loc101" = "lfg_nanite_moon_swarmer_ring_entity" }
+	attach = { "loc102" = "lfg_nanite_moon_interdictor_ring_entity" }
+	scale = 1
+}
+
+##### NANITE PLANETCRAFT #####
+
+entity = {
+	name = "lfg_nanite_pc_interdictor_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_mothership_section_entity" }
+	scale = @lfg_pc_interdictor_scale
+}
+
+entity = {
+	name = "lfg_nanite_pc_interdictor_two_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 -330 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 330 } rotation = { 0 270 0 } }
+	attach = { "loc101" = "lfg_nanite_pc_interdictor_entity" }
+	attach = { "loc102" = "lfg_nanite_pc_interdictor_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_nanite_pc_interdictor_ring_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 30 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 60 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc105" position = { 0 0 0 } rotation = { 0 120 0 } }
+	locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 150 0 } }
+	attach = { "loc101" = "lfg_nanite_pc_interdictor_two_entity" }
+	attach = { "loc102" = "lfg_nanite_pc_interdictor_two_entity" }
+	attach = { "loc103" = "lfg_nanite_pc_interdictor_two_entity" }
+	attach = { "loc104" = "lfg_nanite_pc_interdictor_two_entity" }
+	attach = { "loc105" = "lfg_nanite_pc_interdictor_two_entity" }
+	attach = { "loc106" = "lfg_nanite_pc_interdictor_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_nanite_pc_swarmer_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_cruiser_section_entity" }
+	scale = @lfg_pc_swarmer_scale
+}
+
+entity = {
+	name = "lfg_nanite_pc_swarmer_two_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 -420 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 420 } rotation = { 0 270 0 } }
+	attach = { "loc101" = "lfg_nanite_pc_swarmer_entity" }
+	attach = { "loc102" = "lfg_nanite_pc_swarmer_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_nanite_pc_swarmer_ring_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 22.5 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 45 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 67.5 0 } }
+	locator = { name = "loc105" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 112.5 0 } }
+	locator = { name = "loc107" position = { 0 0 0 } rotation = { 0 135 0 } }
+	locator = { name = "loc108" position = { 0 0 0 } rotation = { 0 157.5 0 } }
+	attach = { "loc101" = "lfg_nanite_pc_swarmer_two_entity" }
+	attach = { "loc102" = "lfg_nanite_pc_swarmer_two_entity" }
+	attach = { "loc103" = "lfg_nanite_pc_swarmer_two_entity" }
+	attach = { "loc104" = "lfg_nanite_pc_swarmer_two_entity" }
+	attach = { "loc105" = "lfg_nanite_pc_swarmer_two_entity" }
+	attach = { "loc106" = "lfg_nanite_pc_swarmer_two_entity" }
+	attach = { "loc107" = "lfg_nanite_pc_swarmer_two_entity" }
+	attach = { "loc108" = "lfg_nanite_pc_swarmer_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_nanite_pc_swarmer_tilted_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 35 } }
+	attach = { "loc101" = "lfg_nanite_pc_swarmer_ring_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_nanite_pc_cap_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_space_station_section_entity" }
+	scale = @lfg_pc_cap_scale
+}
+
+# The planetcraft's mid section: Gigastructural's weapon locators (war_planet_locators_mesh) plus the look.
+entity = {
+	name = "lfg_nanite_planetcraft_mid_entity"
+	pdxmesh = "war_planet_locators_mesh"
+	cull_radius = 10000
+	scale = 1
+
+	locator = { name = "lfg_body" position = { 0 0 0 } }
+	locator = { name = "lfg_north" position = { 0 250 0 } }
+	locator = { name = "lfg_south" position = { 0 -250 0 } rotation = { 180 0 0 } }
+
+	attach = { lfg_body = "lfg_nanite_planetcraft_body_entity" }
+	attach = { lfg_body = "lfg_nanite_pc_interdictor_ring_entity" }
+	attach = { lfg_body = "lfg_nanite_pc_swarmer_tilted_entity" }
+	attach = { lfg_north = "lfg_nanite_pc_cap_entity" }
+	attach = { lfg_south = "lfg_nanite_pc_cap_entity" }
+	attach = { lfg_body = "lfg_nanite_swarm_planet_entity" }
+}
+
+# The planetcraft's hull model: an invisible frame at Gigastructural's scale (the sections hang on "root") that only
+# explodes.
+entity = {
+	name = "lfg_nanite_planetcraft_entity"
+	pdxmesh = "locator_mesh"
+	cull_radius = 10000
+	scale = @lfg_planetcraft_scale
+
+	locator = { name = "root" position = { 0 0 0 } }
+	locator = { name = "explosion_locator1" position = { 0 0 0 } }
+	locator = { name = "explosion_locator2" position = { 180 80 120 } }
+	locator = { name = "explosion_locator3" position = { -180 -80 -120 } }
+	locator = { name = "explosion_locator4" position = { 0 200 -200 } }
+	locator = { name = "explosion_locator5" position = { 0 -200 200 } }
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5 }
+	state = { name = "moving" state_time = 5 }
+	state = { name = "death" state_time = 5 looping = no
+		event = { time = 0 node = "explosion_locator1" particle = "ship_explosion_particle" trigger_once = yes keep_particle = yes sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1 node = "explosion_locator2" particle = "ship_explosion_particle" trigger_once = yes keep_particle = yes sound = { soundeffect = "station_explosion_large" } }
+		event = { time = 2 node = "explosion_locator3" particle = "ship_explosion_particle" trigger_once = yes keep_particle = yes sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 3 node = "explosion_locator4" particle = "ship_explosion_particle" trigger_once = yes keep_particle = yes sound = { soundeffect = "ship_destroyed_big_explosion" } }
+		event = { time = 4 node = "explosion_locator5" particle = "juggernaut_explosion_particle" trigger_once = yes keep_particle = yes }
+		event = { trigger_once = yes sound = { soundeffect = "amb_fallen_empire_titan_death" } }
+	}
+
+	game_data = {
+		size = 150.0
+		emissive_recolor_crunch = 50
+	}
+}

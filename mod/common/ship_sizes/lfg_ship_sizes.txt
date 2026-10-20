@@ -22,7 +22,7 @@ lfg_nanite_war_moon = {
 	}
 	cloaking_forbidden = yes
 	max_hitpoints = 500000
-	size_multiplier = 250
+	size_multiplier = 64
 	fleet_slot_size = 50
 	section_slots = {
 		"bow" =				{ locator = "part1" }
@@ -51,6 +51,8 @@ lfg_nanite_war_moon = {
 
 	prerequisites = { "tech_lfg_nanite_war_moon" }
 
+	# Nanites only: components add nothing to cost or upkeep (like the Mothership).
+	components_add_to_cost = no
 	resources = {
 		category = ships
 		cost = {
@@ -85,7 +87,7 @@ lfg_nanite_planetcraft = {
 	}
 	cloaking_forbidden = yes
 	max_hitpoints = 5000000
-	size_multiplier = 750
+	size_multiplier = 128
 	fleet_slot_size = 250
 	section_slots = {
 		"bowgun" =			{ locator = "root" }
@@ -114,6 +116,8 @@ lfg_nanite_planetcraft = {
 	required_component_set = "combat_computers"
 	required_component_set = "ship_aura_components"
 
+	# Nanites only: components add nothing to cost or upkeep (like the Mothership).
+	components_add_to_cost = no
 	resources = {
 		category = ships
 		cost = {
@@ -148,10 +152,11 @@ lfg_mothership = {
 		ship_armor_add = 19200000
 		ship_shield_add = 1900000
 		ship_speed_mult = 2
+		ship_ftl_jumpdrive_range_mult = 1	# 2x jump drive range (not on the Steam page)
 	}
 	cloaking_forbidden = yes
 	max_hitpoints = 100000000
-	size_multiplier = 2500
+	size_multiplier = 256
 	fleet_slot_size = 1000
 	section_slots = {
 		"bowgun" =			{ locator = "root" }
@@ -173,12 +178,14 @@ lfg_mothership = {
 	can_disable = no
 	can_have_federation_design = no
 	potential_construction = { lfg_is_progenitor_forge = yes }
-	possible_construction = { lfg_is_progenitor_forge = yes }
-	# One per empire. Two queued at once slip past this; lfg_mothership.6 (on_ship_built) refunds the extra one.
-	possible_country = {
+	# One per empire, checked at the shipyard (this = the Progenitor Forge) so designing stays open: possible_country
+	# also blocked the ship designer. Two queued at once slip past this; lfg_mothership.6 (on_ship_built) refunds the
+	# extra one.
+	possible_construction = {
+		lfg_is_progenitor_forge = yes
 		custom_tooltip = {
 			fail_text = lfg_mothership_limit
-			NOT = { any_owned_ship = { is_ship_size = lfg_mothership } }
+			owner = { NOT = { any_owned_ship = { is_ship_size = lfg_mothership } } }
 		}
 	}
 	construction_type = starbase_shipyard

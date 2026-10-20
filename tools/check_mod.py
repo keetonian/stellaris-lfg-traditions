@@ -70,6 +70,7 @@ ALLOWED_FILES = [
     r"common/section_templates/[^/]+\.txt",
     r"common/component_templates/[^/]+\.txt",
     r"common/component_sets/[^/]+\.txt",
+    r"common/scripted_modifiers/lfg_[^/]+\.txt",
     r"common/start_screen_messages/[^/]+\.txt",
     r"common/technology/lfg_[^/]+\.txt",
     r"common/buildings/lfg_[^/]+\.txt",
@@ -86,6 +87,8 @@ ALLOWED_FILES = [
     r"gfx/interface/icons/governments/civics/civic_lfg_[^/]+\.dds",  # art/make_civic_icons.py
     r"gfx/interface/icons/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py
     r"gfx/interface/icons/traits/trait_lfg_[^/]+\.dds",  # art/make_origin_art.py
+    r"gfx/interface/icons/ship_parts/lfg_[^/]+\.dds",  # art/make_component_icons.py
+    r"gfx/interface/icons/megastructures/lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
     r"gfx/event_pictures/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py
     r"gfx/models/ships/lfg_[^/]+\.asset",  # generated: nanite hulls' look
     r"localisation/english/[^/]+_l_english\.yml",
@@ -93,7 +96,7 @@ ALLOWED_FILES = [
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
 KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "origin_lfg_", "tech_lfg_", "building_lfg_", "d_lfg_", "councilor_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
-                "@lfg_")
+                "@lfg_", "can_destroy_planet_with_LFG_")  # the last: the game's name for an lfg planet killer's targeting trigger
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/", "common/section_templates/", "common/component_templates/",
                          "common/component_sets/", "common/start_screen_messages/")  # sections: ship_section_template, keyed inside

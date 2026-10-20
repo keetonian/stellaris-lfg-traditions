@@ -71,3 +71,22 @@ on_ship_built = {
 		lfg_mothership.6	# Mothership: one per empire (refund the extra)
 	}
 }
+
+# this = target planet, from = fleet that fired (common/on_actions/01_planet_destruction.txt)
+on_destroy_planet_with_LFG_NANITE_DISASSEMBLER = {
+	events = {
+		lfg_mothership.7	# Nanite Disassembler: nanites, then vanilla's World Cracker
+	}
+}
+
+on_destroy_planet_with_LFG_NANITE_DISASSEMBLER_queued = {
+	events = {
+		lfg_mothership.8
+	}
+}
+
+on_destroy_planet_with_LFG_NANITE_DISASSEMBLER_unqueued = {
+	events = {
+		lfg_mothership.9
+	}
+}

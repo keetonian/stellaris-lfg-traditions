@@ -625,7 +625,7 @@ ship_section_template = {
 	key = "lfg_nanite_behemoth_ship_mid_01_key"
 	ship_size = lfg_nanite_planetcraft
 	fits_on_slot = "mid"
-	entity = "war_planet_locators_entity"
+	entity = "lfg_nanite_planetcraft_mid_entity"
 	icon = "GFX_ship_part_core_mid"
 
 	component_slot = { name = "XL_GUN_13"			template = "invisible_extra_large_fixed"		locatorname = "xl_gun_13" }
@@ -760,7 +760,7 @@ ship_section_template = {
 	}
 
 	large_utility_slots = 15
-	aux_utility_slots = 10
+	aux_utility_slots = 4
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -800,7 +800,7 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 10
+	aux_utility_slots = 4
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -840,7 +840,7 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 10
+	aux_utility_slots = 4
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -848,7 +848,7 @@ ship_section_template = {
 	key = "lfg_mothership_systemcraft_ship_mid_01_key"
 	ship_size = lfg_mothership
 	fits_on_slot = "mid"
-	entity = "war_system_locators_entity"
+	entity = "lfg_mothership_mid_entity"
 	icon = "GFX_ship_part_core_mid"
 
 	component_slot = { name = "XL_GUN_01"			template = "large_strike_craft"		locatorname = "xl_gun_01" }
@@ -880,7 +880,7 @@ ship_section_template = {
 	ai_tags = { carrier }
 
 	large_utility_slots = 15
-	aux_utility_slots = 10
+	aux_utility_slots = 4
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -920,7 +920,7 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 10
+	aux_utility_slots = 4
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -960,7 +960,7 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 10
+	aux_utility_slots = 4
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -1000,5 +1000,5 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 10
+	aux_utility_slots = 4
 }

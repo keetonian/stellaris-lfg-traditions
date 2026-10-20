@@ -1,0 +1,31 @@
+# LFG Traditions - custom modifiers (they do nothing by themselves; scripts read them).
+
+# Mothership swarm components (LFG_SWARMER_VAULT etc.): read from the Mothership by lfg_mothership.2 with
+# export_modifier_to_variable and added to its reserve's cap / monthly growth.
+lfg_mothership_swarmer_storage_add = {
+	icon = mod_ship_hangar_add
+	percentage = no
+	good = yes
+	category = ship
+}
+
+lfg_mothership_swarmers_per_month_add = {
+	icon = mod_ship_hangar_add
+	percentage = no
+	good = yes
+	category = ship
+}
+
+lfg_mothership_interdictor_storage_add = {
+	icon = mod_ship_hangar_add
+	percentage = no
+	good = yes
+	category = ship
+}
+
+lfg_mothership_interdictors_per_month_add = {
+	icon = mod_ship_hangar_add
+	percentage = no
+	good = yes
+	category = ship
+}

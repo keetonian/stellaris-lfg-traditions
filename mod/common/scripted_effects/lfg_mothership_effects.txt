@@ -27,6 +27,13 @@ lfg_mothership_grow_reserve = {
 	}
 }
 
+# Scope: the Mothership (ship; ROOT = its fleet). Adds its summed $MODIFIER$ (swarm modules) to ROOT's variable $TO$.
+lfg_mothership_add_module = {
+	export_modifier_to_variable = { modifier = $MODIFIER$ variable = lfg_module_value }
+	ROOT = { change_variable = { which = $TO$ value = prev.lfg_module_value } }
+	clear_variable = lfg_module_value
+}
+
 # Launch the whole reserve into the escort fleet (created beside the Mothership if it isn't out yet).
 lfg_mothership_deploy = {
 	save_event_target_as = lfg_mothership_fleet

@@ -33,19 +33,31 @@ fleet_event = {
 	is_triggered_only = yes
 
 	immediate = {
+		# Base growth / caps plus the Mothership's swarm modules (lfg_mothership_* ship modifiers).
+		set_variable = { which = lfg_swarmer_amount value = @lfg_mothership_swarmers_per_month }
+		set_variable = { which = lfg_swarmer_cap value = @lfg_mothership_swarmer_cap }
+		set_variable = { which = lfg_interdictor_amount value = @lfg_mothership_interdictors_per_month }
+		set_variable = { which = lfg_interdictor_cap value = @lfg_mothership_interdictor_cap }
+		every_owned_ship = {
+			limit = { is_ship_size = lfg_mothership }
+			lfg_mothership_add_module = { MODIFIER = lfg_mothership_swarmers_per_month_add TO = lfg_swarmer_amount }
+			lfg_mothership_add_module = { MODIFIER = lfg_mothership_swarmer_storage_add TO = lfg_swarmer_cap }
+			lfg_mothership_add_module = { MODIFIER = lfg_mothership_interdictors_per_month_add TO = lfg_interdictor_amount }
+			lfg_mothership_add_module = { MODIFIER = lfg_mothership_interdictor_storage_add TO = lfg_interdictor_cap }
+		}
 		lfg_mothership_grow_reserve = {
 			RESERVE = lfg_swarmers
 			SIZE = nanite_swarmer
 			TRADITION = tr_nanotech_4
-			AMOUNT = @lfg_mothership_swarmers_per_month
-			CAP = @lfg_mothership_swarmer_cap
+			AMOUNT = lfg_swarmer_amount
+			CAP = lfg_swarmer_cap
 		}
 		lfg_mothership_grow_reserve = {
 			RESERVE = lfg_interdictors
 			SIZE = nanite_interdictor
 			TRADITION = tr_nanotech_5
-			AMOUNT = @lfg_mothership_interdictors_per_month
-			CAP = @lfg_mothership_interdictor_cap
+			AMOUNT = lfg_interdictor_amount
+			CAP = lfg_interdictor_cap
 		}
 		if = {
 			limit = { owner = { any_owned_fleet = { has_fleet_flag = lfg_escort_of_@ROOT } } }
@@ -136,7 +148,7 @@ fleet_event = {
 	}
 }
 
-# A ship is built (on_ship_built; this = ship): one Mothership per empire. The hull's possible_country blocks queueing a
+# A ship is built (on_ship_built; this = ship): one Mothership per empire. The hull's possible_construction blocks queueing a
 # second once one exists, but two queued together both finish; the later one is deleted and its hull cost refunded.
 ship_event = {
 	id = lfg_mothership.6
@@ -162,5 +174,59 @@ ship_event = {
 			}
 		}
 		delete_ship = this
+	}
+}
+
+# Nanite Disassembler (on_destroy_planet_with_LFG_NANITE_DISASSEMBLER; this = the target planet, from = the firing fleet):
+# the world's mass and population become nanites for the Mothership's owner (value:lfg_disassembler_nanites, while the
+# pops are still there), then vanilla's World Cracker on_action runs, which cracks the world and fires everything
+# hooked to it (as Gigastructural's giga_planet_killer_event_delegate does for its systemcraft crackers).
+planet_event = {
+	id = lfg_mothership.7
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_variable = { which = lfg_disassembled_nanites value = value:lfg_disassembler_nanites }
+		from.owner = {
+			set_variable = { which = lfg_disassembled_nanites value = root.lfg_disassembled_nanites }
+			add_resource = {
+				nanites = 1
+				mult = lfg_disassembled_nanites
+			}
+			clear_variable = lfg_disassembled_nanites
+		}
+		clear_variable = lfg_disassembled_nanites
+		fire_on_action = {
+			on_action = on_destroy_planet_with_PLANET_KILLER_CRACKER
+			scopes = { from = from }
+		}
+	}
+}
+
+# Nanite Disassembler ordered / cancelled: pass on to vanilla's World Cracker on_actions.
+planet_event = {
+	id = lfg_mothership.8
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		fire_on_action = {
+			on_action = on_destroy_planet_with_PLANET_KILLER_CRACKER_queued
+			scopes = { from = from }
+		}
+	}
+}
+
+planet_event = {
+	id = lfg_mothership.9
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		fire_on_action = {
+			on_action = on_destroy_planet_with_PLANET_KILLER_CRACKER_unqueued
+			scopes = { from = from }
+		}
 	}
 }

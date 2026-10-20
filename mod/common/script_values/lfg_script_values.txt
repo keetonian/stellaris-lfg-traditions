@@ -422,3 +422,16 @@ lfg_stationcraft_megastructures = {
 		mode = add
 	}
 }
+
+# Nanite Disassembler (lfg_mothership.7): nanites from cracking a world. Planet scope (the target).
+lfg_disassembler_nanites = {
+	base = 0
+	add = {
+		value = trigger:planet_size
+		mult = @lfg_disassembler_nanites_per_size
+	}
+	add = {
+		value = trigger:pop_amount
+		mult = @lfg_disassembler_nanites_per_pop
+	}
+}

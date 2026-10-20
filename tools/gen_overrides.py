@@ -474,6 +474,10 @@ NANITE_HULLS = [  # (Giga section file, Giga ship size, our ship size)
     (GIGA + "common/section_templates/giga_mooncraft.txt", "giga_war_moon", "lfg_nanite_war_moon"),
     (GIGA + "common/section_templates/giga_planetcraft.txt", "giga_planet_behemoth", "lfg_nanite_planetcraft"),
 ]
+# The hulls whose look is not in a section (Giga puts it on the hull model, which the ship designer doesn't show): their
+# "mid" section gets a model holding Giga's weapon locators plus the look (mod/gfx/models/ships/lfg_nanite_hulls.asset,
+# lfg_mothership.asset), and the hull model is an invisible frame (engines, explosions).
+SECTION_BODIES = {"lfg_nanite_planetcraft": "lfg_nanite_planetcraft_mid_entity", "lfg_mothership": "lfg_mothership_mid_entity"}
 NANITE_SECTIONS_FILE = "mod/common/section_templates/lfg_nanite_section_templates.txt"
 NANITE_SECTIONS_LOC_FILE = "mod/localisation/english/lfg_nanite_sections_l_english.yml"
 # The nanite look (NANITE_ENTITIES_FILE): Giga's moon / planetcraft meshes (and engine particles) with nanite planet
@@ -491,20 +495,27 @@ NANITE_TEXTURES = {  # skin -> (diffuse, normal, specular)
 # Aeternite tech) are replaced by our Machine Shell and Swarm Core skins, open to every nanite moon.
 NANITE_MOON_DEFAULT_SKIN = ("giga_moon_thrusters_ai_fe", "grey_goo")
 NANITE_MOON_EXTRA_SKINS = {"machine_shell": "Machine Shell", "swarm_core": "Swarm Core"}
-# Mothership (ap_lfg_mothership): Giga's systemcraft sections for lfg_mothership, whose mid section's extra large guns
-# become hangars (with the sternthrusters' own 25: 45 hangars) and every section gets MOTHERSHIP_AUX_SLOTS aux slots,
-# and Giga's systemcraft model with its worlds
-# in the three nanite skins (in turn) inside a large swarm.
+# Mothership (ap_lfg_mothership): Giga's systemcraft sections (slots and weapon locators) for lfg_mothership, whose mid
+# section's extra large guns become hangars (with the sternthrusters' own 25: 45 hangars) and every section gets
+# MOTHERSHIP_AUX_SLOTS aux slots. Its model is our own (mod/gfx/models/ships/lfg_mothership.asset); the generator only
+# makes its core world: Giga's planetcraft mesh in the Swarm Core skin (lfg_mothership_core_entity).
 MOTHERSHIP_SECTIONS = (GIGA + "common/section_templates/giga_systemcraft.txt", "giga_systemcraft", "lfg_mothership")
-MOTHERSHIP_HANGAR_SLOTS = {"mid": "Nanite Hive Bays"}
-# The Mothership's hull (the systemcraft mesh's "body" object, 24 parts textured with assorted vanilla ships) gets the
-# nanite ships' look (vanilla's Gatebuilder textures, used by Nanite Swarmers), and all its worlds the grey goo skin.
-MOTHERSHIP_HULL_PARTS = 24
+MOTHERSHIP_HANGAR_SLOTS = {"mid"}
+# Section names by slot (Giga's systemcraft names otherwise); the bow section with the World Cracker ("W") slot is the
+# Disassembler Prow.
+MOTHERSHIP_SECTION_NAMES = {
+    "bowgun": "Siege Prow",
+    "bow": "Siege Driver Battery",
+    "mid": "Nanite Hive Bays",
+    "stern": "Reshaper Spine",
+    "sternthrusters": "Swarm Brood Decks",
+    "kugel": "Swarm Heart",
+}
+MOTHERSHIP_DISASSEMBLER_SECTION_NAME = "Disassembler Prow"
 # Aux utility ("A") slots in every Mothership section (Giga's systemcraft: 0-5).
-MOTHERSHIP_AUX_SLOTS = 10
-MOTHERSHIP_HULL_TEXTURES = ("gatebuilder_01_cruiser_diffuse.dds", "gatebuilder_01_cruiser_normal.dds",
-                            "gatebuilder_01_cruiser_specular.dds")
-GIGA_WAR_SYSTEM_ASSET = GIGA + "gfx/models/ships/megastructures/war_system/giga_war_system.asset"
+MOTHERSHIP_AUX_SLOTS = 4
+MOTHERSHIP_CORE_SKIN = "swarm_core"
+MOTHERSHIP_CORE_SCALE = 0.8  # Giga's planetcraft mesh is ~440 wide at scale 1
 SHELVE_LOC_FILE = "mod/localisation/english/lfg_shelve_l_english.yml"
 
 
@@ -741,6 +752,7 @@ def nanite_sections(game: Path, giga: Path) -> tuple[str, list[tuple[str, str]]]
             block = re.sub(rf"^(\tship_size = ){giga_size}\s*$", rf"\g<1>{ours}", block, flags=re.M)
             block = block.replace(f'key = "{key}"', f'key = "lfg_nanite_{key}"', 1)
             block = block.replace(f'entity = "{default_entity}"', f'entity = "lfg_nanite_moon_{default_skin}_entity"')
+            block = section_body(block, ours)
             lines.append(f"\n# from {src.replace(GIGA, 'Gigastructural ')}\n" + block)
             loc.append((f"lfg_nanite_{key}", f"${key}$"))
             found += 1
@@ -766,17 +778,26 @@ def nanite_sections(game: Path, giga: Path) -> tuple[str, list[tuple[str, str]]]
         block = re.sub(rf"^(\tship_size = ){giga_size}\s*$", rf"\g<1>{ours}", block, flags=re.M)
         block = block.replace(f'key = "{key}"', f'key = "{ours}_{key}"', 1)
         block = re.sub(r"^(\taux_utility_slots = )\d+", rf"\g<1>{MOTHERSHIP_AUX_SLOTS}", block, flags=re.M)
-        name = f"${key}$"
+        block = section_body(block, ours)
+        name = MOTHERSHIP_SECTION_NAMES.get(slot, f"${key}$")
+        if 'template = "invisible_planet_killer_fixed"' in block:
+            name = MOTHERSHIP_DISASSEMBLER_SECTION_NAME
         if slot in MOTHERSHIP_HANGAR_SLOTS:
             block = block.replace('template = "invisible_extra_large_fixed"', 'template = "large_strike_craft"')
             block = re.sub(r"^\tai_tags = \{[^}]*\}", "\tai_tags = { carrier }", block, flags=re.M)
-            name = MOTHERSHIP_HANGAR_SLOTS[slot]
         lines.append(f"\n# from {src.replace(GIGA, 'Gigastructural ')}\n" + block)
         loc.append((f"{ours}_{key}", name))
         found += 1
     if not found:
         raise GenError(f"no section templates for {giga_size} in {src}")
     return "".join(lines), loc
+
+
+def section_body(block: str, ours: str) -> str:
+    """A "mid" section of a hull in SECTION_BODIES carries the hull's look (see SECTION_BODIES)."""
+    if ours in SECTION_BODIES and re.search(r'^\tfits_on_slot = "?mid"?\s*$', block, re.M):
+        block = re.sub(r'^\tentity = "[^"]+"', f'\tentity = "{SECTION_BODIES[ours]}"', block, count=1, flags=re.M)
+    return block
 
 
 def generate_nanite_sections(game: Path, giga: Path) -> str:
@@ -846,24 +867,21 @@ def generate_nanite_entities(game: Path, giga: Path) -> str:
         re.search(r"^@war_planet_scale = .*\n", planet, re.M).group(0),
         NANITE_SWARM_ENTITIES,
     ]
-    # No swarm on the moon: in game it showed as a dark blob hiding the moon (its size relative to the moon mesh).
+    # No swarm on the moon (in game it showed as a dark blob hiding the moon); its escort ring of nanite ships instead
+    # (lfg_nanite_moon_escort_entity in lfg_nanite_hulls.asset). The skins are the moon's stern sections.
     for skin in [NANITE_MOON_DEFAULT_SKIN[1], *NANITE_MOON_EXTRA_SKINS]:
-        parts.append("\n" + nanite_entity(moon_template, f"lfg_nanite_moon_{skin}_entity", skin, None))
-    parts.append("\n" + nanite_entity(extract_entity(planet, "synthetics_01_war_planet_complete_entity"),
-                                      "lfg_nanite_planetcraft_entity", "grey_goo", "lfg_nanite_swarm_planet_entity"))
-    # Mothership: every world grey goo, the hull in the nanite ships' (Gatebuilder) textures.
-    system = read_source(GIGA_WAR_SYSTEM_ASSET, game, giga)
-    parts.append(re.search(r"^@war_system_scale = .*\n", system, re.M).group(0))
-    mothership = nanite_entity(extract_entity(system, "war_system_complete_entity"), "lfg_mothership_entity",
-                               "grey_goo", "lfg_nanite_swarm_mothership_entity")
-    diffuse, normal, specular = MOTHERSHIP_HULL_TEXTURES
-    hull = "".join(
-        f'\tmeshsettings = {{\n\t\tname = "body"\n\t\tindex = {i}\n\t\ttexture_diffuse = "{diffuse}"\n'
-        f'\t\ttexture_normal = "{normal}"\n\t\ttexture_specular = "{specular}"\n\t\tshader = "PdxMeshShip"\n\t}}\n\n'
-        for i in range(MOTHERSHIP_HULL_PARTS))
-    mothership = re.sub(r"^(\tmeshsettings = \{)", "\t# nanite hull (Gatebuilder textures on every part of the \"body\" object)\n" + hull.replace("\\", "\\\\") + r"\1",
-                        mothership, count=1, flags=re.M)
-    parts.append("\n" + mothership)
+        parts.append("\n" + nanite_entity(moon_template, f"lfg_nanite_moon_{skin}_entity", skin,
+                                          "lfg_nanite_moon_escort_entity"))
+    # Planetcraft: the grey goo world alone, scale 1 (it sits in the mid section, under the hull frame's scale); the rest
+    # of its look is lfg_nanite_planetcraft_mid_entity in lfg_nanite_hulls.asset.
+    body = nanite_entity(extract_entity(planet, "synthetics_01_war_planet_complete_entity"),
+                         "lfg_nanite_planetcraft_body_entity", "grey_goo", None)
+    parts.append("\n" + re.sub(r"^(\tscale = )@war_planet_scale", r"\g<1>1", body, count=1, flags=re.M))
+    # Mothership: only its core world (the model around it is mod/gfx/models/ships/lfg_mothership.asset).
+    core = nanite_entity(extract_entity(planet, "synthetics_01_war_planet_complete_entity"), "lfg_mothership_core_entity",
+                         MOTHERSHIP_CORE_SKIN, None)
+    core = re.sub(r"^(\tscale = )@war_planet_scale", r"\g<1>@lfg_mothership_core_scale", core, count=1, flags=re.M)
+    parts.append(f"\n# The Mothership's core world\n@lfg_mothership_core_scale = {MOTHERSHIP_CORE_SCALE}\n" + core)
     return "".join(parts)
 
 

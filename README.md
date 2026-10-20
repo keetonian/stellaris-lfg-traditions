@@ -396,10 +396,16 @@ the 1,000,000-nanite Planetcraft needs no storage bonus):
   system in your borders with a **class A or B star or a red giant** (`lfg_swarmforge_star`) and no other megastructure.
   Site: 10,000 alloys, 50,000 nanites, 100 influence, 5 years; finishing it: 25,000 alloys, 150,000 nanites, 10 years;
   upkeep 100 energy + 50 nanites. Finished, it's a shipyard (`starbase_shipyard_capacity_add`, like vanilla's Mega
-  Shipyard; `@lfg_swarmforge_shipyard_capacity` = 50). Uses the Mega Shipyard's model.
+  Shipyard; `@lfg_swarmforge_shipyard_capacity` = 50). **Its model** (`mod/gfx/models/ships/lfg_megastructures.asset`)
+  is built **over the star**: a nanite cage of six great circles of 12 Nanite Swarmers meeting at the poles, four nanite
+  hive stations on the equator as docks and four grey goo clouds (under construction: three circles and the docks);
+  sizes `@lfg_swarmforge_*scale`. Build icon: `art/make_megastructure_icons.py` (vanilla's Mega Shipyard tech icon in
+  nanite cyan with the Nanites symbol).
 - **Nanite Attack Moon** (`lfg_nanite_war_moon`, **500,000 nanites**) and **Nanite Planetcraft** (`lfg_nanite_planetcraft`,
   **1,000,000 nanites**): Gigastructural's Attack Moon and Planetcraft models with twice their hull and armour and half
-  their shields (moon 500K hull / 300K armour / 50K shields; planetcraft 5M / 2.5M / 625K), upkeep in energy and nanites,
+  their shields (moon 500K hull / 300K armour / 50K shields; planetcraft 5M / 2.5M / 625K), size 64 / 128 (`size_multiplier`;
+  Giga's: 250 / 750), **nanites only**: components add nothing to cost or upkeep (`components_add_to_cost = no`),
+  upkeep in energy and nanites,
   built like normal ships but **only at a Swarmforge or Progenitor Forge** (`lfg_is_swarmforge`: the shipyard must be one
   of those megastructures). The Swarmforge builds 50 at once (`@lfg_swarmforge_shipyard_capacity`).
   **Designable** in the ship designer: their sections are generated copies of Giga's
@@ -407,22 +413,27 @@ the 1,000,000-nanite Planetcraft needs no storage bonus):
   `giga_ship_uses_war_moon_components` / `giga_ship_uses_war_planet_components`, so Giga's moon / planet reactors,
   computers and weapons fit.
 
-**Their look** (generated `mod/gfx/models/ships/lfg_nanite_celestials.asset`, from Giga's models; no new art): Giga's moon
-and planet meshes with nanite planet textures, keeping Giga's engine plumes; the planetcraft and Mothership are also
-wrapped in vanilla's **grey goo swarm** (the Grey Goo world's cloud particle, on a locator attached to the hull's root
-node). The moon has no swarm: in game it showed as a dark blob hiding the moon.
+**Their look**: Giga's moon and planet meshes with nanite planet textures (generated
+`mod/gfx/models/ships/lfg_nanite_celestials.asset`), dressed in our own designs from vanilla's nanite (Gatebuilder) ships
+(`mod/gfx/models/ships/lfg_nanite_hulls.asset`; sizes `@lfg_moon_*` / `@lfg_pc_*`, first guesses). **The ship designer
+shows them** because the look is in a section: the moon's stern sections are the moon itself, and the planetcraft's (and
+the Mothership's) mid section model holds Giga's weapon locators plus the look (`SECTION_BODIES` in the generator), while
+the hull model is an invisible frame (Giga put the look on the hull model, which the designer doesn't draw). The moon
+has no swarm: in game it showed as a dark blob hiding the moon.
 - **Nanite Attack Moon:** its default sections are a **Grey Goo** moon (the Grey Goo world's surface). Giga's optional
   planet-skin sections (behind its Aeternite tech) are replaced by two nanite skins with no tech: **Machine Shell**
   (synthetic ecumenopolis surface) and **Swarm Core** (machine world surface). Section names: generated
-  `lfg_nanite_sections_l_english.yml` (Giga's names for the copied sections).
-- **Nanite Planetcraft:** a grey goo planet in a swarm (`lfg_nanite_planetcraft_entity`; `graphical_culture = no`, so
-  not Giga's species-culture planets).
+  `lfg_nanite_sections_l_english.yml` (Giga's names for the copied sections). Every skin has an **escort**: a tilted
+  ring of 8 Nanite Swarmers and a crossing ring of 4 Nanite Interdictors (`lfg_nanite_moon_escort_entity`).
+- **Nanite Planetcraft:** the grey goo world with an equatorial ring of 12 Nanite Interdictors, a tilted ring of 16
+  Nanite Swarmers, nanite hive stations capping both poles and the grey goo swarm (`lfg_nanite_planetcraft_mid_entity`;
+  `graphical_culture = no`, so not Giga's species-culture planets).
 - The swarm's size is `@lfg_nanite_swarm_planet_scale` / `@lfg_nanite_swarm_mothership_scale` in the generator's
   `NANITE_SWARM_ENTITIES` (a first guess: check it in game and adjust).
 
 **Unverified in game:** that the megastructure's shipyard offers only these hulls and builds them; the nanite look (the
 swarm's size around each hull, and Giga's moon mesh with the grey goo texture); the Swarmforge's model
-around a star (`entity_offset` copied from the Mega Shipyard); that the three techs stay research options after a reload (`add_research_option`, like Giga's).
+over its star; the designer showing the section-held looks; that the three techs stay research options after a reload (`add_research_option`, like Giga's).
 
 ## Ascension perk: Mothership
 
@@ -436,24 +447,72 @@ traditions finished** (its escort's Swarmers and Interdictors need the 4th and 5
   megastructure. Three stages, **50,000,000 nanites** in all (5M, 15M, 30M; `@lfg_progenitor_forge_*_nanites`) plus
   alloys and influence; 5 + 10 + 10 years. Finished, it's a shipyard building **300 ships at once** (`@lfg_progenitor_forge_shipyard_capacity`), the only place
   Motherships can be built, and it also builds the nanite Attack Moons and Planetcraft.
+  Its model (`mod/gfx/models/ships/lfg_megastructures.asset`) is built **around the star**, laid out like Gigastructural's
+  Hyperstructural Assembly: stage 1 is a ring of 12 nanite (Gatebuilder) space stations with six grey goo clouds
+  (`gray_goo_planet_effect`); the finished forge adds Giga's assembly yards and tractor beams and an outer ring of 12
+  nanite motherships (the Nanite Interdictor model). **Unverified in game:** its size around an O star
+  (`@lfg_progenitor_forge_*scale` at the top of the asset).
 - **Mothership** (`lfg_mothership`, **one per empire**, **100,000,000 nanites + 500,000 alloys + 700 influence**, upkeep a flat **30,000 nanites** a month: components add
-  nothing to cost or upkeep, `components_add_to_cost = no`; 10 years): beyond Gigastructural's systemcraft (100M hull,
-  19.2M armour, 1.9M shields), size 2,500. One per empire: `possible_country` blocks queueing another while you own
+  nothing to cost or upkeep, `components_add_to_cost = no`; 10 years): 100M hull, 19.2M armour, 1.9M shields (Gigastructural's
+  systemcraft: 12.5M / 4.8M / 1.9M), size 256 (`size_multiplier`; the systemcraft: 1,250), **2x jump drive range** (`ship_ftl_jumpdrive_range_mult = 1`; hidden: not on the Steam page). One per empire: `possible_construction` (at the Progenitor Forge, so designing
+  stays open; `possible_country` also blocked the designer) blocks queueing another while you own
   one, and `lfg_mothership.6` (`on_ship_built`) deletes a second that was queued alongside and refunds its hull cost. Its sections are generated copies of Giga's systemcraft sections with the mid
-  section's guns turned into hangars (**45 hangars**) and **10 aux utility slots in every section** (60); Giga's systemcraft components fit (generated trigger override).
-  Its look: the systemcraft's hull in the nanite ships' (Gatebuilder) textures, every world grey goo, in a large swarm
-  (generated; the hull is the mesh's `body` object, 24 parts, re-textured with `meshsettings` by index).
+  section's guns turned into hangars (**45 hangars**) and **4 aux utility slots in every section** (24; `MOTHERSHIP_AUX_SLOTS`); Giga's systemcraft components fit (generated trigger override).
+  Its sections have Mothership names (`MOTHERSHIP_SECTION_NAMES`, by slot): Disassembler Prow (the bow with the W slot),
+  Siege Prow, Siege Driver Battery, Nanite Hive Bays, Reshaper Spine, Swarm Brood Decks, Swarm Heart.
+  **Its look** is our own (`mod/gfx/models/ships/lfg_mothership.asset`, no systemcraft model): a **Swarm Core** world at
+  the centre (Giga's planetcraft mesh in the machine world skin, generated as `lfg_mothership_core_entity`), three
+  gyroscope rings of 12 Nanite Interdictors tilted 60 degrees apart around its long axis, nanite hive stations as prow
+  and stern, a halo of 24 Nanite Swarmers, the grey goo swarm and Giga's systemcraft thruster plumes. Weapons fire from
+  Giga's systemcraft weapon locators. **Unverified in game:** the parts' sizes and placement (`@lfg_ms_*_scale`).
 - **Nanite Swarm hangar** (`LFG_NANITE_SWARM_HANGAR`, Motherships only, `common/component_templates/lfg_components.txt`):
-  strike craft can be buggy, so **few but strong**: 2 craft per hangar (90 in all), 250-450 damage every 1.5 days, 400
+  strike craft can be buggy, so **few but strong**: 2 craft per hangar (90 in all; 0.5 rebuilt a day), 125-225 damage every 1.5 days, 400
   health, 200 armour, 500 shields, full shield penetration. For comparison, ACOT's Alpha-tier best: fighters 8 craft,
   12-34 damage every 2 days, 17 health; bombers 4 craft, 423-507 every 14 days.
 - **Nanite Reshaper** (`LFG_NANITE_RESHAPER`, X slot, Motherships only): the Reshaping Projectile Accelerator
-  (vanilla `LM_ACCELERATOR`) rebuilt from nanites (20,000 nanites, 10 upkeep): kinetic, **15,000-40,000** damage every
-  50 days (windup 9-34), range 200, accuracy 90%, 50% armour and shield penetration, 2.5x shield damage, no power.
+  (vanilla `LM_ACCELERATOR`) rebuilt from nanites (20,000 nanites, 10 upkeep): kinetic, **2,500-6,250** damage every
+  50 days (windup 9-34), range 180, accuracy 90%, 40% armour and shield penetration, 2.5x shield damage, no power.
   ACOT's Alpha X kinetic for comparison: 1,996-5,232 every 80 days, range 175, accuracy 75%, 50% shield penetration.
+- **Swarm modules** (aux "A" slots, Motherships only, 5,000 nanites each, free on the Mothership): each adds to the
+  Mothership's swarm reserve, and they **stack per module**: **Swarmer Hive Vault** (`LFG_SWARMER_VAULT`) +100 swarmer
+  storage, **Swarmer Foundry** (`LFG_SWARMER_FOUNDRY`) +20 swarmers a month, **Interdictor Hive Vault**
+  (`LFG_INTERDICTOR_VAULT`) +40 interdictor storage, **Interdictor Foundry** (`LFG_INTERDICTOR_FOUNDRY`) +6 interdictors a
+  month (`@lfg_*_vault_add` / `_foundry_add`). How: each gives a custom ship modifier (`common/scripted_modifiers/
+  lfg_scripted_modifiers.txt`: `lfg_mothership_swarmer_storage_add` etc.); `lfg_mothership.2` reads the Mothership's
+  summed values with `export_modifier_to_variable` (`lfg_mothership_add_module`) and adds them to the base 80 / 20 a
+  month and 600 / 200 caps. **Unverified in game:** that component `ship_modifier`s of custom modifiers reach the ship.
 - **Nanite Armour** (`LFG_NANITE_ARMOR`, large utility, **any ship**, **10,000 nanites + 15 nanites/month** per plate
-  (`@lfg_nanite_armor_cost` / `_upkeep`; free on the Mothership, whose components add nothing)): per plate +25,000 armour,
-  +2% armour regeneration, +2% armour hardening and **+3% kinetic weapon fire rate** (stacks per plate).
+  (`@lfg_nanite_armor_cost` / `_upkeep`; free on the Mothership, whose components add nothing)): per plate, split evenly
+  between armour and hull: +12,500 armour and +12,500 hull, +1% armour and +1% hull regeneration, +50 armour and +50
+  hull flat regeneration; plus +6% armour hardening, **+6 damage reduction** (`ship_damage_reduction_add`; vanilla
+  crystal plating gives 1-4) and **+3% kinetic weapon fire rate** (stacks per plate).
+- **Nanite Siege Driver** (`LFG_NANITE_SIEGE_DRIVER`, **T slot**, the Mothership's special weapon, from the Mothership
+  tech): **any number on a Mothership, at most 3 on a Maginot World** (Gigastructural's `strategic_defence_command_platform`;
+  a twin template `LFG_NANITE_SIEGE_DRIVER_MAGINOT` with `ship_limit = 3`, same name and stats), nothing else. Kinetic,
+  **30,000-80,000** damage every 60 days (windup 10-40), range 250, accuracy 95%, 75% armour and shield penetration,
+  1.5x armour and 2.5x shield damage, no power. **On hit** (copied from ACOT's Titan Accelerator Cannon): the target
+  gets **Nanite Infestation** (`lfg_nanite_siege_driver_debuff`: -20% armour and shield hardening, 180 days), and every
+  hostile ship within 45 of it takes **7,500-15,000** damage (`@lfg_nanite_siege_driver_burst_*`). 100,000 nanites + **1,000 nanites/month** (`@lfg_nanite_siege_driver_*`;
+  only a Maginot World pays it).
+- **Nanite Storm Autocannon** (`LFG_NANITE_STORM_AUTOCANNON`, **L slot**, kinetic, from the Mothership tech): an upgrade
+  of vanilla's large Nanite Autocannon for **every nanite hull** (vanilla's Nanite Swarmers and Interdictors, Nanite
+  Attack Moons, Planetcraft, Mothership): the same profile (windup 2-8, 12-day cooldown, 85% accuracy, 25% tracking,
+  1.5x shield / 0.25x armour damage) with **4x range (160 vs 40)**, **2.5x damage (255-525 vs 102-210)** and **2x hull
+  damage** (vanilla 1.25x),
+  no power; 1,000 nanites + 1 a month (free on those hulls: their components add nothing).
+- **Nanite Disassembler** (`LFG_NANITE_DISASSEMBLER`, **W slot** World Cracker, Motherships only, the default pick:
+  `ai_weight` 1,000): fires like Gigastructural's systemcraft World Cracker (30-day windup) and cracks whatever vanilla's
+  World Cracker can (`can_destroy_planet_with_LFG_NANITE_DISASSEMBLER`). It turns the world into nanites for its owner:
+  **+5,000 per size of the world and +5 per pop on it** (`value:lfg_disassembler_nanites`,
+  `@lfg_disassembler_nanites_per_*`), paid by `lfg_mothership.7` before the world is cracked; that event then fires
+  vanilla's `on_destroy_planet_with_PLANET_KILLER_CRACKER` (`.8` / `.9` pass on the queued / unqueued on_actions), as
+  Giga's `giga_planet_killer_event_delegate` does. **Unverified in game:** that the pops are still counted when it fires.
+- **Nanite Flak Swarm** (`LFG_NANITE_FLAK_SWARM`, point defence, **Motherships and Maginot Worlds only**): 38-75
+  damage every half day (cooldown 0.5), range 45, 100% accuracy and tracking (vanilla Point Defence III: 4-8 every 5 days, range 30, 75%).
+  5,000 nanites + 5 nanites/month (`@lfg_nanite_flak_swarm_*`).
+- **Icons** (`art/make_component_icons.py`, `interface/lfg_components.gfx`): vanilla's armour plate, fighter, Reshaping
+  Projectile Accelerator, Giga Cannon and point defence icons without their tier numerals, recoloured to nanite metal
+  with glowing cyan, the Nanites symbol and drifting motes (the hangar shows a swarm of three fighters).
 - **Nanite swarm** (`events/lfg_mothership_events.txt`): each Mothership keeps a **reserve** of Nanite Swarmers and
   Nanite Interdictors (fleet variables `lfg_swarmers` / `lfg_interdictors`) that grows by **80 / 20 a month**
   (`lfg_mothership.1` → `.2`), up to **600 / 200** counting deployed ships (`@lfg_mothership_*`). It's deployed **only

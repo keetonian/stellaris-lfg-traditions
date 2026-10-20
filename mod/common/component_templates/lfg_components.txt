@@ -2,7 +2,7 @@
 
 # Mothership (ap_lfg_mothership): Nanite Swarm hangar, Motherships only. Strike craft can be buggy, so few but strong,
 # far beyond ACOT's Alpha-tier hangars (its best fighters: 8 craft, 12-34 damage every 2 days, 17 health, 35 shields;
-# bombers: 4 craft, 423-507 every 14 days): 2 craft per hangar (45 hangars: 90 craft), 250-450 damage every 1.5 days,
+# bombers: 4 craft, 423-507 every 14 days): 2 craft per hangar (45 hangars: 90 craft), 125-225 damage every 1.5 days,
 # 400 health, 200 armour, 500 shields, full shield penetration. Paid in nanites.
 strike_craft_component_template = {
 	key = "LFG_NANITE_SWARM_HANGAR"
@@ -28,10 +28,10 @@ strike_craft_component_template = {
 	}
 
 	count = 2
-	regeneration_per_day = 1
+	regeneration_per_day = 0.5
 	launch_time = 1
 
-	damage = { min = 250 max = 450 }
+	damage = { min = 125 max = 225 }
 	cooldown = 1.5
 	range = 20
 	engagement_range = 300
@@ -55,7 +55,7 @@ strike_craft_component_template = {
 
 	ship_behavior = "fighters_behavior"
 
-	icon = "GFX_ship_part_strike_craft_fighter_3"
+	icon = "GFX_ship_part_lfg_nanite_swarm_hangar"
 	icon_frame = 1
 	component_set = "LFG_NANITE_SWARM_HANGAR"
 	prerequisites = { "tech_lfg_mothership" }
@@ -70,24 +70,24 @@ strike_craft_component_template = {
 }
 
 # Mothership X slot: the Reshaping Projectile Accelerator (vanilla LM_ACCELERATOR) rebuilt from nanites.
-# ~7.5x ACOT's Alpha X kinetic (1996-5232 per 80 days): 15000-40000 per 50 days, 0.5 armour and shield penetration.
+# ~1.9x ACOT's Alpha X kinetic per day (1996-5232 per 80 days): 2500-6250 per 50 days, 0.4 armour and shield penetration.
 weapon_component_template = {
 	key = "LFG_NANITE_RESHAPER"
 	size = extra_large
-	icon = "GFX_ship_part_lm_accelerator"
+	icon = "GFX_ship_part_lfg_nanite_reshaper"
 	icon_frame = 1
 	type = instant
 
-	damage = { min = 15000 max = 40000 }
+	damage = { min = 2500 max = 6250 }
 	windup = { min = 9 max = 34 }
 	total_fire_time = 50
-	range = 200
+	range = 180
 	accuracy = 0.90
 	power = 0
 	hull_damage = 1.0
-	armor_penetration = 0.5
+	armor_penetration = 0.4
 	armor_damage = 1.0
-	shield_penetration = 0.5
+	shield_penetration = 0.4
 	shield_damage = 2.5
 	tracking = 0.0
 
@@ -126,12 +126,357 @@ weapon_component_template = {
 	}
 }
 
-# Nanite Armour (any ship with a large utility slot, from the Mothership tech): each plate adds armour, hardening,
-# armour regeneration and kinetic fire rate.
+# Mothership's special weapon, T slot: Mothership (any number) and Gigastructural's Maginot World
+# (strategic_defence_command_platform, at most 3: ship_limit, so a separate template with the same name and stats).
+# 30000-80000 per 60 days (@lfg_nanite_siege_driver_*), 75% armour and shield
+# penetration, on-hit burst. Keep the two templates identical apart from key, potential and ship_limit.
+weapon_component_template = {
+	key = "LFG_NANITE_SIEGE_DRIVER"
+	size = titanic
+	icon = "GFX_ship_part_lfg_nanite_siege_driver"
+	icon_frame = 1
+	type = instant
+	prio_projectile = yes
+
+	damage = { min = @lfg_nanite_siege_driver_min max = @lfg_nanite_siege_driver_max }
+	windup = { min = 10 max = 40 }
+	total_fire_time = 60
+	range = 250
+	accuracy = 0.95
+	power = 0
+	hull_damage = 1.0
+	armor_penetration = 0.75
+	armor_damage = 1.5
+	shield_penetration = 0.75
+	shield_damage = 2.5
+	tracking = 0.0
+
+	firing_arc = 10.0
+	min_range = 0
+	use_ship_main_target = no
+
+	# On hit (copied from ACOT's Titan Accelerator Cannon): the target's armour and shield hardening -20% for 180 days,
+	# and the slug's nanites burst into every hostile ship within 45 of the target.
+	injected_modifier = {
+		modifier = {
+			modifier = lfg_nanite_siege_driver_debuff
+			days = 180
+		}
+		stack_info = {
+			id = lfg_nanite_siege_driver_debuff
+			priority = 1
+		}
+	}
+	on_hit = {
+		hidden_effect = {
+			solar_system = {
+				every_ship_in_system = {
+					limit = {
+						NOT = { is_same_value = root }
+						controller = { is_hostile = from.controller }
+						distance = {
+							source = root
+							max_distance <= 45
+							same_solar_system = yes
+						}
+					}
+					set_variable_to_random_value = {
+						which = lfg_nanite_burst_damage
+						min = @lfg_nanite_siege_driver_burst_min
+						max = @lfg_nanite_siege_driver_burst_max
+						rounded = yes
+					}
+					damage_ship = {
+						amount = lfg_nanite_burst_damage
+						attacker = from
+					}
+					clear_variable = lfg_nanite_burst_damage
+				}
+			}
+		}
+		custom_tooltip = lfg_nanite_siege_driver_on_hit_tt
+	}
+
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = @lfg_nanite_siege_driver_cost
+		}
+		upkeep = {
+			nanites = @lfg_nanite_siege_driver_upkeep
+		}
+	}
+	potential = {
+		is_ship_size = lfg_mothership
+	}
+
+	component_set = "LFG_NANITE_SIEGE_DRIVER"
+	prerequisites = { "tech_lfg_mothership" }
+	projectile_gfx = "adv_kinetic_artillery"
+
+	tags = {
+		weapon_type_kinetic
+		weapon_role_artillery
+		t_slot
+	}
+	ai_tags = {
+		weapon_role_artillery
+		artillery
+	}
+	ai_weight = {
+		weight = 100
+	}
+}
+
+# The Maginot World's Nanite Siege Driver: at most 3 per Maginot World.
+weapon_component_template = {
+	key = "LFG_NANITE_SIEGE_DRIVER_MAGINOT"
+	size = titanic
+	icon = "GFX_ship_part_lfg_nanite_siege_driver"
+	icon_frame = 1
+	type = instant
+	prio_projectile = yes
+
+	damage = { min = @lfg_nanite_siege_driver_min max = @lfg_nanite_siege_driver_max }
+	windup = { min = 10 max = 40 }
+	total_fire_time = 60
+	range = 250
+	accuracy = 0.95
+	power = 0
+	hull_damage = 1.0
+	armor_penetration = 0.75
+	armor_damage = 1.5
+	shield_penetration = 0.75
+	shield_damage = 2.5
+	tracking = 0.0
+
+	firing_arc = 10.0
+	min_range = 0
+	use_ship_main_target = no
+
+	injected_modifier = {
+		modifier = {
+			modifier = lfg_nanite_siege_driver_debuff
+			days = 180
+		}
+		stack_info = {
+			id = lfg_nanite_siege_driver_debuff
+			priority = 1
+		}
+	}
+	on_hit = {
+		hidden_effect = {
+			solar_system = {
+				every_ship_in_system = {
+					limit = {
+						NOT = { is_same_value = root }
+						controller = { is_hostile = from.controller }
+						distance = {
+							source = root
+							max_distance <= 45
+							same_solar_system = yes
+						}
+					}
+					set_variable_to_random_value = {
+						which = lfg_nanite_burst_damage
+						min = @lfg_nanite_siege_driver_burst_min
+						max = @lfg_nanite_siege_driver_burst_max
+						rounded = yes
+					}
+					damage_ship = {
+						amount = lfg_nanite_burst_damage
+						attacker = from
+					}
+					clear_variable = lfg_nanite_burst_damage
+				}
+			}
+		}
+		custom_tooltip = lfg_nanite_siege_driver_on_hit_tt
+	}
+
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = @lfg_nanite_siege_driver_cost
+		}
+		upkeep = {
+			nanites = @lfg_nanite_siege_driver_upkeep
+		}
+	}
+	potential = {
+		is_ship_size = strategic_defence_command_platform
+	}
+	ship_limit = 3
+
+	component_set = "LFG_NANITE_SIEGE_DRIVER"
+	prerequisites = { "tech_lfg_mothership" }
+	projectile_gfx = "adv_kinetic_artillery"
+
+	tags = {
+		weapon_type_kinetic
+		weapon_role_artillery
+		t_slot
+	}
+	ai_tags = {
+		weapon_role_artillery
+		artillery
+	}
+	ai_weight = {
+		weight = 100
+	}
+}
+
+# Nanite Storm Autocannon: L slot upgrade of vanilla's large Nanite Autocannon (LARGE_AUTOCANNON_4: 102-210 every 12 days,
+# windup 2-8, range 40, 85%, tracking 25%; 1.25x hull, 1.5x shield, 0.25x armour damage) for every nanite hull (vanilla's
+# Nanite Swarmers and Interdictors, our Attack Moons, Planetcraft and Mothership), from the Mothership tech: the same
+# profile with 4x range (160), 2.5x damage (255-525) and 2x hull damage (vanilla 1.25x).
+weapon_component_template = {
+	key = "LFG_NANITE_STORM_AUTOCANNON"
+	size = large
+	icon = "GFX_ship_part_lfg_nanite_storm_autocannon"
+	icon_frame = 1
+	type = instant
+
+	damage = { min = 255 max = 525 }
+	windup = { min = 2 max = 8 }
+	total_fire_time = 12
+	range = 160
+	accuracy = 0.85
+	tracking = 0.25
+	power = 0
+	hull_damage = 2.0
+	armor_penetration = 0.0
+	armor_damage = 0.25
+	shield_penetration = 0.0
+	shield_damage = 1.5
+
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = 1000
+		}
+		upkeep = {
+			nanites = 1
+		}
+	}
+	potential = {
+		OR = {
+			is_ship_size = nanite_swarmer
+			is_ship_size = nanite_interdictor
+			is_ship_size = lfg_nanite_war_moon
+			is_ship_size = lfg_nanite_planetcraft
+			is_ship_size = lfg_mothership
+		}
+	}
+
+	component_set = "LFG_NANITE_STORM_AUTOCANNON"
+	prerequisites = { "tech_lfg_mothership" }
+	projectile_gfx = "stormfire_auto_cannons_l"
+
+	tags = {
+		weapon_type_kinetic
+		l_slot
+	}
+	ai_tags = {
+		weapon_role_anti_shield
+		brawler
+	}
+	ai_weight = {
+		weight = 100
+	}
+}
+
+# Nanite Disassembler: the Mothership's World Cracker (W slot; the default pick). Fires like Gigastructural's systemcraft
+# World Cracker (PLANET_KILLER_CRACKER_SYSTEMCRAFT) and cracks the same worlds (can_destroy_planet_with_LFG_NANITE_DISASSEMBLER);
+# lfg_mothership.7 turns the world into nanites first (@lfg_disassembler_nanites_per_size per size, _per_pop per pop),
+# then fires vanilla's World Cracker on_action so the cracking and everything hooked to it happens as usual.
+weapon_component_template = {
+	key = "LFG_NANITE_DISASSEMBLER"
+	size = planet_killer
+	type = planet_killer
+	use_ship_main_target = no
+
+	icon = "GFX_ship_part_lfg_nanite_disassembler"
+	icon_frame = 1
+
+	windup = { min = 30 max = 30 }
+	total_fire_time = 30
+	power = 0
+	range = 1
+	accuracy = 1.0
+
+	potential = {
+		is_ship_size = lfg_mothership
+	}
+	component_set = "LFG_NANITE_DISASSEMBLER"
+	prerequisites = { "tech_lfg_mothership" }
+	planet_destruction_gfx = "shatter_planet_gfx"
+
+	ai_weight = {
+		weight = 1000
+	}
+}
+
+# Nanite Flak Swarm: point defence, Mothership and Gigastructural's Maginot World only. Vanilla's best (Point Defence III):
+# 4-8 damage every 5 days, range 30, 75% accuracy. This: 38-75 every half day, range 45, never misses.
+weapon_component_template = {
+	key = "LFG_NANITE_FLAK_SWARM"
+	size = point_defence
+	icon = "GFX_ship_part_lfg_nanite_flak_swarm"
+	icon_frame = 1
+	type = point_defence
+
+	damage = { min = 38 max = 75 }
+	total_fire_time = 0.5
+	range = 45
+	accuracy = 1.0
+	tracking = 1.0
+	power = 0
+	hull_damage = 1.0
+	armor_penetration = 0.0
+	armor_damage = 1.0
+	shield_penetration = 0.0
+	shield_damage = 1.0
+
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = @lfg_nanite_flak_swarm_cost
+		}
+		upkeep = {
+			nanites = @lfg_nanite_flak_swarm_upkeep
+		}
+	}
+	potential = {
+		OR = {
+			is_ship_size = lfg_mothership
+			is_ship_size = strategic_defence_command_platform
+		}
+	}
+
+	component_set = "LFG_NANITE_FLAK_SWARM"
+	prerequisites = { "tech_lfg_mothership" }
+	projectile_gfx = "white_laser_pd"
+
+	tags = {
+		weapon_type_point_defense
+		weapon_type_kinetic
+	}
+	ai_tags = {
+		weapon_role_point_defense
+		screen
+	}
+	ai_weight = {
+		weight = 100
+	}
+}
+
+# Nanite Armour (any ship with a large utility slot, from the Mothership tech): each plate adds armour and hull,
+# regeneration of both, hardening, flat damage reduction and kinetic fire rate.
 utility_component_template = {
 	key = "LFG_NANITE_ARMOR"
 	size = large
-	icon = "GFX_ship_part_armor_5"
+	icon = "GFX_ship_part_lfg_nanite_armor"
 	icon_frame = 1
 	power = 0
 
@@ -145,12 +490,18 @@ utility_component_template = {
 		}
 	}
 
+	# Split evenly between armour and hull (the hull half of each bonus is the ship_hull_* line).
 	modifier = {
-		ship_armor_add = 25000
-		ship_armor_regen_add_perc = 0.02
+		ship_armor_add = 12500
+		ship_hull_add = 12500
+		ship_armor_regen_add_perc = 0.01
+		ship_hull_regen_add_perc = 0.01
+		ship_armor_regen_add_static = 50
+		ship_hull_regen_add_static = 50
 	}
 	ship_modifier = {
-		ship_armor_hardening_add = 0.02
+		ship_armor_hardening_add = 0.06
+		ship_damage_reduction_add = 6
 		weapon_type_kinetic_weapon_fire_rate_mult = 0.03
 	}
 
@@ -159,6 +510,109 @@ utility_component_template = {
 
 	ai_weight = {
 		weight = 100
+	}
+}
+
+# Mothership swarm modules (aux slots, Mothership only): each adds to its swarm reserve (lfg_mothership.2 reads the
+# summed lfg_mothership_* modifiers, so they stack per slot). Base: +80 swarmers / +20 interdictors a month, up to
+# 600 / 200 (@lfg_mothership_*).
+utility_component_template = {
+	key = "LFG_SWARMER_VAULT"
+	size = aux
+	icon = "GFX_ship_part_lfg_swarmer_vault"
+	icon_frame = 1
+	power = 0
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = 5000
+		}
+	}
+	potential = {
+		is_ship_size = lfg_mothership
+	}
+	ship_modifier = {
+		lfg_mothership_swarmer_storage_add = @lfg_swarmer_vault_add
+	}
+	component_set = "LFG_SWARMER_VAULT"
+	prerequisites = { "tech_lfg_mothership" }
+	ai_weight = {
+		weight = 10
+	}
+}
+
+utility_component_template = {
+	key = "LFG_SWARMER_FOUNDRY"
+	size = aux
+	icon = "GFX_ship_part_lfg_swarmer_foundry"
+	icon_frame = 1
+	power = 0
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = 5000
+		}
+	}
+	potential = {
+		is_ship_size = lfg_mothership
+	}
+	ship_modifier = {
+		lfg_mothership_swarmers_per_month_add = @lfg_swarmer_foundry_add
+	}
+	component_set = "LFG_SWARMER_FOUNDRY"
+	prerequisites = { "tech_lfg_mothership" }
+	ai_weight = {
+		weight = 10
+	}
+}
+
+utility_component_template = {
+	key = "LFG_INTERDICTOR_VAULT"
+	size = aux
+	icon = "GFX_ship_part_lfg_interdictor_vault"
+	icon_frame = 1
+	power = 0
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = 5000
+		}
+	}
+	potential = {
+		is_ship_size = lfg_mothership
+	}
+	ship_modifier = {
+		lfg_mothership_interdictor_storage_add = @lfg_interdictor_vault_add
+	}
+	component_set = "LFG_INTERDICTOR_VAULT"
+	prerequisites = { "tech_lfg_mothership" }
+	ai_weight = {
+		weight = 10
+	}
+}
+
+utility_component_template = {
+	key = "LFG_INTERDICTOR_FOUNDRY"
+	size = aux
+	icon = "GFX_ship_part_lfg_interdictor_foundry"
+	icon_frame = 1
+	power = 0
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = 5000
+		}
+	}
+	potential = {
+		is_ship_size = lfg_mothership
+	}
+	ship_modifier = {
+		lfg_mothership_interdictors_per_month_add = @lfg_interdictor_foundry_add
+	}
+	component_set = "LFG_INTERDICTOR_FOUNDRY"
+	prerequisites = { "tech_lfg_mothership" }
+	ai_weight = {
+		weight = 10
 	}
 }
 

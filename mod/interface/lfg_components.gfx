@@ -1,0 +1,48 @@
+# LFG Traditions - ship component icons.
+spriteTypes = {
+	# art/make_component_icons.py
+	spriteType = {
+		name = "GFX_ship_part_lfg_nanite_armor"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_nanite_armor.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_nanite_swarm_hangar"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_nanite_swarm_hangar.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_nanite_reshaper"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_nanite_reshaper.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_nanite_siege_driver"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_nanite_siege_driver.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_nanite_flak_swarm"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_nanite_flak_swarm.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_nanite_disassembler"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_nanite_disassembler.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_swarmer_vault"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_swarmer_vault.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_swarmer_foundry"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_swarmer_foundry.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_interdictor_vault"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_interdictor_vault.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_interdictor_foundry"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_interdictor_foundry.dds"
+	}
+	spriteType = {
+		name = "GFX_ship_part_lfg_nanite_storm_autocannon"
+		textureFile = "gfx/interface/icons/ship_parts/lfg_nanite_storm_autocannon.dds"
+	}
+}

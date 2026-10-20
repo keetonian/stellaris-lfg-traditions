@@ -2,12 +2,12 @@
 # class A or B star or a red giant. Finished, it's a shipyard (station_modifier shipyard capacity, like vanilla's Mega
 # Shipyard) and the only place the nanite hulls (common/ship_sizes/lfg_ship_sizes.txt) can be built.
 
+# Its model (mod/gfx/models/ships/lfg_megastructures.asset) is a nanite cage built around and over the star.
 lfg_swarmforge_0 = {
-	entity = "construction_platform_entity"
-	construction_entity = "construction_platform_entity"
+	entity = "giga_consite_7_7_entity"
+	construction_entity = "giga_consite_7_7_entity"
 	portrait = "GFX_megastructure_construction_background"
 	place_entity_on_planet_plane = no
-	entity_offset = { x = -7 y = -7 }
 	build_time = 1800
 	resources = {
 		category = megastructures
@@ -60,11 +60,9 @@ lfg_swarmforge_0 = {
 }
 
 lfg_swarmforge_ready = {
-	entity = "mega_shipyard_01_stage_3_entity"
-	construction_entity = "mega_shipyard_01_stage_2_entity"
+	entity = "lfg_swarmforge_entity"
+	construction_entity = "lfg_swarmforge_construction_entity"
 	portrait = "GFX_megastructure_mega_shipyard_background"
-	place_entity_on_planet_plane = no
-	entity_offset = { x = -27 y = -27 }
 	build_time = 3600
 	upgrade_from = {
 		lfg_swarmforge_0
@@ -97,14 +95,13 @@ lfg_swarmforge_ready = {
 # Mothership (ap_lfg_mothership): the Progenitor Forge, around an O star (Gigastructural's giga_is_o_star_for_megas:
 # its own O stars and Real Space's). Three stages, 50,000,000 nanites in all (@lfg_progenitor_forge_*_nanites).
 # Finished, it's a shipyard (like the Swarmforge, 300 ships at once) and the only place Motherships can be built; it
-# also builds the nanite Attack Moons and Planetcraft. Its model is the Mega
-# Shipyard scaled up 4x (mod/gfx/models/ships/lfg_megastructures.asset) so it shows around an O star.
+# also builds the nanite Attack Moons and Planetcraft. It's built around the star, like Gigastructural's Hyperstructural
+# Assembly: nanite station and hive rings, Giga's assembly yards and grey goo clouds (mod/gfx/models/ships/lfg_megastructures.asset).
 lfg_progenitor_forge_0 = {
-	entity = "construction_platform_entity"
-	construction_entity = "construction_platform_entity"
+	entity = "giga_consite_7_7_entity"
+	construction_entity = "giga_consite_7_7_entity"
 	portrait = "GFX_megastructure_construction_background"
 	place_entity_on_planet_plane = no
-	entity_offset = { x = -7 y = -7 }
 	build_time = 1800
 	resources = {
 		category = megastructures
@@ -153,11 +150,9 @@ lfg_progenitor_forge_0 = {
 }
 
 lfg_progenitor_forge_1 = {
-	entity = "lfg_progenitor_forge_stage_2_entity"
+	entity = "lfg_progenitor_forge_stage_1_entity"
 	construction_entity = "lfg_progenitor_forge_stage_1_entity"
 	portrait = "GFX_megastructure_mega_shipyard_background"
-	place_entity_on_planet_plane = no
-	entity_offset = { x = -108 y = -108 }
 	build_time = 3600
 	upgrade_from = {
 		lfg_progenitor_forge_0
@@ -177,11 +172,9 @@ lfg_progenitor_forge_1 = {
 }
 
 lfg_progenitor_forge_2 = {
-	entity = "lfg_progenitor_forge_stage_3_entity"
-	construction_entity = "lfg_progenitor_forge_stage_2_entity"
+	entity = "lfg_progenitor_forge_complete_entity"
+	construction_entity = "lfg_progenitor_forge_complete_construction_entity"
 	portrait = "GFX_megastructure_mega_shipyard_background"
-	place_entity_on_planet_plane = no
-	entity_offset = { x = -108 y = -108 }
 	build_time = 3600
 	upgrade_from = {
 		lfg_progenitor_forge_1

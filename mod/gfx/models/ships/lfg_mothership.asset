@@ -1,0 +1,224 @@
+# LFG Traditions - the Mothership's model (lfg_mothership, common/ship_sizes/lfg_ship_sizes.txt). Our own design from
+# vanilla's nanite (Gatebuilder) ships, replacing Gigastructural's systemcraft look:
+#   - core: a Swarm Core world (lfg_mothership_core_entity, generated in lfg_nanite_celestials.asset from Giga's
+#     planetcraft mesh with the machine world skin)
+#   - three gyroscope rings of 12 Nanite Interdictors each, tilted 60 degrees apart around the ship's long axis
+#   - a nanite hive station as the prow and a larger one as the stern, set edge-on like shields
+#   - a wide halo of 24 Nanite Swarmers
+#   - the grey goo swarm cloud (lfg_nanite_swarm_mothership_entity) and Gigastructural's systemcraft thruster plumes
+# Weapons still sit on Gigastructural's systemcraft weapon locators (war_system_locators_mesh, in every section), so they
+# fire from around the same ~600 x 950 volume. The look is in the mid section (lfg_mothership_mid_entity) so the ship
+# designer shows it. Ring layout as in lfg_megastructures.asset:
+# two pieces -> copies yawed around -> a wrapper turned around the long (z) axis.
+# Sizes are first guesses (meshes: interdictor ~77 long, swarmer ~27, hive station ~84 across): tune in game.
+
+@lfg_ms_interdictor_scale = 2
+@lfg_ms_swarmer_scale = 3
+@lfg_ms_prow_scale = 2.5
+@lfg_ms_stern_scale = 3
+
+##### PIECES #####
+
+entity = {
+	name = "lfg_ms_interdictor_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_mothership_section_entity" }
+	scale = @lfg_ms_interdictor_scale
+}
+
+entity = {
+	name = "lfg_ms_swarmer_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_cruiser_section_entity" }
+	scale = @lfg_ms_swarmer_scale
+}
+
+entity = {
+	name = "lfg_ms_prow_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 90 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_space_station_section_entity" }
+	scale = @lfg_ms_prow_scale
+}
+
+entity = {
+	name = "lfg_ms_stern_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 90 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_space_station_section_entity" }
+	scale = @lfg_ms_stern_scale
+}
+
+##### GYROSCOPE RINGS: 12 interdictors at radius 330 #####
+
+entity = {
+	name = "lfg_ms_gyro_two_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 -330 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 330 } rotation = { 0 270 0 } }
+	attach = { "loc101" = "lfg_ms_interdictor_entity" }
+	attach = { "loc102" = "lfg_ms_interdictor_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_ms_gyro_ring_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 30 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 60 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc105" position = { 0 0 0 } rotation = { 0 120 0 } }
+	locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 150 0 } }
+	attach = { "loc101" = "lfg_ms_gyro_two_entity" }
+	attach = { "loc102" = "lfg_ms_gyro_two_entity" }
+	attach = { "loc103" = "lfg_ms_gyro_two_entity" }
+	attach = { "loc104" = "lfg_ms_gyro_two_entity" }
+	attach = { "loc105" = "lfg_ms_gyro_two_entity" }
+	attach = { "loc106" = "lfg_ms_gyro_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_ms_gyro_1_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_ms_gyro_ring_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_ms_gyro_2_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 60 } }
+	attach = { "loc101" = "lfg_ms_gyro_ring_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_ms_gyro_3_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 120 } }
+	attach = { "loc101" = "lfg_ms_gyro_ring_entity" }
+	scale = 1
+}
+
+##### HALO: 24 swarmers at radius 560, flat around the ship #####
+
+entity = {
+	name = "lfg_ms_halo_two_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 -560 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 560 } rotation = { 0 270 0 } }
+	attach = { "loc101" = "lfg_ms_swarmer_entity" }
+	attach = { "loc102" = "lfg_ms_swarmer_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_ms_halo_ring_entity"
+	cull_radius = 2000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 15 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 30 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 45 0 } }
+	locator = { name = "loc105" position = { 0 0 0 } rotation = { 0 60 0 } }
+	locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 75 0 } }
+	locator = { name = "loc107" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc108" position = { 0 0 0 } rotation = { 0 105 0 } }
+	locator = { name = "loc109" position = { 0 0 0 } rotation = { 0 120 0 } }
+	locator = { name = "loc110" position = { 0 0 0 } rotation = { 0 135 0 } }
+	locator = { name = "loc111" position = { 0 0 0 } rotation = { 0 150 0 } }
+	locator = { name = "loc112" position = { 0 0 0 } rotation = { 0 165 0 } }
+	attach = { "loc101" = "lfg_ms_halo_two_entity" }
+	attach = { "loc102" = "lfg_ms_halo_two_entity" }
+	attach = { "loc103" = "lfg_ms_halo_two_entity" }
+	attach = { "loc104" = "lfg_ms_halo_two_entity" }
+	attach = { "loc105" = "lfg_ms_halo_two_entity" }
+	attach = { "loc106" = "lfg_ms_halo_two_entity" }
+	attach = { "loc107" = "lfg_ms_halo_two_entity" }
+	attach = { "loc108" = "lfg_ms_halo_two_entity" }
+	attach = { "loc109" = "lfg_ms_halo_two_entity" }
+	attach = { "loc110" = "lfg_ms_halo_two_entity" }
+	attach = { "loc111" = "lfg_ms_halo_two_entity" }
+	attach = { "loc112" = "lfg_ms_halo_two_entity" }
+	scale = 1
+}
+
+##### THE SHIP #####
+
+# Its mid section ("Nanite Hive Bays"): Gigastructural's systemcraft weapon locators plus the whole look, so the ship
+# designer shows it.
+entity = {
+	name = "lfg_mothership_mid_entity"
+	pdxmesh = "war_system_locators_mesh"
+	cull_radius = 10000
+	scale = 1
+
+	locator = { name = "lfg_body" position = { 0 0 0 } }
+	locator = { name = "lfg_prow" position = { 0 0 440 } }
+	locator = { name = "lfg_stern" position = { 0 0 -480 } }
+
+	attach = { lfg_body = "lfg_mothership_core_entity" }
+	attach = { lfg_body = "lfg_ms_gyro_1_entity" }
+	attach = { lfg_body = "lfg_ms_gyro_2_entity" }
+	attach = { lfg_body = "lfg_ms_gyro_3_entity" }
+	attach = { lfg_body = "lfg_ms_halo_ring_entity" }
+	attach = { lfg_prow = "lfg_ms_prow_entity" }
+	attach = { lfg_stern = "lfg_ms_stern_entity" }
+	attach = { lfg_body = "lfg_nanite_swarm_mothership_entity" }
+}
+
+# The hull model: an invisible frame (the sections hang on "root") with the thruster plumes and explosions.
+
+entity = {
+	name = "lfg_mothership_entity"
+	pdxmesh = "locator_mesh"
+	cull_radius = 10000
+	scale = 1
+
+	locator = { name = "root" position = { 0 0 0 } }
+	locator = { name = "thruster_center_1" position = { 0 0 -560 } rotation = { 0 180 0 } }
+	locator = { name = "thruster_left_1" position = { -160 0 -520 } rotation = { 0 180 0 } }
+	locator = { name = "thruster_right_1" position = { 160 0 -520 } rotation = { 0 180 0 } }
+	locator = { name = "explosion_locator1" position = { 0 0 0 } }
+	locator = { name = "explosion_locator2" position = { 250 60 200 } }
+	locator = { name = "explosion_locator3" position = { -250 -60 -150 } }
+	locator = { name = "explosion_locator4" position = { 0 200 -300 } }
+	locator = { name = "explosion_locator5" position = { 0 -200 300 } }
+
+
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		event = { trigger_once = yes sound = { soundeffect = juggernaut_fungoid_idle } }
+		event = { time = 0 node = "thruster_left_1" particle = "giga_systemcraft_small1_idle_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "thruster_right_1" particle = "giga_systemcraft_small1_idle_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "thruster_center_1" particle = "giga_systemcraft_large1_idle_particle" keep_particle = yes trigger_once = yes }
+	}
+	state = { name = "moving" state_time = 5
+		event = { sound = { soundeffect = juggernaut_fungoid_move } }
+		event = { time = 0 node = "thruster_left_1" particle = "giga_systemcraft_small1_moving_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "thruster_right_1" particle = "giga_systemcraft_small1_moving_particle" keep_particle = yes trigger_once = yes }
+		event = { time = 0 node = "thruster_center_1" particle = "giga_systemcraft_large1_moving_particle" keep_particle = yes trigger_once = yes }
+	}
+	state = { name = "death" state_time = 5 looping = no
+		event = { time = 0 node = "explosion_locator1" particle = "ship_explosion_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 1 node = "explosion_locator2" particle = "ship_explosion_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "station_explosion_large" } }
+		event = { time = 2 node = "explosion_locator3" particle = "ship_explosion_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "station_explosion_small" } }
+		event = { time = 3 node = "explosion_locator4" particle = "ship_explosion_particle" keep_particle = yes trigger_once = yes sound = { soundeffect = "ship_destroyed_big_explosion" } }
+		event = { time = 4 node = "explosion_locator5" particle = "juggernaut_explosion_particle" keep_particle = yes trigger_once = yes }
+		event = { trigger_once = yes sound = { soundeffect = "amb_fallen_empire_titan_death" } }
+	}
+
+	game_data = {
+		size = 450.0
+		emissive_recolor_crunch = 50
+		trail_locators = {
+			"thruster_center_1" =	{ width = 100 length = 150 height = 20 }
+			"thruster_right_1" =	{ width = 100 length = 150 height = 20 }
+			"thruster_left_1" =		{ width = 100 length = 150 height = 20 }
+		}
+	}
+}

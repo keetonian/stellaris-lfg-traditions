@@ -1,41 +1,368 @@
 # LFG Traditions - megastructure models.
 
-# Progenitor Forge (common/megastructures/lfg_megastructures.txt): vanilla's Mega Shipyard stages (synthetic look), scaled
-# up so the forge shows around an O-class star. Built like vanilla's stage entities: a locator with the section attached.
-@lfg_progenitor_forge_scale = 4
+# Progenitor Forge (common/megastructures/lfg_megastructures.txt): built around its O-class star, like Gigastructural's
+# Hyperstructural Assembly, whose rings this copies the layout of (giga_hyperstructual_ass.asset: two pieces -> six
+# copies turned 30 degrees apart -> a wrapper turned { 0 0 90 }), so it sits the same way around the star. The nanite look:
+#   - inner ring: 12 nanite (Gatebuilder) space stations, the stations of vanilla's nanite ships
+#   - Gigastructural's assembly yards and tractor beams (the shipyard itself)
+#   - outer ring: 12 nanite motherships (vanilla's Nanite Interdictor model)
+#   - six grey goo clouds (vanilla's Grey Goo world particle) drifting on the outer ring
+# Stage 1 is the inner ring and the clouds; the finished forge adds the yards, beams and outer ring.
+# Sizes are first guesses: tune these against an O-class star in game.
+@lfg_progenitor_forge_scale = 1.75
+@lfg_progenitor_forge_station_scale = 3
+@lfg_progenitor_forge_hive_scale = 2.5
+@lfg_progenitor_forge_cloud_scale = 6
 
+##### INNER RING: nanite stations #####
+
+entity = {
+	name = "lfg_progenitor_forge_station_two_entity"
+	cull_radius = 500
+	locator = { name = "loc101" position = { 0 0 -260 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 260 } rotation = { 0 180 0 } }
+	attach = { "loc101" = "lfg_progenitor_forge_station_entity" }
+	attach = { "loc102" = "lfg_progenitor_forge_station_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_progenitor_forge_station_entity"
+	cull_radius = 500
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_space_station_section_entity" }
+	scale = @lfg_progenitor_forge_station_scale
+}
+
+entity = {
+	name = "lfg_progenitor_forge_station_six_entity"
+	cull_radius = 500
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 30 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 60 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc105" position = { 0 0 0 } rotation = { 0 120 0 } }
+	locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 150 0 } }
+	attach = { "loc101" = "lfg_progenitor_forge_station_two_entity" }
+	attach = { "loc102" = "lfg_progenitor_forge_station_two_entity" }
+	attach = { "loc103" = "lfg_progenitor_forge_station_two_entity" }
+	attach = { "loc104" = "lfg_progenitor_forge_station_two_entity" }
+	attach = { "loc105" = "lfg_progenitor_forge_station_two_entity" }
+	attach = { "loc106" = "lfg_progenitor_forge_station_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_progenitor_forge_inner_ring_entity"
+	cull_radius = 500
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 90 } }
+	attach = { "loc101" = "lfg_progenitor_forge_station_six_entity" }
+	scale = 1
+}
+
+##### OUTER RING: nanite motherships #####
+
+entity = {
+	name = "lfg_progenitor_forge_hive_entity"
+	cull_radius = 500
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 90 0 } }
+	attach = { "loc101" = "gatebuilder_01_mothership_section_entity" }
+	scale = @lfg_progenitor_forge_hive_scale
+}
+
+entity = {
+	name = "lfg_progenitor_forge_hive_two_entity"
+	cull_radius = 500
+	locator = { name = "loc101" position = { 0 0 -680 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 680 } rotation = { 0 180 0 } }
+	attach = { "loc101" = "lfg_progenitor_forge_hive_entity" }
+	attach = { "loc102" = "lfg_progenitor_forge_hive_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_progenitor_forge_hive_six_entity"
+	cull_radius = 500
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 15 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 45 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 75 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 105 0 } }
+	locator = { name = "loc105" position = { 0 0 0 } rotation = { 0 135 0 } }
+	locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 165 0 } }
+	attach = { "loc101" = "lfg_progenitor_forge_hive_two_entity" }
+	attach = { "loc102" = "lfg_progenitor_forge_hive_two_entity" }
+	attach = { "loc103" = "lfg_progenitor_forge_hive_two_entity" }
+	attach = { "loc104" = "lfg_progenitor_forge_hive_two_entity" }
+	attach = { "loc105" = "lfg_progenitor_forge_hive_two_entity" }
+	attach = { "loc106" = "lfg_progenitor_forge_hive_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_progenitor_forge_outer_ring_entity"
+	cull_radius = 500
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 90 } }
+	attach = { "loc101" = "lfg_progenitor_forge_hive_six_entity" }
+	scale = 1
+}
+
+##### GREY GOO CLOUDS #####
+
+entity = {
+	name = "lfg_progenitor_forge_cloud_entity"
+	pdxmesh = "locator_mesh"
+	cull_radius = 10000
+	scale = @lfg_progenitor_forge_cloud_scale
+	locator = { name = "swarm" position = { 0 0 0 } }
+	default_state = "idle"
+	state = { name = "idle" state_time = 5
+		start_event = { node = "swarm" particle = "gray_goo_planet_effect" keep_particle = yes trigger_once = yes }
+	}
+}
+
+entity = {
+	name = "lfg_progenitor_forge_clouds_entity"
+	cull_radius = 10000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 60 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 120 0 } }
+	attach = { "loc101" = "lfg_progenitor_forge_cloud_two_entity" }
+	attach = { "loc102" = "lfg_progenitor_forge_cloud_two_entity" }
+	attach = { "loc103" = "lfg_progenitor_forge_cloud_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_progenitor_forge_cloud_two_entity"
+	cull_radius = 10000
+	locator = { name = "loc101" position = { 0 0 -430 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 430 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_progenitor_forge_cloud_entity" }
+	attach = { "loc102" = "lfg_progenitor_forge_cloud_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_progenitor_forge_cloud_ring_entity"
+	cull_radius = 10000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 90 } }
+	attach = { "loc101" = "lfg_progenitor_forge_clouds_entity" }
+	scale = 1
+}
+
+##### STAGES #####
+
+# Stage 1 (lfg_progenitor_forge_1): the station ring in its cloud.
 entity = {
 	name = "lfg_progenitor_forge_stage_1_entity"
-	locator = { name = "part1" }
+	cull_radius = 10000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_progenitor_forge_inner_ring_entity" }
+	attach = { "loc101" = "lfg_progenitor_forge_cloud_ring_entity" }
 	scale = @lfg_progenitor_forge_scale
-	default_state = "idle"
-	state = { name = "idle" state_time = 6.5 }
-	state = { name = "death" state_time = 6.6 looping = no
-		event = { time = 6.5 node = "part1" particle = "juggernaut_explosion_particle" sound = { soundeffect = ship_destroyed } }
-	}
-	attach = { part1 = "synthetics_01_mega_shipyard_01_stage_1_section_entity" }
+}
+
+# Finished forge (lfg_progenitor_forge_2): adds Gigastructural's assembly yards, tractor beams and the hive ring.
+entity = {
+	name = "lfg_progenitor_forge_complete_entity"
+	cull_radius = 10000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_progenitor_forge_inner_ring_entity" }
+	attach = { "loc101" = "lfg_progenitor_forge_cloud_ring_entity" }
+	attach = { "loc101" = "giga_shipyard_yards_tilted_entity" }
+	attach = { "loc101" = "giga_shipyard_tractor_ring_entity" }
+	attach = { "loc101" = "lfg_progenitor_forge_outer_ring_entity" }
+	scale = @lfg_progenitor_forge_scale
+}
+
+# Finished forge under construction: the yards and hive ring going up around stage 1.
+entity = {
+	name = "lfg_progenitor_forge_complete_construction_entity"
+	cull_radius = 10000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "giga_shipyard_yards_tilted_entity" }
+	attach = { "loc101" = "lfg_progenitor_forge_outer_ring_entity" }
+	scale = @lfg_progenitor_forge_scale
+}
+
+##### SWARMFORGE (lfg_swarmforge_ready): a nanite cage over its star #####
+# Six great circles of 12 Nanite Swarmers (vanilla's nanite cruiser) meeting at the poles, like a wireframe globe over
+# the star; four nanite hive stations on the equator as the shipyard's docks; four grey goo clouds drifting through it.
+# Under construction: three of the circles and the docks. Built like the Progenitor Forge's rings (pieces -> copies
+# yawed around -> wrappers turned around the long axis). Sizes are first guesses: tune against an A / B star in game.
+@lfg_swarmforge_scale = 1.5
+@lfg_swarmforge_swarmer_scale = 3
+@lfg_swarmforge_dock_scale = 2
+@lfg_swarmforge_cloud_scale = 4
+
+entity = {
+	name = "lfg_swarmforge_swarmer_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_cruiser_section_entity" }
+	scale = @lfg_swarmforge_swarmer_scale
 }
 
 entity = {
-	name = "lfg_progenitor_forge_stage_2_entity"
-	locator = { name = "part1" }
-	scale = @lfg_progenitor_forge_scale
-	default_state = "idle"
-	state = { name = "idle" state_time = 6.5 }
-	state = { name = "death" state_time = 6.6 looping = no
-		event = { time = 6.5 node = "part1" particle = "juggernaut_explosion_particle" sound = { soundeffect = ship_destroyed } }
-	}
-	attach = { part1 = "synthetics_01_mega_shipyard_01_stage_2_section_entity" }
+	name = "lfg_swarmforge_swarmer_two_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 -230 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 230 } rotation = { 0 270 0 } }
+	attach = { "loc101" = "lfg_swarmforge_swarmer_entity" }
+	attach = { "loc102" = "lfg_swarmforge_swarmer_entity" }
+	scale = 1
 }
 
 entity = {
-	name = "lfg_progenitor_forge_stage_3_entity"
-	locator = { name = "part1" }
-	scale = @lfg_progenitor_forge_scale
+	name = "lfg_swarmforge_circle_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 30 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 60 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc105" position = { 0 0 0 } rotation = { 0 120 0 } }
+	locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 150 0 } }
+	attach = { "loc101" = "lfg_swarmforge_swarmer_two_entity" }
+	attach = { "loc102" = "lfg_swarmforge_swarmer_two_entity" }
+	attach = { "loc103" = "lfg_swarmforge_swarmer_two_entity" }
+	attach = { "loc104" = "lfg_swarmforge_swarmer_two_entity" }
+	attach = { "loc105" = "lfg_swarmforge_swarmer_two_entity" }
+	attach = { "loc106" = "lfg_swarmforge_swarmer_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_meridian_1_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_swarmforge_circle_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_meridian_2_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 30 } }
+	attach = { "loc101" = "lfg_swarmforge_circle_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_meridian_3_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 60 } }
+	attach = { "loc101" = "lfg_swarmforge_circle_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_meridian_4_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 90 } }
+	attach = { "loc101" = "lfg_swarmforge_circle_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_meridian_5_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 120 } }
+	attach = { "loc101" = "lfg_swarmforge_circle_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_meridian_6_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 150 } }
+	attach = { "loc101" = "lfg_swarmforge_circle_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_dock_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "gatebuilder_01_space_station_section_entity" }
+	scale = @lfg_swarmforge_dock_scale
+}
+
+entity = {
+	name = "lfg_swarmforge_dock_two_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 -300 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 300 } rotation = { 0 180 0 } }
+	attach = { "loc101" = "lfg_swarmforge_dock_entity" }
+	attach = { "loc102" = "lfg_swarmforge_dock_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_docks_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 45 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 135 0 } }
+	attach = { "loc101" = "lfg_swarmforge_dock_two_entity" }
+	attach = { "loc102" = "lfg_swarmforge_dock_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_cloud_entity"
+	pdxmesh = "locator_mesh"
+	cull_radius = 10000
+	scale = @lfg_swarmforge_cloud_scale
+	locator = { name = "swarm" position = { 0 0 0 } }
 	default_state = "idle"
-	state = { name = "idle" state_time = 6.5 }
-	state = { name = "death" state_time = 6.6 looping = no
-		event = { time = 6.5 node = "part1" particle = "juggernaut_explosion_particle" sound = { soundeffect = ship_destroyed } }
+	state = { name = "idle" state_time = 5
+		start_event = { node = "swarm" particle = "gray_goo_planet_effect" keep_particle = yes trigger_once = yes }
 	}
-	attach = { part1 = "synthetics_01_mega_shipyard_01_stage_3_section_entity" }
+}
+
+entity = {
+	name = "lfg_swarmforge_cloud_two_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 -260 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 260 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_swarmforge_cloud_entity" }
+	attach = { "loc102" = "lfg_swarmforge_cloud_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_swarmforge_clouds_entity"
+	cull_radius = 3000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 90 0 } }
+	attach = { "loc101" = "lfg_swarmforge_cloud_two_entity" }
+	attach = { "loc102" = "lfg_swarmforge_cloud_two_entity" }
+	scale = 1
+}
+
+# Finished.
+entity = {
+	name = "lfg_swarmforge_entity"
+	cull_radius = 10000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_swarmforge_meridian_1_entity" }
+	attach = { "loc101" = "lfg_swarmforge_meridian_2_entity" }
+	attach = { "loc101" = "lfg_swarmforge_meridian_3_entity" }
+	attach = { "loc101" = "lfg_swarmforge_meridian_4_entity" }
+	attach = { "loc101" = "lfg_swarmforge_meridian_5_entity" }
+	attach = { "loc101" = "lfg_swarmforge_meridian_6_entity" }
+	attach = { "loc101" = "lfg_swarmforge_docks_entity" }
+	attach = { "loc101" = "lfg_swarmforge_clouds_entity" }
+	scale = @lfg_swarmforge_scale
+}
+
+# Under construction.
+entity = {
+	name = "lfg_swarmforge_construction_entity"
+	cull_radius = 10000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_swarmforge_meridian_1_entity" }
+	attach = { "loc101" = "lfg_swarmforge_meridian_3_entity" }
+	attach = { "loc101" = "lfg_swarmforge_meridian_5_entity" }
+	attach = { "loc101" = "lfg_swarmforge_docks_entity" }
+	scale = @lfg_swarmforge_scale
 }

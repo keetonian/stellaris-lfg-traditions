@@ -4,7 +4,7 @@
 component_set = {
 	key = "LFG_NANITE_SWARM_HANGAR"
 
-	icon = "GFX_ship_part_strike_craft_fighter_3"
+	icon = "GFX_ship_part_lfg_nanite_swarm_hangar"
 	icon_frame = 1
 }
 
@@ -12,14 +12,14 @@ component_set = {
 component_set = {
 	key = "LFG_NANITE_RESHAPER"
 
-	icon = "GFX_ship_part_lm_accelerator"
+	icon = "GFX_ship_part_lfg_nanite_reshaper"
 	icon_frame = 1
 }
 
 component_set = {
 	key = "LFG_NANITE_ARMOR"
 
-	icon = "GFX_ship_part_armor_5"
+	icon = "GFX_ship_part_lfg_nanite_armor"
 	icon_frame = 1
 }
 
@@ -35,5 +35,66 @@ component_set = {
 	key = "LFG_LM_ARMOR_6"
 
 	icon = "GFX_ship_part_lm_armor_5"
+	icon_frame = 1
+}
+
+# Mothership / Maginot World T slot.
+component_set = {
+	key = "LFG_NANITE_SIEGE_DRIVER"
+
+	icon = "GFX_ship_part_lfg_nanite_siege_driver"
+	icon_frame = 1
+}
+
+# Mothership / Maginot World point defence.
+component_set = {
+	key = "LFG_NANITE_FLAK_SWARM"
+
+	icon = "GFX_ship_part_lfg_nanite_flak_swarm"
+	icon_frame = 1
+}
+
+# Mothership World Cracker (W slot).
+component_set = {
+	key = "LFG_NANITE_DISASSEMBLER"
+
+	icon = "GFX_ship_part_lfg_nanite_disassembler"
+	icon_frame = 1
+}
+
+# Mothership swarm modules (aux).
+component_set = {
+	key = "LFG_SWARMER_VAULT"
+
+	icon = "GFX_ship_part_lfg_swarmer_vault"
+	icon_frame = 1
+}
+
+component_set = {
+	key = "LFG_SWARMER_FOUNDRY"
+
+	icon = "GFX_ship_part_lfg_swarmer_foundry"
+	icon_frame = 1
+}
+
+component_set = {
+	key = "LFG_INTERDICTOR_VAULT"
+
+	icon = "GFX_ship_part_lfg_interdictor_vault"
+	icon_frame = 1
+}
+
+component_set = {
+	key = "LFG_INTERDICTOR_FOUNDRY"
+
+	icon = "GFX_ship_part_lfg_interdictor_foundry"
+	icon_frame = 1
+}
+
+# Nanite L slot kinetic (all nanite hulls).
+component_set = {
+	key = "LFG_NANITE_STORM_AUTOCANNON"
+
+	icon = "GFX_ship_part_lfg_nanite_storm_autocannon"
 	icon_frame = 1
 }

@@ -163,3 +163,9 @@ lfg_penal_cell_blocks = {
 	icon = "gfx/interface/icons/planet_modifiers/pm_penal_colony.dds"
 	icon_frame = 1
 }
+
+# Nanite Siege Driver (LFG_NANITE_SIEGE_DRIVER) on hit: injected into the target for 180 days.
+lfg_nanite_siege_driver_debuff = {
+	ship_armor_hardening_add = -0.20
+	ship_shield_hardening_add = -0.20
+}

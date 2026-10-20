@@ -116,12 +116,32 @@
 # Nanite Armour (LFG_NANITE_ARMOR): per plate, on any ship.
 @lfg_nanite_armor_cost = 10000
 @lfg_nanite_armor_upkeep = 15
+# Nanite Siege Driver (LFG_NANITE_SIEGE_DRIVER / _MAGINOT): damage, and cost paid on a Maginot World (the Mothership's
+# components cost nothing).
+@lfg_nanite_siege_driver_min = 30000
+@lfg_nanite_siege_driver_max = 80000
+@lfg_nanite_siege_driver_cost = 100000
+@lfg_nanite_siege_driver_upkeep = 1000
+# Its on-hit burst: damage to each hostile ship within 45 of the target.
+@lfg_nanite_siege_driver_burst_min = 7500
+@lfg_nanite_siege_driver_burst_max = 15000
+# Nanite Disassembler (LFG_NANITE_DISASSEMBLER): nanites per size of the cracked world and per pop on it.
+@lfg_disassembler_nanites_per_size = 5000
+@lfg_disassembler_nanites_per_pop = 5
+# Nanite Flak Swarm (LFG_NANITE_FLAK_SWARM): likewise.
+@lfg_nanite_flak_swarm_cost = 5000
+@lfg_nanite_flak_swarm_upkeep = 5
 # Mothership: Swarmers / Interdictors added to its reserve each month, and the most it holds, reserve + deployed
 # (events/lfg_mothership_events.txt). Deployed only while an enemy is in its system.
 @lfg_mothership_swarmers_per_month = 80
 @lfg_mothership_interdictors_per_month = 20
 @lfg_mothership_swarmer_cap = 600
 @lfg_mothership_interdictor_cap = 200
+# Swarm modules (aux slots), per module: storage / monthly assembly.
+@lfg_swarmer_vault_add = 100
+@lfg_swarmer_foundry_add = 20
+@lfg_interdictor_vault_add = 40
+@lfg_interdictor_foundry_add = 6
 
 # Nanite Forge origin: Nanite Consensus buildings (tier: unity produced, build cost, upkeep).
 @lfg_nanite_consensus_1_unity = 10

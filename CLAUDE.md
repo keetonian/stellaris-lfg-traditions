@@ -33,15 +33,22 @@ mod/                                  # exactly what ships
   common/section_templates/lfg_nanite_section_templates.txt  # GENERATED (NANITE_HULLS): Giga's moon / planetcraft sections for our hulls
   localisation/english/lfg_nanite_sections_l_english.yml     # GENERATED: their section names
   gfx/models/ships/lfg_nanite_celestials.asset               # GENERATED (NANITE_TEXTURES / _SKINS): nanite skins + grey goo swarm
+  gfx/models/ships/lfg_mothership.asset                      # Mothership model (hand-written; its core world is generated above)
+  gfx/models/ships/lfg_nanite_hulls.asset                    # moon escort rings, planetcraft look + hull frame (hand-written)
+                                                             #   looks sit in a section (SECTION_BODIES) so the ship designer shows them
   common/scripted_triggers/zz_lfg_trigger_overrides.txt      # GENERATED: Giga's war moon / planet component triggers + our hulls
-  common/component_templates/lfg_components.txt              # LFG_NANITE_SWARM_HANGAR, _RESHAPER (X) (Mothership only), _ARMOR (any ship);
+  common/component_templates/lfg_components.txt              # LFG_NANITE_SWARM_HANGAR, _RESHAPER (X) (Mothership only), _SIEGE_DRIVER (T; _MAGINOT twin: max 3 on a Maginot World),
+                                                             #   _FLAK_SWARM (PD) (Mothership + Maginot World), _DISASSEMBLER (W), _STORM_AUTOCANNON (L, all nanite hulls), _ARMOR (any ship), LFG_SWARMER_/_INTERDICTOR_VAULT/_FOUNDRY (aux);
                                                              #   LFG_LM_ACCELERATOR_2, LFG_*_LM_ARMOR_6 (galvanic)
   common/scripted_effects/lfg_mothership_effects.txt         # lfg_mothership_grow_reserve / _deploy / _launch_reserve / _recall
   events/lfg_mothership_events.txt                           # .1/.2 monthly reserve; .3/.4 battle -> deploy; .5 recall when no enemy;
-                                                             #   .6 one per empire (on_ship_built: delete + refund an extra)
-  gfx/models/ships/lfg_megastructures.asset                  # Progenitor Forge: Mega Shipyard scaled 4x
+                                                             #   .6 one per empire (on_ship_built: delete + refund an extra); .7 Disassembler nanites + vanilla cracker
+                                                             #   on_action (.8/.9 queued/unqueued)
+  gfx/models/ships/lfg_megastructures.asset                  # Progenitor Forge (nanite rings + Giga's yards) and Swarmforge (nanite cage), around their stars
   interface/lfg_megastructures.gfx                           # megastructure build / outliner icons
+  interface/lfg_components.gfx                               # component icons (gfx/interface/icons/ship_parts/lfg_*.dds: art/make_component_icons.py)
   common/component_sets/lfg_component_sets.txt               # their sets (name / icon)
+  common/scripted_modifiers/lfg_scripted_modifiers.txt      # custom ship modifiers of the Mothership's swarm modules (read by lfg_mothership.2)
   common/technology/lfg_technology.txt                       # tech_lfg_swarmforge / _nanite_war_moon / _nanite_planetcraft (offered by the perk); _lm_accelerator_2 / _lm_armor_6 (galvanic civics)
   common/buildings/lfg_buildings.txt                         # building_lfg_nanite_automation + _nanite_consensus_1-4 (origin), _nanite_cognition_core, _nanotensile_converter (Nanotech)
   common/static_modifiers/lfg_specialist_automation.txt      # GENERATED (specialist_jobs in gen_overrides.py): Cognition Core job list

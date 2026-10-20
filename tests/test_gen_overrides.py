@@ -216,7 +216,6 @@ class GenOverridesTests(unittest.TestCase):
         mega = self.tmp / "giga/gfx/models/ships/megastructures"
         (mega / "war_moon").mkdir(parents=True)
         (mega / "war_planet").mkdir(parents=True)
-        (mega / "war_system").mkdir(parents=True)
         skin = ('entity = {{\r\n\tname = "{}"\r\n\tpdxmesh = "{}"\r\n\tgame_data = {{\r\n\t\tsize = 100.0\r\n\t}}\r\n'
                 '\tmeshsettings = {{\r\n\t\ttexture_diffuse = "a.dds"\r\n\t\ttexture_normal = "b.dds"\r\n'
                 '\t\ttexture_specular = "c.dds"\r\n\t}}\r\n}}\r\n')
@@ -224,8 +223,6 @@ class GenOverridesTests(unittest.TestCase):
             "@war_moon_scale = 0.8\r\n" + skin.format("giga_moon_thrusters_ai_fe", "war_moon_complete_mesh"))
         (mega / "war_planet/giga_war_planet.asset").write_text(
             "@war_planet_scale = 0.33\r\n" + skin.format("synthetics_01_war_planet_complete_entity", "war_planet_complete_mesh"))
-        (mega / "war_system/giga_war_system.asset").write_text(
-            "@war_system_scale = 1.5\r\n" + skin.format("war_system_complete_entity", "war_system_complete_mesh"))
         (self.tmp / "giga/common/scripted_triggers").mkdir(parents=True)
         (self.tmp / "giga/common/scripted_triggers/giga_scripted_triggers.txt").write_text(
             "giga_ship_uses_war_moon_components = {\r\n\tOR = {\r\n\t\tis_ship_size = giga_war_moon\r\n\t}\r\n}\r\n"
@@ -321,10 +318,11 @@ class GenOverridesTests(unittest.TestCase):
         self.assertIn(' lfg_nanite_moon_swarm_core_key:0 "Swarm Core"', loc)
         entities = out[gen_overrides.NANITE_ENTITIES_FILE]
         for name in ("lfg_nanite_moon_grey_goo_entity", "lfg_nanite_moon_machine_shell_entity",
-                     "lfg_nanite_moon_swarm_core_entity", "lfg_nanite_planetcraft_entity"):
+                     "lfg_nanite_moon_swarm_core_entity", "lfg_nanite_planetcraft_body_entity"):
             self.assertIn(f'name = "{name}"', entities)
         self.assertIn('texture_diffuse = "gray_goo_planet_01_diffuse.dds"', entities)
-        self.assertEqual(entities.count('attach = { root = "lfg_nanite_swarm_'), 2)  # planetcraft, mothership (not the moon)
+        self.assertEqual(entities.count('attach = { root = "lfg_nanite_moon_escort_entity" }'), 3)  # every moon skin
+        self.assertNotIn('attach = { root = "lfg_nanite_swarm_', entities)  # swarms are in the hand-written models
 
     def test_forge_harvester_keeps_vanilla_harvesting_away(self):
         out = self.generate()
@@ -344,8 +342,9 @@ class GenOverridesTests(unittest.TestCase):
         self.assertIn('template = "invisible_extra_large_fixed"', bow)  # only mid / stern become hangars
         self.assertIn(' lfg_mothership_sc_mid:0 "Nanite Hive Bays"', out[gen_overrides.NANITE_SECTIONS_LOC_FILE])
         entities = out[gen_overrides.NANITE_ENTITIES_FILE]
-        self.assertIn('name = "lfg_mothership_entity"', entities)
-        self.assertEqual(entities.count('name = "body"'), gen_overrides.MOTHERSHIP_HULL_PARTS)  # nanite hull
+        core = gen_overrides.extract_entity(entities, "lfg_mothership_core_entity")  # the model itself is hand-written
+        self.assertIn(gen_overrides.NANITE_TEXTURES[gen_overrides.MOTHERSHIP_CORE_SKIN][0], core)
+        self.assertNotIn("war_system", entities)
         self.assertIn("is_ship_size = lfg_mothership", out["mod/common/scripted_triggers/zz_lfg_trigger_overrides.txt"])
 
     def test_archaeostudies_faculty_gets_expedition_corps_block(self):
