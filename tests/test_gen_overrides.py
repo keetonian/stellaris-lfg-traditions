@@ -194,6 +194,13 @@ class GenOverridesTests(unittest.TestCase):
         (self.game / "common/starbase_buildings/00_starbase_buildings.txt").write_text(
             "nanite_harvester = {\n\tpossible = {\n\t\talways = yes\n\t}\n}\n")
         (self.game / "common/pop_jobs").mkdir()
+        (self.game / "common/deposits").mkdir(exist_ok=True)
+        (self.game / "common/deposits/13_machine_age_deposits.txt").write_text("".join(
+            f"{key} = {{\n\tresources = {{\n\t\tproduces = {{\n\t\t\tnanites = {amount}\n\t\t}}\n\t}}\n}}\n"
+            for key, amount in gen_overrides.NANITE_DEPOSIT_AMOUNTS))
+        (self.game / "common/pop_jobs/04_gestalt_jobs.txt").write_text(
+            "replicator = {\n\tresources = {\n\t\tcategory = planet_pop_assemblers\n\t\tupkeep = {\n\t\t\talloys = 1\n"
+            "\t\t}\n\t}\n}\n")
         (self.game / "common/pop_jobs/02_specialist_jobs.txt").write_text(
             "physicist = {\n\tcategory = specialist\n}\nminer = {\n\tcategory = worker\n}\n"
             "not_a_real_job = {\n\tcategory = specialist\n}\n")

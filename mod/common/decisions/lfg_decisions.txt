@@ -98,3 +98,160 @@ decision_lfg_expand_cell_blocks = {
 		weight = 10
 	}
 }
+
+# Nanotech: the Nanite Pulse, from a star whose system has a nanite harvester (vanilla's, or the Nanite Forge origin's
+# broken / ancient one) on its starbase. Costs @lfg_nanite_pulse_cost_per_body nanites per celestial body in the system
+# (value:lfg_nanite_pulse_bodies); then once per @lfg_nanite_pulse_cooldown_days days for that star (timed star flag).
+# 50/50: the harvester's deposits grow one step (our harvester: lfg_forge_harvester_grow; vanilla's: its own step event
+# cybernetics.5054), or @lfg_nanite_pulse_nanites_per_body nanites per body (always this when no world can grow).
+# lfg_nanite_pulse.1 / .2 report what happened: the system, the worlds grown or the nanites gained.
+decision_lfg_nanite_pulse = {
+	owned_planets_only = no
+	enactment_time = 0
+	icon = decision_lfg_nanite_pulse
+	resources = {
+		category = decisions
+		cost = {
+			nanites = @lfg_nanite_pulse_cost_per_body
+			multiplier = value:lfg_nanite_pulse_bodies
+		}
+	}
+	potential = {
+		is_star = yes
+		exists = space_owner
+		space_owner = {
+			is_same_value = from
+			has_tradition = tr_nanotech_adopt
+		}
+	}
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_nanite_pulse_needs_harvester
+			solar_system = {
+				exists = starbase
+				starbase = {
+					OR = {
+						has_starbase_building = nanite_harvester
+						has_starbase_building = lfg_broken_nanite_harvester
+						has_starbase_building = lfg_ancient_nanite_harvester
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			fail_text = lfg_nanite_pulse_cooling_down
+			NOT = { has_planet_flag = lfg_nanite_pulse_cooldown }
+		}
+	}
+	effect = {
+		custom_tooltip = lfg_nanite_pulse_effect_tt
+		hidden_effect = {
+			set_variable = { which = lfg_pulse_bodies value = value:lfg_nanite_pulse_bodies }
+			set_timed_planet_flag = { flag = lfg_nanite_pulse_cooldown days = @lfg_nanite_pulse_cooldown_days }
+			solar_system = { save_event_target_as = lfg_pulse_system }
+			# What it cost (for the popups): @lfg_nanite_pulse_cost_per_body per body.
+			from = {
+				set_variable = { which = lfg_pulse_cost value = prev.lfg_pulse_bodies }
+				multiply_variable = { which = lfg_pulse_cost value = @lfg_nanite_pulse_cost_per_body }
+				set_variable = { which = lfg_pulse_bodies value = prev.lfg_pulse_bodies }
+			}
+			# Worlds that can grow: a mining station on a harvested deposit (what both harvesters' steps need); vanilla's
+			# harvester only grows them once Nanotech is finished.
+			from = { set_variable = { which = lfg_pulse_planets value = 0 } }
+			solar_system = {
+				every_system_planet = {
+					limit = {
+						has_mining_station = yes
+						OR = {
+							has_deposit = d_nanite_harvester_deposit
+							has_planet_flag = nanites_doubled_1
+						}
+					}
+					from = { change_variable = { which = lfg_pulse_planets value = 1 } }
+				}
+			}
+			if = {
+				limit = {
+					solar_system.starbase = { has_starbase_building = nanite_harvester }
+					NOT = { from = { has_tradition = tr_nanotech_finish } }
+				}
+				from = { set_variable = { which = lfg_pulse_planets value = 0 } }
+			}
+			random_list = {
+				50 = {
+					modifier = {
+						factor = 0
+						from = { check_variable = { which = lfg_pulse_planets value = 0 } }
+					}
+					solar_system = {
+						if = {
+							limit = {
+								starbase = {
+									OR = {
+										has_starbase_building = lfg_broken_nanite_harvester
+										has_starbase_building = lfg_ancient_nanite_harvester
+									}
+								}
+							}
+							lfg_forge_harvester_grow = yes
+						}
+						else = {
+							system_event = { id = cybernetics.5054 }
+						}
+					}
+					from = { country_event = { id = lfg_nanite_pulse.1 } }
+				}
+				50 = {
+					from = {
+						set_variable = { which = lfg_pulse_nanites value = prev.lfg_pulse_bodies }
+						multiply_variable = { which = lfg_pulse_nanites value = @lfg_nanite_pulse_nanites_per_body }
+						add_resource = {
+							nanites = 1
+							mult = lfg_pulse_nanites
+						}
+						country_event = { id = lfg_nanite_pulse.2 }
+					}
+				}
+			}
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# Mothership crew: like Gigastructural's decision_systemcraft_crew (4,000 pops for a systemcraft), a planet with more than
+# 2,000 pops gives @lfg_mothership_crew_hundreds x 100 of them (kill_single_pop, 100 each) to crew the Mothership. Sets
+# the country flag its construction needs (lfg_mothership possible_construction); a finished Mothership uses it up.
+decision_lfg_mothership_crew = {
+	owned_planets_only = yes
+	sound = event_administrative_work
+	icon = decision_lfg_nanite_pulse
+	potential = {
+		owner = {
+			has_technology = tech_lfg_mothership
+			NOT = { has_country_flag = lfg_mothership_crew_ready }
+		}
+	}
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_mothership_crew_needs_pops
+			count_owned_pop_amount = { count >= 2100 }
+		}
+	}
+	effect = {
+		custom_tooltip = lfg_mothership_crew_effect_tt
+		hidden_effect = {
+			owner = { set_country_flag = lfg_mothership_crew_ready }
+			while = {
+				count = @lfg_mothership_crew_hundreds
+				random_owned_pop_group = {
+					kill_single_pop = yes
+				}
+			}
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}

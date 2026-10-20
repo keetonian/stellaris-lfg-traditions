@@ -1,7 +1,7 @@
 # LFG Traditions - the Nanite Armada hulls' models (common/ship_sizes/lfg_ship_sizes.txt), our own designs around
 # Gigastructural's moon / planet meshes (their nanite skins are generated in lfg_nanite_celestials.asset):
-#   - Nanite Attack Moon: the grey goo moon (or its Machine Shell / Swarm Core skin; the moon's stern sections) with an
-#     escort: a tilted ring of 8 Nanite Swarmers and a crossing ring of 4 Nanite Interdictors
+#   - Nanite Attack Moon: the grey goo moon (or its Machine Shell / Swarm Core skin; the moon's stern sections, drawn at
+#     @lfg_nanite_moon_scale in the generated file) with a tilted ring of 8 Nanite Swarmers close around it
 #   - Nanite Planetcraft: the grey goo world with an equatorial ring of 12 Nanite Interdictors, a tilted ring of 16
 #     Nanite Swarmers, nanite hive stations capping both poles, and the grey goo swarm
 # Units are the meshes' (moon ~80 across, planet ~440); sizes are first guesses: tune in game.
@@ -9,8 +9,7 @@
 # ship designer shows it; its hull model (lfg_nanite_planetcraft_entity) is an invisible frame at Giga's scale.
 
 @lfg_planetcraft_scale = 0.33	# Gigastructural's @war_planet_scale
-@lfg_moon_swarmer_scale = 1.4
-@lfg_moon_interdictor_scale = 0.9
+@lfg_moon_swarmer_scale = 0.9
 @lfg_pc_interdictor_scale = 2.2
 @lfg_pc_swarmer_scale = 3
 @lfg_pc_cap_scale = 2.5
@@ -28,8 +27,8 @@ entity = {
 entity = {
 	name = "lfg_nanite_moon_swarmer_two_entity"
 	cull_radius = 2000
-	locator = { name = "loc101" position = { 0 0 -70 } rotation = { 0 90 0 } }
-	locator = { name = "loc102" position = { 0 0 70 } rotation = { 0 270 0 } }
+	locator = { name = "loc101" position = { 0 0 -58 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 58 } rotation = { 0 270 0 } }
 	attach = { "loc101" = "lfg_nanite_moon_swarmer_entity" }
 	attach = { "loc102" = "lfg_nanite_moon_swarmer_entity" }
 	scale = 1
@@ -49,42 +48,12 @@ entity = {
 	scale = 1
 }
 
-entity = {
-	name = "lfg_nanite_moon_interdictor_entity"
-	cull_radius = 2000
-	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
-	attach = { "loc101" = "gatebuilder_01_mothership_section_entity" }
-	scale = @lfg_moon_interdictor_scale
-}
-
-entity = {
-	name = "lfg_nanite_moon_interdictor_two_entity"
-	cull_radius = 2000
-	locator = { name = "loc101" position = { 0 0 -85 } rotation = { 0 90 0 } }
-	locator = { name = "loc102" position = { 0 0 85 } rotation = { 0 270 0 } }
-	attach = { "loc101" = "lfg_nanite_moon_interdictor_entity" }
-	attach = { "loc102" = "lfg_nanite_moon_interdictor_entity" }
-	scale = 1
-}
-
-entity = {
-	name = "lfg_nanite_moon_interdictor_ring_entity"
-	cull_radius = 2000
-	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
-	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 90 0 } }
-	attach = { "loc101" = "lfg_nanite_moon_interdictor_two_entity" }
-	attach = { "loc102" = "lfg_nanite_moon_interdictor_two_entity" }
-	scale = 1
-}
-
 # Attached at the moon skins' root (generated in lfg_nanite_celestials.asset).
 entity = {
 	name = "lfg_nanite_moon_escort_entity"
 	cull_radius = 2000
 	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 20 } }
-	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 45 90 } }
 	attach = { "loc101" = "lfg_nanite_moon_swarmer_ring_entity" }
-	attach = { "loc102" = "lfg_nanite_moon_interdictor_ring_entity" }
 	scale = 1
 }
 

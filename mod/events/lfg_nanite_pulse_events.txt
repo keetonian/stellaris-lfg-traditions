@@ -1,0 +1,43 @@
+# LFG Traditions - the Nanite Pulse decision (common/decisions/lfg_decisions.txt): what the pulse did. The decision sets
+# event_target:lfg_pulse_system and the country variables lfg_pulse_cost / lfg_pulse_bodies (what it cost, for how many
+# bodies), lfg_pulse_planets (worlds grown) / lfg_pulse_nanites (gained).
+namespace = lfg_nanite_pulse
+
+# The harvester's deposits grew a step.
+country_event = {
+	id = lfg_nanite_pulse.1
+	title = lfg_nanite_pulse.1.name
+	desc = lfg_nanite_pulse.1.desc
+	picture = GFX_evt_gray_goo
+	location = event_target:lfg_pulse_system
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_nanite_pulse.1.a
+		hidden_effect = {
+			clear_variable = lfg_pulse_planets
+			clear_variable = lfg_pulse_cost
+			clear_variable = lfg_pulse_bodies
+		}
+	}
+}
+
+# The pulse came back as raw nanites.
+country_event = {
+	id = lfg_nanite_pulse.2
+	title = lfg_nanite_pulse.2.name
+	desc = lfg_nanite_pulse.2.desc
+	picture = GFX_evt_gray_goo_ships
+	location = event_target:lfg_pulse_system
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_nanite_pulse.2.a
+		hidden_effect = {
+			clear_variable = lfg_pulse_nanites
+			clear_variable = lfg_pulse_planets
+			clear_variable = lfg_pulse_cost
+			clear_variable = lfg_pulse_bodies
+		}
+	}
+}

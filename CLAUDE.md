@@ -75,7 +75,8 @@ mod/                                  # exactly what ships
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
   events/lfg_synthetic_fertility_events.txt                  # lfg_synthetic_fertility.1: extra Identity Repository uploads (monthly)
   events/lfg_penal_events.txt                                # lfg_penal.1: Penitence penal colony modifiers + counts (monthly; only the penal colony + planets with our modifiers)
-  events/lfg_stationcraft_events.txt                         # lfg_stationcraft.1: monthly starbase / kilo / megastructure counts
+  events/lfg_stationcraft_events.txt                         # lfg_stationcraft.1: monthly colony / starbase / kilo / mega counts ->
+  common/scripted_effects/lfg_stationcraft_effects.txt       #   lfg_stationcraft_sync: lfg_stationcraft_per_* country modifiers (multiplier = count)
   events/lfg_lineage_events.txt                              # lfg_lineage.1: Every Shore planet-type count (monthly cache)
   common/scripted_effects/lfg_penal_effects.txt              # lfg_sync_penal_modifier / lfg_sync_penal_unemployed / lfg_penal_ship_unemployed
   common/zones/lfg_zones.txt                                 # zone_lfg_penal_supertensiles, zone_lfg_penal_bulk_matter
@@ -91,7 +92,8 @@ mod/                                  # exactly what ships
   common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + per-planet tradition modifiers
   common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1 + lfg_shellworlders.1, anomaly_success -> lfg_xenoarchaeology.1,
                                                              #   colony transfer/ownerless -> lfg_planet.1
-  common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (Paradise Unbound), decision_lfg_expand_cell_blocks (Penitence finisher)
+  common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (Paradise Unbound), decision_lfg_expand_cell_blocks (Penitence finisher),
+                                                             #   decision_lfg_nanite_pulse (Nanotech; from a star) -> events/lfg_nanite_pulse_events.txt, decision_lfg_mothership_crew (2,000 pops)
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)
   common/traits/lfg_leader_traits.txt                        # leader_trait_lfg_massed_assault (given by events/lfg_massed_assault_events.txt)
   common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy)
@@ -106,6 +108,12 @@ mod/                                  # exactly what ships
                                                              #   Prison Industry; each +50% jobs on that colony type)
   interface/lfg_traditions.gfx                               # sprites -> vanilla/Giga .dds, plus the bulk matter zone icon
   gfx/interface/icons/districts/lfg_zone_penal_bulk_matter.dds # 64x64 zone icon (art/make_zone_icons.py, needs Pillow)
+  gfx/interface/icons/*/lfg_*.dds, tradition_lfg_*, agenda_lfg_*  # our art (Pillow scripts in art/): make_component_icons (ship parts),
+                                                             #   make_building_icons (Consensus, Nanotensile, Ancient harvester), make_megastructure_icons
+                                                             #   (Swarmforge build + tech icon, Nanite Pulse), make_glyph_icons (Megaforge / Stationcraft
+                                                             #   tradition + tree icons, agenda icons; our own drawings, no vanilla art)
+  interface/lfg_council_agendas.gfx                          # GFX_council_agenda_icon_<agenda key>
+  common/pop_jobs/zz_lfg_job_overrides.txt                   # GENERATED: replicator job +0.5 nanites upkeep for the Nanite Forge origin
   localisation/english/lfg_*_l_english.yml                   # UTF-8 BOM (lfg_modifiers_*: names for unnamed generated modifiers;
                                                              #   lfg_shelve_* is GENERATED)
 tools/pdx.py          # small Paradox-script parser

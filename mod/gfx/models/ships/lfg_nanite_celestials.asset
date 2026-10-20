@@ -38,11 +38,12 @@ entity = {
 		start_event = { node = "swarm" particle = "gray_goo_planet_effect" keep_particle = yes trigger_once = yes }
 	}
 }
+@lfg_nanite_moon_scale = 0.5
 
 entity = {
 	name = "lfg_nanite_moon_grey_goo_entity"
 	pdxmesh = "war_moon_complete_mesh"
-	scale = @war_moon_scale
+	scale = @lfg_nanite_moon_scale
 	cull_radius = 10000
 
 	attach = { root = "lfg_nanite_moon_escort_entity" }
@@ -190,7 +191,7 @@ entity = {
 entity = {
 	name = "lfg_nanite_moon_machine_shell_entity"
 	pdxmesh = "war_moon_complete_mesh"
-	scale = @war_moon_scale
+	scale = @lfg_nanite_moon_scale
 	cull_radius = 10000
 
 	attach = { root = "lfg_nanite_moon_escort_entity" }
@@ -338,7 +339,7 @@ entity = {
 entity = {
 	name = "lfg_nanite_moon_swarm_core_entity"
 	pdxmesh = "war_moon_complete_mesh"
-	scale = @war_moon_scale
+	scale = @lfg_nanite_moon_scale
 	cull_radius = 10000
 
 	attach = { root = "lfg_nanite_moon_escort_entity" }

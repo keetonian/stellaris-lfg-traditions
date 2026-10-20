@@ -17,9 +17,10 @@ country_event = {
 	}
 
 	immediate = {
-		# A nanite vein in the homeworld (planetary deposit, +10 nanites).
+		# A nanite vein in the homeworld (planetary deposit, +15 nanites), and 50 nanites to start with.
 		capital_scope = { add_deposit = d_lfg_nanite_vein }
-		# A small homeworld: 1,500 fewer pops, taken 100 at a time from its largest pop group.
+		add_resource = { nanites = 50 }
+		# A small homeworld: 1,800 fewer pops, taken 100 at a time from its largest pop group.
 		capital_scope = {
 			while = {
 				count = @lfg_nanite_forge_pops_removed_hundreds
@@ -156,25 +157,7 @@ system_event = {
 			}
 			starbase = { lfg_restore_forge_harvester = yes }
 		}
-		starbase.owner = { save_event_target_as = nanotech_country }
-		every_system_planet = {
-			limit = {
-				has_mining_station = yes
-				OR = {
-					has_deposit = d_nanite_harvester_deposit
-					has_planet_flag = nanites_doubled_1
-					has_planet_flag = nanites_doubled_2
-					has_planet_flag = nanites_doubled_3
-					has_planet_flag = nanites_doubled_4
-					has_planet_flag = nanites_doubled_5
-					has_planet_flag = nanites_doubled_6
-					has_planet_flag = nanites_doubled_7
-					has_planet_flag = nanites_doubled_8
-					has_planet_flag = nanites_doubled_9
-				}
-			}
-			lfg_forge_harvester_step = yes
-		}
+		lfg_forge_harvester_grow = yes
 		system_event = { id = lfg_nanite_forge.2 days = @lfg_broken_harvester_days }
 	}
 }

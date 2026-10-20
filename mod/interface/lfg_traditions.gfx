@@ -2,16 +2,17 @@
 # (a 64x64 version of Gigastructural's bulk matter resource icon, built by art/make_zone_icons.py).
 # Each tree needs 4 category sprites; each tradition needs GFX_<tradition key>; each ascension perk GFX_<perk key>.
 spriteTypes = {
+	# Megaforge and Stationcraft tradition / tree icons are our own (art/make_glyph_icons.py).
 	### MEGAFORGE ###
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_megaforge" textureFile = "gfx/interface/traditions/tradition_hex_bg_orange.dds" }
 	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_megaforge" textureFile = "gfx/interface/tiles/tradition_category_tile_nanotech.dds" }
 	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_megaforge" textureFile = "gfx/interface/tiles/tradition_category_tile_nanotech.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
-	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_megaforge" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_nanotech.dds" }
-	spriteType = { name = "GFX_tr_lfg_megaforge_guilds" textureFile = "gfx/interface/icons/traditions/tradition_nanotech_1.dds" }
-	spriteType = { name = "GFX_tr_lfg_megaforge_lattices" textureFile = "gfx/interface/icons/traditions/tradition_nanotech_2.dds" }
-	spriteType = { name = "GFX_tr_lfg_megaforge_priority" textureFile = "gfx/interface/icons/traditions/tradition_expansion_galactic_ambition.dds" }
-	spriteType = { name = "GFX_tr_lfg_megaforge_foundries" textureFile = "gfx/interface/icons/traditions/tradition_nanotech_3.dds" }
-	spriteType = { name = "GFX_tr_lfg_megaforge_monuments" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_public_works.dds" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_megaforge" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_lfg_megaforge.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_guilds" textureFile = "gfx/interface/icons/traditions/tradition_lfg_megaforge_guilds.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_lattices" textureFile = "gfx/interface/icons/traditions/tradition_lfg_megaforge_lattices.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_priority" textureFile = "gfx/interface/icons/traditions/tradition_lfg_megaforge_priority.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_foundries" textureFile = "gfx/interface/icons/traditions/tradition_lfg_megaforge_foundries.dds" }
+	spriteType = { name = "GFX_tr_lfg_megaforge_monuments" textureFile = "gfx/interface/icons/traditions/tradition_lfg_megaforge_monuments.dds" }
 
 
 
@@ -20,12 +21,12 @@ spriteTypes = {
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_stationcraft" textureFile = "gfx/interface/traditions/tradition_hex_bg_purple.dds" }
 	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_stationcraft" textureFile = "gfx/interface/tiles/tradition_category_tile_unyielding.dds" }
 	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_stationcraft" textureFile = "gfx/interface/tiles/tradition_category_tile_unyielding.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
-	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_stationcraft" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_unyielding.dds" }
-	spriteType = { name = "GFX_tr_lfg_stationcraft_orbital_logistics" textureFile = "gfx/interface/icons/traditions/tradition_supremacy_fleet_logistical_corps.dds" }
-	spriteType = { name = "GFX_tr_lfg_stationcraft_kilostructure_doctrine" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_public_works.dds" }
-	spriteType = { name = "GFX_tr_lfg_stationcraft_bastion_starbases" textureFile = "gfx/interface/icons/traditions/tradition_unyielding_fortress_doctrine.dds" }
-	spriteType = { name = "GFX_tr_lfg_stationcraft_self_repairing_frames" textureFile = "gfx/interface/icons/traditions/tradition_expansion_reach_for_the_stars.dds" }
-	spriteType = { name = "GFX_tr_lfg_stationcraft_orbital_refineries" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_efficiency_algorithms.dds" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_stationcraft" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_lfg_stationcraft.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_orbital_logistics" textureFile = "gfx/interface/icons/traditions/tradition_lfg_stationcraft_orbital_logistics.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_kilostructure_doctrine" textureFile = "gfx/interface/icons/traditions/tradition_lfg_stationcraft_kilostructure_doctrine.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_bastion_starbases" textureFile = "gfx/interface/icons/traditions/tradition_lfg_stationcraft_bastion_starbases.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_self_repairing_frames" textureFile = "gfx/interface/icons/traditions/tradition_lfg_stationcraft_self_repairing_frames.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_orbital_refineries" textureFile = "gfx/interface/icons/traditions/tradition_lfg_stationcraft_orbital_refineries.dds" }
 
 	### XENOARCHAEOLOGY ###
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_xenoarchaeology" textureFile = "gfx/interface/traditions/tradition_hex_bg_purple.dds" }

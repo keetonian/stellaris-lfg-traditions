@@ -102,9 +102,9 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [/list]
 
 [h2]Nanites[/h2]
-[b]Nanite Forge[/b] (machines): a unique home system, a Starhold and a broken nanite harvester that doubles their nanites every 3 years (up to 12.8 each). Nanotech restores it, growing them far further. Unlocks nanite-fuelled automation and unity buildings.
+[b]Nanite Forge[/b] (machines): a unique home system, a Starhold and a broken nanite harvester that doubles their nanites every 3 years. Nanotech restores it. Unlocks nanite automation and unity buildings.
 
-After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's specialist jobs, and the [b]Nanotensile Converter[/b] turns energy and nanites into supertensiles.
+After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's specialist jobs, the [b]Nanotensile Converter[/b] makes supertensiles, and the [b]Nanite Pulse[/b] decision overloads a harvester.
 
 [h2]Civics[/h2]
 [b]Applied Biosciences[/b] (Materialist, non-machine): Biologists research -1 society, +0.4 physics, +0.4 engineering. Its councilor boosts Biologists.
@@ -112,9 +112,9 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 [b]Galvanic civics:[/b] a new tier of galvanic armour and Reshaping Accelerator.
 
 [h2]Ascension perks[/h2]
-[b]Mothership:[/b] one system-sized carrier per empire, with escort, cannon and armour.
+[b]Mothership:[/b] one system-sized carrier per empire, with escort, cannon, armour and a fleet aura; its forge boosts the navy.
 
-[b]Nanite Armada:[/b] build nanite Attack Moons and Planetcraft.
+[b]Nanite Armada:[/b] nanite Attack Moons and Planetcraft; faster, cheaper shipyards.
 
 [b]Massed Assault:[/b] +10 ground combat width; every general boosts the armies they lead.
 
@@ -128,7 +128,7 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 [*][b]Nanite harvesters[/b] double three more times on size 30+ planets.
 [*][b]Virtuality[/b] is closed to individual machines with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin.
 [/list]
-These replace those vanilla and Gigastructural definitions; other mods that change them may conflict.
+Other mods changing these may conflict.
 
 [h2]Requirements and compatibility[/h2]
 [list]

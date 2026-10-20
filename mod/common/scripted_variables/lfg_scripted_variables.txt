@@ -79,7 +79,16 @@
 # Nanite Forge origin: days between the broken harvester's doublings (lfg_nanite_forge.2; vanilla harvesters: 5 years).
 @lfg_broken_harvester_days = 1095
 # Nanite Forge origin: pops removed from the homeworld at game start, in hundreds (15 = 1,500).
-@lfg_nanite_forge_pops_removed_hundreds = 15
+@lfg_nanite_forge_pops_removed_hundreds = 18
+# Ancient Nanite Harvester upkeep: energy per upkeep unit (vanilla's harvester: 4) and the units each of steps 10-16 adds.
+@lfg_ancient_harvester_energy = 6
+@lfg_ancient_harvester_units_per_step = 256
+# Nanite Forge origin: nanites upkeep per replicator job (zz_lfg_job_overrides.txt, generated).
+@lfg_nanite_forge_replicator_upkeep = 0.5
+# Nanite Pulse decision: cost per celestial body in the system, the nanites outcome per body, cooldown.
+@lfg_nanite_pulse_cost_per_body = 10000
+@lfg_nanite_pulse_nanites_per_body = 20000
+@lfg_nanite_pulse_cooldown_days = 1000
 
 # Nanite Forge origin buildings (common/buildings/lfg_buildings.txt).
 # Nanite Automation Hub: share of Technician / Miner / Farmer jobs (and drone versions) automated, and nanite upkeep per
@@ -96,6 +105,10 @@
 @lfg_nanotensile_energy = 40
 @lfg_nanotensile_nanites = 80
 @lfg_nanotensile_supertensiles = 20
+# Its upgrade (building_lfg_nanotensile_converter_2): twice the throughput.
+@lfg_nanotensile_2_energy = 80
+@lfg_nanotensile_2_nanites = 160
+@lfg_nanotensile_2_supertensiles = 40
 
 # Nanite Armada ascension perk: nanite hull costs and Swarmforge shipyard capacity.
 @lfg_nanite_war_moon_cost = 500000
@@ -109,9 +122,15 @@
 @lfg_mothership_cost = 100000000
 @lfg_mothership_influence_cost = 700
 @lfg_mothership_alloy_cost = 500000
+@lfg_mothership_bulk_matter_cost = 100	# Gigastructural's bulk matter
+# Its crew (decision_lfg_mothership_crew), in hundreds of pops (kill_single_pop takes 100), like Giga's systemcraft crew.
+@lfg_mothership_crew_hundreds = 20
 # Progenitor Forge: ships under construction at once (it builds Motherships and the nanite Attack Moons / Planetcraft).
 @lfg_progenitor_forge_shipyard_capacity = 300
 @lfg_mothership_upkeep = 30000
+# Its reactor's aura (LFG_MOTHERSHIP_REACTOR): every friendly ship in its system.
+@lfg_mothership_aura_speed = 0.25
+@lfg_mothership_aura_kinetic_fire_rate = 0.25
 
 # Nanite Armour (LFG_NANITE_ARMOR): per plate, on any ship.
 @lfg_nanite_armor_cost = 10000

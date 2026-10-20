@@ -1,0 +1,12 @@
+﻿l_english:
+ decision_lfg_nanite_pulse:0 "Nanite Pulse"
+ decision_lfg_nanite_pulse_desc:0 "Drive the system's nanite harvester to overload, flooding every world around this star with a pulse of nanites. What comes back is never quite certain."
+ lfg_nanite_pulse_effect_tt:0 "Costs £nanites£ §Y10,000§! Nanites per celestial body in this system (the total is shown above). Then, at random (a popup says what happened):\n- the harvester's nanite deposits grow one step (only if a world there can grow), or\n- we gain £nanites£ §Y20,000§! Nanites per celestial body.\nThis star can pulse again after §Y1,000§! days."
+ lfg_nanite_pulse_needs_harvester:0 "Needs a §YNanite Harvester§! on this system's starbase."
+ lfg_nanite_pulse_cooling_down:0 "This star pulsed recently (§Y1,000§! days between pulses)."
+ lfg_nanite_pulse.1.name:0 "The Pulse Takes Root"
+ lfg_nanite_pulse.1.desc:0 "The pulse from §Y[lfg_pulse_system.GetName]§!'s star sank into the worlds around the harvester.\n\nThe nanite deposits on §Y[Root.lfg_pulse_planets]§! worlds there have grown a step.\n\nThe pulse cost £nanites£ §Y[Root.lfg_pulse_cost]§! Nanites (§Y10,000§! for each of the §Y[Root.lfg_pulse_bodies]§! bodies in the system)."
+ lfg_nanite_pulse.1.a:0 "Let them grow."
+ lfg_nanite_pulse.2.name:0 "The Pulse Returns"
+ lfg_nanite_pulse.2.desc:0 "The pulse washed over §Y[lfg_pulse_system.GetName]§! and came back to the harvester, heavy with nanites.\n\nWe gained £nanites£ §G[Root.lfg_pulse_nanites]§! Nanites.\n\nThe pulse cost £nanites£ §Y[Root.lfg_pulse_cost]§! Nanites (§Y10,000§! for each of the §Y[Root.lfg_pulse_bodies]§! bodies in the system)."
+ lfg_nanite_pulse.2.a:0 "Excellent."

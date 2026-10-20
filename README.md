@@ -6,7 +6,7 @@ A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games th
 - **6 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
 - **4 ascension perks:** **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
 - **1 origin, Nanite Forge** (machines): eight size 40 molten worlds around a blue star, a broken nanite harvester that doubles their nanite deposits every 3 years, and a nanite-fuelled automation building.
-- **Nanite harvesters** (all of them) get three more doubling steps, up to 409.6 nanites per planet.
+- **Nanite harvesters** (all of them) yield **twice** vanilla's nanites at every step and get three more doubling steps, up to 819.2 nanites per planet.
 - **Nanite Cognition Core** (after finishing Nanotech): automates 50% of a planet's specialist jobs for a lot of nanites.
 - **Nanotensile Converter** (after finishing Nanotech, supertensiles on): turns energy and nanites into supertensiles.
 - **1 civic, Applied Biosciences** (materialist, non-machine species): Biologists research less society but some physics and engineering.
@@ -113,10 +113,13 @@ kilostructure (+5%) and megastructure (+10%) you own, uncapped, but **jobs produ
 | 3. Bastion Starbases (needs 1) | Starbase hull and armour +25% · +3 defense platforms · starbase build speed +50% |
 | 4. Orbital Refineries (needs 1 + 2) | Station output +15% · starbase building and module output +30% (`starbase_constructions_produces_mult`: vanilla has no buildings-only modifier) |
 | 5. Self-Repairing Frames (needs 2) | Megastructure upkeep −20% |
-| Finish | +1 megastructure under construction · +3 starbase module slots |
+| Finish | +1 megastructure under construction |
 
-The counts are taken **once a month** (and on adoption) by `lfg_stationcraft.1` into country variables (`lfg_sc_*`, read
-by `value:lfg_stationcraft_*`), so the bonus can lag a month but never recounts on its own. Kilostructures are
+The counts are taken **once a month** (and on adoption) by `lfg_stationcraft.1` into country variables (`lfg_sc_*`), which
+keeps four country modifiers (`lfg_stationcraft_per_colony` / `_starbase` / `_kilostructure` / `_megastructure`, shown in
+the empire's modifiers) at `multiplier =` each count (`lfg_stationcraft_sync`, re-added when a count changes), so the
+bonus can lag a month. (The tradition's own `triggered_modifier` with `mult = value:...` didn't grow in game.) Losing the
+tree removes them on the next monthly run. Kilostructures are
 Gigastructural's `is_kilostructure`; megastructures are every other owned megastructure that isn't ruined or technical
 (Giga's `is_ruined_mega` / `is_technical_mega`); starbases include outposts. Colonies are every owned planet (`every_owned_planet`).
 
@@ -218,7 +221,8 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 
 ## Council agendas
 
-Unlocked by finishing the matching tree (The Great Project: by adopting Megaforge). Requires the Galactic Paragons DLC, like all vanilla agendas. The council
+Unlocked by finishing the matching tree (The Great Project: by adopting Megaforge). Each has its own icon
+(`interface/lfg_council_agendas.gfx`, `GFX_council_agenda_icon_<key>`; drawn by `art/make_glyph_icons.py`). Requires the Galactic Paragons DLC, like all vanilla agendas. The council
 prepares an agenda over time; when launched, its effect lasts **10 years**.
 
 | Agenda | Tree | While preparing | Launch / 10-year effect |
@@ -252,7 +256,7 @@ gas giants are size 62; one base district per size). Initializer: `lfg_emberfall
 ## Origin: Nanite Forge (machines)
 
 **Who:** machine species, individual or gestalt (`species_archetype = MACHINE`), not nomadic. **Orbital stations** (mining and research) **+30%** output. The homeworld gets a planetary
-**Nanite Vein** deposit (`d_lfg_nanite_vein`, +10 nanites; not orbital), and the founder species the **Nanite Substrate**
+**Nanite Vein** deposit (`d_lfg_nanite_vein`, +15 nanites; not orbital), **50 nanites** to start with, and the founder species the **Nanite Substrate**
 trait (`trait_lfg_nanite_substrate`, can't be added, removed or merged by species modification): pops **+20% job
 efficiency** and **+0.3 nanites upkeep** (per 100 pops); mechanical pop assembly speed **−30%** where they're assembled (there is
 no mechanical-only modifier). The deposit is added at game start by `lfg_nanite_forge.1`; the trait through the origin's
@@ -261,7 +265,7 @@ species designer). Needs The Machine Age
 (nanites and the Nanotech tree).
 **Home system** (`lfg_nanite_forge_start`): a **blue B-class star** with a **+22 energy** deposit (`d_lfg_nanite_forge_star`,
 mined by a mining station; set at game start by `lfg_nanite_forge.1`, because vanilla's home-system setup re-rolls the
-star's deposits to +5 energy), a **size 10 homeworld** (with a moon; `lfg_nanite_forge.1` also removes **1,500 of its pops**, 100 at a time from the
+star's deposits to +5 energy), a **size 12 homeworld** (the initializer says 10; the game makes home planets 12; with a moon; `lfg_nanite_forge.1` also removes **1,800 of its pops**, 100 at a time from the
 largest pop group, `@lfg_nanite_forge_pops_removed_hundreds`), **eight size 60 molten worlds** evenly spaced on one orbit, a **broken world with +8 engineering** and a **research
 asteroid with +3 physics** (both flagged `ignore_startup_effect` so vanilla's home-system setup keeps their deposits), a
 small molten world, barren, toxic, frozen and cold barren worlds with moons, two asteroid belts (12 asteroids) and a gas giant
@@ -276,15 +280,20 @@ every rocky body in the system without a research deposit a 0.1 nanite deposit a
 grown deposit with a mining station; the star's 22 energy covers about 5), then (`lfg_nanite_forge.2`):
 - doubles them **every 3 years** (vanilla: 5) with **no Nanotech requirement**, using vanilla's steps, size limits, odds and
   payouts (`lfg_forge_harvester_step`), and like vanilla only for planets with a **mining station**;
-- stops at **step 7 (12.8 nanites per planet)**: on the molten worlds that's 8 × 12.8 = 102.4 nanites a month before modifiers.
+- stops at **step 7 (25.6 nanites per planet**, all harvester amounts here are doubled, see below**)**: on the molten worlds that's 8 × 25.6 = 204.8 nanites a month before modifiers.
 - **Finishing Nanotech restores it** into the **Ancient Nanite Harvester** (`lfg_ancient_nanite_harvester`; swapped in the
   same slot by `lfg_restore_forge_harvester` from `lfg_nanite_forge.3` on `on_tradition_picked`, also checked every 3
   years). It's our own building, not vanilla's (whose `possible` would refuse a system where every rock already has a
   deposit), and keeps our 3-year cycle through the whole ladder: vanilla's steps 8-9, every harvester's steps 10-12, and
-  four of its own: **step 13** (size ≥ 45, 819.2), **step 14** (size ≥ 50, 1,638.4), **step 15** (size ≥ 55, 3,276.8) and
-  **step 16** (size ≥ 60, **6,553.6** per planet). Steps 13-14 use our `d_lfg_nanite_harvester_deposit_huge` (409.6 = 16
-  of vanilla's largest) and steps 15-16 our `d_lfg_nanite_harvester_deposit_vast` (1,638.4) instead of dozens of
-  deposits. Fully grown, the eight forge worlds make about **52,400 nanites a month** before modifiers.
+  four of its own: **step 13** (size ≥ 45, 1,638.4), **step 14** (size ≥ 50, 3,276.8), **step 15** (size ≥ 55, 6,553.6) and
+  **step 16** (size ≥ 60, **13,107.2** per planet). Steps 13-14 use our `d_lfg_nanite_harvester_deposit_huge` (819.2 = 16
+  of the (doubled) largest vanilla deposit) and steps 15-16 our `d_lfg_nanite_harvester_deposit_vast` (3,276.8) instead of dozens of
+  deposits. Fully grown, the eight forge worlds make about **104,900 nanites a month** before modifiers.
+  **Its upkeep is higher than vanilla's harvester**: **6 energy** per upkeep unit (vanilla: 4; `@lfg_ancient_harvester_energy`),
+  and the units keep growing past vanilla's last step: vanilla's count (1, 2, 4 ... 256 per step reached, 511 per planet at
+  step 9) **+256 per planet for each of steps 10-16** (`value:lfg_ancient_harvester_upkeep_units`,
+  `@lfg_ancient_harvester_units_per_step`). Fully grown: 2,303 units, **about 13,800 energy a month per forge world**
+  (~110,000 for all eight) against ~13,100 nanites each. The broken harvester keeps vanilla's 4 per unit.
 - Dismantling either clears the system's harvester deposits and step flags (`lfg_nanite_forge.4` →
   `lfg_clear_forge_harvester`), except during the swap (timed star flag `lfg_nanite_harvester_swapping`).
 Neither can be built by hand: their `possible` only passes while our events place them (country flag
@@ -312,6 +321,11 @@ three times. Per tier (`@lfg_nanite_consensus_*`):
 | Lattice | 40 | 500 / 200 | 24 / 8 |
 | Core | 60 | 600 / 400 | 32 / 16 |
 
+Icons (`art/make_building_icons.py`): vanilla's mechanical Brain Node without its research flask, its undergrowth turned to
+grey goo, with vanilla's unity symbol and 1-4 tier pips. **Replicators:** with this origin every replicator job costs
+**+0.5 nanites** upkeep (per job, i.e. per 100 pops working it; generated override of vanilla's `replicator` job,
+`common/pop_jobs/zz_lfg_job_overrides.txt`, `@lfg_nanite_forge_replicator_upkeep`).
+
 **Nanite Automation Hub** (`building_lfg_nanite_automation`, this origin only, one per planet, in an energy, mining or
 farming specialization like vanilla's automation buildings): automates **50%** of Technician, Miner and Farmer jobs (and
 their drone versions). Costs 600 minerals + 100 nanites; upkeep **30 nanites per resource district** on the planet
@@ -332,7 +346,15 @@ keeps on planets with the building. Tunables: `@lfg_nanite_core_*`, `@lfg_nanite
 `building_lfg_nanotensile_converter`: any empire that has **finished Nanotech**, only while Gigastructural's job-based
 supertensiles are on (global flag `giga_buildcap_j`); any number per planet, in the same slots as Gigastructural's megaworkshops
 (industrial, factory, foundry, capital and supertensile specializations). Costs 500 alloys + 250 nanites; each month turns
-**40 energy + 80 nanites into 20 supertensiles** (`@lfg_nanotensile_*`).
+**40 energy + 80 nanites into 20 supertensiles** (`@lfg_nanotensile_*`). **Upgrades once** to the **Nanotensile Foundry**
+(`building_lfg_nanotensile_converter_2`: 1,000 alloys + 500 nanites; **80 energy + 160 nanites into 40 supertensiles**,
+`@lfg_nanotensile_2_*`). Icons (`art/make_building_icons.py`): Gigastructural's megaworkshop with the nanite and
+supertensile symbols side by side; the Foundry's glows.
+
+The origin's broken and Ancient harvesters are **never offered** in a starbase's (or Gigastructural deep space citadel's)
+build list: their `potential` needs the country flag our events set only while placing them. The Ancient harvester has its
+own module icon (vanilla's harvester in ancient bronze with a nanite glow, `art/make_building_icons.py`). **Unverified in
+game:** that a `potential` failing later leaves a built one in place.
 
 The in-game origin texts deliberately don't describe the home system; its start-screen name is `lfg_nanite_forge_start_NAME`.
 
@@ -340,14 +362,32 @@ The in-game origin texts deliberately don't describe the home system; its start-
 because its `possible` was `always = no`, which `set_starbase_building` also checks); that the swap to the Ancient harvester doesn't fire the broken one's `on_destroyed` before the timed flag is seen
 (the flag guards it); the size 40 molten worlds' layout.
 
-## Nanite harvesters: three more steps
+## Nanite harvesters: twice the nanites, three more steps
 
-Vanilla doubles harvested nanite deposits every 5 years up to step 9 (51.2 per planet, size 25+). A generated override of
-`cybernetics.5054` adds **step 10** (size ≥ 30, 50%: 102.4), **step 11** (size ≥ 35, 50%: 204.8) and **step 12** (size ≥ 40,
-50%: 409.6) for every harvester, before vanilla's payout for planets that can't grow (sizes: `@lfg_nanite_step_1x_size`).
+Every harvested nanite deposit yields **twice** vanilla's amount (generated `common/deposits/zz_lfg_deposit_overrides.txt`:
+vanilla's three harvester deposits, 0.1 / 1.6 / 25.6, each get a second equal `produces` block), so a harvester's first
+step and every step after are doubled. All amounts below are the doubled ones.
+
+Vanilla doubles harvested nanite deposits every 5 years up to step 9 (102.4 per planet, size 25+). A generated override of
+`cybernetics.5054` adds **step 10** (size ≥ 30, 50%: 204.8), **step 11** (size ≥ 35, 50%: 409.6) and **step 12** (size ≥ 40,
+50%: 819.2) for every harvester, before vanilla's payout for planets that can't grow (sizes: `@lfg_nanite_step_1x_size`).
 Planets keep `nanites_doubled_9`, so vanilla's upkeep and payouts still count them; the new steps use
 `lfg_nanites_doubled_10/11/12`, which the `cybernetics.5051` override clears when a harvester is removed. Only planets of
 size 30+ (vanilla's largest rocky worlds are smaller; the Nanite Forge's molten worlds are 40) can use them.
+
+## Decision: Nanite Pulse (Nanotech)
+
+`decision_lfg_nanite_pulse`, for any empire that has **adopted Nanotech**, taken **from a star** (Gigastructural's pattern:
+`owned_planets_only = no`, `is_star = yes`, the system is ours) whose system's starbase has a **nanite harvester**
+(vanilla's, or the Nanite Forge's broken / Ancient one). Costs **10,000 nanites per celestial body** in the system
+(`value:lfg_nanite_pulse_bodies`, every system planet, the star included); the star can pulse again after **1,000 days**
+(timed planet flag). Then, 50/50: the harvester's deposits **grow one step** (our harvester: `lfg_forge_harvester_grow`,
+shared with its 3-year cycle; vanilla's: its own step event `cybernetics.5054`, which also needs Nanotech finished), or
+**20,000 nanites per body** (`@lfg_nanite_pulse_*`). `lfg_nanite_pulse.1` / `.2` report what happened: the system, the worlds grown or nanites gained, and what the pulse
+cost (and for how many bodies). With no world that can grow (none with a mining station on a harvested deposit, or
+vanilla's harvester before Nanotech is finished), the pulse always pays nanites. Icon: vanilla's pulsar
+decision icon in nanite cyan (`art/make_megastructure_icons.py`). **Unverified in game:** the decision showing on stars,
+and the per-body cost (`count_system_planet` as a script value from the star).
 
 ## Civic: Applied Biosciences
 
@@ -396,7 +436,8 @@ the 1,000,000-nanite Planetcraft needs no storage bonus):
   system in your borders with a **class A or B star or a red giant** (`lfg_swarmforge_star`) and no other megastructure.
   Site: 10,000 alloys, 50,000 nanites, 100 influence, 5 years; finishing it: 25,000 alloys, 150,000 nanites, 10 years;
   upkeep 100 energy + 50 nanites. Finished, it's a shipyard (`starbase_shipyard_capacity_add`, like vanilla's Mega
-  Shipyard; `@lfg_swarmforge_shipyard_capacity` = 50). **Its model** (`mod/gfx/models/ships/lfg_megastructures.asset`)
+  Shipyard; `@lfg_swarmforge_shipyard_capacity` = 50). Finished, it also gives the **whole empire** shipyards **+100% build
+  speed** (`starbase_shipyard_build_speed_mult`) and ships **-10% cost** (`ships_cost_mult`). **Its model** (`mod/gfx/models/ships/lfg_megastructures.asset`)
   is built **over the star**: a nanite cage of six great circles of 12 Nanite Swarmers meeting at the poles, four nanite
   hive stations on the equator as docks and four grey goo clouds (under construction: three circles and the docks);
   sizes `@lfg_swarmforge_*scale`. Build icon: `art/make_megastructure_icons.py` (vanilla's Mega Shipyard tech icon in
@@ -420,11 +461,11 @@ shows them** because the look is in a section: the moon's stern sections are the
 the Mothership's) mid section model holds Giga's weapon locators plus the look (`SECTION_BODIES` in the generator), while
 the hull model is an invisible frame (Giga put the look on the hull model, which the designer doesn't draw). The moon
 has no swarm: in game it showed as a dark blob hiding the moon.
-- **Nanite Attack Moon:** its default sections are a **Grey Goo** moon (the Grey Goo world's surface). Giga's optional
+- **Nanite Attack Moon:** drawn smaller than Giga's moons (`NANITE_MOON_SCALE` 0.5 vs Giga's 0.8). Its default sections are a **Grey Goo** moon (the Grey Goo world's surface). Giga's optional
   planet-skin sections (behind its Aeternite tech) are replaced by two nanite skins with no tech: **Machine Shell**
   (synthetic ecumenopolis surface) and **Swarm Core** (machine world surface). Section names: generated
   `lfg_nanite_sections_l_english.yml` (Giga's names for the copied sections). Every skin has an **escort**: a tilted
-  ring of 8 Nanite Swarmers and a crossing ring of 4 Nanite Interdictors (`lfg_nanite_moon_escort_entity`).
+  ring of 8 small Nanite Swarmers close around it (`lfg_nanite_moon_escort_entity`).
 - **Nanite Planetcraft:** the grey goo world with an equatorial ring of 12 Nanite Interdictors, a tilted ring of 16
   Nanite Swarmers, nanite hive stations capping both poles and the grey goo swarm (`lfg_nanite_planetcraft_mid_entity`;
   `graphical_culture = no`, so not Giga's species-culture planets).
@@ -447,14 +488,30 @@ traditions finished** (its escort's Swarmers and Interdictors need the 4th and 5
   megastructure. Three stages, **50,000,000 nanites** in all (5M, 15M, 30M; `@lfg_progenitor_forge_*_nanites`) plus
   alloys and influence; 5 + 10 + 10 years. Finished, it's a shipyard building **300 ships at once** (`@lfg_progenitor_forge_shipyard_capacity`), the only place
   Motherships can be built, and it also builds the nanite Attack Moons and Planetcraft.
+  **When its site (stage 1) is done, its swarms consume the system**: every world Gigastructural allows to be dismantled
+  for bulk matter (`can_dismantle_planet_for_bm`: not the star, colonies, habitats, megastructure anchors, holy worlds...)
+  gives its builder **1 bulk matter per size** (Giga's rate) and is removed, along with the debris and asteroid belts
+  (`lfg_progenitor_forge_consume_system`, popup `lfg_mothership.10` with the total). Popups also mark stage 2
+  (`lfg_mothership.11`), the finished forge (`.12`) and a finished Mothership (`.13` → `.14`). Icon (tech and build menu):
+  an O-class star in two nanite rings (`art/make_glyph_icons.py`). **Unverified in game:** `remove_planet` from a
+  megastructure's `on_build_complete`.
   Its model (`mod/gfx/models/ships/lfg_megastructures.asset`) is built **around the star**, laid out like Gigastructural's
   Hyperstructural Assembly: stage 1 is a ring of 12 nanite (Gatebuilder) space stations with six grey goo clouds
   (`gray_goo_planet_effect`); the finished forge adds Giga's assembly yards and tractor beams and an outer ring of 12
   nanite motherships (the Nanite Interdictor model). **Unverified in game:** its size around an O star
   (`@lfg_progenitor_forge_*scale` at the top of the asset).
-- **Mothership** (`lfg_mothership`, **one per empire**, **100,000,000 nanites + 500,000 alloys + 700 influence**, upkeep a flat **30,000 nanites** a month: components add
-  nothing to cost or upkeep, `components_add_to_cost = no`; 10 years): 100M hull, 19.2M armour, 1.9M shields (Gigastructural's
-  systemcraft: 12.5M / 4.8M / 1.9M), size 256 (`size_multiplier`; the systemcraft: 1,250), **2x jump drive range** (`ship_ftl_jumpdrive_range_mult = 1`; hidden: not on the Steam page). One per empire: `possible_construction` (at the Progenitor Forge, so designing
+- **Progenitor Forge bonuses** (finished, `lfg_progenitor_forge_2`): **the forge itself builds +300% faster**
+  (`station_modifier`), and the **whole empire** gets ships **+50% speed** (`ship_speed_mult`), **+10,000 naval capacity**
+  and **+500 command limit** (`country_modifier`).
+- **Mothership Swarm Core** (`LFG_MOTHERSHIP_REACTOR`, the Mothership's reactor, auto-picked: weight 100,000 over Giga's
+  systemcraft reactor's 10,000; 2,000,000 power): carries its **built-in aura**, like the Juggernaut's reactor: **Swarm
+  Link**, every friendly ship in its system (the Mothership too) **+25% speed** and **+25% kinetic weapon fire rate**
+  (`@lfg_mothership_aura_*`). A designer could still swap in Giga's reactor and lose it.
+- The **Mothership tech** lists its 13 components as one line (*Unlocks Components: Nanite weapons, armour, hangars and
+  swarm modules*): each has `show_tech_unlock_if = { always = no }` and the tech a custom `prereqfor_desc` line.
+- **Mothership** (`lfg_mothership`, **one per empire**, **100,000,000 nanites + 500,000 alloys + 700 influence + 100 bulk matter** (Gigastructural's) **and a crew of 2,000 pops** (like Giga's systemcraft's 4,000: the planet decision `decision_lfg_mothership_crew`, on a world with more than 2,000 pops, takes them and sets the flag its construction needs; a finished Mothership uses it up), upkeep a flat **30,000 nanites** a month: components add
+  nothing to cost or upkeep, `components_add_to_cost = no`; 10 years): 100M hull, 24.2M armour, 3M shields (Gigastructural's
+  systemcraft: 12.5M / 4.8M / 1.9M), size 256 (`size_multiplier`; the systemcraft: 1,250), speed 60 (the systemcraft: 30), **2x jump drive range** (`ship_ftl_jumpdrive_range_mult = 1`; hidden: not on the Steam page). One per empire: `possible_construction` (at the Progenitor Forge, so designing
   stays open; `possible_country` also blocked the designer) blocks queueing another while you own
   one, and `lfg_mothership.6` (`on_ship_built`) deletes a second that was queued alongside and refunds its hull cost. Its sections are generated copies of Giga's systemcraft sections with the mid
   section's guns turned into hangars (**45 hangars**) and **4 aux utility slots in every section** (24; `MOTHERSHIP_AUX_SLOTS`); Giga's systemcraft components fit (generated trigger override).

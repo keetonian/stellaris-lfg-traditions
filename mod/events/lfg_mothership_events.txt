@@ -171,6 +171,7 @@ ship_event = {
 				nanites = @lfg_mothership_cost
 				alloys = @lfg_mothership_alloy_cost
 				influence = @lfg_mothership_influence_cost
+				giga_sr_bulk_matter = @lfg_mothership_bulk_matter_cost
 			}
 		}
 		delete_ship = this
@@ -228,5 +229,82 @@ planet_event = {
 			on_action = on_destroy_planet_with_PLANET_KILLER_CRACKER_unqueued
 			scopes = { from = from }
 		}
+	}
+}
+
+# The Progenitor Forge's site is done and its swarms have taken the rest of the system apart
+# (lfg_progenitor_forge_consume_system; country variable lfg_forge_bulk_matter = the bulk matter it gave).
+country_event = {
+	id = lfg_mothership.10
+	title = lfg_mothership.10.name
+	desc = lfg_mothership.10.desc
+	picture = GFX_evt_gray_gooed_planet
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_mothership.10.a
+		hidden_effect = { clear_variable = lfg_forge_bulk_matter }
+	}
+}
+
+# The Progenitor Forge's second stage is done (lfg_progenitor_forge_1's on_build_complete).
+country_event = {
+	id = lfg_mothership.11
+	title = lfg_mothership.11.name
+	desc = lfg_mothership.11.desc
+	picture = GFX_evt_gray_goo
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_mothership.11.a
+	}
+}
+
+# The Progenitor Forge is finished (lfg_progenitor_forge_2's on_build_complete).
+country_event = {
+	id = lfg_mothership.12
+	title = lfg_mothership.12.name
+	desc = lfg_mothership.12.desc
+	picture = GFX_evt_gray_goo_ships
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_mothership.12.a
+	}
+}
+
+# A Mothership is built (on_ship_built, after lfg_mothership.6 has removed any second one; this = the ship).
+ship_event = {
+	id = lfg_mothership.13
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ship_size = lfg_mothership
+		owner = {
+			count_owned_ship = {
+				limit = { is_ship_size = lfg_mothership }
+				count = 1
+			}
+		}
+	}
+
+	immediate = {
+		owner = {
+			remove_country_flag = lfg_mothership_crew_ready	# its crew is aboard
+			country_event = { id = lfg_mothership.14 }
+		}
+	}
+}
+
+country_event = {
+	id = lfg_mothership.14
+	title = lfg_mothership.14.name
+	desc = lfg_mothership.14.desc
+	picture = GFX_evt_gray_goo_ships
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_mothership.14.a
 	}
 }

@@ -89,6 +89,13 @@ ALLOWED_FILES = [
     r"gfx/interface/icons/traits/trait_lfg_[^/]+\.dds",  # art/make_origin_art.py
     r"gfx/interface/icons/ship_parts/lfg_[^/]+\.dds",  # art/make_component_icons.py
     r"gfx/interface/icons/megastructures/lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
+    r"gfx/interface/icons/buildings/lfg_[^/]+\.dds",  # art/make_building_icons.py
+    r"gfx/interface/icons/technologies/tech_lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
+    r"gfx/interface/icons/traditions/tradition_lfg_[^/]+\.dds",  # art/make_glyph_icons.py
+    r"gfx/interface/icons/traditions/tree_icons/tradition_icon_lfg_[^/]+\.dds",  # art/make_glyph_icons.py
+    r"gfx/interface/icons/agenda_icons/agenda_lfg_[^/]+\.dds",  # art/make_glyph_icons.py
+    r"gfx/interface/icons/decisions/decision_lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
+    r"gfx/interface/icons/modules/lfg_[^/]+\.dds",  # art/make_building_icons.py
     r"gfx/event_pictures/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py
     r"gfx/models/ships/lfg_[^/]+\.asset",  # generated: nanite hulls' look
     r"localisation/english/[^/]+_l_english\.yml",

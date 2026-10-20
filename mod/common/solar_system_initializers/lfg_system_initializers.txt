@@ -380,7 +380,7 @@ lfg_nanite_forge_start = {
 		class = ideal_planet_class
 		orbit_distance = 18
 		orbit_angle = { min = 90 max = 270 }
-		size = 10	# small homeworld; lfg_nanite_forge.1 also removes 1,500 of its pops
+		size = 10	# the game makes it a size 12 homeworld; lfg_nanite_forge.1 also removes 1,800 of its pops
 		starting_planet = yes
 		deposit_blockers = none
 		modifiers = none

@@ -11,8 +11,11 @@ spriteTypes = {
 	spriteType = { name = "GFX_lfg_swarmforge_ready_outliner_icon" textureFile = "gfx/interface/icons/megastructures/mega_shipyard.dds" }
 
 	### Progenitor Forge (Mothership) ###
-	spriteType = { name = "GFX_lfg_progenitor_forge_0_build_icon" textureFile = "gfx/interface/icons/technologies/tech_nanite_transmutation.dds" }
+	spriteType = { name = "GFX_lfg_progenitor_forge_0_build_icon" textureFile = "gfx/interface/icons/megastructures/lfg_progenitor_forge.dds" }	# art/make_glyph_icons.py
 	spriteType = { name = "GFX_lfg_progenitor_forge_0_outliner_icon" textureFile = "gfx/interface/icons/megastructures/nidavellir_hyperforge.dds" }
 	spriteType = { name = "GFX_lfg_progenitor_forge_1_outliner_icon" textureFile = "gfx/interface/icons/megastructures/nidavellir_hyperforge.dds" }
 	spriteType = { name = "GFX_lfg_progenitor_forge_2_outliner_icon" textureFile = "gfx/interface/icons/megastructures/nidavellir_hyperforge.dds" }
+
+	### Nanite Forge origin: the Ancient Nanite Harvester's module icon (art/make_building_icons.py) ###
+	spriteType = { name = "GFX_starbase_lfg_ancient_nanite_harvester" textureFile = "gfx/interface/icons/modules/lfg_ancient_nanite_harvester.dds" }
 }

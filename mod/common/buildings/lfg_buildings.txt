@@ -97,10 +97,11 @@ building_lfg_nanite_cognition_core = {
 
 # Finishing Nanotech, with Gigastructural's supertensiles on (global flag giga_buildcap_j): turns energy and nanites into
 # supertensiles (Giga's resource giga_sr_amb_megaconstruction). No limit per planet; same slots as Giga's megaworkshops.
+# Upgrades once (_2: twice the throughput). Icons: art/make_building_icons.py.
 building_lfg_nanotensile_converter = {
 	base_buildtime = @b2_time
 	category = manufacturing
-	icon = building_giga_megaworkshop
+	icon = lfg_nanotensile_converter_1
 
 	building_sets = {
 		industrial
@@ -114,6 +115,10 @@ building_lfg_nanotensile_converter = {
 		has_global_flag = giga_buildcap_j
 		exists = owner
 		owner = { has_tradition = tr_nanotech_finish }
+	}
+
+	upgrades = {
+		building_lfg_nanotensile_converter_2
 	}
 
 	resources = {
@@ -132,13 +137,49 @@ building_lfg_nanotensile_converter = {
 	}
 }
 
+building_lfg_nanotensile_converter_2 = {
+	base_buildtime = @b3_time
+	can_build = no
+	category = manufacturing
+	icon = lfg_nanotensile_converter_2
+
+	building_sets = {
+		industrial
+		factory
+		foundry
+		government
+		giga_supertensile
+	}
+
+	potential = {
+		has_global_flag = giga_buildcap_j
+		exists = owner
+		owner = { has_tradition = tr_nanotech_finish }
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			alloys = 1000
+			nanites = 500
+		}
+		produces = {
+			giga_sr_amb_megaconstruction = @lfg_nanotensile_2_supertensiles
+		}
+		upkeep = {
+			energy = @lfg_nanotensile_2_energy
+			nanites = @lfg_nanotensile_2_nanites
+		}
+	}
+}
+
 # Nanite Forge origin: the Nanite Consensus line, unity from thinking nanites. Any number per planet, in capital or unity
 # slots. Built for minerals and nanites; upkeep in energy and nanites. Upgrades three times: 10 -> 20 -> 40 -> 60 unity
-# (@lfg_nanite_consensus_*). Icons: vanilla's Brain Node 1-4.
+# (@lfg_nanite_consensus_*). Icons: art/make_building_icons.py.
 building_lfg_nanite_consensus_1 = {
 	base_buildtime = @b2_time
 	category = unity
-	icon = brain_node_1
+	icon = lfg_nanite_consensus_1
 
 	building_sets = {
 		government
@@ -174,7 +215,7 @@ building_lfg_nanite_consensus_2 = {
 	base_buildtime = @b3_time
 	can_build = no
 	category = unity
-	icon = brain_node_2
+	icon = lfg_nanite_consensus_2
 
 	building_sets = {
 		government
@@ -210,7 +251,7 @@ building_lfg_nanite_consensus_3 = {
 	base_buildtime = @b4_time
 	can_build = no
 	category = unity
-	icon = brain_node_3
+	icon = lfg_nanite_consensus_3
 
 	building_sets = {
 		government
@@ -246,7 +287,7 @@ building_lfg_nanite_consensus_4 = {
 	base_buildtime = @b4_time
 	can_build = no
 	category = unity
-	icon = brain_node_4
+	icon = lfg_nanite_consensus_4
 
 	building_sets = {
 		government

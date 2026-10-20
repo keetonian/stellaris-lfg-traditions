@@ -113,3 +113,26 @@ lfg_mothership_recall = {
 		}
 	}
 }
+
+# System scope, from = the Progenitor Forge's builder (its site's on_build_complete): every world Gigastructural lets be
+# dismantled for bulk matter (can_dismantle_planet_for_bm: not the star, colonies, habitats, megastructure anchors, holy
+# worlds...) becomes bulk matter for the builder, 1 per size (Gigastructural's rate), and is removed; so are the system's
+# debris and asteroid belts. lfg_mothership.10 tells the builder how much.
+lfg_progenitor_forge_consume_system = {
+	from = { set_variable = { which = lfg_forge_bulk_matter value = 0 } }
+	every_system_planet = {
+		limit = { can_dismantle_planet_for_bm = yes }
+		export_trigger_value_to_variable = { trigger = planet_size variable = lfg_forge_size }
+		from = { change_variable = { which = lfg_forge_bulk_matter value = prev.lfg_forge_size } }
+		remove_planet = yes
+	}
+	giga_remove_system_debris = yes
+	set_asteroid_belt = { radius = 0 }
+	from = {
+		add_resource = {
+			giga_sr_bulk_matter = 1
+			mult = lfg_forge_bulk_matter
+		}
+		country_event = { id = lfg_mothership.10 }
+	}
+}

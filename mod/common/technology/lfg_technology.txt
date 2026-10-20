@@ -7,7 +7,7 @@
 # A Celestial Armada does for its celestials); they're never drawn otherwise (weight 0) and need the perk.
 # Swarmforge megastructure (common/megastructures/lfg_megastructures.txt).
 tech_lfg_swarmforge = {
-	icon = tech_nanite_assemblers
+	icon = tech_lfg_swarmforge	# art/make_megastructure_icons.py
 	prereqfor_desc = {
 		custom = { title = "lfg_allow_swarmforge" desc = "lfg_allow_swarmforge_desc" }
 	}
@@ -67,7 +67,7 @@ tech_lfg_nanite_planetcraft = {
 
 # Mothership (ap_lfg_mothership): the Progenitor Forge megastructure (common/megastructures/lfg_megastructures.txt).
 tech_lfg_progenitor_forge = {
-	icon = tech_nanite_transmutation
+	icon = tech_lfg_progenitor_forge	# art/make_glyph_icons.py
 	prereqfor_desc = {
 		custom = { title = "lfg_allow_progenitor_forge" desc = "lfg_allow_progenitor_forge_desc" }
 	}
@@ -91,6 +91,7 @@ tech_lfg_mothership = {
 	prereqfor_desc = {
 		custom = { title = "lfg_allow_mothership_forge" desc = "lfg_allow_mothership_forge_desc" }
 		custom = { title = "lfg_allow_mothership_escort" desc = "lfg_allow_mothership_escort_desc" }
+		custom = { title = "lfg_allow_mothership_components" desc = "lfg_allow_mothership_components_desc" }
 	}
 	cost = @giga_tier9cost1
 	area = engineering

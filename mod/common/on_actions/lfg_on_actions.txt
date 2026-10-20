@@ -69,6 +69,7 @@ on_colony_ownerless = {
 on_ship_built = {
 	events = {
 		lfg_mothership.6	# Mothership: one per empire (refund the extra)
+		lfg_mothership.13	# Mothership: built (popup)
 	}
 }
 

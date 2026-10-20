@@ -2,40 +2,64 @@
 namespace = lfg_stationcraft
 
 # Monthly (on_monthly_pulse_country) and on adoption: count our colonies, starbases, kilostructures and megastructures into
-# country variables (read by value:lfg_stationcraft_*), so the tradition's modifier reads four numbers instead of recounting
-# whenever the game re-evaluates it. Countries without the tree: one lookup.
+# country variables lfg_sc_*, and keep the lfg_stationcraft_per_* country modifiers at multiplier = each count (re-added only
+# when a count changes; the pattern of lfg_sync_arc_neighbours, verified in game). A tradition's own triggered_modifier
+# with mult = value:... didn't update in game. Without the tree, one last run removes the modifiers (country flag
+# lfg_stationcraft_active); countries that never had it: one lookup.
 country_event = {
 	id = lfg_stationcraft.1
 	hide_window = yes
 	is_triggered_only = yes
 
 	trigger = {
-		has_tradition = tr_lfg_stationcraft_adopt
+		OR = {
+			has_tradition = tr_lfg_stationcraft_adopt
+			has_country_flag = lfg_stationcraft_active
+		}
 	}
 
 	immediate = {
-		set_variable = { which = lfg_sc_colonies value = 0 }
-		set_variable = { which = lfg_sc_starbases value = 0 }
-		set_variable = { which = lfg_sc_kilostructures value = 0 }
-		set_variable = { which = lfg_sc_megastructures value = 0 }
-		every_owned_planet = {
-			prev = { change_variable = { which = lfg_sc_colonies value = 1 } }
+		if = {
+			limit = { NOT = { has_tradition = tr_lfg_stationcraft_adopt } }
+			remove_country_flag = lfg_stationcraft_active
+			remove_modifier = lfg_stationcraft_per_colony
+			clear_variable = lfg_sc_colonies
+			remove_modifier = lfg_stationcraft_per_starbase
+			clear_variable = lfg_sc_starbases
+			remove_modifier = lfg_stationcraft_per_kilostructure
+			clear_variable = lfg_sc_kilostructures
+			remove_modifier = lfg_stationcraft_per_megastructure
+			clear_variable = lfg_sc_megastructures
 		}
-		every_owned_starbase = {
-			prev = { change_variable = { which = lfg_sc_starbases value = 1 } }
-		}
-		every_owned_megastructure = {
-			limit = {
-				is_ruined_mega = no
-				is_technical_mega = no
+		else = {
+			set_country_flag = lfg_stationcraft_active
+			set_variable = { which = lfg_sc_colonies_now value = 0 }
+			set_variable = { which = lfg_sc_starbases_now value = 0 }
+			set_variable = { which = lfg_sc_kilostructures_now value = 0 }
+			set_variable = { which = lfg_sc_megastructures_now value = 0 }
+			every_owned_planet = {
+				prev = { change_variable = { which = lfg_sc_colonies_now value = 1 } }
 			}
-			if = {
-				limit = { is_kilostructure = yes }
-				prev = { change_variable = { which = lfg_sc_kilostructures value = 1 } }
+			every_owned_starbase = {
+				prev = { change_variable = { which = lfg_sc_starbases_now value = 1 } }
 			}
-			else = {
-				prev = { change_variable = { which = lfg_sc_megastructures value = 1 } }
+			every_owned_megastructure = {
+				limit = {
+					is_ruined_mega = no
+					is_technical_mega = no
+				}
+				if = {
+					limit = { is_kilostructure = yes }
+					prev = { change_variable = { which = lfg_sc_kilostructures_now value = 1 } }
+				}
+				else = {
+					prev = { change_variable = { which = lfg_sc_megastructures_now value = 1 } }
+				}
 			}
+			lfg_stationcraft_sync = { COUNT = lfg_sc_colonies MODIFIER = lfg_stationcraft_per_colony }
+			lfg_stationcraft_sync = { COUNT = lfg_sc_starbases MODIFIER = lfg_stationcraft_per_starbase }
+			lfg_stationcraft_sync = { COUNT = lfg_sc_kilostructures MODIFIER = lfg_stationcraft_per_kilostructure }
+			lfg_stationcraft_sync = { COUNT = lfg_sc_megastructures MODIFIER = lfg_stationcraft_per_megastructure }
 		}
 	}
 }

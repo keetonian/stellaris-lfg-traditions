@@ -1,0 +1,23 @@
+# LFG Traditions - Stationcraft (events/lfg_stationcraft_events.txt). Country scope.
+
+# Keep $MODIFIER$ at multiplier = $COUNT$_now: re-added (and $COUNT$ updated) only when the count changed or the modifier
+# is missing.
+lfg_stationcraft_sync = {
+	if = {
+		limit = {
+			OR = {
+				NOT = { check_variable = { which = $COUNT$ value = $COUNT$_now } }
+				AND = {
+					check_variable = { which = $COUNT$_now value > 0 }
+					NOT = { has_modifier = $MODIFIER$ }
+				}
+			}
+		}
+		remove_modifier = $MODIFIER$
+		set_variable = { which = $COUNT$ value = $COUNT$_now }
+		if = {
+			limit = { check_variable = { which = $COUNT$ value > 0 } }
+			add_modifier = { modifier = $MODIFIER$ days = -1 multiplier = $COUNT$ }
+		}
+	}
+}

@@ -342,3 +342,27 @@ lfg_clear_forge_harvester = {
 		remove_planet_flag = lfg_nanites_doubled_16
 	}
 }
+
+# System scope, with the origin's harvester: one doubling step for each deposit planet with a mining station
+# (lfg_nanite_forge.2 every 3 years; the Nanite Pulse decision).
+lfg_forge_harvester_grow = {
+	starbase.owner = { save_event_target_as = nanotech_country }
+	every_system_planet = {
+		limit = {
+			has_mining_station = yes
+			OR = {
+				has_deposit = d_nanite_harvester_deposit
+				has_planet_flag = nanites_doubled_1
+				has_planet_flag = nanites_doubled_2
+				has_planet_flag = nanites_doubled_3
+				has_planet_flag = nanites_doubled_4
+				has_planet_flag = nanites_doubled_5
+				has_planet_flag = nanites_doubled_6
+				has_planet_flag = nanites_doubled_7
+				has_planet_flag = nanites_doubled_8
+				has_planet_flag = nanites_doubled_9
+			}
+		}
+		lfg_forge_harvester_step = yes
+	}
+}

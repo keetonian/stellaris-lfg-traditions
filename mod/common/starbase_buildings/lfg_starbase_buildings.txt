@@ -9,9 +9,13 @@ lfg_broken_nanite_harvester = {
 	construction_days = 360
 	category = sm_economy_cat
 
+	# Never offered on a starbase or deep space citadel: only our events place it (flag set just while they do).
 	potential = {
 		exists = owner
-		owner = { has_origin = origin_lfg_nanite_forge }
+		owner = {
+			has_origin = origin_lfg_nanite_forge
+			has_country_flag = lfg_placing_forge_harvester
+		}
 	}
 
 	possible = {
@@ -46,15 +50,17 @@ lfg_broken_nanite_harvester = {
 # Finishing Nanotech swaps the broken one for this (lfg_restore_forge_harvester): carries on to step 14 (409.6 per planet
 # at step 12, 1,638.4 at step 14 on the size 50 forge worlds).
 lfg_ancient_nanite_harvester = {
-	icon = "GFX_starbase_nanite_harvester"
+	icon = "GFX_starbase_lfg_ancient_nanite_harvester"
 	construction_days = 360
 	category = sm_economy_cat
 
+	# Never offered on a starbase or deep space citadel: only our events place it (flag set just while they do).
 	potential = {
 		exists = owner
 		owner = {
 			has_origin = origin_lfg_nanite_forge
 			has_tradition = tr_nanotech_finish
+			has_country_flag = lfg_placing_forge_harvester
 		}
 	}
 
@@ -67,9 +73,11 @@ lfg_ancient_nanite_harvester = {
 
 	resources = {
 		category = starbase_buildings
+		# Pricier than vanilla's (4 energy per unit, growth ending at step 9): @lfg_ancient_harvester_energy per unit, and
+		# its units keep growing through our steps 10-16 (value:lfg_ancient_harvester_upkeep_units).
 		upkeep = {
-			energy = 4
-			mult = value:nanotech_harvester_deposit_num
+			energy = @lfg_ancient_harvester_energy
+			mult = value:lfg_ancient_harvester_upkeep_units
 		}
 	}
 

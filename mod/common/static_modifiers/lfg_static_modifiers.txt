@@ -169,3 +169,25 @@ lfg_nanite_siege_driver_debuff = {
 	ship_armor_hardening_add = -0.20
 	ship_shield_hardening_add = -0.20
 }
+
+# Stationcraft (tr_lfg_stationcraft_adopt): station output per colony / starbase / kilostructure / megastructure owned.
+# lfg_stationcraft.1 adds each with multiplier = the count (country variables lfg_sc_*), re-adding it when the count changes.
+lfg_stationcraft_per_colony = {
+	station_gatherers_produces_mult = 0.03
+	station_researchers_produces_mult = 0.03
+}
+
+lfg_stationcraft_per_starbase = {
+	station_gatherers_produces_mult = 0.02
+	station_researchers_produces_mult = 0.02
+}
+
+lfg_stationcraft_per_kilostructure = {
+	station_gatherers_produces_mult = 0.05
+	station_researchers_produces_mult = 0.05
+}
+
+lfg_stationcraft_per_megastructure = {
+	station_gatherers_produces_mult = 0.1
+	station_researchers_produces_mult = 0.1
+}

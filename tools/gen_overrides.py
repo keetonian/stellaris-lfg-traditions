@@ -391,6 +391,17 @@ def shelve_tech_block(edict: str, indent: str = "\t\t") -> str:
     inner = indent + ("\t" if indent.startswith("\t") else "    ")
     return f"{indent}modifier = {{\n{inner}factor = 0\n{inner}has_edict = {edict}\n{indent}}}\n"
 
+NANITE_DEPOSITS = "common/deposits/13_machine_age_deposits.txt"
+NANITE_DEPOSIT_AMOUNTS = [("d_nanite_harvester_deposit", "0.1"), ("d_nanite_harvester_deposit_regular", "1.6"),
+                          ("d_nanite_harvester_deposit_large", "25.6")]
+
+REPLICATOR_NANITE_UPKEEP = (
+    "\t\tupkeep = {\n"
+    "\t\t\ttrigger = { owner = { has_origin = origin_lfg_nanite_forge } }\n"
+    "\t\t\tnanites = @lfg_nanite_forge_replicator_upkeep\n"
+    "\t\t}\n"
+)
+
 # out file -> list of (vanilla source file, top-level key, anchor regex, snippet inserted after the anchor)
 OVERRIDES = {
     "mod/common/districts/zz_lfg_district_overrides.txt": [
@@ -413,6 +424,18 @@ OVERRIDES = {
         (HOLOMUSEUMS, "galactic_history_holomuseum", holomuseum_anchor("society"), holomuseum_block("society", "historical_item")),
         ("common/buildings/05_research_buildings.txt", "building_archaeostudies_faculty", ARCHAEO_FACULTY_ANCHOR,
          ARCHAEO_FACULTY_BLOCK),
+    ],
+    # Nanite Forge origin: +0.5 nanites upkeep per replicator job (per 100 pops working it, like the job's alloys).
+    "mod/common/pop_jobs/zz_lfg_job_overrides.txt": [
+        ("common/pop_jobs/04_gestalt_jobs.txt", "replicator", r"^\tresources = \{\n\t\tcategory = planet_pop_assemblers\n",
+         REPLICATOR_NANITE_UPKEEP),
+    ],
+    # Nanite harvesters: every harvested nanite deposit yields twice vanilla's (a second, equal produces block; several
+    # add up), so a harvester's starting and final amounts double.
+    "mod/common/deposits/zz_lfg_deposit_overrides.txt": [
+        (NANITE_DEPOSITS, key, rf"^\t\tproduces = \{{\n\t\t\tnanites = {re.escape(amount)}\n\t\t\}}\n",
+         f"\t\tproduces = {{\n\t\t\tnanites = {amount}\n\t\t}}\n")
+        for key, amount in NANITE_DEPOSIT_AMOUNTS
     ],
     "mod/common/situations/zz_lfg_situation_overrides.txt": [
         ("common/situations/08_machine_age_situations.txt", "situation_synthetic_fertility_digitization",
@@ -495,6 +518,8 @@ NANITE_TEXTURES = {  # skin -> (diffuse, normal, specular)
 # Aeternite tech) are replaced by our Machine Shell and Swarm Core skins, open to every nanite moon.
 NANITE_MOON_DEFAULT_SKIN = ("giga_moon_thrusters_ai_fe", "grey_goo")
 NANITE_MOON_EXTRA_SKINS = {"machine_shell": "Machine Shell", "swarm_core": "Swarm Core"}
+# Our moons are drawn smaller than Giga's (@war_moon_scale 0.8): next to the planetcraft they looked as big.
+NANITE_MOON_SCALE = 0.5
 # Mothership (ap_lfg_mothership): Giga's systemcraft sections (slots and weapon locators) for lfg_mothership, whose mid
 # section's extra large guns become hangars (with the sternthrusters' own 25: 45 hangars) and every section gets
 # MOTHERSHIP_AUX_SLOTS aux slots. Its model is our own (mod/gfx/models/ships/lfg_mothership.asset); the generator only
@@ -869,9 +894,11 @@ def generate_nanite_entities(game: Path, giga: Path) -> str:
     ]
     # No swarm on the moon (in game it showed as a dark blob hiding the moon); its escort ring of nanite ships instead
     # (lfg_nanite_moon_escort_entity in lfg_nanite_hulls.asset). The skins are the moon's stern sections.
+    parts.append(f"@lfg_nanite_moon_scale = {NANITE_MOON_SCALE}\n")
     for skin in [NANITE_MOON_DEFAULT_SKIN[1], *NANITE_MOON_EXTRA_SKINS]:
-        parts.append("\n" + nanite_entity(moon_template, f"lfg_nanite_moon_{skin}_entity", skin,
-                                          "lfg_nanite_moon_escort_entity"))
+        moon_skin = nanite_entity(moon_template, f"lfg_nanite_moon_{skin}_entity", skin, "lfg_nanite_moon_escort_entity")
+        parts.append("\n" + re.sub(r"^(\tscale = )@war_moon_scale\b", r"\g<1>@lfg_nanite_moon_scale", moon_skin,
+                                    count=1, flags=re.M))
     # Planetcraft: the grey goo world alone, scale 1 (it sits in the mid section, under the hull frame's scale); the rest
     # of its look is lfg_nanite_planetcraft_mid_entity in lfg_nanite_hulls.asset.
     body = nanite_entity(extract_entity(planet, "synthetics_01_war_planet_complete_entity"),

@@ -141,7 +141,7 @@ lfg_nanite_planetcraft = {
 lfg_mothership = {
 	graphical_culture = no
 	entity = "lfg_mothership_entity"
-	max_speed = 30
+	max_speed = 60
 	acceleration = 0.10
 	rotation_speed = 0.05
 	collision_radius = 512
@@ -149,8 +149,8 @@ lfg_mothership = {
 	base_buildtime = 3600
 	modifier = {
 		ship_evasion_mult = -1
-		ship_armor_add = 19200000
-		ship_shield_add = 1900000
+		ship_armor_add = 24200000
+		ship_shield_add = 3000000
 		ship_speed_mult = 2
 		ship_ftl_jumpdrive_range_mult = 1	# 2x jump drive range (not on the Steam page)
 	}
@@ -187,6 +187,12 @@ lfg_mothership = {
 			fail_text = lfg_mothership_limit
 			owner = { NOT = { any_owned_ship = { is_ship_size = lfg_mothership } } }
 		}
+		# Its crew: 2,000 pops, taken by the decision_lfg_mothership_crew planet decision (like Gigastructural's
+		# systemcraft crew); used up when the Mothership is finished (lfg_mothership.13).
+		custom_tooltip = {
+			fail_text = lfg_requires_mothership_crew
+			owner = { has_country_flag = lfg_mothership_crew_ready }
+		}
 	}
 	construction_type = starbase_shipyard
 
@@ -206,6 +212,7 @@ lfg_mothership = {
 			nanites = @lfg_mothership_cost
 			alloys = @lfg_mothership_alloy_cost
 			influence = @lfg_mothership_influence_cost
+			giga_sr_bulk_matter = @lfg_mothership_bulk_matter_cost
 		}
 		upkeep = {
 			nanites = @lfg_mothership_upkeep

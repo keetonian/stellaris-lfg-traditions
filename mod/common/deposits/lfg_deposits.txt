@@ -19,12 +19,13 @@ d_lfg_nanite_forge_star = {
 }
 
 # Nanite Forge origin: the Ancient Nanite Harvester's steps 13-14 (lfg_forge_harvester_step) use this instead of
-# piling up vanilla's 25.6 deposits: 409.6 = 16 x d_nanite_harvester_deposit_large. Same shape as vanilla's.
+# piling up vanilla's large deposits: 819.2 = 16 x d_nanite_harvester_deposit_large (51.2: this mod doubles vanilla's
+# harvester deposits, zz_lfg_deposit_overrides.txt). Same shape as vanilla's.
 d_lfg_nanite_harvester_deposit_huge = {
 	resources = {
 		category = orbital_mining_deposits
 		produces = {
-			nanites = 409.6
+			nanites = 819.2
 		}
 	}
 	station = shipclass_mining_station
@@ -35,12 +36,12 @@ d_lfg_nanite_harvester_deposit_huge = {
 	}
 }
 
-# Its steps 15-16: 1,638.4 = 4 x d_lfg_nanite_harvester_deposit_huge.
+# Its steps 15-16: 3,276.8 = 4 x d_lfg_nanite_harvester_deposit_huge.
 d_lfg_nanite_harvester_deposit_vast = {
 	resources = {
 		category = orbital_mining_deposits
 		produces = {
-			nanites = 1638.4
+			nanites = 3276.8
 		}
 	}
 	station = shipclass_mining_station
@@ -62,7 +63,7 @@ d_lfg_nanite_vein = {
 	resources = {
 		category = planet_deposits
 		produces = {
-			nanites = 10
+			nanites = 15
 		}
 	}
 
