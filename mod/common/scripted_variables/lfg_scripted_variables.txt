@@ -99,6 +99,9 @@
 # district of any kind on the planet (value:lfg_all_districts).
 @lfg_nanite_core_automation = 0.5
 @lfg_nanite_core_upkeep_per_district = 500
+# Its upgrade, the Nanite Overmind Core (Mothership perk tech): all of it, twice the upkeep.
+@lfg_nanite_core_2_automation = 1.0
+@lfg_nanite_core_2_upkeep_per_district = 1000
 # Both nanite automation buildings cost this share (build cost and upkeep) on Nanite Worlds (pc_nanotech).
 @lfg_nanite_world_discount = 0.5
 # Nanotensile Converter (after Nanotech, supertensiles on): monthly energy + nanites in, supertensiles out.

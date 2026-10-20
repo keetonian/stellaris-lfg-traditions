@@ -339,7 +339,15 @@ versions). Automated jobs still pay vanilla's automation upkeep. On a **Nanite W
 slot. Automates **50% of every specialist and complex drone job** on the planet (vanilla and Gigastructural, ~220 jobs).
 Costs 1,000 alloys + 500 nanites; upkeep **500 nanites per district** (both **halved on a Nanite World**) (any kind, `value:lfg_all_districts`) a month. The job list is the generated static modifier
 `lfg_nanite_specialist_automation` (`tools/gen_overrides.py`, one tooltip line), which the monthly `lfg_nanite_forge.5`
-keeps on planets with the building. Tunables: `@lfg_nanite_core_*`, `@lfg_nanite_hub_*`.
+keeps on planets with the building **active** (`has_active_building`: disabling or ruining it removes the automation
+within a month; the game has no on_action for toggling a building). Tunables: `@lfg_nanite_core_*`, `@lfg_nanite_hub_*`.
+
+**Upgrade: Nanite Overmind Core** (`building_lfg_nanite_cognition_core_2`): needs **Nanite Overmind**
+(`tech_lfg_cognition_core_2`, a society research option the **Mothership** perk adds). Automates **100%** of every
+specialist and complex drone job (generated `lfg_nanite_specialist_automation_full`; the monthly check swaps the 50%
+modifier for it). Costs 2,000 alloys + 1,000 nanites; upkeep **1,000 nanites per district** (both halved on a Nanite
+World). Tunables: `@lfg_nanite_core_2_*`. Icons (`art/make_building_icons.py`): the Automation Hub is vanilla's Automation building in nanite colours;
+the Cognition and Overmind Cores vanilla's Nanite Transmuter with a glowing cyan core (the Overmind crowned by a ring).
 
 ## Building: Nanotensile Converter (Nanotech, supertensiles)
 

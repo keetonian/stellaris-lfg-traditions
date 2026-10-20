@@ -84,6 +84,7 @@ ap_lfg_mothership = {
 		hidden_effect = {
 			if = { limit = { NOT = { has_technology = tech_lfg_progenitor_forge } }	add_research_option = tech_lfg_progenitor_forge }
 			if = { limit = { NOT = { has_technology = tech_lfg_mothership } }			add_research_option = tech_lfg_mothership }
+			if = { limit = { NOT = { has_technology = tech_lfg_cognition_core_2 } }	add_research_option = tech_lfg_cognition_core_2 }
 		}
 	}
 	possible = {

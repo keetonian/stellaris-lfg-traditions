@@ -5,6 +5,10 @@ art/make_component_icons.py:
   undergrowth turned into grey goo, vanilla's unity symbol where the flask was; higher tiers glow more and show 1-4 pips.
 - Nanotensile Converter 1-2 (78x78): Gigastructural's megaworkshop with the nanite and supertensile symbols side by side
   (its own supertensile symbol removed); the upgrade glows cyan.
+- Nanite Automation Hub (78x78): vanilla's Automation building in gunmetal, its gold trim glowing nanite cyan, with the
+  Nanites symbol and rising motes;
+- Nanite Cognition Core / Overmind Core (78x78): vanilla's Nanite Transmuter in gunmetal with a glowing cyan core and the
+  Nanites symbol; the Overmind brighter, crowned by a glowing ring, more motes.
 - Ancient Nanite Harvester (58x58, a starbase module icon): vanilla's nanite harvester module in ancient bronze with a
   cyan nanite glow.
 
@@ -17,7 +21,7 @@ import colorsys
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter
 
-from make_component_icons import GAME, SEAM, glow, motes
+from make_component_icons import GAME, SEAM, cyan_seams, glow, glyph, motes, nanite_metal, warm_parts
 
 GIGA = Path.home() / "Library/Application Support/Steam/steamapps/workshop/content/281990/1121692237"
 BUILDINGS = Path("mod/gfx/interface/icons/buildings")
@@ -82,6 +86,32 @@ def converter(tier: int) -> Image.Image:
     return im
 
 
+def automation_hub() -> Image.Image:
+    im = nanite_metal(load(GAME / "gfx/interface/icons/buildings/building_automation_2.dds"),
+                      lambda r, g, b: max(cyan_seams(r, g, b), warm_parts(r, g, b)))
+    motes(im, (40, 30), (14, -28), 14, 51)
+    glyph(im, 18, (56, 4))
+    return im
+
+
+def cognition(tier: int) -> Image.Image:
+    src = load(GAME / "gfx/interface/icons/buildings/building_nanite_transmuter.dds")
+    boost = 1.6 if tier > 1 else 1.2
+    im = nanite_metal(src, lambda r, g, b: min(1.0, max(cyan_seams(r, g, b), max(0, b - r - 20) / 120) * boost))  # its blue core
+    body = Image.new("RGBA", im.size)
+    body.alpha_composite(im)
+    if tier > 1:  # the Overmind: a glowing ring over it
+        ring = Image.new("RGBA", im.size)
+        ImageDraw.Draw(ring).ellipse((8, 4, 70, 26), outline=SEAM + (255,), width=3)
+        im.alpha_composite(glow(ring, 2.0))
+        im.alpha_composite(ring)
+        im.alpha_composite(glow(body, 2.0))
+        im.alpha_composite(body)
+    motes(im, (38, 40), (20, -34), 10 + 10 * tier, 60 + tier)
+    glyph(im, 16 + 2 * tier, (58 - 2 * tier, 56 - 2 * tier))
+    return im
+
+
 def ancient_harvester() -> Image.Image:
     src = load(GAME / "gfx/interface/icons/modules/sb_nanite_harvester.dds")
     out = src.copy()
@@ -111,4 +141,7 @@ if __name__ == "__main__":
     for t in (1, 2):
         converter(t).save(BUILDINGS / f"lfg_nanotensile_converter_{t}.dds")
     ancient_harvester().save(MODULES / "lfg_ancient_nanite_harvester.dds")
+    automation_hub().save(BUILDINGS / "lfg_nanite_automation.dds")
+    cognition(1).save(BUILDINGS / "lfg_nanite_cognition_core.dds")
+    cognition(2).save(BUILDINGS / "lfg_nanite_overmind_core.dds")
     print("wrote building icons")

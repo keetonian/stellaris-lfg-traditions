@@ -10,7 +10,7 @@ building_lfg_nanite_automation = {
 	base_buildtime = @b2_time
 	planet_limit = 1
 	category = pop_assembly
-	icon = building_automation_2
+	icon = lfg_nanite_automation	# art/make_building_icons.py
 
 	building_sets = {
 		generator_automation
@@ -59,7 +59,7 @@ building_lfg_nanite_cognition_core = {
 	base_buildtime = @b3_time
 	planet_limit = 1
 	category = pop_assembly
-	icon = building_nanite_transmuter
+	icon = lfg_nanite_cognition_core	# art/make_building_icons.py
 
 	building_sets = {
 		government
@@ -69,6 +69,10 @@ building_lfg_nanite_cognition_core = {
 	potential = {
 		exists = owner
 		owner = { has_tradition = tr_nanotech_finish }
+	}
+
+	upgrades = {
+		building_lfg_nanite_cognition_core_2
 	}
 
 	resources = {
@@ -92,6 +96,51 @@ building_lfg_nanite_cognition_core = {
 
 	triggered_desc = {
 		text = building_lfg_nanite_cognition_core_effects
+	}
+}
+
+# Its upgrade, the Nanite Overmind Core (tech_lfg_cognition_core_2, from the Mothership perk): 100% automation
+# (lfg_nanite_specialist_automation_full) for twice the cost and upkeep.
+building_lfg_nanite_cognition_core_2 = {
+	base_buildtime = @b3_time
+	can_build = no
+	planet_limit = 1
+	category = pop_assembly
+	icon = lfg_nanite_overmind_core	# art/make_building_icons.py
+
+	building_sets = {
+		government
+		urban
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_tradition = tr_nanotech_finish }
+	}
+
+	prerequisites = { "tech_lfg_cognition_core_2" }
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
+			alloys = 2000
+			nanites = 1000
+		}
+		cost = {
+			trigger = { is_planet_class = pc_nanotech }
+			alloys = 2000
+			nanites = 1000
+			mult = @lfg_nanite_world_discount
+		}
+		upkeep = {
+			nanites = @lfg_nanite_core_2_upkeep_per_district
+			mult = value:lfg_all_districts
+		}
+	}
+
+	triggered_desc = {
+		text = building_lfg_nanite_cognition_core_2_effects
 	}
 }
 
