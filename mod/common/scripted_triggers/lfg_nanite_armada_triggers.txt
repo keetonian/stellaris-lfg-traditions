@@ -1,9 +1,13 @@
 # LFG Traditions - Nanite Armada. Scope: the shipyard (starbase or megastructure) a ship would be built at.
+# Nanite Attack Moons / Planetcraft: a Swarmforge or a Progenitor Forge.
 lfg_is_swarmforge = {
 	custom_tooltip = {
 		fail_text = lfg_requires_swarmforge
 		is_scope_type = megastructure
-		is_megastructure_type = lfg_swarmforge_ready
+		OR = {
+			is_megastructure_type = lfg_swarmforge_ready
+			is_megastructure_type = lfg_progenitor_forge_2
+		}
 	}
 }
 

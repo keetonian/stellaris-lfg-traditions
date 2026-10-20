@@ -1,7 +1,13 @@
-# LFG Traditions - Mothership (ap_lfg_mothership): nanite escorts.
+# LFG Traditions - Mothership (ap_lfg_mothership): its nanite swarm.
+# A Mothership keeps a reserve of Nanite Swarmers and Nanite Interdictors (fleet variables lfg_swarmers /
+# lfg_interdictors), grown monthly. Only when an enemy is in its system does it deploy them: in a battle, the reserve
+# launches as an escort fleet (fleet flag lfg_escort_of_@<mothership fleet>, like Giga's defense squadrons) that follows
+# it and takes no naval capacity. Once no enemy is left in the system, survivors return to the reserve and the escort
+# vanishes. Reserve + deployed never exceed @lfg_mothership_swarmer_cap / _interdictor_cap. Vanilla only gives designs for
+# these with the Nanotech traditions (Swarmers: 4th, Interdictors: 5th); the Mothership perk needs Nanotech finished.
 namespace = lfg_mothership
 
-# Monthly (on_monthly_pulse_country): every fleet with a Mothership tops up its escort (lfg_mothership.2).
+# Monthly (on_monthly_pulse_country): every fleet with a Mothership grows its reserve (lfg_mothership.2).
 # Countries without the perk: one lookup.
 country_event = {
 	id = lfg_mothership.1
@@ -20,50 +26,141 @@ country_event = {
 	}
 }
 
-# ROOT = a fleet with a Mothership. Its escort is a separate fleet (fleet flag lfg_escort_of_@ROOT, like Giga's defense
-# squadrons) that follows it, takes no naval capacity, and gains up to @lfg_mothership_swarmers_per_month Nanite
-# Swarmers and @lfg_mothership_interdictors_per_month Nanite Interdictors a month (random picks from the owner's designs),
-# up to @lfg_mothership_swarmer_cap / _interdictor_cap. Vanilla only gives designs for these with the Nanotech traditions
-# (Swarmers: 4th, Interdictors: 5th); without them that type isn't added. If the Mothership is lost, the escort stays.
+# ROOT = a fleet with a Mothership: grow the reserve; if its escort is out (a battle is on), send the new ships too.
 fleet_event = {
 	id = lfg_mothership.2
 	hide_window = yes
 	is_triggered_only = yes
 
 	immediate = {
-		save_event_target_as = lfg_mothership_fleet
+		lfg_mothership_grow_reserve = {
+			RESERVE = lfg_swarmers
+			SIZE = nanite_swarmer
+			TRADITION = tr_nanotech_4
+			AMOUNT = @lfg_mothership_swarmers_per_month
+			CAP = @lfg_mothership_swarmer_cap
+		}
+		lfg_mothership_grow_reserve = {
+			RESERVE = lfg_interdictors
+			SIZE = nanite_interdictor
+			TRADITION = tr_nanotech_5
+			AMOUNT = @lfg_mothership_interdictors_per_month
+			CAP = @lfg_mothership_interdictor_cap
+		}
+		if = {
+			limit = { owner = { any_owned_fleet = { has_fleet_flag = lfg_escort_of_@ROOT } } }
+			lfg_mothership_deploy = yes
+		}
+	}
+}
+
+# A battle starts (on_entering_battle; this = owner of fleet 1, fromfrom = fleet 1, fromfromfrom = fleet 2): a fleet with
+# a Mothership launches its reserve (lfg_mothership.4) and starts checking for enemies (lfg_mothership.5).
+country_event = {
+	id = lfg_mothership.3
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			fromfrom = { any_owned_ship = { is_ship_size = lfg_mothership } }
+			fromfromfrom = { any_owned_ship = { is_ship_size = lfg_mothership } }
+		}
+	}
+
+	immediate = {
+		fromfrom = {
+			if = {
+				limit = { any_owned_ship = { is_ship_size = lfg_mothership } }
+				fleet_event = { id = lfg_mothership.4 }
+			}
+		}
+		fromfromfrom = {
+			if = {
+				limit = { any_owned_ship = { is_ship_size = lfg_mothership } }
+				fleet_event = { id = lfg_mothership.4 }
+			}
+		}
+	}
+}
+
+# ROOT = a Mothership fleet entering battle: launch the reserve (into its escort, created if needed).
+fleet_event = {
+	id = lfg_mothership.4
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = { NOT = { has_fleet_flag = lfg_mothership_deployed } }
+			set_fleet_flag = lfg_mothership_deployed
+			fleet_event = { id = lfg_mothership.5 days = 5 }
+		}
+		lfg_mothership_deploy = yes
+	}
+}
+
+# ROOT = a Mothership fleet with its swarm out, every 5 days: once no enemy is in its system, recall it (survivors back
+# to the reserve, escort gone); otherwise check again.
+fleet_event = {
+	id = lfg_mothership.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_fleet_flag = lfg_mothership_deployed
+	}
+
+	immediate = {
 		owner = { save_event_target_as = lfg_escort_owner }
 		if = {
 			limit = {
-				owner = { any_owned_fleet = { has_fleet_flag = lfg_escort_of_@ROOT } }
-			}
-			owner = {
-				every_owned_fleet = {
-					limit = { has_fleet_flag = lfg_escort_of_@ROOT }
-					lfg_mothership_add_escort_ships = yes
-					auto_follow_fleet = { target = event_target:lfg_mothership_fleet }
+				exists = solar_system
+				solar_system = {
+					any_ship_in_system = {
+						exists = owner
+						owner = {
+							OR = {
+								is_hostile_to = event_target:lfg_escort_owner
+								is_at_war_with = event_target:lfg_escort_owner
+							}
+						}
+					}
 				}
 			}
+			fleet_event = { id = lfg_mothership.5 days = 5 }
 		}
 		else = {
-			create_fleet = {
-				name = "lfg_mothership_escort_fleet"
-				settings = {
-					spawn_debris = no
-					uses_naval_capacity = no
-					can_upgrade = no
-					can_change_leader = no
-				}
-				effect = {
-					set_owner = event_target:lfg_escort_owner
-					set_fleet_flag = lfg_mothership_escort
-					set_fleet_flag = lfg_escort_of_@ROOT
-					set_location = event_target:lfg_mothership_fleet
-					set_fleet_stance = aggressive
-					lfg_mothership_add_escort_ships = yes
-					auto_follow_fleet = { target = event_target:lfg_mothership_fleet }
-				}
+			lfg_mothership_recall = yes
+		}
+	}
+}
+
+# A ship is built (on_ship_built; this = ship): one Mothership per empire. The hull's possible_country blocks queueing a
+# second once one exists, but two queued together both finish; the later one is deleted and its hull cost refunded.
+ship_event = {
+	id = lfg_mothership.6
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_ship_size = lfg_mothership
+		owner = {
+			count_owned_ship = {
+				limit = { is_ship_size = lfg_mothership }
+				count > 1
 			}
 		}
+	}
+
+	immediate = {
+		owner = {
+			add_resource = {
+				nanites = @lfg_mothership_cost
+				alloys = @lfg_mothership_alloy_cost
+				influence = @lfg_mothership_influence_cost
+			}
+		}
+		delete_ship = this
 	}
 }

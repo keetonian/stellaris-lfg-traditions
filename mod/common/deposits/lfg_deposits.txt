@@ -50,3 +50,23 @@ d_lfg_nanite_harvester_deposit_vast = {
 		weight = 0
 	}
 }
+
+# Nanite Forge origin: a nanite vein in the homeworld itself (a planetary deposit, not orbital), +10 nanites. Added at
+# game start by lfg_nanite_forge.1.
+d_lfg_nanite_vein = {
+	is_for_colonizable = yes
+	category = deposit_cat_rare
+
+	icon = d_nanite_corpses
+
+	resources = {
+		category = planet_deposits
+		produces = {
+			nanites = 10
+		}
+	}
+
+	drop_weight = {
+		weight = 0
+	}
+}

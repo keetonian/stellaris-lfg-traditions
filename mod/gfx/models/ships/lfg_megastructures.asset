@@ -1,0 +1,41 @@
+# LFG Traditions - megastructure models.
+
+# Progenitor Forge (common/megastructures/lfg_megastructures.txt): vanilla's Mega Shipyard stages (synthetic look), scaled
+# up so the forge shows around an O-class star. Built like vanilla's stage entities: a locator with the section attached.
+@lfg_progenitor_forge_scale = 4
+
+entity = {
+	name = "lfg_progenitor_forge_stage_1_entity"
+	locator = { name = "part1" }
+	scale = @lfg_progenitor_forge_scale
+	default_state = "idle"
+	state = { name = "idle" state_time = 6.5 }
+	state = { name = "death" state_time = 6.6 looping = no
+		event = { time = 6.5 node = "part1" particle = "juggernaut_explosion_particle" sound = { soundeffect = ship_destroyed } }
+	}
+	attach = { part1 = "synthetics_01_mega_shipyard_01_stage_1_section_entity" }
+}
+
+entity = {
+	name = "lfg_progenitor_forge_stage_2_entity"
+	locator = { name = "part1" }
+	scale = @lfg_progenitor_forge_scale
+	default_state = "idle"
+	state = { name = "idle" state_time = 6.5 }
+	state = { name = "death" state_time = 6.6 looping = no
+		event = { time = 6.5 node = "part1" particle = "juggernaut_explosion_particle" sound = { soundeffect = ship_destroyed } }
+	}
+	attach = { part1 = "synthetics_01_mega_shipyard_01_stage_2_section_entity" }
+}
+
+entity = {
+	name = "lfg_progenitor_forge_stage_3_entity"
+	locator = { name = "part1" }
+	scale = @lfg_progenitor_forge_scale
+	default_state = "idle"
+	state = { name = "idle" state_time = 6.5 }
+	state = { name = "death" state_time = 6.6 looping = no
+		event = { time = 6.5 node = "part1" particle = "juggernaut_explosion_particle" sound = { soundeffect = ship_destroyed } }
+	}
+	attach = { part1 = "synthetics_01_mega_shipyard_01_stage_3_section_entity" }
+}

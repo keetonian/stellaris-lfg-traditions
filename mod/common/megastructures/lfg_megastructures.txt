@@ -96,7 +96,9 @@ lfg_swarmforge_ready = {
 
 # Mothership (ap_lfg_mothership): the Progenitor Forge, around an O star (Gigastructural's giga_is_o_star_for_megas:
 # its own O stars and Real Space's). Three stages, 50,000,000 nanites in all (@lfg_progenitor_forge_*_nanites).
-# Finished, it's a shipyard (like the Swarmforge) and the only place Motherships can be built.
+# Finished, it's a shipyard (like the Swarmforge, 300 ships at once) and the only place Motherships can be built; it
+# also builds the nanite Attack Moons and Planetcraft. Its model is the Mega
+# Shipyard scaled up 4x (mod/gfx/models/ships/lfg_megastructures.asset) so it shows around an O star.
 lfg_progenitor_forge_0 = {
 	entity = "construction_platform_entity"
 	construction_entity = "construction_platform_entity"
@@ -151,11 +153,11 @@ lfg_progenitor_forge_0 = {
 }
 
 lfg_progenitor_forge_1 = {
-	entity = "mega_shipyard_01_stage_2_entity"
-	construction_entity = "mega_shipyard_01_stage_1_entity"
+	entity = "lfg_progenitor_forge_stage_2_entity"
+	construction_entity = "lfg_progenitor_forge_stage_1_entity"
 	portrait = "GFX_megastructure_mega_shipyard_background"
 	place_entity_on_planet_plane = no
-	entity_offset = { x = -27 y = -27 }
+	entity_offset = { x = -108 y = -108 }
 	build_time = 3600
 	upgrade_from = {
 		lfg_progenitor_forge_0
@@ -175,11 +177,11 @@ lfg_progenitor_forge_1 = {
 }
 
 lfg_progenitor_forge_2 = {
-	entity = "mega_shipyard_01_stage_3_entity"
-	construction_entity = "mega_shipyard_01_stage_2_entity"
+	entity = "lfg_progenitor_forge_stage_3_entity"
+	construction_entity = "lfg_progenitor_forge_stage_2_entity"
 	portrait = "GFX_megastructure_mega_shipyard_background"
 	place_entity_on_planet_plane = no
-	entity_offset = { x = -27 y = -27 }
+	entity_offset = { x = -108 y = -108 }
 	build_time = 3600
 	upgrade_from = {
 		lfg_progenitor_forge_1
@@ -199,7 +201,7 @@ lfg_progenitor_forge_2 = {
 	prerequisites = { "tech_lfg_progenitor_forge" }
 
 	station_modifier = {
-		starbase_shipyard_capacity_add = 1
+		starbase_shipyard_capacity_add = @lfg_progenitor_forge_shipyard_capacity
 	}
 
 	on_build_complete = {

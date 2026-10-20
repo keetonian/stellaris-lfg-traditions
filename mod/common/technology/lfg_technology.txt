@@ -1,9 +1,16 @@
 # LFG Traditions - technologies.
 
+# Icons are vanilla / Gigastructural tech icons; prereqfor_desc adds the unlock lines the game doesn't show by itself
+# (megastructures, where the hulls are built, the Mothership's escort).
+
 # Nanite Armada (ap_lfg_nanite_armada): taking the perk adds these three as research options (like Gigastructural's
 # A Celestial Armada does for its celestials); they're never drawn otherwise (weight 0) and need the perk.
 # Swarmforge megastructure (common/megastructures/lfg_megastructures.txt).
 tech_lfg_swarmforge = {
+	icon = tech_nanite_assemblers
+	prereqfor_desc = {
+		custom = { title = "lfg_allow_swarmforge" desc = "lfg_allow_swarmforge_desc" }
+	}
 	cost = @giga_tier6cost3
 	area = engineering
 	tier = 5
@@ -20,6 +27,10 @@ tech_lfg_swarmforge = {
 
 # Nanite Attack Moon hull (common/ship_sizes/lfg_ship_sizes.txt; built only at a Swarmforge).
 tech_lfg_nanite_war_moon = {
+	icon = giga_tech_war_moon_1
+	prereqfor_desc = {
+		custom = { title = "lfg_allow_swarmforge_ships" desc = "lfg_allow_swarmforge_ships_desc" }
+	}
 	cost = @giga_tier7cost1
 	area = engineering
 	tier = 5
@@ -36,6 +47,10 @@ tech_lfg_nanite_war_moon = {
 
 # Nanite Planetcraft hull.
 tech_lfg_nanite_planetcraft = {
+	icon = giga_tech_war_planet
+	prereqfor_desc = {
+		custom = { title = "lfg_allow_swarmforge_ships" desc = "lfg_allow_swarmforge_ships_desc" }
+	}
 	cost = @giga_tier7cost3
 	area = engineering
 	tier = 5
@@ -52,6 +67,10 @@ tech_lfg_nanite_planetcraft = {
 
 # Mothership (ap_lfg_mothership): the Progenitor Forge megastructure (common/megastructures/lfg_megastructures.txt).
 tech_lfg_progenitor_forge = {
+	icon = tech_nanite_transmutation
+	prereqfor_desc = {
+		custom = { title = "lfg_allow_progenitor_forge" desc = "lfg_allow_progenitor_forge_desc" }
+	}
 	cost = @giga_tier8cost2
 	area = engineering
 	tier = 5
@@ -68,6 +87,11 @@ tech_lfg_progenitor_forge = {
 
 # Mothership hull (only built at a Progenitor Forge) and its Nanite Swarm hangar.
 tech_lfg_mothership = {
+	icon = giga_tech_war_system_6
+	prereqfor_desc = {
+		custom = { title = "lfg_allow_mothership_forge" desc = "lfg_allow_mothership_forge_desc" }
+		custom = { title = "lfg_allow_mothership_escort" desc = "lfg_allow_mothership_escort_desc" }
+	}
 	cost = @giga_tier9cost1
 	area = engineering
 	tier = 5
@@ -79,5 +103,41 @@ tech_lfg_mothership = {
 	}
 	ai_weight = {
 		factor = 0
+	}
+}
+
+# Galvanic upgrades (any galvanic, non-bio empire; drawn like normal tier 5 techs): new levels of vanilla's galvanic
+# Reshaping Projectile Accelerator and armour.
+tech_lfg_lm_accelerator_2 = {
+	icon = tech_kinetic_artillery_2
+	cost = @tier5cost3
+	area = engineering
+	tier = 5
+	category = { propulsion }
+	prerequisites = { "tech_kinetic_artillery_2" }
+	weight = @tier5weight3
+	potential = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+	ai_weight = {
+		factor = 1
+	}
+}
+
+tech_lfg_lm_armor_6 = {
+	icon = tech_ship_armor_5
+	cost = @tier5cost3
+	area = engineering
+	tier = 5
+	category = { materials }
+	prerequisites = { "tech_ship_armor_5" }
+	weight = @tier5weight3
+	potential = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+	ai_weight = {
+		factor = 1
 	}
 }

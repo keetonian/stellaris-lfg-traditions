@@ -1,0 +1,28 @@
+# LFG Traditions - tradition tree (stationcraft).
+# This tree uses vanilla's tree_12_12 layout (same as Domestication): slots 1 2 on top; slot 3 requires 1, slot 4
+# requires 1 + 2, slot 5 requires 2. A starbase branch (1 -> 3) and a megastructure branch (2 -> 5) meeting in slot 4.
+# The order of `traditions` maps to slots 1..5. Prerequisites live in common/traditions/lfg_traditions.txt.
+# One tree per file, named 00_<English tree name>_lfg.txt, so the traditions window sorts it alphabetically
+# among vanilla's regular trees (00_<tree>.txt) instead of after the ascension trees (01_*).
+
+# Starbases, kilostructures and megastructures over planets: orbital stations grow with every one you own. Any empire.
+tradition_lfg_stationcraft = {
+	desc = tradition_lfg_stationcraft_desc
+	tree_template = "tree_12_12"
+	adoption_bonus = "tr_lfg_stationcraft_adopt"
+	finish_bonus = "tr_lfg_stationcraft_finish"
+	traditions = {
+		"tr_lfg_stationcraft_orbital_logistics"
+		"tr_lfg_stationcraft_kilostructure_doctrine"
+		"tr_lfg_stationcraft_bastion_starbases"
+		"tr_lfg_stationcraft_orbital_refineries"
+		"tr_lfg_stationcraft_self_repairing_frames"
+	}
+	ai_weight = {
+		factor = 3
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}

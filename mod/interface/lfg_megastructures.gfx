@@ -1,0 +1,18 @@
+spriteTypes = {
+	# LFG Traditions - megastructure icons: GFX_<stage>_build_icon (build menu) and GFX_<stage>_outliner_icon (outliner
+	# and map), as vanilla / Gigastructural name them.
+
+	### Nanite Forge origin picture (art/make_origin_art.py) ###
+	spriteType = { name = "GFX_origin_lfg_nanite_forge" textureFile = "gfx/event_pictures/origins/lfg_origin_nanite_forge.dds" alwaystransparent = yes }
+
+	### Swarmforge (Nanite Armada) ###
+	spriteType = { name = "GFX_lfg_swarmforge_0_build_icon" textureFile = "gfx/interface/icons/technologies/tech_nanite_assemblers.dds" }
+	spriteType = { name = "GFX_lfg_swarmforge_0_outliner_icon" textureFile = "gfx/interface/icons/megastructures/mega_shipyard.dds" }
+	spriteType = { name = "GFX_lfg_swarmforge_ready_outliner_icon" textureFile = "gfx/interface/icons/megastructures/mega_shipyard.dds" }
+
+	### Progenitor Forge (Mothership) ###
+	spriteType = { name = "GFX_lfg_progenitor_forge_0_build_icon" textureFile = "gfx/interface/icons/technologies/tech_nanite_transmutation.dds" }
+	spriteType = { name = "GFX_lfg_progenitor_forge_0_outliner_icon" textureFile = "gfx/interface/icons/megastructures/nidavellir_hyperforge.dds" }
+	spriteType = { name = "GFX_lfg_progenitor_forge_1_outliner_icon" textureFile = "gfx/interface/icons/megastructures/nidavellir_hyperforge.dds" }
+	spriteType = { name = "GFX_lfg_progenitor_forge_2_outliner_icon" textureFile = "gfx/interface/icons/megastructures/nidavellir_hyperforge.dds" }
+}

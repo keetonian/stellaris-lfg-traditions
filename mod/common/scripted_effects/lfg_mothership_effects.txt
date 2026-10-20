@@ -1,39 +1,108 @@
-# LFG Traditions - Mothership escorts (lfg_mothership.2). Scope: the escort fleet.
+# LFG Traditions - Mothership swarm (events/lfg_mothership_events.txt). Scope: the Mothership's fleet (ROOT there).
 
-lfg_mothership_add_escort_ships = {
+# Grow reserve $RESERVE$ (fleet variable) by $AMOUNT$, so that reserve + ships of size $SIZE$ in the escort stay within
+# $CAP$. Nothing without $TRADITION$, the Nanotech tradition that gives designs for the size.
+lfg_mothership_grow_reserve = {
 	if = {
-		limit = { owner = { has_tradition = tr_nanotech_4 } }
-		lfg_mothership_add_escorts = {
-			SIZE = nanite_swarmer
-			AMOUNT = @lfg_mothership_swarmers_per_month
-			CAP = @lfg_mothership_swarmer_cap
+		limit = { owner = { has_tradition = $TRADITION$ } }
+		change_variable = { which = $RESERVE$ value = $AMOUNT$ }
+		set_variable = { which = lfg_reserve_room value = $CAP$ }
+		owner = {
+			every_owned_fleet = {
+				limit = { has_fleet_flag = lfg_escort_of_@ROOT }
+				every_owned_ship = {
+					limit = { is_ship_size = $SIZE$ }
+					ROOT = { change_variable = { which = lfg_reserve_room value = -1 } }
+				}
+			}
 		}
-	}
-	if = {
-		limit = { owner = { has_tradition = tr_nanotech_5 } }
-		lfg_mothership_add_escorts = {
-			SIZE = nanite_interdictor
-			AMOUNT = @lfg_mothership_interdictors_per_month
-			CAP = @lfg_mothership_interdictor_cap
+		if = {
+			limit = { check_variable = { which = $RESERVE$ value > lfg_reserve_room } }
+			set_variable = { which = $RESERVE$ value = lfg_reserve_room }
+		}
+		if = {
+			limit = { check_variable = { which = $RESERVE$ value < 0 } }
+			set_variable = { which = $RESERVE$ value = 0 }
 		}
 	}
 }
 
-# Adds up to $AMOUNT$ ships of size $SIZE$ (random picks from the owner's designs) to this fleet, stopping at $CAP$.
-lfg_mothership_add_escorts = {
+# Launch the whole reserve into the escort fleet (created beside the Mothership if it isn't out yet).
+lfg_mothership_deploy = {
+	save_event_target_as = lfg_mothership_fleet
+	owner = { save_event_target_as = lfg_escort_owner }
+	if = {
+		limit = { NOT = { owner = { any_owned_fleet = { has_fleet_flag = lfg_escort_of_@ROOT } } } }
+		create_fleet = {
+			name = "lfg_mothership_escort_fleet"
+			settings = {
+				spawn_debris = no
+				uses_naval_capacity = no
+				can_upgrade = no
+				can_change_leader = no
+			}
+			effect = {
+				set_owner = event_target:lfg_escort_owner
+				set_fleet_flag = lfg_mothership_escort
+				set_fleet_flag = lfg_escort_of_@ROOT
+				set_location = event_target:lfg_mothership_fleet
+				set_fleet_stance = aggressive
+				lfg_mothership_launch_reserve = yes
+			}
+		}
+	}
+	else = {
+		owner = {
+			every_owned_fleet = {
+				limit = { has_fleet_flag = lfg_escort_of_@ROOT }
+				lfg_mothership_launch_reserve = yes
+			}
+		}
+	}
+	owner = {
+		every_owned_fleet = {
+			limit = { has_fleet_flag = lfg_escort_of_@ROOT }
+			auto_follow_fleet = { target = event_target:lfg_mothership_fleet }
+		}
+	}
+}
+
+# Scope: the escort fleet (event_target:lfg_mothership_fleet = its Mothership). Moves the reserve into it, one ship at a
+# time (random picks from the owner's designs).
+lfg_mothership_launch_reserve = {
 	while = {
-		count = $AMOUNT$
-		if = {
-			limit = {
-				count_owned_ship = {
-					limit = { is_ship_size = $SIZE$ }
-					count < $CAP$
-				}
+		limit = { event_target:lfg_mothership_fleet = { check_variable = { which = lfg_swarmers value > 0 } } }
+		create_ship = {
+			name = random
+			random_existing_design = nanite_swarmer
+		}
+		event_target:lfg_mothership_fleet = { change_variable = { which = lfg_swarmers value = -1 } }
+	}
+	while = {
+		limit = { event_target:lfg_mothership_fleet = { check_variable = { which = lfg_interdictors value > 0 } } }
+		create_ship = {
+			name = random
+			random_existing_design = nanite_interdictor
+		}
+		event_target:lfg_mothership_fleet = { change_variable = { which = lfg_interdictors value = -1 } }
+	}
+}
+
+# Recall the swarm: its surviving Swarmers and Interdictors go back to the reserve, and the escort fleet vanishes.
+lfg_mothership_recall = {
+	remove_fleet_flag = lfg_mothership_deployed
+	owner = {
+		every_owned_fleet = {
+			limit = { has_fleet_flag = lfg_escort_of_@ROOT }
+			every_owned_ship = {
+				limit = { is_ship_size = nanite_swarmer }
+				ROOT = { change_variable = { which = lfg_swarmers value = 1 } }
 			}
-			create_ship = {
-				name = random
-				random_existing_design = $SIZE$
+			every_owned_ship = {
+				limit = { is_ship_size = nanite_interdictor }
+				ROOT = { change_variable = { which = lfg_interdictors value = 1 } }
 			}
+			delete_fleet = this
 		}
 	}
 }

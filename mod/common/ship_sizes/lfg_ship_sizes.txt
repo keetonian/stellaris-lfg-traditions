@@ -16,12 +16,12 @@ lfg_nanite_war_moon = {
 	base_buildtime = 1800
 	modifier = {
 		ship_evasion_mult = -1
-		ship_armor_add = 150000
-		ship_shield_add = 100000
+		ship_armor_add = 300000
+		ship_shield_add = 50000
 		ship_speed_mult = 2
 	}
 	cloaking_forbidden = yes
-	max_hitpoints = 250000
+	max_hitpoints = 500000
 	size_multiplier = 250
 	fleet_slot_size = 50
 	section_slots = {
@@ -79,12 +79,12 @@ lfg_nanite_planetcraft = {
 	base_buildtime = 2700
 	modifier = {
 		ship_evasion_mult = -1
-		ship_armor_add = 1250000
-		ship_shield_add = 1250000
+		ship_armor_add = 2500000
+		ship_shield_add = 625000
 		ship_speed_mult = 2
 	}
 	cloaking_forbidden = yes
-	max_hitpoints = 2500000
+	max_hitpoints = 5000000
 	size_multiplier = 750
 	fleet_slot_size = 250
 	section_slots = {
@@ -129,7 +129,7 @@ lfg_nanite_planetcraft = {
 	}
 }
 
-# Mothership (ap_lfg_mothership): stronger than Gigastructural's systemcraft (twice its hull, armour and shields), on its
+# Mothership (ap_lfg_mothership): stronger than Gigastructural's systemcraft (8x its hull, 4x its armour, its shields), on its
 # sections (generated) with the mid section's guns turned into hangars: 45 in all, for the Nanite Swarm hangar
 # (LFG_NANITE_SWARM_HANGAR) or any other. Giga's systemcraft components fit (generated trigger override). Its look: the
 # systemcraft's worlds in nanite skins, in a swarm. Paid in nanites, built only at a Progenitor Forge. Each month its
@@ -145,12 +145,12 @@ lfg_mothership = {
 	base_buildtime = 3600
 	modifier = {
 		ship_evasion_mult = -1
-		ship_armor_add = 9600000
-		ship_shield_add = 3800000
+		ship_armor_add = 19200000
+		ship_shield_add = 1900000
 		ship_speed_mult = 2
 	}
 	cloaking_forbidden = yes
-	max_hitpoints = 25000000
+	max_hitpoints = 100000000
 	size_multiplier = 2500
 	fleet_slot_size = 1000
 	section_slots = {
@@ -174,6 +174,13 @@ lfg_mothership = {
 	can_have_federation_design = no
 	potential_construction = { lfg_is_progenitor_forge = yes }
 	possible_construction = { lfg_is_progenitor_forge = yes }
+	# One per empire. Two queued at once slip past this; lfg_mothership.6 (on_ship_built) refunds the extra one.
+	possible_country = {
+		custom_tooltip = {
+			fail_text = lfg_mothership_limit
+			NOT = { any_owned_ship = { is_ship_size = lfg_mothership } }
+		}
+	}
 	construction_type = starbase_shipyard
 
 	ship_roles = { carrier artillery }
@@ -184,14 +191,17 @@ lfg_mothership = {
 	required_component_set = "combat_computers"
 	required_component_set = "ship_aura_components"
 
+	# Cost and upkeep are the hull's only (components add nothing, like vanilla's Nanite Swarmers).
+	components_add_to_cost = no
 	resources = {
 		category = ships
 		cost = {
 			nanites = @lfg_mothership_cost
+			alloys = @lfg_mothership_alloy_cost
+			influence = @lfg_mothership_influence_cost
 		}
 		upkeep = {
-			energy = 3000
-			nanites = 1000
+			nanites = @lfg_mothership_upkeep
 		}
 		logistics = {
 			trade = 500

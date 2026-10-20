@@ -6,3 +6,4 @@
  mod_district_resort_max_add:0 "Max $district_resort$s"
  mod_job_lfg_penal_supertensile_laborer_add:0 "$job_lfg_penal_supertensile_laborer$ Jobs"
  mod_job_lfg_penal_matter_compactor_add:0 "$job_lfg_penal_matter_compactor$ Jobs"
+ mod_shipclass_starbase_build_speed_mult:0 "Station Build Speed"

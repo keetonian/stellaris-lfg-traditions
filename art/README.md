@@ -31,3 +31,12 @@ Every civic from this mod has the same colour: `python3 art/make_civic_icons.py`
 (listed in `ICONS`) and recolours it to `CIVIC_COLOR` (amber; vanilla's are teal), keeping its shading.
 Output: `mod/gfx/interface/icons/governments/civics/civic_lfg_<name>.dds`, referenced by the civic's `icon`.
 A new civic needs an entry in `ICONS`.
+
+# Origin art
+
+The Nanite Forge origin's icon and picture: `python3 art/make_origin_art.py` (Pillow). The icon is a diamond in vanilla's
+origin-icon colours with vanilla's nanite symbol as the glyph (`mod/gfx/interface/icons/origins/lfg_origin_nanite_forge.dds`);
+the Nanite Substrate trait icon is a teal disc like vanilla's positive trait icons with the same symbol
+(`mod/gfx/interface/icons/traits/trait_lfg_nanite_substrate.dds`); the picture is a 220x115 crop of vanilla's "gray gooed planet" event picture
+(`mod/gfx/event_pictures/origins/lfg_origin_nanite_forge.dds`, sprite `GFX_origin_lfg_nanite_forge` in
+`mod/interface/lfg_megastructures.gfx`).

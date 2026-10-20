@@ -202,7 +202,7 @@ class GenOverridesTests(unittest.TestCase):
         (self.tmp / "giga/common/section_templates/giga_systemcraft.txt").write_text(
             'ship_section_template = {\r\n\tkey = "sc_mid"\r\n\tship_size = giga_systemcraft\r\n\tfits_on_slot = "mid"\r\n'
             '\tcomponent_slot = { name = "X" template = "invisible_extra_large_fixed" locatorname = "x" }\r\n'
-            '\tai_tags = { artillery }\r\n}\r\n'
+            '\tai_tags = { artillery }\r\n\taux_utility_slots = 0\r\n}\r\n'
             'ship_section_template = {\r\n\tkey = "sc_bow"\r\n\tship_size = giga_systemcraft\r\n\tfits_on_slot = "bow"\r\n'
             '\tcomponent_slot = { name = "Y" template = "invisible_extra_large_fixed" locatorname = "y" }\r\n}\r\n')
         for name, size in (("giga_mooncraft", "giga_war_moon"), ("giga_planetcraft", "giga_planet_behemoth")):
@@ -324,7 +324,7 @@ class GenOverridesTests(unittest.TestCase):
                      "lfg_nanite_moon_swarm_core_entity", "lfg_nanite_planetcraft_entity"):
             self.assertIn(f'name = "{name}"', entities)
         self.assertIn('texture_diffuse = "gray_goo_planet_01_diffuse.dds"', entities)
-        self.assertEqual(entities.count('attach = { root = "lfg_nanite_swarm_'), 5)  # 3 moon skins, planetcraft, mothership
+        self.assertEqual(entities.count('attach = { root = "lfg_nanite_swarm_'), 2)  # planetcraft, mothership (not the moon)
 
     def test_forge_harvester_keeps_vanilla_harvesting_away(self):
         out = self.generate()
@@ -339,10 +339,13 @@ class GenOverridesTests(unittest.TestCase):
         mid = sections[sections.index('key = "lfg_mothership_sc_mid"'):]
         self.assertIn('template = "large_strike_craft"', mid.split("}\n", 2)[0] + mid)
         self.assertIn("ai_tags = { carrier }", mid)
+        self.assertIn(f"aux_utility_slots = {gen_overrides.MOTHERSHIP_AUX_SLOTS}", mid)
         bow = sections[sections.index('key = "lfg_mothership_sc_bow"'):]
         self.assertIn('template = "invisible_extra_large_fixed"', bow)  # only mid / stern become hangars
         self.assertIn(' lfg_mothership_sc_mid:0 "Nanite Hive Bays"', out[gen_overrides.NANITE_SECTIONS_LOC_FILE])
-        self.assertIn('name = "lfg_mothership_entity"', out[gen_overrides.NANITE_ENTITIES_FILE])
+        entities = out[gen_overrides.NANITE_ENTITIES_FILE]
+        self.assertIn('name = "lfg_mothership_entity"', entities)
+        self.assertEqual(entities.count('name = "body"'), gen_overrides.MOTHERSHIP_HULL_PARTS)  # nanite hull
         self.assertIn("is_ship_size = lfg_mothership", out["mod/common/scripted_triggers/zz_lfg_trigger_overrides.txt"])
 
     def test_archaeostudies_faculty_gets_expedition_corps_block(self):

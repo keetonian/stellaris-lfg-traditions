@@ -356,6 +356,19 @@ lfg_nanite_forge_start = {
 		size = { min = 2 max = 4 }
 	}
 
+	# A research asteroid (+3 physics). ignore_startup_effect keeps vanilla's home-system setup from re-rolling it.
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = 30
+		size = 4
+		flags = { ignore_startup_effect }
+		init_effect = {
+			clear_deposits = yes
+			add_deposit = d_physics_3
+		}
+	}
+
 	planet = {
 		class = pc_molten
 		orbit_distance = 12
@@ -367,7 +380,7 @@ lfg_nanite_forge_start = {
 		class = ideal_planet_class
 		orbit_distance = 18
 		orbit_angle = { min = 90 max = 270 }
-		size = 12	# small homeworld; lfg_nanite_forge.1 also removes 1,500 of its pops
+		size = 10	# small homeworld; lfg_nanite_forge.1 also removes 1,500 of its pops
 		starting_planet = yes
 		deposit_blockers = none
 		modifiers = none
@@ -391,6 +404,19 @@ lfg_nanite_forge_start = {
 		orbit_distance = 22
 		orbit_angle = { min = 90 max = 270 }
 		size = { min = 8 max = 14 }
+	}
+
+	# A broken world with +8 engineering.
+	planet = {
+		class = pc_broken
+		orbit_distance = 18
+		orbit_angle = { min = 90 max = 270 }
+		size = 12
+		flags = { ignore_startup_effect }
+		init_effect = {
+			clear_deposits = yes
+			add_deposit = d_engineering_8
+		}
 	}
 
 	planet = {
@@ -467,14 +493,143 @@ lfg_nanite_forge_start = {
 		}
 	}
 
+	# Instead of vanilla's guaranteed-colony neighbours (no extra habitable worlds for this origin): two systems built for
+	# Gigastructural's research kilostructures (lfg_nanite_forge_science_init).
 	neighbor_system = {
-		trigger = { num_guaranteed_colonies >= 2 }
-		hyperlane_jumps = { min = 1 max = 3 }
-		initializer = "neighbor_t1"
+		hyperlane_jumps = { min = 1 max = 2 }
+		initializer = "lfg_nanite_forge_science_init"
 	}
 	neighbor_system = {
-		trigger = { num_guaranteed_colonies >= 1 }
 		hyperlane_jumps = { min = 1 max = 3 }
-		initializer = "neighbor_t1_first_colony"
+		initializer = "lfg_nanite_forge_science_init"
+	}
+}
+
+# Nanite Forge origin's two guaranteed neighbours (replacing vanilla's guaranteed colonies; no habitable worlds): made for
+# Gigastructural's three research kilostructures, which each sit on a
+# host world (Macroengineering Test Site: frozen -> engineering; Atmosphere Shredder: gas giant -> physics; Orbital
+# Artificial Ecosystem: toxic -> society) and put research deposits on every other "science candidate" in the system
+# (giga_is_science_candidate: not a star, not colonizable, no mining deposit). So: the three hosts plus 25-27 bare rocks,
+# moons and asteroids, 28-30 bodies in all, none habitable and none with mining deposits (clear_deposits). Anomalies can
+# spawn (the kilostructures need them researched first).
+lfg_nanite_forge_science_init = {
+	class = "rl_standard_stars"
+	usage = misc_system_init
+	usage_odds = 0
+	flags = { lfg_nanite_forge_science_system }
+
+	init_effect = {
+		every_neighbor_system = { set_star_flag = empire_cluster }
+		every_system_planet = {
+			limit = { is_star = no }
+			clear_deposits = yes
+		}
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 1
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 35
+	planet = {
+		count = 6
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = 60
+		size = { min = 2 max = 4 }
+	}
+
+	# Society host
+	planet = {
+		class = pc_toxic
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 12 max = 18 }
+
+		change_orbit = 8
+		moon = {
+			count = 2
+			class = pc_barren
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+		}
+	}
+
+	planet = {
+		class = pc_molten
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+	}
+
+	planet = {
+		class = pc_barren
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+
+		change_orbit = 8
+		moon = {
+			class = pc_barren
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 6 }
+		}
+	}
+
+	# Physics host
+	planet = {
+		class = pc_gas_giant
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = 30
+
+		change_orbit = 10
+		moon = {
+			count = 4
+			class = pc_barren_cold
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 8 }
+		}
+	}
+
+	# Outer belt
+	change_orbit = 25
+	planet = {
+		count = { min = 7 max = 9 }
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = 45
+		size = { min = 2 max = 4 }
+	}
+
+	# Engineering host
+	planet = {
+		class = pc_frozen
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 12 max = 18 }
+
+		change_orbit = 8
+		moon = {
+			count = 2
+			class = pc_barren_cold
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+		}
+	}
+
+	planet = {
+		class = pc_barren_cold
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
 	}
 }

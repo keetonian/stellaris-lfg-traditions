@@ -90,6 +90,8 @@
 # district of any kind on the planet (value:lfg_all_districts).
 @lfg_nanite_core_automation = 0.5
 @lfg_nanite_core_upkeep_per_district = 500
+# Both nanite automation buildings cost this share (build cost and upkeep) on Nanite Worlds (pc_nanotech).
+@lfg_nanite_world_discount = 0.5
 # Nanotensile Converter (after Nanotech, supertensiles on): monthly energy + nanites in, supertensiles out.
 @lfg_nanotensile_energy = 40
 @lfg_nanotensile_nanites = 80
@@ -98,15 +100,47 @@
 # Nanite Armada ascension perk: nanite hull costs and Swarmforge shipyard capacity.
 @lfg_nanite_war_moon_cost = 500000
 @lfg_nanite_planetcraft_cost = 1000000
-@lfg_swarmforge_shipyard_capacity = 2
+@lfg_swarmforge_shipyard_capacity = 50
 
 # Mothership ascension perk: Progenitor Forge stages (50,000,000 nanites in all) and the Mothership's nanite cost.
 @lfg_progenitor_forge_0_nanites = 5000000
 @lfg_progenitor_forge_1_nanites = 15000000
 @lfg_progenitor_forge_2_nanites = 30000000
 @lfg_mothership_cost = 100000000
-# Mothership: nanite escorts added to its fleet each month, and the most it holds (events/lfg_mothership_events.txt).
+@lfg_mothership_influence_cost = 700
+@lfg_mothership_alloy_cost = 500000
+# Progenitor Forge: ships under construction at once (it builds Motherships and the nanite Attack Moons / Planetcraft).
+@lfg_progenitor_forge_shipyard_capacity = 300
+@lfg_mothership_upkeep = 30000
+
+# Nanite Armour (LFG_NANITE_ARMOR): per plate, on any ship.
+@lfg_nanite_armor_cost = 10000
+@lfg_nanite_armor_upkeep = 15
+# Mothership: Swarmers / Interdictors added to its reserve each month, and the most it holds, reserve + deployed
+# (events/lfg_mothership_events.txt). Deployed only while an enemy is in its system.
 @lfg_mothership_swarmers_per_month = 80
 @lfg_mothership_interdictors_per_month = 20
-@lfg_mothership_swarmer_cap = 200
-@lfg_mothership_interdictor_cap = 100
+@lfg_mothership_swarmer_cap = 600
+@lfg_mothership_interdictor_cap = 200
+
+# Nanite Forge origin: Nanite Consensus buildings (tier: unity produced, build cost, upkeep).
+@lfg_nanite_consensus_1_unity = 10
+@lfg_nanite_consensus_1_minerals = 300
+@lfg_nanite_consensus_1_nanites = 50
+@lfg_nanite_consensus_1_energy_upkeep = 8
+@lfg_nanite_consensus_1_nanite_upkeep = 2
+@lfg_nanite_consensus_2_unity = 20
+@lfg_nanite_consensus_2_minerals = 400
+@lfg_nanite_consensus_2_nanites = 100
+@lfg_nanite_consensus_2_energy_upkeep = 16
+@lfg_nanite_consensus_2_nanite_upkeep = 4
+@lfg_nanite_consensus_3_unity = 40
+@lfg_nanite_consensus_3_minerals = 500
+@lfg_nanite_consensus_3_nanites = 200
+@lfg_nanite_consensus_3_energy_upkeep = 24
+@lfg_nanite_consensus_3_nanite_upkeep = 8
+@lfg_nanite_consensus_4_unity = 60
+@lfg_nanite_consensus_4_minerals = 600
+@lfg_nanite_consensus_4_nanites = 400
+@lfg_nanite_consensus_4_energy_upkeep = 32
+@lfg_nanite_consensus_4_nanite_upkeep = 16

@@ -739,3 +739,102 @@ tr_lfg_tourism_galactic_destination = {
 	}
 	ai_weight = { factor = 1000 }
 }
+
+#####################################################################
+# STATIONCRAFT - hook: orbital stations (mining and research stations) produce more for every starbase, kilostructure
+# and megastructure you own, while jobs produce much less. The counts are taken monthly (and on adoption) into country
+# variables by lfg_stationcraft.1, so the modifier never recounts them itself.
+#####################################################################
+
+# Hook: station output +2% per starbase, +5% per kilostructure, +10% per megastructure (no cap). Jobs -35%.
+tr_lfg_stationcraft_adopt = {
+	custom_tooltip = tr_lfg_stationcraft_adopt_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_stationcraft.1 } }
+	}
+	modifier = {
+		planet_jobs_produces_mult = -0.35
+	}
+	triggered_modifier = {
+		potential = { always = yes }
+		station_gatherers_produces_mult = 0.02
+		station_researchers_produces_mult = 0.02
+		mult = value:lfg_stationcraft_starbases
+	}
+	triggered_modifier = {
+		potential = { always = yes }
+		station_gatherers_produces_mult = 0.05
+		station_researchers_produces_mult = 0.05
+		mult = value:lfg_stationcraft_kilostructures
+	}
+	triggered_modifier = {
+		potential = { always = yes }
+		station_gatherers_produces_mult = 0.10
+		station_researchers_produces_mult = 0.10
+		mult = value:lfg_stationcraft_megastructures
+	}
+}
+
+tr_lfg_stationcraft_finish = {
+	modifier = {
+		ascension_perks_add = 1
+		country_megastructure_build_cap_add = 1
+		starbase_module_capacity_add = 3
+	}
+}
+
+# Starbase branch: slot 1 -> slot 3.
+tr_lfg_stationcraft_orbital_logistics = {
+	modifier = {
+		country_starbase_capacity_add = 3
+		starbases_upkeep_mult = -0.25
+		country_starbase_influence_cost_mult = -0.25
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Megastructure branch: slot 2 -> slot 5.
+tr_lfg_stationcraft_kilostructure_doctrine = {
+	modifier = {
+		megastructure_build_speed_mult = 0.20
+		megastructures_cost_mult = -0.10
+	}
+	ai_weight = { factor = 1000 }
+}
+
+tr_lfg_stationcraft_bastion_starbases = {
+	possible = {
+		has_tradition = tr_lfg_stationcraft_orbital_logistics
+	}
+	modifier = {
+		shipclass_starbase_hull_mult = 0.25
+		shipclass_starbase_armor_mult = 0.25
+		starbase_defense_platform_capacity_add = 3
+		shipclass_starbase_build_speed_mult = 0.50
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Where the branches meet: both roots.
+tr_lfg_stationcraft_orbital_refineries = {
+	possible = {
+		has_tradition = tr_lfg_stationcraft_orbital_logistics
+		has_tradition = tr_lfg_stationcraft_kilostructure_doctrine
+	}
+	modifier = {
+		station_gatherers_produces_mult = 0.15
+		station_researchers_produces_mult = 0.15
+		starbase_constructions_produces_mult = 0.30	# starbase buildings and modules (one category; no buildings-only modifier)
+	}
+	ai_weight = { factor = 1000 }
+}
+
+tr_lfg_stationcraft_self_repairing_frames = {
+	possible = {
+		has_tradition = tr_lfg_stationcraft_kilostructure_doctrine
+	}
+	modifier = {
+		megastructures_upkeep_mult = -0.20
+	}
+	ai_weight = { factor = 1000 }
+}

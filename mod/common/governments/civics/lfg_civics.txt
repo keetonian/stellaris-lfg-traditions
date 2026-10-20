@@ -42,8 +42,9 @@ origin_lfg_nanite_forge = {
 	is_origin = yes
 	playable = { host_has_dlc = "The Machine Age" }
 	ai_playable = { host_has_dlc = "The Machine Age" }
-	icon = "gfx/interface/icons/origins/origin_arc_welders.dds"
-	picture = GFX_origin_arc_welders
+	# Art: art/make_origin_art.py (nanite diamond icon; a world engulfed by nanites).
+	icon = "gfx/interface/icons/origins/lfg_origin_nanite_forge.dds"
+	picture = GFX_origin_lfg_nanite_forge
 	flags = { custom_start_screen }
 	initializers = { lfg_nanite_forge_start }
 	possible = {
@@ -51,5 +52,15 @@ origin_lfg_nanite_forge = {
 		is_nomadic = no
 	}
 	description = "origin_tooltip_lfg_nanite_forge_effects"
+	# The founder species always has Nanite Substrate: shown added and locked in the species designer (as vanilla's
+	# Evolutionary Predators forces trait_malleable_genes).
+	traits = {
+		trait = trait_lfg_nanite_substrate
+	}
+	# Orbital stations (mining and research) +30%. The pop assembly downside is on the Nanite Substrate trait.
+	modifier = {
+		station_gatherers_produces_mult = 0.30
+		station_researchers_produces_mult = 0.30
+	}
 	random_weight = { base = 1 }
 }

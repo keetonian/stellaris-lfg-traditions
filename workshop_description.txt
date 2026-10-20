@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Eight new tradition trees, six council agendas, four ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Nine new tradition trees, six council agendas, four ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
@@ -31,6 +31,13 @@ Eight new tradition trees, six council agendas, four ascension perks, an origin,
 [*][b]Reverse Engineering:[/b] +5% research speed per relic you own.
 [*][b]Commissioned Digs:[/b] spend 2,000 minor artifacts on a new dig site, anomaly or astral rift in your borders.
 [*][b]Downside:[/b] scientists cost more.
+[/list]
+
+[h3]Stationcraft[/h3]
+[i]Your wealth hangs in orbit.[/i] Any empire.
+[list]
+[*]Mining and research stations produce more for every starbase, kilostructure and megastructure you own; jobs produce 35% less.
+[*]More, cheaper and tougher starbases; faster, cheaper megastructures with less upkeep.
 [/list]
 
 [h3]Lineage[/h3]
@@ -95,28 +102,30 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [/list]
 
 [h2]Nanites[/h2]
-[b]Nanite Forge[/b] (machines): a unique home system, a Starhold and a broken nanite harvester that doubles their nanites every 3 years (up to 12.8 each). Nanotech restores it, growing them far further. Unlocks a nanite-fuelled automation building.
+[b]Nanite Forge[/b] (machines): a unique home system, a Starhold and a broken nanite harvester that doubles their nanites every 3 years (up to 12.8 each). Nanotech restores it, growing them far further. Unlocks nanite-fuelled automation and unity buildings.
 
 After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's specialist jobs, and the [b]Nanotensile Converter[/b] turns energy and nanites into supertensiles.
 
-[h2]Civic[/h2]
-[b]Applied Biosciences[/b] (Materialist, non-machine): Biologists research -1 society, +0.4 physics, +0.4 engineering. Scientist councilor: more efficient Biologists.
+[h2]Civics[/h2]
+[b]Applied Biosciences[/b] (Materialist, non-machine): Biologists research -1 society, +0.4 physics, +0.4 engineering. Its councilor boosts Biologists.
+
+[b]Galvanic civics:[/b] a new tier of galvanic armour and Reshaping Accelerator.
 
 [h2]Ascension perks[/h2]
-[b]Mothership:[/b] build system-sized carriers with a nanite escort.
+[b]Mothership:[/b] one system-sized carrier per empire, with escort, cannon and armour.
 
 [b]Nanite Armada:[/b] build nanite Attack Moons and Planetcraft.
 
 [b]Massed Assault:[/b] +10 ground combat width; every general boosts the armies they lead.
 
-[b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]): a [b]Shelve[/b] edict for every repeatable technology, stopping it from being offered as a research option (2,000 unity, 200 influence, plus monthly research).
+[b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]): a [b]Shelve[/b] edict for every repeatable technology, keeping it out of your research options (2,000 unity, 200 influence, monthly research).
 
 [h2]Changes to vanilla content[/h2]
 [list]
 [*][b]Synthetic Fertility[/b]: the uploading situation speeds up every year and uploads more pops.
-[*]The [b]Accommodation District[/b], resort specializations, [b]holomuseums[/b] and [b]Archaeostudies Faculty[/b] gain extra blocks for our trees.
+[*]The [b]Accommodation District[/b], resort specializations, [b]holomuseums[/b] and [b]Archaeostudies Faculty[/b] gain our trees' bonuses.
 [*]Repeatable technologies (vanilla and Gigastructural) check their Shelve edicts.
-[*][b]Nanite harvesters[/b] get three more doubling steps on planets of size 30+.
+[*][b]Nanite harvesters[/b] double three more times on size 30+ planets.
 [*][b]Virtuality[/b] is closed to individual machines with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin.
 [/list]
 These replace those vanilla and Gigastructural definitions; other mods that change them may conflict.

@@ -27,11 +27,19 @@ on_monthly_pulse_country = {
 		lfg_penal.1	# Penitence: penal colony modifiers + inmate count
 		lfg_nanite_forge.5	# Nanite Cognition Core: specialist automation modifier
 		lfg_lineage.1	# Every Shore: monthly planet-type count
+		lfg_stationcraft.1	# Stationcraft: monthly starbase / kilostructure / megastructure counts
 		lfg_mothership.1	# Mothership: monthly nanite swarmers / interdictors
 	}
 }
 
 # this = ship, from = planet
+# This = owner of fleet 1, FromFrom = fleet 1, FromFromFrom = fleet 2
+on_entering_battle = {
+	events = {
+		lfg_mothership.3	# Mothership: deploy its nanite swarm
+	}
+}
+
 anomaly_success = {
 	events = {
 		lfg_xenoarchaeology.1	# Xenoarchaeology: minor artifacts + anomaly count
@@ -54,5 +62,12 @@ on_colony_transfer = {
 on_colony_ownerless = {
 	events = {
 		lfg_planet.1	# strip the old owner's per-planet tradition modifiers
+	}
+}
+
+# Root = Ship
+on_ship_built = {
+	events = {
+		lfg_mothership.6	# Mothership: one per empire (refund the extra)
 	}
 }

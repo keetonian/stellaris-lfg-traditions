@@ -760,7 +760,7 @@ ship_section_template = {
 	}
 
 	large_utility_slots = 15
-	aux_utility_slots = 0
+	aux_utility_slots = 10
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -800,7 +800,7 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 0
+	aux_utility_slots = 10
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -840,7 +840,7 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 0
+	aux_utility_slots = 10
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -880,7 +880,7 @@ ship_section_template = {
 	ai_tags = { carrier }
 
 	large_utility_slots = 15
-	aux_utility_slots = 0
+	aux_utility_slots = 10
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -920,7 +920,7 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 0
+	aux_utility_slots = 10
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -960,7 +960,7 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 5
+	aux_utility_slots = 10
 }
 
 # from Gigastructural common/section_templates/giga_systemcraft.txt
@@ -1000,5 +1000,5 @@ ship_section_template = {
 	ai_tags = { artillery }
 
 	large_utility_slots = 15
-	aux_utility_slots = 5
+	aux_utility_slots = 10
 }

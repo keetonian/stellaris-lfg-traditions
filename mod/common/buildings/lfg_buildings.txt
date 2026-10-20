@@ -1,4 +1,6 @@
 # LFG Traditions - buildings (new ones; edits to vanilla buildings are generated in zz_lfg_building_overrides.txt).
+# The two nanite automation buildings cost half (build cost and upkeep) on Nanite Worlds (pc_nanotech): cost blocks
+# with mult = @lfg_nanite_world_discount, and their upkeep values (lfg_resource_districts / lfg_all_districts).
 
 # Nanite Forge origin: like vanilla's Technician / Miner / Farmer automation buildings (01_pop_assembly_buildings.txt),
 # but one building for all three jobs (and their drone versions), in any of their district specializations. Upkeep is
@@ -33,8 +35,15 @@ building_lfg_nanite_automation = {
 	resources = {
 		category = planet_buildings
 		cost = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
 			minerals = @b2_minerals
 			nanites = 100
+		}
+		cost = {
+			trigger = { is_planet_class = pc_nanotech }
+			minerals = @b2_minerals
+			nanites = 100
+			mult = @lfg_nanite_world_discount
 		}
 		upkeep = {
 			nanites = @lfg_nanite_hub_upkeep_per_district
@@ -65,8 +74,15 @@ building_lfg_nanite_cognition_core = {
 	resources = {
 		category = planet_buildings
 		cost = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
 			alloys = 1000
 			nanites = 500
+		}
+		cost = {
+			trigger = { is_planet_class = pc_nanotech }
+			alloys = 1000
+			nanites = 500
+			mult = @lfg_nanite_world_discount
 		}
 		upkeep = {
 			nanites = @lfg_nanite_core_upkeep_per_district
@@ -112,6 +128,148 @@ building_lfg_nanotensile_converter = {
 		upkeep = {
 			energy = @lfg_nanotensile_energy
 			nanites = @lfg_nanotensile_nanites
+		}
+	}
+}
+
+# Nanite Forge origin: the Nanite Consensus line, unity from thinking nanites. Any number per planet, in capital or unity
+# slots. Built for minerals and nanites; upkeep in energy and nanites. Upgrades three times: 10 -> 20 -> 40 -> 60 unity
+# (@lfg_nanite_consensus_*). Icons: vanilla's Brain Node 1-4.
+building_lfg_nanite_consensus_1 = {
+	base_buildtime = @b2_time
+	category = unity
+	icon = brain_node_1
+
+	building_sets = {
+		government
+		unity
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	upgrades = {
+		building_lfg_nanite_consensus_2
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = @lfg_nanite_consensus_1_minerals
+			nanites = @lfg_nanite_consensus_1_nanites
+		}
+		upkeep = {
+			energy = @lfg_nanite_consensus_1_energy_upkeep
+			nanites = @lfg_nanite_consensus_1_nanite_upkeep
+		}
+		produces = {
+			unity = @lfg_nanite_consensus_1_unity
+		}
+	}
+}
+
+building_lfg_nanite_consensus_2 = {
+	base_buildtime = @b3_time
+	can_build = no
+	category = unity
+	icon = brain_node_2
+
+	building_sets = {
+		government
+		unity
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	upgrades = {
+		building_lfg_nanite_consensus_3
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = @lfg_nanite_consensus_2_minerals
+			nanites = @lfg_nanite_consensus_2_nanites
+		}
+		upkeep = {
+			energy = @lfg_nanite_consensus_2_energy_upkeep
+			nanites = @lfg_nanite_consensus_2_nanite_upkeep
+		}
+		produces = {
+			unity = @lfg_nanite_consensus_2_unity
+		}
+	}
+}
+
+building_lfg_nanite_consensus_3 = {
+	base_buildtime = @b4_time
+	can_build = no
+	category = unity
+	icon = brain_node_3
+
+	building_sets = {
+		government
+		unity
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	upgrades = {
+		building_lfg_nanite_consensus_4
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = @lfg_nanite_consensus_3_minerals
+			nanites = @lfg_nanite_consensus_3_nanites
+		}
+		upkeep = {
+			energy = @lfg_nanite_consensus_3_energy_upkeep
+			nanites = @lfg_nanite_consensus_3_nanite_upkeep
+		}
+		produces = {
+			unity = @lfg_nanite_consensus_3_unity
+		}
+	}
+}
+
+building_lfg_nanite_consensus_4 = {
+	base_buildtime = @b4_time
+	can_build = no
+	category = unity
+	icon = brain_node_4
+
+	building_sets = {
+		government
+		unity
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = @lfg_nanite_consensus_4_minerals
+			nanites = @lfg_nanite_consensus_4_nanites
+		}
+		upkeep = {
+			energy = @lfg_nanite_consensus_4_energy_upkeep
+			nanites = @lfg_nanite_consensus_4_nanite_upkeep
+		}
+		produces = {
+			unity = @lfg_nanite_consensus_4_unity
 		}
 	}
 }

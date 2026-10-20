@@ -1,0 +1,39 @@
+# LFG Traditions - component sets (the name and icon the ship designer and tech cards show for a component).
+
+# Mothership's Nanite Swarm hangar (common/component_templates/lfg_components.txt).
+component_set = {
+	key = "LFG_NANITE_SWARM_HANGAR"
+
+	icon = "GFX_ship_part_strike_craft_fighter_3"
+	icon_frame = 1
+}
+
+# Mothership's Nanite Reshaper (X slot) and Nanite Armour.
+component_set = {
+	key = "LFG_NANITE_RESHAPER"
+
+	icon = "GFX_ship_part_lm_accelerator"
+	icon_frame = 1
+}
+
+component_set = {
+	key = "LFG_NANITE_ARMOR"
+
+	icon = "GFX_ship_part_armor_5"
+	icon_frame = 1
+}
+
+# Galvanic level-2 accelerator and level-6 armour (galvanic empires).
+component_set = {
+	key = "LFG_LM_ACCELERATOR_2"
+
+	icon = "GFX_ship_part_lm_accelerator"
+	icon_frame = 1
+}
+
+component_set = {
+	key = "LFG_LM_ARMOR_6"
+
+	icon = "GFX_ship_part_lm_armor_5"
+	icon_frame = 1
+}

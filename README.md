@@ -2,7 +2,7 @@
 
 A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games that adds:
 
-- **8 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
+- **9 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
 - **6 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
 - **4 ascension perks:** **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
 - **1 origin, Nanite Forge** (machines): eight size 40 molten worlds around a blue star, a broken nanite harvester that doubles their nanite deposits every 3 years, and a nanite-fuelled automation building.
@@ -23,7 +23,7 @@ This is a gameplay mod (it adds `common/` files), so it **changes the game check
 - Stellaris 4.5.x
 - [Gigastructural Engineering & More (4.5)](https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237). Required: the Megaforge tree uses its supertensiles, techs and origins.
 - Recommended: [A Lot of Traditions - 24 Tradition Slots](https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981).
-  Vanilla allows 7 trees in total, and this mod adds 8 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
+  Vanilla allows 7 trees in total, and this mod adds 9 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
 
 Load order: after Gigastructural.
 
@@ -99,6 +99,26 @@ Relics are counted with `num_owned_relics` (`value:lfg_num_relics`).
 
 `lfg_xenoarchaeology.3` then says where it is. If no spot fits after all, the cost is refunded.
 **Unverified in game:** that `spawn_random_anomaly` works on already-surveyed planets, and the option `allow` tooltips.
+
+### Stationcraft: wealth in orbit
+**Who:** any empire. **Hook:** orbital stations (mining and research stations) produce more for every starbase (+2%),
+kilostructure (+5%) and megastructure (+10%) you own, uncapped, but **jobs produce 35% less**. Layout `tree_12_12`
+(Domestication's): a starbase branch (1 → 3) and a megastructure branch (2 → 5) that meet in slot 4.
+
+| Tradition | Effect |
+|---|---|
+| Adopt ⚙ | Station output +2% per starbase, +5% per kilostructure, +10% per megastructure · resources from jobs −35% |
+| 1. Orbital Logistics | Starbase capacity +3 · starbase upkeep −25% · starbase influence cost −25% |
+| 2. Kilostructure Doctrine | Megastructure build speed +20% · megastructure cost −10% |
+| 3. Bastion Starbases (needs 1) | Starbase hull and armour +25% · +3 defense platforms · starbase build speed +50% |
+| 4. Orbital Refineries (needs 1 + 2) | Station output +15% · starbase building and module output +30% (`starbase_constructions_produces_mult`: vanilla has no buildings-only modifier) |
+| 5. Self-Repairing Frames (needs 2) | Megastructure upkeep −20% |
+| Finish | +1 megastructure under construction · +3 starbase module slots |
+
+The counts are taken **once a month** (and on adoption) by `lfg_stationcraft.1` into country variables (`lfg_sc_*`, read
+by `value:lfg_stationcraft_*`), so the bonus can lag a month but never recounts on its own. Kilostructures are
+Gigastructural's `is_kilostructure`; megastructures are every other owned megastructure that isn't ruined or technical
+(Giga's `is_ruined_mega` / `is_technical_mega`); starbases include outposts.
 
 ### Lineage: every trait is an advantage
 **Who:** any empire. **Hook:** scales with your main species' traits, your species and subspecies, and the planet types you live on (all uncapped).
@@ -231,13 +251,20 @@ gas giants are size 62; one base district per size). Initializer: `lfg_emberfall
 
 ## Origin: Nanite Forge (machines)
 
-**Who:** machine species, individual or gestalt (`species_archetype = MACHINE`), not nomadic. Needs The Machine Age
+**Who:** machine species, individual or gestalt (`species_archetype = MACHINE`), not nomadic. **Orbital stations** (mining and research) **+30%** output. The homeworld gets a planetary
+**Nanite Vein** deposit (`d_lfg_nanite_vein`, +10 nanites; not orbital), and the founder species the **Nanite Substrate**
+trait (`trait_lfg_nanite_substrate`, can't be added, removed or merged by species modification): pops **+20% job
+efficiency** and **+0.3 nanites upkeep** (per 100 pops); mechanical pop assembly speed **−30%** where they're assembled (there is
+no mechanical-only modifier). The deposit is added at game start by `lfg_nanite_forge.1`; the trait through the origin's
+`traits = { trait = trait_lfg_nanite_substrate }`, like vanilla's Evolutionary Predators (shown added and locked in the
+species designer). Needs The Machine Age
 (nanites and the Nanotech tree).
 **Home system** (`lfg_nanite_forge_start`): a **blue B-class star** with a **+22 energy** deposit (`d_lfg_nanite_forge_star`,
 mined by a mining station; set at game start by `lfg_nanite_forge.1`, because vanilla's home-system setup re-rolls the
-star's deposits to +5 energy), a **size 12 homeworld** (with a moon; `lfg_nanite_forge.1` also removes **1,500 of its pops**, 100 at a time from the
-largest pop group, `@lfg_nanite_forge_pops_removed_hundreds`), **eight size 60 molten worlds** evenly spaced on one orbit, a small
-molten world, barren, toxic, frozen and cold barren worlds with moons, two asteroid belts (12 asteroids) and a gas giant
+star's deposits to +5 energy), a **size 10 homeworld** (with a moon; `lfg_nanite_forge.1` also removes **1,500 of its pops**, 100 at a time from the
+largest pop group, `@lfg_nanite_forge_pops_removed_hundreds`), **eight size 60 molten worlds** evenly spaced on one orbit, a **broken world with +8 engineering** and a **research
+asteroid with +3 physics** (both flagged `ignore_startup_effect` so vanilla's home-system setup keeps their deposits), a
+small molten world, barren, toxic, frozen and cold barren worlds with moons, two asteroid belts (12 asteroids) and a gas giant
 with 3 moons.
 **Starting starbase:** the origin starts with **Starholds** researched (`tech_starbase_3`) and the home starbase upgraded
 to a Starhold (`lfg_nanite_forge.1`).
@@ -266,17 +293,37 @@ vanilla's 5-year cycle skip any system with it (e.g. a Nomad nanotech waystation
 `nanite_harvester` override stops vanilla's Nanite Harvester from being built on the same starbase (fail text
 `lfg_requires_no_ancient_harvester`). Elsewhere you can build vanilla harvesters once you've adopted Nanotech, as usual.
 
+**No extra habitable worlds:** the origin replaces vanilla's guaranteed-colony neighbours (the game setting) with **two
+science neighbours** (`lfg_nanite_forge_science_init`, 1-3 jumps away), and neither has a habitable world. Each is built for Gigastructural's three
+research kilostructures, which each sit on a host world and put research deposits on every other "science candidate"
+(`giga_is_science_candidate`: not a star, not colonizable, no mining deposit) in the system. It has the three hosts (a
+**frozen** world for the Macroengineering Test Site → engineering, a **gas giant** for the Atmosphere Shredder → physics,
+a **toxic** world for the Orbital Artificial Ecosystem → society) and 25-27 bare rocks, moons and asteroids: **28-30
+bodies**, all with their deposits cleared. Anomalies can spawn; Gigastructural's kilostructures need them researched first.
+
+**Nanite Consensus** (`building_lfg_nanite_consensus_1` → `_4`, this origin only): unity from thinking nanites, **any
+number per planet**, in capital or unity slots. Built for minerals and nanites, upkeep in energy and nanites; upgrades
+three times. Per tier (`@lfg_nanite_consensus_*`):
+
+| Tier | Unity | Cost (minerals / nanites) | Upkeep (energy / nanites) |
+|---|---|---|---|
+| Node | 10 | 300 / 50 | 8 / 2 |
+| Array | 20 | 400 / 100 | 16 / 4 |
+| Lattice | 40 | 500 / 200 | 24 / 8 |
+| Core | 60 | 600 / 400 | 32 / 16 |
+
 **Nanite Automation Hub** (`building_lfg_nanite_automation`, this origin only, one per planet, in an energy, mining or
 farming specialization like vanilla's automation buildings): automates **50%** of Technician, Miner and Farmer jobs (and
 their drone versions). Costs 600 minerals + 100 nanites; upkeep **30 nanites per resource district** on the planet
 (`value:lfg_resource_districts`: energy, mining and food districts, including habitat, ring world, machine, hive and ark
-versions). Automated jobs still pay vanilla's automation upkeep. It can stack with vanilla's own automation buildings.
+versions). Automated jobs still pay vanilla's automation upkeep. On a **Nanite World** (`pc_nanotech`) it costs **half**
+(build cost and upkeep; `@lfg_nanite_world_discount`), like the Cognition Core. It can stack with vanilla's own automation buildings.
 
 ## Building: Nanite Cognition Core (Nanotech)
 
 `building_lfg_nanite_cognition_core`: any empire that has **finished Nanotech**; one per planet, in a city or capital
 slot. Automates **50% of every specialist and complex drone job** on the planet (vanilla and Gigastructural, ~220 jobs).
-Costs 1,000 alloys + 500 nanites; upkeep **500 nanites per district** (any kind, `value:lfg_all_districts`) a month. The job list is the generated static modifier
+Costs 1,000 alloys + 500 nanites; upkeep **500 nanites per district** (both **halved on a Nanite World**) (any kind, `value:lfg_all_districts`) a month. The job list is the generated static modifier
 `lfg_nanite_specialist_automation` (`tools/gen_overrides.py`, one tooltip line), which the monthly `lfg_nanite_forge.5`
 keeps on planets with the building. Tunables: `@lfg_nanite_core_*`, `@lfg_nanite_hub_*`.
 
@@ -312,6 +359,19 @@ recoloured to the mod's amber civic colour (`art/make_civic_icons.py`; every civ
 **Council position:** **Chief Bioengineer** (scientists only; `councilor_lfg_applied_biosciences`): Biologist job efficiency
 **+3% per level**. Not more physics per Biologist, because vanilla's Technocracy councilor (also Materialist) already gives that.
 
+## Galvanic upgrades (galvanic civics)
+
+Any empire with a galvanic civic (`is_galvanic_empire`, non-bio ships, like vanilla's lines) can draw two tier 5
+engineering techs (`common/technology/lfg_technology.txt`, cost `@tier5cost3`, weight `@tier5weight3`):
+- **Symbiotic Accelerators** (`tech_lfg_lm_accelerator_2`, needs `tech_kinetic_artillery_2`) → `LFG_LM_ACCELERATOR_2`,
+  level 2 of the Reshaping Projectile Accelerator (large): **350-1,050** damage every 45 days (vanilla 165-500 / 50),
+  range 140 (120), accuracy 90% (85%), 75% armour penetration (50%), 3x shield damage (2.5x), power -120 (-91). Cost
+  1,000 living metal + 10 volatile motes (vanilla 333 + 3.5); upkeep 6 energy, 1.2 alloys.
+- **Symbiotic Galvanic Armour** (`tech_lfg_lm_armor_6`, needs `tech_ship_armor_5`) → `LFG_{SMALL,MEDIUM,LARGE}_LM_ARMOR_6`,
+  level 6 of the galvanic armour: **400 / 1,200 / 3,600** armour (vanilla level 5: 260 / 780 / 2,340), +2% armour and
+  hull regeneration (1%), +2% energy weapon fire rate (same as level 5), 6% hardening (4%). Cost 160 / 400 / 1,000 living metal
+  (vanilla 53 / 133 / 333).
+
 ## Ascension perk: Massed Assault
 
 **+10 ground combat width**: more armies fight at the same time. **Every general** also gets the **Massed Assault Doctrine**
@@ -336,25 +396,28 @@ the 1,000,000-nanite Planetcraft needs no storage bonus):
   system in your borders with a **class A or B star or a red giant** (`lfg_swarmforge_star`) and no other megastructure.
   Site: 10,000 alloys, 50,000 nanites, 100 influence, 5 years; finishing it: 25,000 alloys, 150,000 nanites, 10 years;
   upkeep 100 energy + 50 nanites. Finished, it's a shipyard (`starbase_shipyard_capacity_add`, like vanilla's Mega
-  Shipyard; `@lfg_swarmforge_shipyard_capacity` = 2). Uses the Mega Shipyard's model.
+  Shipyard; `@lfg_swarmforge_shipyard_capacity` = 50). Uses the Mega Shipyard's model.
 - **Nanite Attack Moon** (`lfg_nanite_war_moon`, **500,000 nanites**) and **Nanite Planetcraft** (`lfg_nanite_planetcraft`,
-  **1,000,000 nanites**): Gigastructural's Attack Moon and Planetcraft stats and models, upkeep in energy and nanites,
-  built like normal ships but **only at a Swarmforge** (`lfg_is_swarmforge`: the shipyard must be that megastructure).
+  **1,000,000 nanites**): Gigastructural's Attack Moon and Planetcraft models with twice their hull and armour and half
+  their shields (moon 500K hull / 300K armour / 50K shields; planetcraft 5M / 2.5M / 625K), upkeep in energy and nanites,
+  built like normal ships but **only at a Swarmforge or Progenitor Forge** (`lfg_is_swarmforge`: the shipyard must be one
+  of those megastructures). The Swarmforge builds 50 at once (`@lfg_swarmforge_shipyard_capacity`).
   **Designable** in the ship designer: their sections are generated copies of Giga's
   (`common/section_templates/lfg_nanite_section_templates.txt`), and a generated override adds them to Giga's
   `giga_ship_uses_war_moon_components` / `giga_ship_uses_war_planet_components`, so Giga's moon / planet reactors,
   computers and weapons fit.
 
 **Their look** (generated `mod/gfx/models/ships/lfg_nanite_celestials.asset`, from Giga's models; no new art): Giga's moon
-and planet meshes with nanite planet textures, wrapped in vanilla's **grey goo swarm** (the Grey Goo world's cloud
-particle, on a locator attached to the hull's root node), keeping Giga's engine plumes.
+and planet meshes with nanite planet textures, keeping Giga's engine plumes; the planetcraft and Mothership are also
+wrapped in vanilla's **grey goo swarm** (the Grey Goo world's cloud particle, on a locator attached to the hull's root
+node). The moon has no swarm: in game it showed as a dark blob hiding the moon.
 - **Nanite Attack Moon:** its default sections are a **Grey Goo** moon (the Grey Goo world's surface). Giga's optional
   planet-skin sections (behind its Aeternite tech) are replaced by two nanite skins with no tech: **Machine Shell**
   (synthetic ecumenopolis surface) and **Swarm Core** (machine world surface). Section names: generated
   `lfg_nanite_sections_l_english.yml` (Giga's names for the copied sections).
 - **Nanite Planetcraft:** a grey goo planet in a swarm (`lfg_nanite_planetcraft_entity`; `graphical_culture = no`, so
   not Giga's species-culture planets).
-- The swarm's size is `@lfg_nanite_swarm_moon_scale` / `@lfg_nanite_swarm_planet_scale` in the generator's
+- The swarm's size is `@lfg_nanite_swarm_planet_scale` / `@lfg_nanite_swarm_mothership_scale` in the generator's
   `NANITE_SWARM_ENTITIES` (a first guess: check it in game and adjust).
 
 **Unverified in game:** that the megastructure's shipyard offers only these hulls and builds them; the nanite look (the
@@ -371,23 +434,39 @@ traditions finished** (its escort's Swarmers and Interdictors need the 4th and 5
 - **Progenitor Forge** (`lfg_progenitor_forge_0` → `_1` → `_2`): built around an **O-class star** (Gigastructural's
   `giga_is_o_star_for_megas`: its own O stars, about 1 per 70 systems, and Real Space's), in your borders, with no other
   megastructure. Three stages, **50,000,000 nanites** in all (5M, 15M, 30M; `@lfg_progenitor_forge_*_nanites`) plus
-  alloys and influence; 5 + 10 + 10 years. Finished, it's a shipyard (capacity 1) and the only place Motherships can be built.
-- **Mothership** (`lfg_mothership`, **100,000,000 nanites**, 10 years): twice Gigastructural's systemcraft (25M hull,
-  9.6M armour, 3.8M shields), size 2,500. Its sections are generated copies of Giga's systemcraft sections with the mid
-  section's guns turned into hangars (**45 hangars**); Giga's systemcraft components fit (generated trigger override).
-  Its look: the systemcraft's worlds in the three nanite skins, in a large swarm.
+  alloys and influence; 5 + 10 + 10 years. Finished, it's a shipyard building **300 ships at once** (`@lfg_progenitor_forge_shipyard_capacity`), the only place
+  Motherships can be built, and it also builds the nanite Attack Moons and Planetcraft.
+- **Mothership** (`lfg_mothership`, **one per empire**, **100,000,000 nanites + 500,000 alloys + 700 influence**, upkeep a flat **30,000 nanites** a month: components add
+  nothing to cost or upkeep, `components_add_to_cost = no`; 10 years): beyond Gigastructural's systemcraft (100M hull,
+  19.2M armour, 1.9M shields), size 2,500. One per empire: `possible_country` blocks queueing another while you own
+  one, and `lfg_mothership.6` (`on_ship_built`) deletes a second that was queued alongside and refunds its hull cost. Its sections are generated copies of Giga's systemcraft sections with the mid
+  section's guns turned into hangars (**45 hangars**) and **10 aux utility slots in every section** (60); Giga's systemcraft components fit (generated trigger override).
+  Its look: the systemcraft's hull in the nanite ships' (Gatebuilder) textures, every world grey goo, in a large swarm
+  (generated; the hull is the mesh's `body` object, 24 parts, re-textured with `meshsettings` by index).
 - **Nanite Swarm hangar** (`LFG_NANITE_SWARM_HANGAR`, Motherships only, `common/component_templates/lfg_components.txt`):
   strike craft can be buggy, so **few but strong**: 2 craft per hangar (90 in all), 250-450 damage every 1.5 days, 400
   health, 200 armour, 500 shields, full shield penetration. For comparison, ACOT's Alpha-tier best: fighters 8 craft,
   12-34 damage every 2 days, 17 health; bombers 4 craft, 423-507 every 14 days.
-- **Escort** (`lfg_mothership.1` monthly → `.2`): each Mothership's fleet gets a separate escort fleet that follows it
-  (`auto_follow_fleet`), takes **no naval capacity**, and gains **80 Nanite Swarmers and 20 Nanite Interdictors a month**
-  (random picks from your designs), up to **200 / 100** (`@lfg_mothership_*`). Vanilla only gives designs for these with
-  the Nanotech traditions (Swarmers: 4th, Interdictors: 5th); without them that type isn't added. The escort is tied to
-  its Mothership by fleet flag `lfg_escort_of_@<fleet>`; if the Mothership is lost, the escort stays as a normal fleet.
+- **Nanite Reshaper** (`LFG_NANITE_RESHAPER`, X slot, Motherships only): the Reshaping Projectile Accelerator
+  (vanilla `LM_ACCELERATOR`) rebuilt from nanites (20,000 nanites, 10 upkeep): kinetic, **15,000-40,000** damage every
+  50 days (windup 9-34), range 200, accuracy 90%, 50% armour and shield penetration, 2.5x shield damage, no power.
+  ACOT's Alpha X kinetic for comparison: 1,996-5,232 every 80 days, range 175, accuracy 75%, 50% shield penetration.
+- **Nanite Armour** (`LFG_NANITE_ARMOR`, large utility, **any ship**, **10,000 nanites + 15 nanites/month** per plate
+  (`@lfg_nanite_armor_cost` / `_upkeep`; free on the Mothership, whose components add nothing)): per plate +25,000 armour,
+  +2% armour regeneration, +2% armour hardening and **+3% kinetic weapon fire rate** (stacks per plate).
+- **Nanite swarm** (`events/lfg_mothership_events.txt`): each Mothership keeps a **reserve** of Nanite Swarmers and
+  Nanite Interdictors (fleet variables `lfg_swarmers` / `lfg_interdictors`) that grows by **80 / 20 a month**
+  (`lfg_mothership.1` → `.2`), up to **600 / 200** counting deployed ships (`@lfg_mothership_*`). It's deployed **only
+  while an enemy is in its system**: when the Mothership enters a battle (`on_entering_battle` → `.3` → `.4`) the reserve
+  launches as an escort fleet (random picks from your designs) that follows it (`auto_follow_fleet`) and takes no naval
+  capacity; monthly growth during the fight joins it. Every 5 days (`.5`) it checks for hostile ships in the system;
+  once none are left, the survivors return to the reserve and the escort vanishes. Vanilla only gives designs for these
+  with the Nanotech traditions (Swarmers: 4th, Interdictors: 5th); the perk needs Nanotech finished. The escort is tied
+  to its Mothership by fleet flag `lfg_escort_of_@<fleet>`.
 
-**Unverified in game:** `create_ship` adding ships to an existing escort fleet (vanilla only uses it inside
-`create_fleet`); the escort following its Mothership; the Mothership's look and swarm size.
+Verified in game: `create_ship` adds ships to an existing escort fleet (vanilla only uses it inside `create_fleet`).
+**Unverified in game:** the escort deploying on battle, following its Mothership and being recalled once the system is
+clear; the Mothership's look and swarm size.
 
 ## Ascension perk: Curated Progress
 

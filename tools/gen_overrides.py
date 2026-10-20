@@ -492,10 +492,18 @@ NANITE_TEXTURES = {  # skin -> (diffuse, normal, specular)
 NANITE_MOON_DEFAULT_SKIN = ("giga_moon_thrusters_ai_fe", "grey_goo")
 NANITE_MOON_EXTRA_SKINS = {"machine_shell": "Machine Shell", "swarm_core": "Swarm Core"}
 # Mothership (ap_lfg_mothership): Giga's systemcraft sections for lfg_mothership, whose mid section's extra large guns
-# become hangars (with the sternthrusters' own 25: 45 hangars), and Giga's systemcraft model with its worlds
+# become hangars (with the sternthrusters' own 25: 45 hangars) and every section gets MOTHERSHIP_AUX_SLOTS aux slots,
+# and Giga's systemcraft model with its worlds
 # in the three nanite skins (in turn) inside a large swarm.
 MOTHERSHIP_SECTIONS = (GIGA + "common/section_templates/giga_systemcraft.txt", "giga_systemcraft", "lfg_mothership")
 MOTHERSHIP_HANGAR_SLOTS = {"mid": "Nanite Hive Bays"}
+# The Mothership's hull (the systemcraft mesh's "body" object, 24 parts textured with assorted vanilla ships) gets the
+# nanite ships' look (vanilla's Gatebuilder textures, used by Nanite Swarmers), and all its worlds the grey goo skin.
+MOTHERSHIP_HULL_PARTS = 24
+# Aux utility ("A") slots in every Mothership section (Giga's systemcraft: 0-5).
+MOTHERSHIP_AUX_SLOTS = 10
+MOTHERSHIP_HULL_TEXTURES = ("gatebuilder_01_cruiser_diffuse.dds", "gatebuilder_01_cruiser_normal.dds",
+                            "gatebuilder_01_cruiser_specular.dds")
 GIGA_WAR_SYSTEM_ASSET = GIGA + "gfx/models/ships/megastructures/war_system/giga_war_system.asset"
 SHELVE_LOC_FILE = "mod/localisation/english/lfg_shelve_l_english.yml"
 
@@ -757,6 +765,7 @@ def nanite_sections(game: Path, giga: Path) -> tuple[str, list[tuple[str, str]]]
         slot = re.search(r'^\tfits_on_slot = "([^"]+)"', block, re.M).group(1)
         block = re.sub(rf"^(\tship_size = ){giga_size}\s*$", rf"\g<1>{ours}", block, flags=re.M)
         block = block.replace(f'key = "{key}"', f'key = "{ours}_{key}"', 1)
+        block = re.sub(r"^(\taux_utility_slots = )\d+", rf"\g<1>{MOTHERSHIP_AUX_SLOTS}", block, flags=re.M)
         name = f"${key}$"
         if slot in MOTHERSHIP_HANGAR_SLOTS:
             block = block.replace('template = "invisible_extra_large_fixed"', 'template = "large_strike_craft"')
@@ -789,23 +798,24 @@ def extract_entity(text: str, name: str) -> str:
     return extract_block(text[start:], "entity", first=True)
 
 
-def nanite_entity(block: str, name: str, skin: str, swarm: str) -> str:
+def nanite_entity(block: str, name: str, skin: str, swarm: str | None) -> str:
     diffuse, normal, specular = NANITE_TEXTURES[skin]
     block = re.sub(r'^(\tname = )"[^"]+"', rf'\g<1>"{name}"', block, count=1, flags=re.M)
     block = re.sub(r'(texture_diffuse = )"[^"]+"', rf'\g<1>"{diffuse}"', block)
     block = re.sub(r'(texture_normal = )"[^"]+"', rf'\g<1>"{normal}"', block)
     block = re.sub(r'(texture_specular = )"[^"]+"', rf'\g<1>"{specular}"', block)
+    if swarm is None:
+        return block
     return re.sub(r"^\tgame_data = \{", f'\tattach = {{ root = "{swarm}" }}\n\n\tgame_data = {{', block, count=1, flags=re.M)
 
 
 NANITE_SWARM_ENTITIES = """
 # The swarm: vanilla's grey goo world cloud particle on a locator, attached to the hull's root node. Its size follows
 # the scale; change @lfg_nanite_swarm_*_scale to fit it around the hull.
-@lfg_nanite_swarm_moon_scale = 3
 @lfg_nanite_swarm_planet_scale = 5
 @lfg_nanite_swarm_mothership_scale = 15
 """
-for _hull in ("moon", "planet", "mothership"):
+for _hull in ("planet", "mothership"):
     NANITE_SWARM_ENTITIES += f"""
 entity = {{
 	name = "lfg_nanite_swarm_{_hull}_entity"
@@ -836,23 +846,24 @@ def generate_nanite_entities(game: Path, giga: Path) -> str:
         re.search(r"^@war_planet_scale = .*\n", planet, re.M).group(0),
         NANITE_SWARM_ENTITIES,
     ]
+    # No swarm on the moon: in game it showed as a dark blob hiding the moon (its size relative to the moon mesh).
     for skin in [NANITE_MOON_DEFAULT_SKIN[1], *NANITE_MOON_EXTRA_SKINS]:
-        parts.append("\n" + nanite_entity(moon_template, f"lfg_nanite_moon_{skin}_entity", skin, "lfg_nanite_swarm_moon_entity"))
+        parts.append("\n" + nanite_entity(moon_template, f"lfg_nanite_moon_{skin}_entity", skin, None))
     parts.append("\n" + nanite_entity(extract_entity(planet, "synthetics_01_war_planet_complete_entity"),
                                       "lfg_nanite_planetcraft_entity", "grey_goo", "lfg_nanite_swarm_planet_entity"))
-    # Mothership: the systemcraft's worlds take the nanite skins in turn.
+    # Mothership: every world grey goo, the hull in the nanite ships' (Gatebuilder) textures.
     system = read_source(GIGA_WAR_SYSTEM_ASSET, game, giga)
     parts.append(re.search(r"^@war_system_scale = .*\n", system, re.M).group(0))
     mothership = nanite_entity(extract_entity(system, "war_system_complete_entity"), "lfg_mothership_entity",
                                "grey_goo", "lfg_nanite_swarm_mothership_entity")
-    skins = list(NANITE_TEXTURES)
-    chunks = re.split(r"(?=^\tmeshsettings = \{)", mothership, flags=re.M)
-    for i in range(1, len(chunks)):
-        diffuse, normal, specular = NANITE_TEXTURES[skins[(i - 1) % len(skins)]]
-        chunks[i] = re.sub(r'(texture_diffuse = )"[^"]+"', rf'\g<1>"{diffuse}"', chunks[i], count=1)
-        chunks[i] = re.sub(r'(texture_normal = )"[^"]+"', rf'\g<1>"{normal}"', chunks[i], count=1)
-        chunks[i] = re.sub(r'(texture_specular = )"[^"]+"', rf'\g<1>"{specular}"', chunks[i], count=1)
-    parts.append("\n" + "".join(chunks))
+    diffuse, normal, specular = MOTHERSHIP_HULL_TEXTURES
+    hull = "".join(
+        f'\tmeshsettings = {{\n\t\tname = "body"\n\t\tindex = {i}\n\t\ttexture_diffuse = "{diffuse}"\n'
+        f'\t\ttexture_normal = "{normal}"\n\t\ttexture_specular = "{specular}"\n\t\tshader = "PdxMeshShip"\n\t}}\n\n'
+        for i in range(MOTHERSHIP_HULL_PARTS))
+    mothership = re.sub(r"^(\tmeshsettings = \{)", "\t# nanite hull (Gatebuilder textures on every part of the \"body\" object)\n" + hull.replace("\\", "\\\\") + r"\1",
+                        mothership, count=1, flags=re.M)
+    parts.append("\n" + mothership)
     return "".join(parts)
 
 

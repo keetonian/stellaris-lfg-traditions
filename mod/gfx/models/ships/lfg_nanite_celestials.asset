@@ -6,24 +6,8 @@
 
 # The swarm: vanilla's grey goo world cloud particle on a locator, attached to the hull's root node. Its size follows
 # the scale; change @lfg_nanite_swarm_*_scale to fit it around the hull.
-@lfg_nanite_swarm_moon_scale = 3
 @lfg_nanite_swarm_planet_scale = 5
 @lfg_nanite_swarm_mothership_scale = 15
-
-entity = {
-	name = "lfg_nanite_swarm_moon_entity"
-	pdxmesh = "locator_mesh"
-	cull_radius = 10000
-	scale = @lfg_nanite_swarm_moon_scale
-	locator = { name = "swarm" position = { 0 0 0 } }
-	default_state = "idle"
-	state = { name = "idle" state_time = 5
-		start_event = { node = "swarm" particle = "gray_goo_planet_effect" keep_particle = yes trigger_once = yes }
-	}
-	state = { name = "moving" state_time = 5
-		start_event = { node = "swarm" particle = "gray_goo_planet_effect" keep_particle = yes trigger_once = yes }
-	}
-}
 
 entity = {
 	name = "lfg_nanite_swarm_planet_entity"
@@ -60,8 +44,6 @@ entity = {
 	pdxmesh = "war_moon_complete_mesh"
 	scale = @war_moon_scale
 	cull_radius = 10000
-
-	attach = { root = "lfg_nanite_swarm_moon_entity" }
 
 	game_data = {
 		size = 100.0
@@ -209,8 +191,6 @@ entity = {
 	scale = @war_moon_scale
 	cull_radius = 10000
 
-	attach = { root = "lfg_nanite_swarm_moon_entity" }
-
 	game_data = {
 		size = 100.0
 		emissive_recolor_crunch = 50
@@ -356,8 +336,6 @@ entity = {
 	pdxmesh = "war_moon_complete_mesh"
 	scale = @war_moon_scale
 	cull_radius = 10000
-
-	attach = { root = "lfg_nanite_swarm_moon_entity" }
 
 	game_data = {
 		size = 100.0
@@ -573,6 +551,223 @@ entity = {
 	cull_radius = 10000
 	scale = @war_system_scale
 
+	# nanite hull (Gatebuilder textures on every part of the "body" object)
+	meshsettings = {
+		name = "body"
+		index = 0
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 1
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 2
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 3
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 4
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 5
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 6
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 7
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 8
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 9
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 10
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 11
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 12
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 13
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 14
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 15
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 16
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 17
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 18
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 19
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 20
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 21
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 22
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
+	meshsettings = {
+		name = "body"
+		index = 23
+		texture_diffuse = "gatebuilder_01_cruiser_diffuse.dds"
+		texture_normal = "gatebuilder_01_cruiser_normal.dds"
+		texture_specular = "gatebuilder_01_cruiser_specular.dds"
+		shader = "PdxMeshShip"
+	}
+
 	meshsettings = {
 		name = "1"
 		index = 0
@@ -585,18 +780,18 @@ entity = {
 	meshsettings = {
 		name = "2"
 		index = 0
-		texture_diffuse = "city_planet_synthetics_01_diffuse.dds"
-		texture_normal = "city_planet_synthetics_01_normal.dds"
-		texture_specular = "city_planet_synthetics_01_specular.dds"
+		texture_diffuse = "gray_goo_planet_01_diffuse.dds"
+		texture_normal = "nonormal.dds"
+		texture_specular = "nospec.dds"
 		shader = "PdxMeshTerra"
 	}
 
 	meshsettings = {
 		name = "3"
 		index = 0
-		texture_diffuse = "ai_01_diffuse.dds"
-		texture_normal = "ai_01_normals.dds"
-		texture_specular = "ai_01_specular.dds"
+		texture_diffuse = "gray_goo_planet_01_diffuse.dds"
+		texture_normal = "nonormal.dds"
+		texture_specular = "nospec.dds"
 		shader = "PdxMeshTerra"
 	}
 
@@ -612,18 +807,18 @@ entity = {
 	meshsettings = {
 		name = "6"
 		index = 0
-		texture_diffuse = "city_planet_synthetics_01_diffuse.dds"
-		texture_normal = "city_planet_synthetics_01_normal.dds"
-		texture_specular = "city_planet_synthetics_01_specular.dds"
+		texture_diffuse = "gray_goo_planet_01_diffuse.dds"
+		texture_normal = "nonormal.dds"
+		texture_specular = "nospec.dds"
 		shader = "PdxMeshTerra"
 	}
 
 	meshsettings = {
 		name = "7"
 		index = 0
-		texture_diffuse = "ai_01_diffuse.dds"
-		texture_normal = "ai_01_normals.dds"
-		texture_specular = "ai_01_specular.dds"
+		texture_diffuse = "gray_goo_planet_01_diffuse.dds"
+		texture_normal = "nonormal.dds"
+		texture_specular = "nospec.dds"
 		shader = "PdxMeshTerra"
 	}
 
@@ -639,18 +834,18 @@ entity = {
 	meshsettings = {
 		name = "9"
 		index = 0
-		texture_diffuse = "city_planet_synthetics_01_diffuse.dds"
-		texture_normal = "city_planet_synthetics_01_normal.dds"
-		texture_specular = "city_planet_synthetics_01_specular.dds"
+		texture_diffuse = "gray_goo_planet_01_diffuse.dds"
+		texture_normal = "nonormal.dds"
+		texture_specular = "nospec.dds"
 		shader = "PdxMeshTerra"
 	}
 
 	meshsettings = {
 		name = "0"
 		index = 0
-		texture_diffuse = "ai_01_diffuse.dds"
-		texture_normal = "ai_01_normals.dds"
-		texture_specular = "ai_01_specular.dds"
+		texture_diffuse = "gray_goo_planet_01_diffuse.dds"
+		texture_normal = "nonormal.dds"
+		texture_specular = "nospec.dds"
 		shader = "PdxMeshTerra"
 	}
 

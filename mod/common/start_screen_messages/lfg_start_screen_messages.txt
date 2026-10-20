@@ -1,0 +1,12 @@
+# LFG Traditions - game start screen texts. Origins with flags = { custom_start_screen } get no generic text, so each
+# needs a part of its own here (like vanilla's 00_start_screen_messages.txt).
+
+# Nanite Forge
+part = {
+	location = 0
+	localization = "START_SCREEN_LFG_NANITE_FORGE"
+
+	trigger = {
+		has_origin = origin_lfg_nanite_forge
+	}
+}

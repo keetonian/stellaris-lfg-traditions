@@ -29,3 +29,50 @@ trait_lfg_inherited_genius = {
 		}
 	}
 }
+
+# Nanite Forge origin: the founder species' nanite-woven bodies (the origin's traits = { }: shown added and locked in
+# the species designer). Can't be
+# added, removed or merged by species modification (like vanilla's trait_machine_unit). Pops: +0.3 nanites upkeep
+# (per 100 pops, as vanilla's per-pop upkeep), job efficiency +20%; where they're assembled, assembly speed -30% (the
+# origin's downside, moved here; vanilla's Cave Dweller uses the same block).
+trait_lfg_nanite_substrate = {
+	cost = 0
+	sorting_priority = 20
+	initial = no
+	randomized = no
+	species_potential_add = {
+		always = no
+	}
+	species_possible_remove = {
+		always = no
+	}
+	species_possible_merge_add = {
+		always = no
+	}
+
+	icon = "gfx/interface/icons/traits/trait_lfg_nanite_substrate.dds"
+	allowed_archetypes = { MACHINE ROBOT }
+	tags = { machine positive special }
+
+	modifier = {
+		pop_bonus_workforce_mult = 0.20
+	}
+	triggered_planet_growth_habitability_modifier = {
+		planet_pop_assembly_mult = -0.30
+	}
+
+	resources = {
+		category = planet_pops_traits
+		upkeep = {
+			trigger = {
+				is_being_purged = no
+				is_sapient = yes
+			}
+			nanites = 0.3
+		}
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}

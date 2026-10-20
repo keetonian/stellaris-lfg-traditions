@@ -16,6 +16,17 @@ spriteTypes = {
 
 
 
+	### STATIONCRAFT ###
+	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_stationcraft" textureFile = "gfx/interface/traditions/tradition_hex_bg_purple.dds" }
+	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_stationcraft" textureFile = "gfx/interface/tiles/tradition_category_tile_unyielding.dds" }
+	corneredTileSpriteType = { name = "GFX_tradition_category_tile_tradition_lfg_stationcraft" textureFile = "gfx/interface/tiles/tradition_category_tile_unyielding.dds" borderSize = { x = 140 y = 140 } effectFile = "gfx/FX/buttonstate_onlydisable.shader" }
+	spriteType = { name = "GFX_tradition_category_icon_tradition_lfg_stationcraft" textureFile = "gfx/interface/icons/traditions/tree_icons/tradition_icon_unyielding.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_orbital_logistics" textureFile = "gfx/interface/icons/traditions/tradition_supremacy_fleet_logistical_corps.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_kilostructure_doctrine" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_public_works.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_bastion_starbases" textureFile = "gfx/interface/icons/traditions/tradition_unyielding_fortress_doctrine.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_self_repairing_frames" textureFile = "gfx/interface/icons/traditions/tradition_expansion_reach_for_the_stars.dds" }
+	spriteType = { name = "GFX_tr_lfg_stationcraft_orbital_refineries" textureFile = "gfx/interface/icons/traditions/tradition_prosperity_efficiency_algorithms.dds" }
+
 	### XENOARCHAEOLOGY ###
 	spriteType = { name = "GFX_tradition_hex_bg_tradition_lfg_xenoarchaeology" textureFile = "gfx/interface/traditions/tradition_hex_bg_purple.dds" }
 	spriteType = { name = "GFX_tradition_category_bg_tradition_lfg_xenoarchaeology" textureFile = "gfx/interface/tiles/tradition_category_tile_discovery.dds" }

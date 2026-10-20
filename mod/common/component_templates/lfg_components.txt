@@ -68,3 +68,287 @@ strike_craft_component_template = {
 		carrier
 	}
 }
+
+# Mothership X slot: the Reshaping Projectile Accelerator (vanilla LM_ACCELERATOR) rebuilt from nanites.
+# ~7.5x ACOT's Alpha X kinetic (1996-5232 per 80 days): 15000-40000 per 50 days, 0.5 armour and shield penetration.
+weapon_component_template = {
+	key = "LFG_NANITE_RESHAPER"
+	size = extra_large
+	icon = "GFX_ship_part_lm_accelerator"
+	icon_frame = 1
+	type = instant
+
+	damage = { min = 15000 max = 40000 }
+	windup = { min = 9 max = 34 }
+	total_fire_time = 50
+	range = 200
+	accuracy = 0.90
+	power = 0
+	hull_damage = 1.0
+	armor_penetration = 0.5
+	armor_damage = 1.0
+	shield_penetration = 0.5
+	shield_damage = 2.5
+	tracking = 0.0
+
+	firing_arc = 45.0
+	min_range = 45
+	use_ship_main_target = no
+
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = 20000
+		}
+		upkeep = {
+			nanites = 10
+		}
+	}
+	potential = {
+		is_ship_size = lfg_mothership
+	}
+
+	component_set = "LFG_NANITE_RESHAPER"
+	prerequisites = { "tech_lfg_mothership" }
+	projectile_gfx = "adv_kinetic_artillery"
+
+	tags = {
+		weapon_type_kinetic
+		weapon_role_artillery
+		x_slot
+	}
+	ai_tags = {
+		weapon_role_artillery
+		artillery
+	}
+	ai_weight = {
+		weight = 100
+	}
+}
+
+# Nanite Armour (any ship with a large utility slot, from the Mothership tech): each plate adds armour, hardening,
+# armour regeneration and kinetic fire rate.
+utility_component_template = {
+	key = "LFG_NANITE_ARMOR"
+	size = large
+	icon = "GFX_ship_part_armor_5"
+	icon_frame = 1
+	power = 0
+
+	resources = {
+		category = ship_components
+		cost = {
+			nanites = @lfg_nanite_armor_cost
+		}
+		upkeep = {
+			nanites = @lfg_nanite_armor_upkeep
+		}
+	}
+
+	modifier = {
+		ship_armor_add = 25000
+		ship_armor_regen_add_perc = 0.02
+	}
+	ship_modifier = {
+		ship_armor_hardening_add = 0.02
+		weapon_type_kinetic_weapon_fire_rate_mult = 0.03
+	}
+
+	component_set = "LFG_NANITE_ARMOR"
+	prerequisites = { "tech_lfg_mothership" }
+
+	ai_weight = {
+		weight = 100
+	}
+}
+
+# Galvanic upgrades (galvanic, non-bio empires, like vanilla's lines; common/technology/lfg_technology.txt).
+# Reshaping Projectile Accelerator, level 2 (vanilla LM_ACCELERATOR: 165-500, 50 days, range 120, 85%, 50% armour pen.).
+weapon_component_template = {
+	key = "LFG_LM_ACCELERATOR_2"
+	size = large
+	icon = "GFX_ship_part_lm_accelerator"
+	icon_frame = 1
+	type = instant
+
+	damage = { min = 350 max = 1050 }
+	windup = { min = 9 max = 30 }
+	total_fire_time = 45
+	range = 140
+	accuracy = 0.90
+	power = -120
+	hull_damage = 1.0
+	armor_penetration = 0.75
+	armor_damage = 1.0
+	shield_penetration = 0.0
+	shield_damage = 3.0
+	tracking = 0.0
+	min_range = 45.0
+
+	prerequisites = { "tech_lfg_lm_accelerator_2" }
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+
+	component_set = "LFG_LM_ACCELERATOR_2"
+	projectile_gfx = "adv_kinetic_artillery"
+	tags = {
+		weapon_type_kinetic
+		l_slot
+		weapon_role_artillery
+	}
+	ai_tags = {
+		weapon_role_artillery
+		artillery
+		artillery_stealth
+	}
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 1000
+			volatile_motes = 10
+		}
+		upkeep = {
+			energy = 6
+			alloys = 1.2
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# Galvanic armour, level 6 (vanilla LM_ARMOR_5: 260 / 780 / 2340 armour, 1% armour + hull regen, +2% energy fire rate,
+# 4% hardening).
+utility_component_template = {
+	key = "LFG_SMALL_LM_ARMOR_6"
+	size = small
+	icon = "GFX_ship_part_lm_armor_5"
+	icon_frame = 1
+	power = 0
+	modifier = {
+		ship_armor_add = 400
+		ship_armor_regen_add_perc = 0.02
+		ship_hull_regen_add_perc = 0.02
+	}
+	ship_modifier = {
+		weapon_type_energy_weapon_fire_rate_mult = 0.02
+		ship_armor_hardening_add = 0.06
+	}
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+	prerequisites = { "tech_lfg_lm_armor_6" }
+	component_set = "LFG_LM_ARMOR_6"
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 160
+		}
+		upkeep = {
+			energy = 0.34
+			alloys = 0.1
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+utility_component_template = {
+	key = "LFG_MEDIUM_LM_ARMOR_6"
+	size = medium
+	icon = "GFX_ship_part_lm_armor_5"
+	icon_frame = 1
+	power = 0
+	modifier = {
+		ship_armor_add = 1200
+		ship_armor_regen_add_perc = 0.02
+		ship_hull_regen_add_perc = 0.02
+	}
+	ship_modifier = {
+		weapon_type_energy_weapon_fire_rate_mult = 0.02
+		ship_armor_hardening_add = 0.06
+	}
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+	prerequisites = { "tech_lfg_lm_armor_6" }
+	component_set = "LFG_LM_ARMOR_6"
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 400
+		}
+		upkeep = {
+			energy = 0.68
+			alloys = 0.2
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+utility_component_template = {
+	key = "LFG_LARGE_LM_ARMOR_6"
+	size = large
+	icon = "GFX_ship_part_lm_armor_5"
+	icon_frame = 1
+	power = 0
+	modifier = {
+		ship_armor_add = 3600
+		ship_armor_regen_add_perc = 0.02
+		ship_hull_regen_add_perc = 0.02
+	}
+	ship_modifier = {
+		weapon_type_energy_weapon_fire_rate_mult = 0.02
+		ship_armor_hardening_add = 0.06
+	}
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+	prerequisites = { "tech_lfg_lm_armor_6" }
+	component_set = "LFG_LM_ARMOR_6"
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 1000
+		}
+		upkeep = {
+			energy = 1.36
+			alloys = 0.4
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}

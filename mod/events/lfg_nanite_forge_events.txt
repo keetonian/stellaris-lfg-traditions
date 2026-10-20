@@ -17,6 +17,8 @@ country_event = {
 	}
 
 	immediate = {
+		# A nanite vein in the homeworld (planetary deposit, +10 nanites).
+		capital_scope = { add_deposit = d_lfg_nanite_vein }
 		# A small homeworld: 1,500 fewer pops, taken 100 at a time from its largest pop group.
 		capital_scope = {
 			while = {

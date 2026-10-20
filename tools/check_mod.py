@@ -38,7 +38,8 @@ KNOWN_TREE_TEMPLATES = {
     "tree_12_11", "tree_12_12", "tree_21_11", "tree_21_12", "tree_21_21",
 }
 # Required prerequisites per layout: slot index -> slots it must require (1-based).
-TEMPLATE_PREREQS = {"tree_21_11": {4: {1, 2}, 5: {3}}, "tree_111_11": {2: {1}, 3: {2}, 5: {4}}}
+TEMPLATE_PREREQS = {"tree_21_11": {4: {1, 2}, 5: {3}}, "tree_111_11": {2: {1}, 3: {2}, 5: {4}},
+                    "tree_12_12": {3: {1}, 4: {1, 2}, 5: {2}}}
 
 ALLOWED_FILES = [
     r"descriptor\.mod",
@@ -68,6 +69,8 @@ ALLOWED_FILES = [
     r"common/ship_sizes/[^/]+\.txt",
     r"common/section_templates/[^/]+\.txt",
     r"common/component_templates/[^/]+\.txt",
+    r"common/component_sets/[^/]+\.txt",
+    r"common/start_screen_messages/[^/]+\.txt",
     r"common/technology/lfg_[^/]+\.txt",
     r"common/buildings/lfg_[^/]+\.txt",
     r"common/council_agendas/[^/]+\.txt",
@@ -81,6 +84,9 @@ ALLOWED_FILES = [
     r"interface/[^/]+\.gfx",
     r"gfx/interface/icons/districts/lfg_[^/]+\.dds",  # art/make_zone_icons.py
     r"gfx/interface/icons/governments/civics/civic_lfg_[^/]+\.dds",  # art/make_civic_icons.py
+    r"gfx/interface/icons/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py
+    r"gfx/interface/icons/traits/trait_lfg_[^/]+\.dds",  # art/make_origin_art.py
+    r"gfx/event_pictures/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py
     r"gfx/models/ships/lfg_[^/]+\.asset",  # generated: nanite hulls' look
     r"localisation/english/[^/]+_l_english\.yml",
     r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
@@ -89,7 +95,8 @@ OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.O
 KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "origin_lfg_", "tech_lfg_", "building_lfg_", "d_lfg_", "councilor_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
                 "@lfg_")
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
-PREFIX_EXEMPT_FOLDERS = ("common/on_actions/", "common/section_templates/", "common/component_templates/")  # sections: ship_section_template, keyed inside
+PREFIX_EXEMPT_FOLDERS = ("common/on_actions/", "common/section_templates/", "common/component_templates/",
+                         "common/component_sets/", "common/start_screen_messages/")  # sections: ship_section_template, keyed inside
 # Single-category values used by vanilla policies (common/policies/00_policies.txt, 4.5).
 POLICY_CATEGORIES = {"diplomacy", "economy", "military", "research", "society"}
 STATIC_MODIFIER_NON_MODIFIERS = {"icon", "icon_frame", "custom_tooltip", "hide_in_tooltip", "show_only_custom_tooltip"}
@@ -522,7 +529,7 @@ def mod_sprites(mod: Mod, r: Report) -> Dict[str, str]:
     return sprites
 
 
-def check_sprites(mod: Mod, game: Optional[Path], r: Report) -> None:
+def check_sprites(mod: Mod, game: Optional[Path], r: Report, giga: Optional[Path] = None) -> None:
     sprites = mod_sprites(mod, r)
     for ck, cat in mod.top("common/tradition_categories").items():
         for kind in ("hex_bg", "category_bg", "category_tile", "category_icon"):
@@ -544,8 +551,8 @@ def check_sprites(mod: Mod, game: Optional[Path], r: Report) -> None:
         r.skip("texture files exist")
         return
     for tex in sorted(textures):
-        if not ((mod.root / tex).exists() or (game / tex).exists()):
-            r.fail(f"texture not found in mod or game: {tex}")
+        if not ((mod.root / tex).exists() or (game / tex).exists() or (giga is not None and (giga / tex).exists())):
+            r.fail(f"texture not found in mod, game or Gigastructural: {tex}")
 
 
 def load_modifiers(log: Optional[Path]) -> Set[str]:
@@ -781,7 +788,7 @@ def run(mod_dir: Path, game: Optional[Path], giga: Optional[Path], modifiers_log
     check_system_names(mod, loc, r)
     check_events(mod, loc, r)
     check_scripted_references(mod, r)
-    check_sprites(mod, game, r)
+    check_sprites(mod, game, r, giga)
     known_modifiers = load_modifiers(modifiers_log)
     check_modifiers(mod, known_modifiers, r)
     check_agendas_and_static_modifiers(mod, loc, known_modifiers, r)

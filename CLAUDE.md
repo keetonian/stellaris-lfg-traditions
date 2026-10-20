@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 8 tradition trees, 7 council agenda definitions (6 agendas), the Evolutionary
+Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 9 tradition trees, 7 council agenda definitions (6 agendas), the Evolutionary
 Predators edict `lfg_species_experimentation`, the ascension perk
 `ap_lfg_curated_progress` + 27 generated Shelve edicts, and generated overrides of 1 situation +
 1 district (district_resort) + 8 resort zones + 12 city zones (Prison Industry) + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script
@@ -34,11 +34,16 @@ mod/                                  # exactly what ships
   localisation/english/lfg_nanite_sections_l_english.yml     # GENERATED: their section names
   gfx/models/ships/lfg_nanite_celestials.asset               # GENERATED (NANITE_TEXTURES / _SKINS): nanite skins + grey goo swarm
   common/scripted_triggers/zz_lfg_trigger_overrides.txt      # GENERATED: Giga's war moon / planet component triggers + our hulls
-  common/component_templates/lfg_components.txt              # LFG_NANITE_SWARM_HANGAR (Mothership only)
-  common/scripted_effects/lfg_mothership_effects.txt         # lfg_mothership_add_escort_ships / _add_escorts
-  events/lfg_mothership_events.txt                           # .1 monthly -> .2 escort fleet (swarmers / interdictors)
-  common/technology/lfg_technology.txt                       # tech_lfg_swarmforge / _nanite_war_moon / _nanite_planetcraft (offered by the perk)
-  common/buildings/lfg_buildings.txt                         # building_lfg_nanite_automation (origin), _nanite_cognition_core, _nanotensile_converter (Nanotech)
+  common/component_templates/lfg_components.txt              # LFG_NANITE_SWARM_HANGAR, _RESHAPER (X) (Mothership only), _ARMOR (any ship);
+                                                             #   LFG_LM_ACCELERATOR_2, LFG_*_LM_ARMOR_6 (galvanic)
+  common/scripted_effects/lfg_mothership_effects.txt         # lfg_mothership_grow_reserve / _deploy / _launch_reserve / _recall
+  events/lfg_mothership_events.txt                           # .1/.2 monthly reserve; .3/.4 battle -> deploy; .5 recall when no enemy;
+                                                             #   .6 one per empire (on_ship_built: delete + refund an extra)
+  gfx/models/ships/lfg_megastructures.asset                  # Progenitor Forge: Mega Shipyard scaled 4x
+  interface/lfg_megastructures.gfx                           # megastructure build / outliner icons
+  common/component_sets/lfg_component_sets.txt               # their sets (name / icon)
+  common/technology/lfg_technology.txt                       # tech_lfg_swarmforge / _nanite_war_moon / _nanite_planetcraft (offered by the perk); _lm_accelerator_2 / _lm_armor_6 (galvanic civics)
+  common/buildings/lfg_buildings.txt                         # building_lfg_nanite_automation + _nanite_consensus_1-4 (origin), _nanite_cognition_core, _nanotensile_converter (Nanotech)
   common/static_modifiers/lfg_specialist_automation.txt      # GENERATED (specialist_jobs in gen_overrides.py): Cognition Core job list
   common/deposits/lfg_deposits.txt                           # d_lfg_nanite_forge_star (+22 energy), Ancient harvester's huge / vast deposits
   common/starbase_buildings/zz_lfg_starbase_building_overrides.txt  # GENERATED: vanilla nanite_harvester, not beside ours
@@ -63,6 +68,7 @@ mod/                                  # exactly what ships
   common/scripted_effects/lfg_shellworlders_effects.txt      # lfg_sync_shellworld_modifier / _natural_world / lfg_sync_arc_neighbours
   events/lfg_synthetic_fertility_events.txt                  # lfg_synthetic_fertility.1: extra Identity Repository uploads (monthly)
   events/lfg_penal_events.txt                                # lfg_penal.1: Penitence penal colony modifiers + counts (monthly; only the penal colony + planets with our modifiers)
+  events/lfg_stationcraft_events.txt                         # lfg_stationcraft.1: monthly starbase / kilo / megastructure counts
   events/lfg_lineage_events.txt                              # lfg_lineage.1: Every Shore planet-type count (monthly cache)
   common/scripted_effects/lfg_penal_effects.txt              # lfg_sync_penal_modifier / lfg_sync_penal_unemployed / lfg_penal_ship_unemployed
   common/zones/lfg_zones.txt                                 # zone_lfg_penal_supertensiles, zone_lfg_penal_bulk_matter
