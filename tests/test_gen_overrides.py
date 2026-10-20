@@ -203,7 +203,9 @@ class GenOverridesTests(unittest.TestCase):
             "\t\t}\n\t}\n}\n")
         (self.game / "common/pop_jobs/02_specialist_jobs.txt").write_text(
             "physicist = {\n\tcategory = specialist\n}\nminer = {\n\tcategory = worker\n}\n"
-            "not_a_real_job = {\n\tcategory = specialist\n}\n")
+            "not_a_real_job = {\n\tcategory = specialist\n}\n"
+            "resort_worker = {\n\tcategory = specialist\n\ttriggered_planet_modifier = {\n\t\tplanet_amenities_add = 200\n\t}\n\n"
+            "\tcountry_modifier = {\n\t\tpop_amenities_usage_mult = -0.01\n\t}\n}\n")
         (self.tmp / "giga/common/pop_jobs").mkdir(parents=True)
         (self.tmp / "giga/common/section_templates").mkdir(parents=True)
         (self.tmp / "giga/common/section_templates/giga_systemcraft.txt").write_text(

@@ -657,8 +657,11 @@ tr_lfg_broadcast_syndication_deals = {
 # THE GRAND TOUR - hook: scales with Resort Workers employed (per 100); agenda "Grand Tour Season"
 #####################################################################
 
+# Also: Resort Workers count for the Instrument of Desire's Exploitation accord (psionic empires), through the generated
+# resort_worker override (common/pop_jobs/zz_lfg_job_overrides.txt).
 tr_lfg_tourism_adopt = {
 	unlocks_agenda = agenda_lfg_grand_tour_season
+	custom_tooltip = tr_lfg_tourism_adopt_tt
 	possible = {
 		has_technology = tech_resort_colonies
 	}

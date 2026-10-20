@@ -74,3 +74,92 @@ replicator = {
 	}
 
 }
+
+# from common/pop_jobs/02_specialist_jobs.txt
+resort_worker = {
+	category = specialist
+
+	swappable_data = {
+		default = {
+			condition_string = SPECIALIST_JOB_TRIGGER
+			building_icon = building_amusement_megaplex
+			icon = servant
+		}
+	}
+
+	tags = { unity amenities }
+
+	possible_pre_triggers = {
+		has_owner = yes
+		is_being_purged = no
+		is_being_assimilated = no
+		is_sapient = yes
+	}
+
+	possible_precalc = can_fill_specialist_job
+	possible = {
+		entertainer_job_check_trigger = yes
+	}
+
+	resources = {
+		category = planet_entertainers
+		produces = {
+			unity = 1
+			trade = 4
+		}
+		upkeep = {
+			consumer_goods = 2
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_tradition = tr_mercantile_commercial_enterprise
+				NOT = {
+					has_valid_civic = civic_dystopian_society
+				}
+			}
+		}
+		planet_amenities_add = 200
+		mult = value:scripted_modifier_mult|MODIFIER|pop_job_amenities_mult|
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_modifier = exploitation_accord
+				has_tradition = tr_lfg_tourism_adopt
+			}
+		}
+		planet_jobs_produces_mult = @accord_exploitation_resources_from_jobs
+	}
+
+	country_modifier = {
+		pop_amenities_usage_mult = -0.01
+		planet_pops_trade_produces_mult = 0.02
+	}
+
+	weight = {
+		weight = @specialist_job_weight
+		mult = value:scripted_modifier_job_weight_mult|MODIFIER|pop_job_amenities_mult|
+		# crisis purge
+		modifier = {
+			factor = 0.01
+			colony.controller? = {
+				OR = {
+					is_country_type = swarm
+					is_country_type = ai_empire
+				}
+			}
+			OR = { # contingency won't purge itself
+				NOT = { exists = event_target:custodian_bot }
+				AND = {
+					exists = event_target:custodian_bot
+					NOT = { species = { is_same_value = event_target:custodian_bot } }
+				}
+			}
+		}
+	}
+
+}

@@ -203,7 +203,7 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
 
 | Tradition | Effect |
 |---|---|
-| Adopt | Resort Worker workforce +10%, resort district build speed +25% · unlocks agenda **Grand Tour Season** |
+| Adopt | Resort Worker workforce +10%, resort district build speed +25% · psionic empires with the Instrument of Desire's **Exploitation** accord: Resort Workers count like Entertainers (+1% resources from jobs per 100 on their planet; generated `resort_worker` override) · unlocks agenda **Grand Tour Season** |
 | 1. Hospitality Academies | Each **Accommodation District** gives +150 Resort Worker jobs (+50%; via a generated `district_resort` override), and every resort-world **district specialization** gives +50% jobs: Resort (+50 Resort Workers), Entertainment (+50 Entertainers), and the attractions Zoo (+100 Biologists), Grand Museum and Spiritual Retreat (+100 Bureaucrats), Hunting Ground (+100 Wranglers), Restoration Enclave (+100 Healthcare), Proving Grounds (+100 Entertainers). Generated zone overrides, modelled on vanilla's Commercial Enterprise |
 | 2. Package Holidays ⚙ | Per 100 Resort Workers: unity +0.5%, pop happiness +0.25% |
 | 3. Paradise Unbound | Each Accommodation District adds +0.5 max districts to the resort world · unlocks the **Expand the Resort** decision · +1 max Accommodation District, resort district build speed +25% |

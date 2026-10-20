@@ -395,6 +395,20 @@ NANITE_DEPOSITS = "common/deposits/13_machine_age_deposits.txt"
 NANITE_DEPOSIT_AMOUNTS = [("d_nanite_harvester_deposit", "0.1"), ("d_nanite_harvester_deposit_regular", "1.6"),
                           ("d_nanite_harvester_deposit_large", "25.6")]
 
+# Same block as vanilla's entertainer job (02_specialist_jobs.txt), inserted before resort_worker's country_modifier
+# (after the block that precedes it).
+RESORT_WORKER_EXPLOITATION = (
+    "\ttriggered_planet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\towner? = {\n"
+    "\t\t\t\thas_modifier = exploitation_accord\n"
+    "\t\t\t\thas_tradition = tr_lfg_tourism_adopt\n"
+    "\t\t\t}\n"
+    "\t\t}\n"
+    "\t\tplanet_jobs_produces_mult = @accord_exploitation_resources_from_jobs\n"
+    "\t}\n"
+)
+
 REPLICATOR_NANITE_UPKEEP = (
     "\t\tupkeep = {\n"
     "\t\t\ttrigger = { owner = { has_origin = origin_lfg_nanite_forge } }\n"
@@ -426,9 +440,12 @@ OVERRIDES = {
          ARCHAEO_FACULTY_BLOCK),
     ],
     # Nanite Forge origin: +0.5 nanites upkeep per replicator job (per 100 pops working it, like the job's alloys).
+    # Tourism adopted: Resort Workers count for the Instrument of Desire's Exploitation accord like Entertainers.
     "mod/common/pop_jobs/zz_lfg_job_overrides.txt": [
         ("common/pop_jobs/04_gestalt_jobs.txt", "replicator", r"^\tresources = \{\n\t\tcategory = planet_pop_assemblers\n",
          REPLICATOR_NANITE_UPKEEP),
+        ("common/pop_jobs/02_specialist_jobs.txt", "resort_worker", r"^\t\}\n(?=\s*\tcountry_modifier = \{)",
+         RESORT_WORKER_EXPLOITATION),
     ],
     # Nanite harvesters: every harvested nanite deposit yields twice vanilla's (a second, equal produces block; several
     # add up), so a harvester's starting and final amounts double.

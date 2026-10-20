@@ -117,6 +117,7 @@
  tradition_lfg_tourism_desc:0 "Our resort world (or Pleasure World) is the jewel of the galaxy. The more of its people we put to work pampering visitors, the more unity, trade and prestige it brings, and our hospitality schools turn out the finest resort staff among the stars."
  tr_lfg_tourism_adopt:0 "Tourism Traditions"
  tr_lfg_tourism_adopt_desc:0 "Requires §YResort Colonies§! research.\nUnlocks the §YGrand Tour Season§! council agenda."
+ tr_lfg_tourism_adopt_tt:0 "With the §YInstrument of Desire§!'s §YExploitation§! accord, §YResort Workers§! count like §YEntertainers§!: resources from jobs on their planet §G+1%§! per 100."
  tr_lfg_tourism_finish:0 "Tourism Traditions Finished"
  tr_lfg_tourism_finish_desc:0 "Ascension Perks Unlocked: §G+1§!"
  tr_lfg_tourism_hospitality_academies:0 "Hospitality Academies"
