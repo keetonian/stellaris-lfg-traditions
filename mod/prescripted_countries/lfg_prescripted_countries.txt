@@ -540,3 +540,55 @@ lfg_empire_alaran = {
 		leader_class = official
 	}
 }
+
+# Cevelli Stormbloom Cooperative (from the saved design "Cevellian Cooperative"; spawns as AI: yes)
+lfg_empire_cevelli = {
+	name = "lfg_empire_cevelli_name"
+	adjective = "lfg_empire_cevelli_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_cevelli_prefix"
+	species = {
+		class = "FUN"
+		portrait = "fun16"
+		name = "lfg_empire_cevelli_species"
+		plural = "lfg_empire_cevelli_species_plural"
+		adjective = "lfg_empire_cevelli_species_adj"
+		name_list = "lfg_cevelli"
+		trait = "trait_organic"
+		trait = "trait_plantoid_budding"
+		trait = "trait_thrifty"
+		trait = "trait_unruly"
+		trait = "trait_humanoid_psychological_infertility"
+		trait = "trait_charismatic"
+	}
+	room = "default_room"
+	authority = "auth_corporate"
+	government = gov_storm_chasers
+	civics = { "civic_free_traders" "civic_corporate_ascensionists" "civic_gospel_of_the_masses" }
+	ethic = "ethic_fanatic_xenophile"
+	ethic = "ethic_spiritualist"
+	origin = "origin_storm_chasers"
+	flag = lfg_empire_cevelli	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_cevelli_planet"
+	planet_class = "pc_tropical"
+	system_name = "lfg_empire_cevelli_system"
+	graphical_culture = "psionic_01"
+	city_graphical_culture = "fungoid_01"
+	empire_flag = {
+		icon = { category = "plantoid" file = "plantoid_09.dds" }
+		background = { category = "backgrounds" file = "flag_BG_38.dds" }
+		colors = { "sky_blue" "intense_purple" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_cevelli_ruler"
+		ruler_title = "lfg_empire_cevelli_ruler_title"
+		gender = female
+		portrait = "fun16"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_principled"
+		leader_class = official
+	}
+}

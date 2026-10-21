@@ -381,3 +381,39 @@ lfg_alaran = {
 		}
 	}
 }
+
+lfg_cevelli = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Thundercap" "Eye of the Gale" "Sower" "Lightning Bloom" "Cevell's Gale" "Squall Market" "Windborne Spore" "Storm Psalm" "Rainmother" "Gospel of the Gale" "Stormchaser" "Flashpoint" "Thunderhead" "Charged Cap" "Wild Season" "Front Runner" "Static Bloom" "Downpour" "Gale Ledger" "Storm Tithe" "Sporestorm" "Wake of the Tempest" "Ionized" "Rolling Thunder" "Bright Hyphae" "Cloudburst" "Petrichor" "Monsoon Bloom" "The Great Sower" "Eyewall"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Stormchaser Flotilla" "Gale Escort" "Thunderhead Squadron" "Sower's Wing" "Front Patrol" "Cloudburst Convoy" "Tempest Pilgrims" "Thunderloam Home Fleet"
+		}
+		sequential_name = lfg_empire_cevelli_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_cevelli_seq_army }
+		defense_army = { sequential_name = lfg_empire_cevelli_seq_defense }
+		assault_army = { sequential_name = lfg_empire_cevelli_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_cevelli_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_cevelli_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "New Thunderloam" "Galefield" "Sporefall" "Stormbloom" "Petrichor" "Rainhollow" "Squallmere" "Thunderglen" "Cloudmoss" "Brightcap" "Wildseason" "Downpour" "Gale's Rest" "Monsoon Reach" "Lightningwood" "Staticmoor" "Sowerfield" "Eyewall" "Cevell Minor" "Tempest Loam" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Khebb" "Cevell" "Thund" "Galo" "Sporr" "Rainn" "Static" "Brumm" "Voltu" "Squall" }
+			first_names_female = { "Khebba" "Cevella" "Thunda" "Gala" "Sporra" "Raina" "Stassi" "Brumma" "Volta" "Squalla" }
+			second_names = { "Thundercap" "Galeborn" "Stormsower" "Rainbloom" "Brightgill" "Windspore" "Cloudcap" "Stormfaith" "Squallheart" "Lightningroot" }
+			regnal_first_names = { "Khebba" "Cevella" "Thunda" "Gala" "Khebb" "Cevell" "Thund" "Galo" }
+			regnal_second_names = { "Thundercap" "Galeborn" "Stormsower" "Rainbloom" }
+		}
+	}
+}

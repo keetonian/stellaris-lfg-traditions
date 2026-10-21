@@ -41,3 +41,7 @@ lfg_empire_khellzen = {
 lfg_empire_alaran = {
 	flags = { lfg_empire_alaran custom_start_screen }
 }
+
+lfg_empire_cevelli = {
+	flags = { lfg_empire_cevelli custom_start_screen }
+}

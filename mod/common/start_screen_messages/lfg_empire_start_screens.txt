@@ -79,3 +79,11 @@ part = {
 		has_country_flag = lfg_empire_alaran
 	}
 }
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_CEVELLI_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_cevelli
+	}
+}

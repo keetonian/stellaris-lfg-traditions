@@ -1122,13 +1122,13 @@ DRAKE_BABY_SIZE = "space_dragon_origin_baby"
 DRAKE_ELDER_STEP = 11
 DRAKE_STEP_YEARS = 4  # keep in step with lfg_dragons.1 (48 months)
 DRAKE_MAX_STEP = 24
-DRAKE_BASE_HP = 10000
+DRAKE_BASE_HP = 8500  # 10,000 at first, -15%
 DRAKE_GROWTH, DRAKE_LEGEND_GROWTH = 1.75, 1.5  # size (model) growth
 # Legendary durability grows slower than its size: x1.35 a step (cap ~230M, ~1.8x the Mothership's 127M).
 DRAKE_LEGEND_DURABILITY_GROWTH = 1.35
 # Weapon damage has its own curve: half the durability growth up to the Elder, then x1.3 a Legendary step (durability:
 # x1.5), so a capped Legendary hits ~x7,100 a baby's breath, not x91,750.
-DRAKE_DAMAGE_FACTOR, DRAKE_LEGEND_DAMAGE_GROWTH = 0.5, 1.3
+DRAKE_DAMAGE_FACTOR, DRAKE_LEGEND_DAMAGE_GROWTH = 0.32, 1.3  # 0.5 at first, -20%, -20%
 DRAKE_FOOD, DRAKE_FOOD_GROWTH, DRAKE_LEGEND_FOOD_GROWTH = 41.58, 1.45, 1.292  # 48 at first, -25%, then +10%, then +5% at every step
 DRAKE_BREATH = "LFG_DRAKE_BREATH"
 # Vanilla weapon slots kept beside the breath: four claw / wing strikes (our LFG_DRAKE_CLAW_<step>: vanilla's
@@ -1137,9 +1137,9 @@ DRAKE_BREATH = "LFG_DRAKE_BREATH"
 DRAKE_KEEP_SLOTS = {"SECONDARY_GUN_01", "SECONDARY_GUN_02", "SECONDARY_GUN_03", "SECONDARY_GUN_04",
                     "TERTIARY_GUN_01", "TERTIARY_GUN_02"}
 # Durability split at every step: mostly hull and armour, a token shield; plus damage reduction and living regeneration.
-DRAKE_HULL_SHARE, DRAKE_ARMOR_SHARE, DRAKE_SHIELD_SHARE = 0.62, 0.36, 0.002  # shields: 2% at first, -90%; a quarter of the armour (0.48) moved to hull
-DRAKE_DAMAGE_REDUCTION = 0.10
-DRAKE_REGEN = 0.005  # hull and armour regeneration (0.25 meant it never took lasting damage)
+DRAKE_HULL_SHARE, DRAKE_ARMOR_SHARE, DRAKE_SHIELD_SHARE = 0.62, 0.108, 0.002  # shields: 2% at first, -90%; armour: 0.48, a quarter moved to hull, then -70%
+DRAKE_DAMAGE_REDUCTION = 0  # removed (was 25%, then 10%)
+DRAKE_REGEN = 0  # bonus hull / armour regeneration removed (was 25%, then 0.5%)
 # The Legendary Dragon's hull grows extra: x1 at the Elder's step, rising evenly to x2 at step 24 (~917M hull, under the
 # ~2.1 billion the game can hold).
 DRAKE_LEGEND_HULL_BONUS = 0.0  # was 1.0 (x2 hull at step 24); dropped with DRAKE_LEGEND_DURABILITY_GROWTH
@@ -1148,7 +1148,7 @@ DRAKE_STAGES = [(3, "Baby Drake"), (6, "Juvenile Dragon"), (10, "Dragon"), (11, 
 # The Dragon's Breath, one per step (its damage and splash baked in: a ship_weapon_damage modifier on the ship size
 # didn't raise its damage in game): base damage and splash, times the step's growth.
 DRAKE_BREATH_DAMAGE = (5000, 9000)
-DRAKE_BREATH_SPLASH = (2500, 8100)
+DRAKE_BREATH_SPLASH = (500, 1620)  # 2,500-8,100 at first, -60%, -50%
 DRAKE_SPLASH_RADIUS, DRAKE_LEGEND_SPLASH_RADIUS_STEP = 120, 10  # +10 a Legendary step: 250 at step 24
 DRAKE_BREATH_TEMPLATE = """weapon_component_template = {{
 	key = "{key}"
@@ -1162,7 +1162,7 @@ DRAKE_BREATH_TEMPLATE = """weapon_component_template = {{
 	windup = {{ min = 5 max = 15 }}
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
-	accuracy = 1.0
+	accuracy = 0.95
 	power = 0
 	hull_damage = 1.5	# 150% against hull
 	armor_penetration = 0.25
@@ -1215,6 +1215,7 @@ DRAKE_BREATH_TEMPLATE = """weapon_component_template = {{
 """
 # The claws: vanilla's secondary ice weapon (its stats from weapon_components.csv), damage times the step's growth.
 DRAKE_CLAW_SOURCE = "DRAGON_SECONDARY_WEAPON_ICE"
+DRAKE_CLAW_DAMAGE_FACTOR = 0.5  # on top of the damage curve: half the claws' first damage
 DRAKE_FILES = {
     "size": "mod/common/ship_sizes/lfg_drake_ship_sizes.txt",
     "section": "mod/common/section_templates/lfg_drake_section_templates.txt",
@@ -1302,6 +1303,9 @@ def generate_drakes(game: Path) -> dict[str, str]:
     for key, n, legendary in drake_steps():
         s = drake_stats(n)
         stage = drake_stage(n, legendary)
+        defense_lines = "".join(f"\t\t{k} = {v}\n" for k, v in (
+            ("ship_damage_reduction_mult", DRAKE_DAMAGE_REDUCTION), ("ship_hull_regen_add_perc", DRAKE_REGEN),
+            ("ship_armor_regen_add_perc", DRAKE_REGEN)) if v)
         sizes.append(f"""
 # Step {n} ({n * DRAKE_STEP_YEARS} years): {stage}, durability {s['hp'] + s['armor'] + s['shield']:,}, damage x{s['growth']:,.1f}, model x{s['length']:.2f}
 {key} = {{
@@ -1317,10 +1321,7 @@ def generate_drakes(game: Path) -> dict[str, str]:
 		ship_evasion_add = 25
 		ship_armor_add = {s['armor']}
 		ship_shield_add = {s['shield']}
-		ship_damage_reduction_mult = {DRAKE_DAMAGE_REDUCTION}
-		ship_hull_regen_add_perc = {DRAKE_REGEN}
-		ship_armor_regen_add_perc = {DRAKE_REGEN}
-		ship_weapon_range_mult = {DRAKE_RANGE_PER_STEP * n:.2f}
+{defense_lines}		ship_weapon_range_mult = {DRAKE_RANGE_PER_STEP * n:.2f}
 	}}
 	max_hitpoints = {s['hp']}
 	size_multiplier = {round(base_size * s['length'])}
@@ -1370,7 +1371,7 @@ def generate_drakes(game: Path) -> dict[str, str]:
             weapons.append(f"\n# Step {n}: damage x{g:,.2f}\n" + DRAKE_BREATH_TEMPLATE.format(
                 key=bkey, dmin=round(DRAKE_BREATH_DAMAGE[0] * g), dmax=round(DRAKE_BREATH_DAMAGE[1] * g),
                 smin=round(DRAKE_BREATH_SPLASH[0] * g), smax=round(DRAKE_BREATH_SPLASH[1] * g), radius=radius))
-            stat_lines = (f"\tdamage = {{ min = {round(dmin * g)} max = {round(dmax * g)} }}\n"
+            stat_lines = (f"\tdamage = {{ min = {round(dmin * g * DRAKE_CLAW_DAMAGE_FACTOR)} max = {round(dmax * g * DRAKE_CLAW_DAMAGE_FACTOR)} }}\n"
                           f"\twindup = {{ min = {wmin:g} max = {wmax:g} }}\n\ttotal_fire_time = {cooldown:g}\n"
                           f"\trange = {rng:g}\n\taccuracy = {acc:g}\n\ttracking = {track:g}\n\tpower = 0\n"
                           f"\thull_damage = {hull:g}\n\tshield_damage = {shield:g}\n\tshield_penetration = {shield_pen:g}\n"

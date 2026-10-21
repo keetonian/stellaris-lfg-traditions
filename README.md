@@ -755,14 +755,13 @@ ship size**, replaces it with a new drake in the same fleet (`lfg_drake_replace`
 flag, loses its name and experience). **Verified in game:** drakes grow every 4 years (5 at first), and `set_ship_design` does move a ship onto
 another ship size (it keeps its name), so the replacement is only a safety net.
 
-- **Weapon damage** has its own curve (`DRAKE_DAMAGE_FACTOR`, `DRAKE_LEGEND_DAMAGE_GROWTH`): half of the durability
-  growth at every step up to the Elder (×0.5 → ×236 at step 11), then ×1.3 a Legendary step (×7,139 at step 24: breath
-  36M–64M, splash 18M–58M, ~0.95M a day against hull, overtaking the Mothership's ~0.38M around step 21).
-- **Durability** ×1.75 a step to the **Elder Dragon** (step 11, 44 years: 4.6M ≈ a Gigastructural Planetcraft), where
-  growth stops; the **Legendary Dragon** goes on ×1.35 a step to step 24 (96 years: ~230M, ~1.8× the Mothership's 127M;
-  `DRAKE_LEGEND_DURABILITY_GROWTH`). Its size and damage have their own curves. Durability: 62% hull, 36% armour, 0.2%
-  shields; plus **10% damage reduction** (`ship_damage_reduction_mult`) and **0.5%** hull and armour regeneration (25%
-  made it practically unkillable). The design's four Dragonscale Armor plates and auto-repair (vanilla's baby design)
+- **Weapon damage** has its own curve (`DRAKE_DAMAGE_FACTOR`, `DRAKE_LEGEND_DAMAGE_GROWTH`): 0.32× the durability
+  growth at every step up to the Elder (×0.32 → ×151 at step 11), then ×1.3 a Legendary step (×4,569 at step 24: breath
+  23M–41M, splash 2.3M–7.4M, ~0.54M a day against hull, overtaking the Mothership's ~0.38M around step 23).
+- **Durability** ×1.75 a step to the **Elder Dragon** (step 11, 44 years: 2.9M, about half a Gigastructural Planetcraft), where
+  growth stops; the **Legendary Dragon** goes on ×1.35 a step to step 24 (96 years: ~145M, ~1.1× the Mothership's 127M; base 8,500, 15% under the first 10,000;
+  `DRAKE_LEGEND_DURABILITY_GROWTH`). Its size and damage have their own curves. Hull 62% and armour 10.8% (36%, cut 70%) of the durability
+  base, shields 0.2%; no bonus damage reduction or regeneration (they were 25%, then 10% / 0.5%). The design's four Dragonscale Armor plates and auto-repair (vanilla's baby design)
   come on top.
 - **Model** grows by the ¼ power of that (×1.15 a step, ×1.10 as a Legendary): baby 63 long (the dragon mesh is 210 at
   scale 1), Elder 292, capped Legendary ~1,070, a Gigastructural systemcraft (956) +12%.
@@ -772,24 +771,24 @@ another ship size (it keeps its name), so the replacement is only a safety net.
 
 | Years | Stage | Durability | Model length | Food / month |
 |---|---|---|---|---|
-| 0 | Baby Drake | 10,000 | 63 | 42 |
-| 16 | Juvenile Dragon | 94k | 110 | 184 |
-| 28 | Dragon | 503k | 167 | 560 |
-| 44 | Elder Dragon | 4.6M | 292 | 2,477 |
-| 64 | Legendary | 20.8M | 482 | ~8,900 |
-| 80 | Legendary | 69M | 719 | ~24,800 |
-| 96 | Legendary (cap) | 229M | 1,072 | ~69,000 |
+| 0 | Baby Drake | 6,200 | 63 | 42 |
+| 16 | Juvenile Dragon | 58k | 110 | 184 |
+| 28 | Dragon | 312k | 167 | 560 |
+| 44 | Elder Dragon | 2.9M | 292 | 2,477 |
+| 64 | Legendary | 13.1M | 482 | ~8,900 |
+| 80 | Legendary | 43.6M | 719 | ~24,800 |
+| 96 | Legendary (cap) | 145M | 1,072 | ~69,000 |
 
 **The Dragon's Breath** (generated per step: `LFG_DRAKE_BREATH_<step>` in `component_templates/lfg_drake_weapons.txt`,
 `DRAKE_BREATH_*` in `tools/gen_overrides.py`; a `ship_weapon_damage` modifier on the ship sizes didn't raise its damage
 in game, so each step's damage is baked into its own weapon): 5,000–9,000 × the step's growth (150% against hull, 125%
-against armour and shields), 5–15 days windup, 90 days between breaths (`@lfg_drake_breath_cooldown`), 100% accuracy,
+against armour and shields), 5–15 days windup, 90 days between breaths (`@lfg_drake_breath_cooldown`), 95% accuracy,
 range 320 (`@lfg_drake_breath_range`; +5% weapon range per growth step, `ship_weapon_range_mult`: ~704 at step 24).
 **Splash:** every other hostile ship within **120** of the target (+10 a Legendary step: **250** at step 24) takes
-2,500–8,100 × the growth (`on_hit`, `damage_ship`). Look (`gfx/projectiles/lfg_projectiles.txt`,
+500–1,620 × the damage growth (80% under the first 2,500–8,100) (`on_hit`, `damage_ship`). Look (`gfx/projectiles/lfg_projectiles.txt`,
 `gfx/models/ships/lfg_drake_breath.asset`): vanilla's ice breath 4× as wide, ending in a huge ice blast at the target and
 eight more in a ring around it. Beside it, four **Dragon Claws** (`LFG_DRAKE_CLAW_<step>`: vanilla's
-`DRAGON_SECONDARY_WEAPON_ICE` stats from its CSV row, damage × growth) and two of vanilla's point defence
+`DRAGON_SECONDARY_WEAPON_ICE` stats from its CSV row, damage × growth × 0.5, `DRAKE_CLAW_DAMAGE_FACTOR`) and two of vanilla's point defence
 (`DRAGON_TERTIARY_WEAPON_ICE`, unchanged); `DRAKE_KEEP_SLOTS`.
 
 **Starving dragons:** only while the food stockpile is **empty** and monthly food income is **negative**
@@ -890,7 +889,7 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
 
 ## Premade empires
 
-Ten empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
+Eleven empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
 mechanics are theirs, unchanged: species, portrait and traits, ethics, authority, government, all **three civics**
 (played with a +1 civics mod) and origin. Names, homeworld and system, ruler and title, ship set, flag, a name list
 (`common/name_lists/lfg_name_lists.txt`, literal names; fleet and army sequences localised) and a start-screen story are
@@ -910,8 +909,10 @@ new. Each empire's prescripted flag (`common/prescripted_flags/lfg_empire_flags.
 | Bebakian Restoration Academy (Bebakian Confederacy) | Bebaki | Remnants | Humanoid | yes |
 | Khell'Zen Tempest Syndicate (Khell'Zen Enterprises) | Khell'Zen | Overtuned | Avian | yes |
 | Chrome Throne of Alaran (Alarian Kingdom) | Alarans | Cybernetic Creed | Cybernetic | yes |
+| Cevelli Stormbloom Cooperative (Cevellian Cooperative) | Cevelli, on the tropical world Thunderloam | Storm Chasers | Psionic | yes |
 
-Changed from the saved designs: the Myrran homeworld is a vanilla **ocean** world (it was Planetary Diversity's), and
+Changed from the saved designs: the Myrran homeworld is a vanilla **ocean** world and the Cevelli one a **tropical** world
+(both were Planetary Diversity's), and
 the two that started in Sol (`sol_system_initializer`) get a random home system instead. **Unverified in game:** the
 stories (prescripted flag → start screen), `ruler_title`, and the Mindwarden / Solarpunk ship sets with mammalian cities.
 

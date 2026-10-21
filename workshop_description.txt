@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Ten new tradition trees, seven council agendas, six ascension perks, ten premade empires, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Ten new tradition trees, seven council agendas, six ascension perks, eleven premade empires, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
