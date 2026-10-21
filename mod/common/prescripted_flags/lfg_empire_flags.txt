@@ -1,0 +1,43 @@
+# LFG Traditions - premade empires' country flags (prescripted_countries/lfg_prescripted_countries.txt `flag`):
+# lfg_empire_<key> picks its story (common/start_screen_messages/lfg_empire_start_screens.txt); custom_start_screen
+# hides the generic homeworld text, as vanilla's premade empires do.
+
+lfg_empire_myrran = {
+	flags = { lfg_empire_myrran custom_start_screen }
+}
+
+lfg_empire_thalassine = {
+	flags = { lfg_empire_thalassine custom_start_screen }
+}
+
+lfg_empire_cevantian_league = {
+	flags = { lfg_empire_cevantian_league custom_start_screen }
+}
+
+lfg_empire_veyl = {
+	flags = { lfg_empire_veyl custom_start_screen }
+}
+
+lfg_empire_korinth = {
+	flags = { lfg_empire_korinth custom_start_screen }
+}
+
+lfg_empire_cevantian_forge = {
+	flags = { lfg_empire_cevantian_forge custom_start_screen }
+}
+
+lfg_empire_alari = {
+	flags = { lfg_empire_alari custom_start_screen }
+}
+
+lfg_empire_bebakian = {
+	flags = { lfg_empire_bebakian custom_start_screen }
+}
+
+lfg_empire_khellzen = {
+	flags = { lfg_empire_khellzen custom_start_screen }
+}
+
+lfg_empire_alaran = {
+	flags = { lfg_empire_alaran custom_start_screen }
+}

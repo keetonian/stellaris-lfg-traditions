@@ -1,0 +1,81 @@
+# LFG Traditions - the premade empires' stories (country flag lfg_empire_<key>, set by their prescripted flag).
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_MYRRAN_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_myrran
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_THALASSINE_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_thalassine
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_CEVANTIAN_LEAGUE_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_cevantian_league
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_VEYL_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_veyl
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_KORINTH_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_korinth
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_CEVANTIAN_FORGE_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_cevantian_forge
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_ALARI_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_alari
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_BEBAKIAN_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_bebakian
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_KHELLZEN_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_khellzen
+	}
+}
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_ALARAN_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_alaran
+	}
+}

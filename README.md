@@ -758,12 +758,12 @@ another ship size (it keeps its name), so the replacement is only a safety net.
 - **Weapon damage** has its own curve (`DRAKE_DAMAGE_FACTOR`, `DRAKE_LEGEND_DAMAGE_GROWTH`): half of the durability
   growth at every step up to the Elder (×0.5 → ×236 at step 11), then ×1.3 a Legendary step (×7,139 at step 24: breath
   36M–64M, splash 18M–58M, ~0.95M a day against hull, overtaking the Mothership's ~0.38M around step 21).
-- **Durability** ×1.75 a step to the **Elder Dragon** (step 11, 44 years: 4.7M ≈ a Gigastructural Planetcraft),
-  where growth stops; the **Legendary Dragon** goes on ×1.5 a step to step 24 (96 years: 917M, under the ~2 billion the
-  game's numbers can hold). Durability: 50% hull, 48% armour, 0.2% shields (cut 90% from 2%), and the Legendary's hull grows extra, ×1 → ×2
-from step 11 to 24 (`DRAKE_LEGEND_HULL_BONUS`: ~917M hull at full growth); plus 25% damage reduction
-  (`ship_damage_reduction_mult`) and +25% hull and armour regeneration. The design's four Dragonscale Armor plates and
-  auto-repair (vanilla's baby design) come on top.
+- **Durability** ×1.75 a step to the **Elder Dragon** (step 11, 44 years: 4.6M ≈ a Gigastructural Planetcraft), where
+  growth stops; the **Legendary Dragon** goes on ×1.35 a step to step 24 (96 years: ~230M, ~1.8× the Mothership's 127M;
+  `DRAKE_LEGEND_DURABILITY_GROWTH`). Its size and damage have their own curves. Durability: 62% hull, 36% armour, 0.2%
+  shields; plus **10% damage reduction** (`ship_damage_reduction_mult`) and **0.5%** hull and armour regeneration (25%
+  made it practically unkillable). The design's four Dragonscale Armor plates and auto-repair (vanilla's baby design)
+  come on top.
 - **Model** grows by the ¼ power of that (×1.15 a step, ×1.10 as a Legendary): baby 63 long (the dragon mesh is 210 at
   scale 1), Elder 292, capped Legendary ~1,070, a Gigastructural systemcraft (956) +12%.
 - **Food upkeep** (the only upkeep; `components_add_to_cost = no`) ×1.45 a step to the Elder (42 → 2,477), then ×1.292
@@ -775,10 +775,10 @@ from step 11 to 24 (`DRAKE_LEGEND_HULL_BONUS`: ~917M hull at full growth); plus 
 | 0 | Baby Drake | 10,000 | 63 | 42 |
 | 16 | Juvenile Dragon | 94k | 110 | 184 |
 | 28 | Dragon | 503k | 167 | 560 |
-| 44 | Elder Dragon | 4.7M | 292 | 2,477 |
-| 64 | Legendary | 35.8M | 482 | ~8,900 |
-| 80 | Legendary | 181M | 719 | ~24,800 |
-| 96 | Legendary (cap) | 917M | 1,072 | ~69,000 |
+| 44 | Elder Dragon | 4.6M | 292 | 2,477 |
+| 64 | Legendary | 20.8M | 482 | ~8,900 |
+| 80 | Legendary | 69M | 719 | ~24,800 |
+| 96 | Legendary (cap) | 229M | 1,072 | ~69,000 |
 
 **The Dragon's Breath** (generated per step: `LFG_DRAKE_BREATH_<step>` in `component_templates/lfg_drake_weapons.txt`,
 `DRAKE_BREATH_*` in `tools/gen_overrides.py`; a `ship_weapon_damage` modifier on the ship sizes didn't raise its damage
@@ -887,6 +887,33 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
 - Can't be picked at species creation or added with gene modding. Only the **Evolutionary Predators** origin's random
   trait events can grant it (it's in their "pop output" category, alongside vanilla traits).
 - Never given by **Species Experimentation** (its random trait filter skips it).
+
+## Premade empires
+
+Ten empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
+mechanics are theirs, unchanged: species, portrait and traits, ethics, authority, government, all **three civics**
+(played with a +1 civics mod) and origin. Names, homeworld and system, ruler and title, ship set, flag, a name list
+(`common/name_lists/lfg_name_lists.txt`, literal names; fleet and army sequences localised) and a start-screen story are
+new. Each empire's prescripted flag (`common/prescripted_flags/lfg_empire_flags.txt`) sets country flag
+`lfg_empire_<key>`, which picks its story (`common/start_screen_messages/lfg_empire_start_screens.txt`), plus vanilla's
+`custom_start_screen`, which hides the generic homeworld text. Built once by a throwaway script; edit the files directly.
+
+| Empire (saved design) | Species | Origin | Ship set | Spawns as AI |
+|---|---|---|---|---|
+| Myrran Gene-Tide Exchange (Myrran Trade Commission) | Myrran, on the ocean world Vael Myrrhos | Evolutionary Predators | Aquatic | yes |
+| Halcyon Ring Reliquary (food aura) | Thalassi | The Great Ring (Giga) | Psionic | **no** |
+| Cevantian Sporeweb Cooperative (Cevantian Commerce League) | Cevanti | Synthetic Fertility | Fungoid | yes |
+| Veyl Groundskeeping Directive (Island) | Groundskeepers | Incohesive (Giga) | Solarpunk | **no** |
+| Hearthkeepers of the Korinth Disk (Servitors) | Attendants + Korinthi | Alderson Disk (Giga) | Mindwarden | **no** |
+| Cevantian Nanoforge Directorate (Cevantian Forge) | Forgeminds | Nanite Forge | Synthetic | **no** |
+| Drakesworn Dominion of Alar (Sovereign Alarian Nations) | Alari | Here Be Dragons | Reptilian | yes |
+| Bebakian Restoration Academy (Bebakian Confederacy) | Bebaki | Remnants | Humanoid | yes |
+| Khell'Zen Tempest Syndicate (Khell'Zen Enterprises) | Khell'Zen | Overtuned | Avian | yes |
+| Chrome Throne of Alaran (Alarian Kingdom) | Alarans | Cybernetic Creed | Cybernetic | yes |
+
+Changed from the saved designs: the Myrran homeworld is a vanilla **ocean** world (it was Planetary Diversity's), and
+the two that started in Sol (`sol_system_initializer`) get a random home system instead. **Unverified in game:** the
+stories (prescripted flag → start screen), `ruler_title`, and the Mindwarden / Solarpunk ship sets with mammalian cities.
 
 ## Overrides of vanilla and Gigastructural content
 

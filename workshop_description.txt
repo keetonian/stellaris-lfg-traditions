@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Ten new tradition trees, seven council agendas, six ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Ten new tradition trees, seven council agendas, six ascension perks, ten premade empires, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
@@ -65,7 +65,7 @@ Ten new tradition trees, seven council agendas, six ascension perks, an origin, 
 [*][b]Tithe Barns:[/b] full granaries bring stability and growth; empty ones, unrest.
 [*]Up to +20% unity from stored food.
 [*][b]Grain Reserves:[/b] huge food storage, but your people eat three times as much.
-[*]Food surpluses buy influence; farmers gain clout.
+[*]Food surpluses buy influence.
 [*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth per 1,000 monthly food.
 [/list]
 
@@ -117,7 +117,7 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 [h2]Civics[/h2]
 [b]Applied Biosciences[/b] (Materialist, non-machine): Biologists trade some society for physics and engineering research.
 
-[b]Galvanic civics:[/b] a new galvanic armour and accelerator tier.
+[b]Galvanic civics:[/b] new galvanic armour and accelerator tiers.
 
 [h2]Ascension perks[/h2]
 [b]Mothership:[/b] one system-sized carrier per empire with escorts and a fleet aura; its forge boosts the navy.
@@ -128,7 +128,7 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 
 [b]Massed Assault:[/b] +10 ground combat width; every general boosts the armies they lead.
 
-[b]Legendary Dragons[/b] (Here Be Dragons): drakes grow for decades and breathe splashing ice; one can grow far beyond.
+[b]Legendary Dragons[/b] (Here Be Dragons): drakes grow for decades and breathe splashing ice; one grows far beyond.
 
 [b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]): a [b]Shelve[/b] edict per repeatable tech, keeping it out of research options.
 

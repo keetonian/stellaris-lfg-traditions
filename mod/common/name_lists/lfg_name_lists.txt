@@ -1,0 +1,383 @@
+# LFG Traditions - name lists for the premade empires (prescripted_countries/lfg_prescripted_countries.txt). Names
+# are literal; sequential fleet and army names are localised (lfg_empire_<key>_seq_*).
+
+lfg_myrran = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Brine Sovereign" "Deepcurrent" "Ossuvar's Hunger" "Tidewright" "Abyssal Ledger" "Saltmarrow" "Riptide Accord" "Pelagic Dividend" "Coral Margin" "Thalassic Bond" "Undertow" "Kelp Throne" "Deepwater Assay" "Fathom's Due" "Silt Broker" "Brackish Venture" "Hunter's Tithe" "Scale Ledger" "Black Reef" "Trench Warden" "Vael's Bounty" "Spawning Tide" "Gene Harvest" "Marrow Market" "Apex Exchange" "Current's Claim" "Leviathan Share" "Red Gill" "Saltfang" "Long Hunt"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Brine Flotilla" "Abyssal Convoy" "Reefguard Squadron" "Deepcurrent Armada" "Trenchwatch" "Gene-Tide Escort" "Saltfang Pack" "Ossuvar Home Fleet"
+		}
+		sequential_name = lfg_empire_myrran_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_myrran_seq_army }
+		defense_army = { sequential_name = lfg_empire_myrran_seq_defense }
+		assault_army = { sequential_name = lfg_empire_myrran_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_myrran_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_myrran_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Myrrhos Minor" "Saltreach" "Ossu Deep" "Coral Vey" "Brinehold" "Tidewell" "Fathomgate" "Vey Marrow" "Kelphaven" "Silt Crown" "Pelagos" "Undermire" "Gillspire" "Reefmother" "Thalass" "Abyssa" "Marrowmere" "Driftholm" "Deepgrove" "Saltcrown" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Ixal" "Vorr" "Sseth" "Kael" "Thurr" "Ossik" "Zarr" "Mykk" "Hesh" "Rael" "Grisk" "Tolv" }
+			first_names_female = { "Ixalith" "Vora" "Ssetha" "Kaela" "Thurra" "Ossika" "Zarra" "Myra" "Hesha" "Raela" "Grissa" "Tolva" }
+			second_names = { "Venn-Ossu" "Deepmaw" "Saltscale" "Thal-Vey" "Brinecoil" "Kesh-Myrr" "Vaelstrike" "Tidefang" "Ossamar" "Coralhide" "Gillsworn" "Murk-Vey" }
+			regnal_first_names = { "Ixalith" "Vora" "Ssetha" "Kaela" "Ixal" "Vorr" "Sseth" "Kael" }
+			regnal_second_names = { "Venn-Ossu" "Deepmaw" "Saltscale" "Thal-Vey" }
+		}
+	}
+}
+
+lfg_thalassine = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Quiet Waters" "Reliquary Bell" "Halcyon Drift" "Choir of Brine" "Curator's Grace" "Vigil Current" "Saltglass Oracle" "Arc of Remembrance" "Pearl of the Ring" "Tidal Psalm" "Lumen Vessel" "Still Water" "The Patient Tide" "Whisper of the Deep" "Gilded Brine" "Seventh Tank" "Oracle's Wake" "Drowned Archive" "Silver Current" "Ringborn" "Veil Gazer" "Last Ocean" "Brine Psalter" "Halcyon Grace" "Kept Memory" "Reliquary Tide" "Deep Choir" "Lantern of the Ring" "Tank of Stars" "Curated Dawn"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Reliquary Procession" "Choir Escort" "Halcyon Vigil" "Brine Pilgrims" "Ring Guard" "Oracle's Retinue" "Lumen Flotilla" "Tank Convoy"
+		}
+		sequential_name = lfg_empire_thalassine_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_thalassine_seq_army }
+		defense_army = { sequential_name = lfg_empire_thalassine_seq_defense }
+		assault_army = { sequential_name = lfg_empire_thalassine_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_thalassine_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_thalassine_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Lumen Reach" "Brine Sanctum" "Halcyon Deep" "Pearlhold" "Oracle's Rest" "Quietwater" "Saltglass" "Archive Shoal" "Veilmere" "Choirhaven" "Stilltide" "Reliquary Shore" "Psalter's Bay" "Lanternfall" "Drownmark" "Kept Sea" "Silverdeep" "Tankmoor" "Ringtide" "Graceward" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Ilun" "Corran" "Lio" "Uthal" "Navin" "Ossel" "Teru" "Mael" "Ithen" "Saro" }
+			first_names_female = { "Seravai" "Thessa" "Navei" "Isel" "Mirae" "Oella" "Lumi" "Caeli" "Ysra" "Thaine" }
+			second_names = { "of the Seventh Tank" "Lumenwater" "Brineveil" "Saltglass" "Deepchoir" "Pearlwater" "Stillcurrent" "Ringward" "Halcyne" "Veilsung" }
+			regnal_first_names = { "Seravai" "Thessa" "Navei" "Isel" "Ilun" "Corran" "Lio" "Uthal" }
+			regnal_second_names = { "of the Seventh Tank" "Lumenwater" "Brineveil" "Saltglass" }
+		}
+	}
+}
+
+lfg_cevantian_league = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Shared Harvest" "Common Loam" "Spore of Plenty" "Mollow's Promise" "Fair Measure" "Network Dividend" "Mycelial Accord" "Good Rot" "Members' Vote" "Rootbound Trader" "Fruiting Body" "Patient Hyphae" "Cap and Gill" "Underweb" "Equal Share" "Gilded Spore" "Last Spore-Mother" "Memory Vessel" "Sporeweb Exchange" "Loam Ledger" "Damp Fortune" "Softcap" "Colony Bond" "The Long Vote" "Toadstool Pride" "Bright Mycel" "Spore Market" "Open Ledger" "Grove Charter" "Saprophyte"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Mycelial Convoy" "Sporeweb Escort" "Cooperative Guard" "Loam Flotilla" "Members' Squadron" "Underweb Patrol" "Market Escort" "Mollow Home Fleet"
+		}
+		sequential_name = lfg_empire_cevantian_league_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_cevantian_league_seq_army }
+		defense_army = { sequential_name = lfg_empire_cevantian_league_seq_defense }
+		assault_army = { sequential_name = lfg_empire_cevantian_league_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_cevantian_league_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_cevantian_league_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Mollow's Rest" "New Loam" "Sporehaven" "Hyphal Reach" "Dampwell" "Gilldown" "Rootmarket" "Capstone" "Underweb" "Fruiting Vale" "Mycel" "Cevantis Minor" "Fairshare" "Moldmere" "Sporefall" "Lichengate" "Rotwood" "Common Ground" "Saprova" "Veilcap" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Ghuum" "Mollo" "Sapro" "Hyph" "Fung" "Lichu" "Spoor" "Cappo" "Mycel" "Torvu" }
+			first_names_female = { "Ghuumi" "Mollia" "Saphra" "Hyphae" "Fungi" "Lichia" "Sporra" "Cappa" "Mycela" "Torva" }
+			second_names = { "Sporewright" "Loamheart" "Gillvote" "Rootshare" "Capfellow" "Underweb" "Mollowkin" "Damplight" "Webmember" "Hyphalis" }
+			regnal_first_names = { "Ghuumi" "Mollia" "Saphra" "Hyphae" "Ghuum" "Mollo" "Sapro" "Hyph" }
+			regnal_second_names = { "Sporewright" "Loamheart" "Gillvote" "Rootshare" }
+		}
+	}
+}
+
+lfg_veyl = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Meadow Keeper" "Patient Spade" "Alpine Steward" "Seed Vault" "Evergreen" "Trellis" "Compost Engine" "Gardener's Due" "Stillmere Bloom" "Pollinator" "Terrace Builder" "Hedge Warden" "Root Survey" "Leaf Archive" "Moss Logic" "First Garden" "Soft Rain" "Orchard Index" "Lattice Grove" "Glasshouse" "Snowline" "Wildflower Protocol" "Greenward" "Spring Thaw" "Arbor Unit" "Tidy Ridge" "Lichen Sensor" "Brook Mender" "Copse" "Perennial"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Groundskeeping Detail" "Garden Patrol" "Meadow Survey" "Hedge Guard" "Orchard Escort" "Seedship Flotilla" "Stillmere Keepers" "Pruning Squadron"
+		}
+		sequential_name = lfg_empire_veyl_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_veyl_seq_army }
+		defense_army = { sequential_name = lfg_empire_veyl_seq_defense }
+		assault_army = { sequential_name = lfg_empire_veyl_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_veyl_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_veyl_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "New Veyl" "Second Garden" "Stillmere Terraces" "Meadowfall" "Seedbank" "Glasshouse" "Alpine Rest" "Hedgerow" "Thawfield" "Greenreach" "Orchard Prime" "Mossbank" "Wildwood" "Trellis" "Bloomhold" "Snowmeadow" "Brookside" "Copsewater" "Perennia" "Arborhome" }
+		}
+	}
+	character_names = {
+		default = {
+			full_names = { "Groundskeeper-7" "Groundskeeper-12" "Groundskeeper-24" "Groundskeeper-31" "Groundskeeper-48" "Groundskeeper-60" "Pruner-7" "Pruner-12" "Pruner-24" "Pruner-31" "Pruner-48" "Pruner-60" "Seeder-7" "Seeder-12" "Seeder-24" "Seeder-31" "Seeder-48" "Seeder-60" "Hedgewright-7" "Hedgewright-12" "Hedgewright-24" "Hedgewright-31" "Hedgewright-48" "Hedgewright-60" "Mossmind-7" "Mossmind-12" "Mossmind-24" "Mossmind-31" "Mossmind-48" "Mossmind-60" }
+			regnal_full_names = { "Groundskeeper Prime" "Head Gardener" "The Steward" "The Orchardist" "The Meadow-Mind" }
+		}
+	}
+}
+
+lfg_korinth = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Gentle Hand" "Lullaby" "Warm Hearth" "Long Sleep" "Dreamwatch" "Blanket of Stars" "Soft Landing" "Bedside Vigil" "Korinth's Comfort" "Tender Mercy" "Nursery Light" "Kind Shepherd" "Safe Harbour" "Quiet Hours" "Hearthguard" "Patient Watch" "Gentle Rain" "Sweet Dreams" "Caretaker's Oath" "Warm Light" "Mother's Wing" "The Kept Promise" "Pillow" "Steady Hand" "Homeward" "Sleepwarden" "First Waking" "Good Morning" "Embrace" "Everwatch"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Caretaker Wing" "Hearth Guard" "Dreamwatch Patrol" "Gentle Escort" "Sleepwarden Squadron" "Comfort Convoy" "Korinth Home Guard" "Lullaby Flotilla"
+		}
+		sequential_name = lfg_empire_korinth_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_korinth_seq_army }
+		defense_army = { sequential_name = lfg_empire_korinth_seq_defense }
+		assault_army = { sequential_name = lfg_empire_korinth_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_korinth_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_korinth_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "New Hearth" "Dreaming Field" "Soft Meadow" "Cradle" "Restful Plain" "Second Hearth" "Sleepwell" "Warmstead" "Lull" "Haven's Disk" "Quiethollow" "Nestmere" "Comfort" "Gentlefall" "Homestead" "Dozing Vale" "Blanketreach" "Waking Shore" "Snugharbor" "Kindred" }
+		}
+	}
+	character_names = {
+		default = {
+			full_names = { "Attendant Ash" "Attendant Bell" "Attendant Cradle" "Attendant Dove" "Attendant Ember" "Attendant Fern" "Caretaker Ash" "Caretaker Bell" "Caretaker Cradle" "Caretaker Dove" "Caretaker Ember" "Caretaker Fern" "Nurse-Unit Ash" "Nurse-Unit Bell" "Nurse-Unit Cradle" "Nurse-Unit Dove" "Nurse-Unit Ember" "Nurse-Unit Fern" "Guardian Ash" "Guardian Bell" "Guardian Cradle" "Guardian Dove" "Guardian Ember" "Guardian Fern" "Comforter Ash" "Comforter Bell" "Comforter Cradle" "Comforter Dove" "Comforter Ember" "Comforter Fern" }
+			regnal_full_names = { "Caretaker Unit MOTHER" "The Hearth-Mind" "Prime Attendant" "The Kind Watcher" "Nanny Prime" }
+		}
+	}
+}
+
+lfg_korinth_organic = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Gentle Hand" "Lullaby" "Warm Hearth" "Long Sleep" "Dreamwatch" "Blanket of Stars" "Soft Landing" "Bedside Vigil" "Korinth's Comfort" "Tender Mercy" "Nursery Light" "Kind Shepherd" "Safe Harbour" "Quiet Hours" "Hearthguard" "Patient Watch" "Gentle Rain" "Sweet Dreams" "Caretaker's Oath" "Warm Light" "Mother's Wing" "The Kept Promise" "Pillow" "Steady Hand" "Homeward" "Sleepwarden" "First Waking" "Good Morning" "Embrace" "Everwatch"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Caretaker Wing" "Hearth Guard" "Dreamwatch Patrol" "Gentle Escort" "Sleepwarden Squadron" "Comfort Convoy" "Korinth Home Guard" "Lullaby Flotilla"
+		}
+		sequential_name = lfg_empire_korinth_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_korinth_seq_army }
+	}
+	planet_names = {
+		generic = {
+			names = { "New Hearth" "Dreaming Field" "Soft Meadow" "Cradle" "Restful Plain" "Second Hearth" "Sleepwell" "Warmstead" "Lull" "Haven's Disk" "Quiethollow" "Nestmere" "Comfort" "Gentlefall" "Homestead" "Dozing Vale" "Blanketreach" "Waking Shore" "Snugharbor" "Kindred" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Orr" "Thal" "Kesh" "Lune" "Brann" "Ivo" "Dorr" "Fenn" }
+			first_names_female = { "Orra" "Thala" "Kesha" "Luna" "Branna" "Iva" "Dorra" "Fenna" }
+			second_names = { "Deeproot" "Longsleep" "Seedcoat" "Meadowborn" "Hearthward" "Softbloom" }
+		}
+	}
+}
+
+lfg_cevantian_forge = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Anvilheart" "Crucible" "Slagborn" "Molten Logic" "Ingot" "Furnace Prime" "Swarm Smith" "Nanite Hammer" "Cast Iron" "Ore Curator" "Grey Tempering" "Forge-Song" "Bellows" "Billet" "Quench" "Cinder Index" "Alloy Mandate" "Rivet" "Annealer" "Hearth of Cevant" "Tongs" "Spark Archive" "Assay" "White Heat" "Lathe" "Directive One" "Harvester's Child" "Smeltwork" "Bloomery" "Kiln"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Forge Battlegroup" "Smelter Wing" "Anvil Guard" "Ore Convoy" "Nanite Swarm" "Crucible Fleet" "Furnace Patrol" "Directorate Escort"
+		}
+		sequential_name = lfg_empire_cevantian_forge_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_cevantian_forge_seq_army }
+		defense_army = { sequential_name = lfg_empire_cevantian_forge_seq_defense }
+		assault_army = { sequential_name = lfg_empire_cevantian_forge_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_cevantian_forge_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_cevantian_forge_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Crucible" "Slagfield" "Ingot" "Second Furnace" "Emberrock" "Nanite Reach" "Bellows" "Cindercore" "Ashforge" "Moltenmere" "Quench" "Kiln" "Alloyhold" "Smeltwork" "Ore Prime" "Temper" "Bloomery" "Ironvein" "Sparkfall" "Lathe" }
+		}
+	}
+	character_names = {
+		default = {
+			full_names = { "Smelter-3" "Smelter-9" "Smelter-17" "Smelter-26" "Smelter-41" "Smelter-77" "Forgemind-3" "Forgemind-9" "Forgemind-17" "Forgemind-26" "Forgemind-41" "Forgemind-77" "Anvil-3" "Anvil-9" "Anvil-17" "Anvil-26" "Anvil-41" "Anvil-77" "Curator-3" "Curator-9" "Curator-17" "Curator-26" "Curator-41" "Curator-77" "Miner-3" "Miner-9" "Miner-17" "Miner-26" "Miner-41" "Miner-77" }
+			regnal_full_names = { "Overseer Bemalon-7" "The Directorate" "Forge Prime" "The Furnace-Mind" "Master Smith" }
+		}
+	}
+}
+
+lfg_alari = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Wyrmhold" "Drakesworn" "Scale of Alar" "Dragon's Shadow" "Imperial Archive" "Sky Oath" "Talon of the Empress" "Ninth Dynasty" "Clawed Edict" "Deep Ledger" "Wingbearer" "Brine Throne" "Memorial Fang" "Coldscale" "Sworn Shield" "Emberless" "Grand Census" "Dragonward" "Tidecrown" "The Record Keeper" "Vigil of Alar" "Iron Edict" "Red Banner" "Seventh Seal" "Wyrmsong" "Oathkeeper" "Abyssal Rank" "Dominion's Will" "Hrozgar's Gaze" "Gold Scale"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Drakesworn Host" "Wyrmhold Armada" "Imperial Guard" "Empress's Talons" "Archive Fleet" "Dragonward Squadron" "Tidecrown Flotilla" "Border Legion"
+		}
+		sequential_name = lfg_empire_alari_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_alari_seq_army }
+		defense_army = { sequential_name = lfg_empire_alari_seq_defense }
+		assault_army = { sequential_name = lfg_empire_alari_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_alari_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_alari_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Alar Minor" "Wyrm's Rest" "Drakehold" "Scalemarch" "Empress Shoal" "Deep Archive" "Talonreach" "Tidecrown" "Oathmere" "Coldmarsh" "Redscale" "Dynasty's Seat" "Memorial Deep" "Ninth Province" "Wingfall" "Brinekeep" "Census Prime" "Dragonward" "Saltfang" "Hoard" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Vhess" "Kharr" "Tazrin" "Ossvar" "Zhul" "Draek" "Morrak" "Seth" "Vael" "Krell" }
+			first_names_female = { "Vhessa" "Kharra" "Tazria" "Ossva" "Zhula" "Draeka" "Morra" "Setha" "Vaela" "Krella" }
+			second_names = { "Drakesworn" "Wyrmhold" "Scaleborn" "Talonmark" "Tidecrown" "Oathscale" "Redclaw" "Archivist" "Coldfang" "Skyward" }
+			regnal_first_names = { "Vhessa" "Kharra" "Tazria" "Ossva" "Vhess" "Kharr" "Tazrin" "Ossvar" }
+			regnal_second_names = { "Drakesworn" "Wyrmhold" "Scaleborn" "Talonmark" }
+		}
+	}
+}
+
+lfg_bebakian = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Restoration" "Page by Page" "First Translation" "Lumen's Answer" "Footnote" "Peer Review" "Old Library" "Second Edition" "Annotated" "Hypothesis" "The Long Index" "Errata" "Fellow of the Academy" "Dusty Archive" "Star Chart" "Thesis" "Rediscovery" "Open Question" "Field Notes" "Margin" "Chancellor's Grant" "Bright Lecture" "Excavator" "Proof" "Bibliotheca" "Lantern of Bebak" "Patient Scholar" "Tenured" "Seminar" "Folio"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Expedition Fleet" "Survey Wing" "Academy Guard" "Faculty Squadron" "Field Corps Escort" "Lumen Flotilla" "Archive Patrol" "Chancellor's Fleet"
+		}
+		sequential_name = lfg_empire_bebakian_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_bebakian_seq_army }
+		defense_army = { sequential_name = lfg_empire_bebakian_seq_defense }
+		assault_army = { sequential_name = lfg_empire_bebakian_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_bebakian_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_bebakian_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "New Bebak" "Lumen's Rest" "Campus" "Folio" "Archivia" "Lecturn" "Old Library" "Thesis" "Footnote" "Second Edition" "Excavation" "Margin" "Peerless" "Index" "Translation" "Errata" "Quadrangle" "Seminary" "Lanternhold" "Rediscovery" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Darmul" "Venter" "Obbak" "Teral" "Quint" "Halvo" "Bek" "Lorimar" "Senn" "Ivaro" }
+			first_names_female = { "Darmulla" "Ventera" "Obbaka" "Terala" "Quinta" "Halva" "Beka" "Lorima" "Senna" "Ivara" }
+			second_names = { "Venteris" "Oldpage" "Lumenreader" "Quillborn" "Archwright" "Foliant" "Margrave" "Tenbrook" "Glossar" "Redlamp" }
+			regnal_first_names = { "Darmulla" "Ventera" "Obbaka" "Terala" "Darmul" "Venter" "Obbak" "Teral" }
+			regnal_second_names = { "Venteris" "Oldpage" "Lumenreader" "Quillborn" }
+		}
+	}
+}
+
+lfg_khellzen = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Stormcrest" "Thunder Dividend" "Zenhara's Song" "Cloud Broker" "Galecaller" "Wind Shear" "Lightning Margin" "Highwing" "Tempest Share" "Eye of Khellar" "Feather Ledger" "Updraft" "Squall" "Rainmaker" "Silver Plume" "Thermal" "Downburst" "Skyward Venture" "Echo of the Storm" "Gilded Wing" "Cyclone Bond" "Stormglass" "Chosen Song" "Pinion" "Tuned Egg" "Crosswind" "Monsoon" "The Answering Storm" "Bright Talon" "Zephyr"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Stormwing" "Tempest Escort" "Galecaller Flight" "Syndicate Guard" "Thunderhead Squadron" "Plume Convoy" "Eyewall Patrol" "Zenhara Home Flight"
+		}
+		sequential_name = lfg_empire_khellzen_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_khellzen_seq_army }
+		defense_army = { sequential_name = lfg_empire_khellzen_seq_defense }
+		assault_army = { sequential_name = lfg_empire_khellzen_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_khellzen_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_khellzen_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Zenhara Minor" "Stormreach" "Eyewall" "Galehaven" "Thunderperch" "Cloudmarket" "Highnest" "Monsoon" "Squallfall" "Rainspire" "Featherfall" "Thermal Prime" "Updraft" "Stormglass" "Windmere" "Tempest Rest" "Plumeholm" "Crosswind" "Zephyria" "Songperch" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Rhass" "Khell" "Zen" "Taro" "Vyrr" "Kesh" "Aero" "Skai" "Toll" "Rhen" }
+			first_names_female = { "Rhassa" "Khella" "Zena" "Tara" "Vyrra" "Kesha" "Aera" "Skaia" "Tolla" "Rhena" }
+			second_names = { "Stormcrest" "Galesong" "Highplume" "Cloudborn" "Thunderwing" "Skycaller" "Eyewall" "Rainvoice" "Brightpinion" "Squallheart" }
+			regnal_first_names = { "Rhassa" "Khella" "Zena" "Tara" "Rhass" "Khell" "Zen" "Taro" }
+			regnal_second_names = { "Stormcrest" "Galesong" "Highplume" "Cloudborn" }
+		}
+	}
+}
+
+lfg_alaran = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Ironblessed" "Holy Chrome" "Sanctified Steel" "Throne's Will" "First Implant" "Corvee" "Inquisitor" "Weak Flesh" "Machine-Queen" "Sere Wind" "Augur Plate" "Penitent Gear" "Silver Litany" "Blessed Servo" "Vault of Perfection" "Desert Sermon" "Steel Psalm" "Ascendant" "Oath of Chrome" "Iron Doctrine" "Bright Rivet" "Watcher of Sere" "Graft" "Perfected" "Holy Lathe" "Zealot's Circuit" "Throne Eternal" "Cogsworn" "Purity of Steel" "The Last Weakness"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Chrome Crusade" "Throne Guard" "Inquisition Fleet" "Ironblessed Host" "Sere Patrol" "Sanctum Armada" "Machine-Queen's Wing" "Litany Squadron"
+		}
+		sequential_name = lfg_empire_alaran_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_alaran_seq_army }
+		defense_army = { sequential_name = lfg_empire_alaran_seq_defense }
+		assault_army = { sequential_name = lfg_empire_alaran_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_alaran_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_alaran_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Sere Prime" "Chromefall" "Ironhold" "Sanctum Minor" "Penitence" "Litany" "Gearspire" "Holy Lathe" "Augury" "Silverdune" "Graftmoor" "Throneward" "Oathsand" "Vault" "Rivet" "Zealotry" "Purity" "Steelreach" "Corvee Fields" "Ascension" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Hephan" "Alar" "Corvo" "Sered" "Ironn" "Dravek" "Malkor" "Tessan" "Vhakk" "Orin" }
+			first_names_female = { "Hephanir" "Alara" "Corva" "Sereda" "Ironna" "Draveka" "Malkora" "Tessa" "Vhakka" "Orina" }
+			second_names = { "the Ironblessed" "Chromeborn" "of the Sanctum" "Steelvow" "Gearsworn" "Silvergraft" "the Penitent" "Thronekin" "Litanist" "of Sere" }
+			regnal_first_names = { "Hephanir" "Alara" "Corva" "Sereda" "Hephan" "Alar" "Corvo" "Sered" }
+			regnal_second_names = { "the Ironblessed" "Chromeborn" "of the Sanctum" "Steelvow" }
+		}
+	}
+}

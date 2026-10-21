@@ -13,14 +13,14 @@ lfg_drake_0 = {
 	collision_radius = 15.0
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 4800
+		ship_armor_add = 3600
 		ship_shield_add = 20
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.00
 	}
-	max_hitpoints = 5000
+	max_hitpoints = 6200
 	size_multiplier = 40
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -51,14 +51,14 @@ lfg_drake_1 = {
 	collision_radius = 17.3
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 8400
+		ship_armor_add = 6300
 		ship_shield_add = 35
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.05
 	}
-	max_hitpoints = 8750
+	max_hitpoints = 10850
 	size_multiplier = 46
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -77,7 +77,7 @@ lfg_drake_1 = {
 	}
 }
 
-# Step 2 (8 years): Baby Drake, durability 30,073, damage x3.1, model x1.32
+# Step 2 (8 years): Baby Drake, durability 30,074, damage x3.1, model x1.32
 lfg_drake_2 = {
 	entity = "lfg_drake_2_entity"
 	is_space_object = yes
@@ -89,14 +89,14 @@ lfg_drake_2 = {
 	collision_radius = 19.8
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 14700
+		ship_armor_add = 11025
 		ship_shield_add = 61
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.10
 	}
-	max_hitpoints = 15312
+	max_hitpoints = 18988
 	size_multiplier = 53
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -127,14 +127,14 @@ lfg_drake_3 = {
 	collision_radius = 22.8
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 25725
+		ship_armor_add = 19294
 		ship_shield_add = 107
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.15
 	}
-	max_hitpoints = 26797
+	max_hitpoints = 33228
 	size_multiplier = 61
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -153,7 +153,7 @@ lfg_drake_3 = {
 	}
 }
 
-# Step 4 (16 years): Juvenile Dragon, durability 92,102, damage x9.4, model x1.75
+# Step 4 (16 years): Juvenile Dragon, durability 92,101, damage x9.4, model x1.75
 lfg_drake_4 = {
 	entity = "lfg_drake_4_entity"
 	is_space_object = yes
@@ -165,14 +165,14 @@ lfg_drake_4 = {
 	collision_radius = 26.2
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 45019
+		ship_armor_add = 33764
 		ship_shield_add = 188
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.20
 	}
-	max_hitpoints = 46895
+	max_hitpoints = 58149
 	size_multiplier = 70
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -203,14 +203,14 @@ lfg_drake_5 = {
 	collision_radius = 30.2
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 78783
+		ship_armor_add = 59087
 		ship_shield_add = 328
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.25
 	}
-	max_hitpoints = 82065
+	max_hitpoints = 101761
 	size_multiplier = 81
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -229,7 +229,7 @@ lfg_drake_5 = {
 	}
 }
 
-# Step 6 (24 years): Juvenile Dragon, durability 282,059, damage x28.7, model x2.32
+# Step 6 (24 years): Juvenile Dragon, durability 282,058, damage x28.7, model x2.32
 lfg_drake_6 = {
 	entity = "lfg_drake_6_entity"
 	is_space_object = yes
@@ -241,14 +241,14 @@ lfg_drake_6 = {
 	collision_radius = 34.7
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 137870
+		ship_armor_add = 103402
 		ship_shield_add = 574
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.30
 	}
-	max_hitpoints = 143615
+	max_hitpoints = 178082
 	size_multiplier = 93
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -279,14 +279,14 @@ lfg_drake_7 = {
 	collision_radius = 39.9
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 241272
+		ship_armor_add = 180954
 		ship_shield_add = 1005
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.35
 	}
-	max_hitpoints = 251325
+	max_hitpoints = 311643
 	size_multiplier = 107
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -317,14 +317,14 @@ lfg_drake_8 = {
 	collision_radius = 45.9
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 422227
+		ship_armor_add = 316670
 		ship_shield_add = 1759
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.40
 	}
-	max_hitpoints = 439819
+	max_hitpoints = 545376
 	size_multiplier = 122
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -343,7 +343,7 @@ lfg_drake_8 = {
 	}
 }
 
-# Step 9 (36 years): Dragon, durability 1,511,660, damage x153.9, model x3.52
+# Step 9 (36 years): Dragon, durability 1,511,659, damage x153.9, model x3.52
 lfg_drake_9 = {
 	entity = "lfg_drake_9_entity"
 	is_space_object = yes
@@ -355,14 +355,14 @@ lfg_drake_9 = {
 	collision_radius = 52.8
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 738897
+		ship_armor_add = 554172
 		ship_shield_add = 3079
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.45
 	}
-	max_hitpoints = 769684
+	max_hitpoints = 954408
 	size_multiplier = 141
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -393,14 +393,14 @@ lfg_drake_10 = {
 	collision_radius = 60.8
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 1293069
+		ship_armor_add = 969802
 		ship_shield_add = 5388
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.50
 	}
-	max_hitpoints = 1346947
+	max_hitpoints = 1670214
 	size_multiplier = 162
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -431,14 +431,14 @@ lfg_drake_11 = {
 	collision_radius = 69.9
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 2262871
+		ship_armor_add = 1697153
 		ship_shield_add = 9429
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.55
 	}
-	max_hitpoints = 2357157
+	max_hitpoints = 2922875
 	size_multiplier = 186
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -469,14 +469,14 @@ lfg_drake_11_legendary = {
 	collision_radius = 69.9
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 2262871
+		ship_armor_add = 1697153
 		ship_shield_add = 9429
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.55
 	}
-	max_hitpoints = 2357157
+	max_hitpoints = 2922875
 	size_multiplier = 186
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -495,7 +495,7 @@ lfg_drake_11_legendary = {
 	}
 }
 
-# Step 12 (48 years): Legendary Dragon, durability 7,216,164, damage x707.1, model x5.16
+# Step 12 (48 years): Legendary Dragon, durability 6,249,767, damage x707.1, model x5.16
 lfg_drake_12 = {
 	entity = "lfg_drake_12_entity"
 	is_space_object = yes
@@ -507,14 +507,14 @@ lfg_drake_12 = {
 	collision_radius = 77.4
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 3394306
-		ship_shield_add = 14143
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 2291157
+		ship_shield_add = 12729
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.60
 	}
-	max_hitpoints = 3807715
+	max_hitpoints = 3945881
 	size_multiplier = 206
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -533,7 +533,7 @@ lfg_drake_12 = {
 	}
 }
 
-# Step 13 (52 years): Legendary Dragon, durability 11,232,216, damage x1,060.7, model x5.71
+# Step 13 (52 years): Legendary Dragon, durability 8,437,185, damage x1,060.7, model x5.71
 lfg_drake_13 = {
 	entity = "lfg_drake_13_entity"
 	is_space_object = yes
@@ -545,14 +545,14 @@ lfg_drake_13 = {
 	collision_radius = 85.6
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 5091459
-		ship_shield_add = 21214
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 3093062
+		ship_shield_add = 17184
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.65
 	}
-	max_hitpoints = 6119543
+	max_hitpoints = 5326939
 	size_multiplier = 228
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -571,7 +571,7 @@ lfg_drake_13 = {
 	}
 }
 
-# Step 14 (56 years): Legendary Dragon, durability 17,460,279, damage x1,591.1, model x6.32
+# Step 14 (56 years): Legendary Dragon, durability 11,390,199, damage x1,591.1, model x6.32
 lfg_drake_14 = {
 	entity = "lfg_drake_14_entity"
 	is_space_object = yes
@@ -583,14 +583,14 @@ lfg_drake_14 = {
 	collision_radius = 94.7
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 7637189
-		ship_shield_add = 31822
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 4175633
+		ship_shield_add = 23198
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.70
 	}
-	max_hitpoints = 9791268
+	max_hitpoints = 7191368
 	size_multiplier = 253
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -609,7 +609,7 @@ lfg_drake_14 = {
 	}
 }
 
-# Step 15 (60 years): Legendary Dragon, durability 27,108,350, damage x2,386.6, model x6.99
+# Step 15 (60 years): Legendary Dragon, durability 15,376,769, damage x2,386.6, model x6.99
 lfg_drake_15 = {
 	entity = "lfg_drake_15_entity"
 	is_space_object = yes
@@ -621,14 +621,14 @@ lfg_drake_15 = {
 	collision_radius = 104.8
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 11455784
-		ship_shield_add = 47732
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 5637105
+		ship_shield_add = 31317
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.75
 	}
-	max_hitpoints = 15604834
+	max_hitpoints = 9708347
 	size_multiplier = 280
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -647,7 +647,7 @@ lfg_drake_15 = {
 	}
 }
 
-# Step 16 (64 years): Legendary Dragon, durability 42,039,423, damage x3,579.9, model x7.74
+# Step 16 (64 years): Legendary Dragon, durability 20,758,639, damage x3,579.9, model x7.74
 lfg_drake_16 = {
 	entity = "lfg_drake_16_entity"
 	is_space_object = yes
@@ -659,14 +659,14 @@ lfg_drake_16 = {
 	collision_radius = 116.0
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 17183676
-		ship_shield_add = 71599
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 7610092
+		ship_shield_add = 42278
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.80
 	}
-	max_hitpoints = 24784148
+	max_hitpoints = 13106269
 	size_multiplier = 309
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -685,7 +685,7 @@ lfg_drake_16 = {
 	}
 }
 
-# Step 17 (68 years): Legendary Dragon, durability 65,124,479, damage x5,369.9, model x8.56
+# Step 17 (68 years): Legendary Dragon, durability 28,024,163, damage x5,369.9, model x8.56
 lfg_drake_17 = {
 	entity = "lfg_drake_17_entity"
 	is_space_object = yes
@@ -697,14 +697,14 @@ lfg_drake_17 = {
 	collision_radius = 128.4
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 25775514
-		ship_shield_add = 107398
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 10273624
+		ship_shield_add = 57076
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.85
 	}
-	max_hitpoints = 39241567
+	max_hitpoints = 17693463
 	size_multiplier = 342
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -723,7 +723,7 @@ lfg_drake_17 = {
 	}
 }
 
-# Step 18 (72 years): Legendary Dragon, durability 100,784,736, damage x8,054.8, model x9.47
+# Step 18 (72 years): Legendary Dragon, durability 37,832,619, damage x8,054.8, model x9.47
 lfg_drake_18 = {
 	entity = "lfg_drake_18_entity"
 	is_space_object = yes
@@ -735,14 +735,14 @@ lfg_drake_18 = {
 	collision_radius = 142.1
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 38663270
-		ship_shield_add = 161097
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 13869392
+		ship_shield_add = 77052
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.90
 	}
-	max_hitpoints = 61960369
+	max_hitpoints = 23886175
 	size_multiplier = 379
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -761,7 +761,7 @@ lfg_drake_18 = {
 	}
 }
 
-# Step 19 (76 years): Legendary Dragon, durability 155,824,132, damage x12,082.3, model x10.48
+# Step 19 (76 years): Legendary Dragon, durability 51,074,035, damage x12,082.3, model x10.48
 lfg_drake_19 = {
 	entity = "lfg_drake_19_entity"
 	is_space_object = yes
@@ -773,14 +773,14 @@ lfg_drake_19 = {
 	collision_radius = 157.3
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 57994906
-		ship_shield_add = 241645
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 18723679
+		ship_shield_add = 104020
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 0.95
 	}
-	max_hitpoints = 97587581
+	max_hitpoints = 32246336
 	size_multiplier = 419
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -799,7 +799,7 @@ lfg_drake_19 = {
 	}
 }
 
-# Step 20 (80 years): Legendary Dragon, durability 240,706,740, damage x18,123.4, model x11.60
+# Step 20 (80 years): Legendary Dragon, durability 68,949,947, damage x18,123.4, model x11.60
 lfg_drake_20 = {
 	entity = "lfg_drake_20_entity"
 	is_space_object = yes
@@ -811,14 +811,14 @@ lfg_drake_20 = {
 	collision_radius = 174.0
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 86992358
-		ship_shield_add = 362468
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 25276966
+		ship_shield_add = 140428
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 1.00
 	}
-	max_hitpoints = 153351914
+	max_hitpoints = 43532553
 	size_multiplier = 464
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -837,7 +837,7 @@ lfg_drake_20 = {
 	}
 }
 
-# Step 21 (84 years): Legendary Dragon, durability 371,515,922, damage x27,185.1, model x12.84
+# Step 21 (84 years): Legendary Dragon, durability 93,082,429, damage x27,185.1, model x12.84
 lfg_drake_21 = {
 	entity = "lfg_drake_21_entity"
 	is_space_object = yes
@@ -849,14 +849,14 @@ lfg_drake_21 = {
 	collision_radius = 192.6
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 130488537
-		ship_shield_add = 543702
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 34123905
+		ship_shield_add = 189577
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 1.05
 	}
-	max_hitpoints = 240483683
+	max_hitpoints = 58768947
 	size_multiplier = 514
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -875,7 +875,7 @@ lfg_drake_21 = {
 	}
 }
 
-# Step 22 (88 years): Legendary Dragon, durability 572,957,602, damage x40,777.7, model x14.21
+# Step 22 (88 years): Legendary Dragon, durability 125,661,279, damage x40,777.7, model x14.21
 lfg_drake_22 = {
 	entity = "lfg_drake_22_entity"
 	is_space_object = yes
@@ -887,14 +887,14 @@ lfg_drake_22 = {
 	collision_radius = 213.2
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 195732806
-		ship_shield_add = 815553
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 46067271
+		ship_shield_add = 255929
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 1.10
 	}
-	max_hitpoints = 376409243
+	max_hitpoints = 79338079
 	size_multiplier = 568
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -913,7 +913,7 @@ lfg_drake_22 = {
 	}
 }
 
-# Step 23 (92 years): Legendary Dragon, durability 882,961,981, damage x61,166.5, model x15.73
+# Step 23 (92 years): Legendary Dragon, durability 169,642,727, damage x61,166.5, model x15.73
 lfg_drake_23 = {
 	entity = "lfg_drake_23_entity"
 	is_space_object = yes
@@ -925,14 +925,14 @@ lfg_drake_23 = {
 	collision_radius = 235.9
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 293599209
-		ship_shield_add = 1223330
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 62190816
+		ship_shield_add = 345505
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 1.15
 	}
-	max_hitpoints = 588139442
+	max_hitpoints = 107106406
 	size_multiplier = 629
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster
@@ -951,7 +951,7 @@ lfg_drake_23 = {
 	}
 }
 
-# Step 24 (96 years): Legendary Dragon, durability 1,359,731,338, damage x91,749.8, model x17.40
+# Step 24 (96 years): Legendary Dragon, durability 229,017,681, damage x91,749.8, model x17.40
 lfg_drake_24 = {
 	entity = "lfg_drake_24_entity"
 	is_space_object = yes
@@ -963,14 +963,14 @@ lfg_drake_24 = {
 	collision_radius = 261.1
 	modifier = {
 		ship_evasion_add = 25
-		ship_armor_add = 440398814
-		ship_shield_add = 1834995
-		ship_damage_reduction_mult = 0.25
-		ship_hull_regen_add_perc = 0.25
-		ship_armor_regen_add_perc = 0.25
+		ship_armor_add = 83957602
+		ship_shield_add = 466431
+		ship_damage_reduction_mult = 0.1
+		ship_hull_regen_add_perc = 0.005
+		ship_armor_regen_add_perc = 0.005
 		ship_weapon_range_mult = 1.20
 	}
-	max_hitpoints = 917497529
+	max_hitpoints = 144593648
 	size_multiplier = 696
 	map_counter_icon = ship_counter_32
 	icon = ship_size_space_monster

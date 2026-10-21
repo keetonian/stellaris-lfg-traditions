@@ -1,0 +1,542 @@
+# LFG Traditions - premade empires, from the author's own saved designs (user_empire_designs). The mechanics are
+# theirs (species, traits, ethics, government, all three civics - played with a +1 civics mod - and origin);
+# names, worlds, ruler, ship set, flag, name list (common/name_lists/lfg_name_lists.txt) and story are new.
+# spawn_enabled = no: never spawned as an AI empire, still playable.
+
+# Myrran Gene-Tide Exchange (from the saved design "Myrran Trade Commission"; spawns as AI: yes)
+lfg_empire_myrran = {
+	name = "lfg_empire_myrran_name"
+	adjective = "lfg_empire_myrran_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_myrran_prefix"
+	species = {
+		class = "REP"
+		portrait = "pro2"
+		name = "lfg_empire_myrran_species"
+		plural = "lfg_empire_myrran_species_plural"
+		adjective = "lfg_empire_myrran_species_adj"
+		name_list = "lfg_myrran"
+		trait = "trait_organic"
+		trait = "trait_malleable_genes"
+		trait = "trait_seasonal_dormancy"
+		trait = "trait_unruly"
+		trait = "trait_humanoid_psychological_infertility"
+		trait = "trait_sedentary"
+		trait = "trait_fleeting"
+	}
+	room = "default_room"
+	authority = "auth_corporate"
+	government = gov_trade_league
+	civics = { "civic_free_traders" "civic_environmental_architects_megacorp" "civic_corporate_guided_sapience" }
+	ethic = "ethic_egalitarian"
+	ethic = "ethic_fanatic_materialist"
+	origin = "origin_evolutionary_predators"
+	flag = lfg_empire_myrran	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_myrran_planet"
+	planet_class = "pc_ocean"
+	system_name = "lfg_empire_myrran_system"
+	graphical_culture = "aquatic_01"
+	city_graphical_culture = "aquatic_01"
+	empire_flag = {
+		icon = { category = "aquatic" file = "aquatic_07.dds" }
+		background = { category = "backgrounds" file = "diagonal.dds" }
+		colors = { "ocean_turquoise" "dark_teal" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_myrran_ruler"
+		ruler_title = "lfg_empire_myrran_ruler_title"
+		gender = female
+		portrait = "pro2"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_spark_of_genius"
+		leader_class = official
+	}
+}
+
+# Halcyon Ring Reliquary (from the saved design "food aura"; spawns as AI: no)
+lfg_empire_thalassine = {
+	name = "lfg_empire_thalassine_name"
+	adjective = "lfg_empire_thalassine_adj"
+	spawn_enabled = no
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_thalassine_prefix"
+	species = {
+		class = "AQUATIC"
+		portrait = "psionic_07"
+		name = "lfg_empire_thalassine_species"
+		plural = "lfg_empire_thalassine_species_plural"
+		adjective = "lfg_empire_thalassine_species_adj"
+		name_list = "lfg_thalassine"
+		trait = "trait_organic"
+		trait = "trait_tankbound"
+		trait = "trait_charismatic"
+		trait = "trait_unruly"
+		trait = "trait_thrifty"
+		trait = "trait_humanoid_psychological_infertility"
+		trait = "trait_traditional"
+	}
+	room = "runic_room"
+	authority = "auth_corporate"
+	government = gov_megacorporation
+	civics = { "civic_tankbound_corporate" "civic_corporate_galactic_curators" "civic_corporate_chosen" }
+	ethic = "ethic_fanatic_xenophile"
+	ethic = "ethic_spiritualist"
+	origin = "origin_great_ring"
+	flag = lfg_empire_thalassine	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_thalassine_planet"
+	planet_class = "pc_continental"
+	initializer = "giga_behemoth_ring_system"
+	system_name = "lfg_empire_thalassine_system"
+	graphical_culture = "psionic_01"
+	city_graphical_culture = "psionic_01"
+	empire_flag = {
+		icon = { category = "ornate" file = "flag_ornate_10.dds" }
+		background = { category = "backgrounds" file = "circle.dds" }
+		colors = { "ice_turquoise" "dark_purple" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_thalassine_ruler"
+		ruler_title = "lfg_empire_thalassine_ruler_title"
+		gender = female
+		portrait = "psionic_07"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_principled"
+		leader_class = official
+	}
+}
+
+# Cevantian Sporeweb Cooperative (from the saved design "Cevantian Commerce League"; spawns as AI: yes)
+lfg_empire_cevantian_league = {
+	name = "lfg_empire_cevantian_league_name"
+	adjective = "lfg_empire_cevantian_league_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_cevantian_league_prefix"
+	species = {
+		class = "FUN"
+		portrait = "psionic_02"
+		name = "lfg_empire_cevantian_league_species"
+		plural = "lfg_empire_cevantian_league_species_plural"
+		adjective = "lfg_empire_cevantian_league_species_adj"
+		name_list = "lfg_cevantian_league"
+		trait = "trait_organic"
+		trait = "trait_pathogenic_genes"
+		trait = "trait_thrifty"
+		trait = "trait_uncanny_intuition"
+		trait = "trait_rooted"
+		trait = "trait_strong"
+	}
+	room = "default_room"
+	authority = "auth_corporate"
+	government = gov_worker_coop
+	civics = { "civic_free_traders" "civic_trading_posts" "civic_worker_coop" }
+	ethic = "ethic_egalitarian"
+	ethic = "ethic_fanatic_xenophile"
+	origin = "origin_synthetic_fertility"
+	flag = lfg_empire_cevantian_league	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_cevantian_league_planet"
+	planet_class = "pc_continental"
+	system_name = "lfg_empire_cevantian_league_system"
+	graphical_culture = "fungoid_01"
+	city_graphical_culture = "fungoid_01"
+	empire_flag = {
+		icon = { category = "plantoid" file = "plantoid_04.dds" }
+		background = { category = "backgrounds" file = "flag_BG_26.dds" }
+		colors = { "moss_green" "ochre_brown" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_cevantian_league_ruler"
+		ruler_title = "lfg_empire_cevantian_league_ruler_title"
+		gender = female
+		portrait = "psionic_02"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_principled"
+		leader_class = official
+	}
+}
+
+# Veyl Groundskeeping Directive (from the saved design "Island"; spawns as AI: no)
+lfg_empire_veyl = {
+	name = "lfg_empire_veyl_name"
+	adjective = "lfg_empire_veyl_adj"
+	spawn_enabled = no
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_veyl_prefix"
+	species = {
+		class = "MACHINE"
+		portrait = "tox_machine"
+		name = "lfg_empire_veyl_species"
+		plural = "lfg_empire_veyl_species_plural"
+		adjective = "lfg_empire_veyl_species_adj"
+		name_list = "lfg_veyl"
+		trait = "trait_machine_unit"
+		trait = "trait_robot_history_artbot"
+	}
+	room = "default_room"
+	authority = "auth_machine_intelligence"
+	government = gov_machine_empire
+	civics = { "civic_machine_galactic_curators" "civic_environmental_architects_machine" "civic_machine_galvanic_symbiosis" }
+	ethic = "ethic_gestalt_consciousness"
+	origin = "origin_incohesive"
+	flag = lfg_empire_veyl	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_veyl_planet"
+	planet_class = "pc_alpine"
+	system_name = "lfg_empire_veyl_system"
+	graphical_culture = "solarpunk_01"
+	city_graphical_culture = "mammalian_01"
+	empire_flag = {
+		icon = { category = "pointy" file = "flag_pointy_8.dds" }
+		background = { category = "backgrounds" file = "flag_BG_11.dds" }
+		colors = { "light_green" "silver_steel" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_veyl_ruler"
+		ruler_title = "lfg_empire_veyl_ruler_title"
+		gender = female
+		portrait = "tox_machine"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_spark_of_genius"
+		leader_class = official
+	}
+}
+
+# Hearthkeepers of the Korinth Disk (from the saved design "Servitors"; spawns as AI: no)
+lfg_empire_korinth = {
+	name = "lfg_empire_korinth_name"
+	adjective = "lfg_empire_korinth_adj"
+	spawn_enabled = no
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_korinth_prefix"
+	species = {
+		class = "MACHINE"
+		portrait = "aqu_machine"
+		name = "lfg_empire_korinth_species"
+		plural = "lfg_empire_korinth_species_plural"
+		adjective = "lfg_empire_korinth_species_adj"
+		name_list = "lfg_korinth"
+		trait = "trait_machine_unit"
+		trait = "trait_robot_high_bandwidth"
+		trait = "trait_robot_bulky"
+		trait = "trait_auto_mod_robotic"
+		trait = "trait_robot_recycled"
+		trait = "trait_robot_high_maintenance"
+	}
+	secondary_species = {
+		class = "MINDWARDEN"
+		portrait = "mindwarden_01"
+		name = "lfg_empire_korinth_species2"
+		plural = "lfg_empire_korinth_species2_plural"
+		adjective = "lfg_empire_korinth_species2_adj"
+		name_list = "lfg_korinth_organic"
+		trait = "trait_organic"
+		trait = "trait_charismatic"
+		trait = "trait_seasonal_dormancy"
+		trait = "trait_sedentary"
+		trait = "trait_communal"
+		trait = "trait_nonadaptive"
+	}
+	room = "default_room"
+	authority = "auth_machine_intelligence"
+	government = gov_machine_servitor
+	civics = { "civic_machine_chosen" "civic_machine_servitor" "civic_machine_galvanic_symbiosis" }
+	ethic = "ethic_gestalt_consciousness"
+	origin = "origin_alderson"
+	flag = lfg_empire_korinth	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_korinth_planet"
+	planet_class = "pc_continental"
+	initializer = "giga_alderson_start"
+	system_name = "lfg_empire_korinth_system"
+	graphical_culture = "mindwarden_01"
+	city_graphical_culture = "mammalian_01"
+	empire_flag = {
+		icon = { category = "ornate" file = "flag_ornate_3.dds" }
+		background = { category = "backgrounds" file = "circle.dds" }
+		colors = { "light_pink" "white" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_korinth_ruler"
+		ruler_title = "lfg_empire_korinth_ruler_title"
+		gender = female
+		portrait = "aqu_machine"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_spark_of_genius"
+		leader_class = official
+	}
+}
+
+# Cevantian Nanoforge Directorate (from the saved design "Cevantian Forge"; spawns as AI: no)
+lfg_empire_cevantian_forge = {
+	name = "lfg_empire_cevantian_forge_name"
+	adjective = "lfg_empire_cevantian_forge_adj"
+	spawn_enabled = no
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_cevantian_forge_prefix"
+	species = {
+		class = "MACHINE"
+		portrait = "cyb_machine"
+		name = "lfg_empire_cevantian_forge_species"
+		plural = "lfg_empire_cevantian_forge_species_plural"
+		adjective = "lfg_empire_cevantian_forge_species_adj"
+		name_list = "lfg_cevantian_forge"
+		trait = "trait_machine_unit"
+		trait = "trait_lfg_nanite_substrate"
+		trait = "trait_robot_history_explorebot"
+		trait = "trait_robot_propaganda_machines"
+		trait = "trait_robot_high_bandwidth"
+		trait = "trait_robot_bulky"
+		trait = "trait_robot_efficient_processors"
+	}
+	room = "default_room"
+	authority = "auth_machine_intelligence"
+	government = gov_machine_industrial
+	civics = { "civic_machine_astromining_drones" "civic_machine_unitary_cohesion" "civic_machine_galactic_curators" }
+	ethic = "ethic_gestalt_consciousness"
+	origin = "origin_lfg_nanite_forge"
+	flag = lfg_empire_cevantian_forge	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_cevantian_forge_planet"
+	planet_class = "pc_continental"
+	initializer = "lfg_nanite_forge_start"
+	system_name = "lfg_empire_cevantian_forge_system"
+	graphical_culture = "synthetics_01"
+	city_graphical_culture = "synthetics_01"
+	empire_flag = {
+		icon = { category = "blocky" file = "flag_blocky_7.dds" }
+		background = { category = "backgrounds" file = "flag_BG_36.dds" }
+		colors = { "intense_orange" "shadow_steel" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_cevantian_forge_ruler"
+		ruler_title = "lfg_empire_cevantian_forge_ruler_title"
+		gender = female
+		portrait = "cyb_machine"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_principled"
+		leader_class = official
+	}
+}
+
+# Drakesworn Dominion of Alar (from the saved design "Sovereign Alarian Nations"; spawns as AI: yes)
+lfg_empire_alari = {
+	name = "lfg_empire_alari_name"
+	adjective = "lfg_empire_alari_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_alari_prefix"
+	species = {
+		class = "REP"
+		portrait = "rep17"
+		name = "lfg_empire_alari_species"
+		plural = "lfg_empire_alari_species_plural"
+		adjective = "lfg_empire_alari_species_adj"
+		name_list = "lfg_alari"
+		trait = "trait_organic"
+		trait = "trait_agrarian"
+		trait = "trait_chromalogs"
+		trait = "trait_unruly"
+		trait = "trait_humanoid_psychological_infertility"
+	}
+	room = "default_room"
+	authority = "auth_imperial"
+	government = gov_star_empire
+	civics = { "civic_environmental_architects" "civic_byzantine_bureaucracy" "civic_memorialist" }
+	ethic = "ethic_authoritarian"
+	ethic = "ethic_xenophobe"
+	ethic = "ethic_militarist"
+	origin = "origin_here_be_dragons"
+	flag = lfg_empire_alari	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_alari_planet"
+	planet_class = "pc_ocean"
+	system_name = "lfg_empire_alari_system"
+	graphical_culture = "reptilian_01"
+	city_graphical_culture = "reptilian_01"
+	empire_flag = {
+		icon = { category = "domination" file = "domination_12.dds" }
+		background = { category = "backgrounds" file = "flag_BG_1.dds" }
+		colors = { "dark_red" "yellow" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_alari_ruler"
+		ruler_title = "lfg_empire_alari_ruler_title"
+		gender = female
+		portrait = "rep17"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "trait_ruler_logistic_understanding"
+		leader_class = official
+	}
+}
+
+# Bebakian Restoration Academy (from the saved design "Bebakian Confederacy"; spawns as AI: yes)
+lfg_empire_bebakian = {
+	name = "lfg_empire_bebakian_name"
+	adjective = "lfg_empire_bebakian_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_bebakian_prefix"
+	species = {
+		class = "HUM"
+		portrait = "psionic_10"
+		name = "lfg_empire_bebakian_species"
+		plural = "lfg_empire_bebakian_species_plural"
+		adjective = "lfg_empire_bebakian_species_adj"
+		name_list = "lfg_bebakian"
+		trait = "trait_organic"
+		trait = "trait_cranial_megatrophy"
+		trait = "trait_natural_sociologists"
+		trait = "trait_unruly"
+		trait = "trait_humanoid_psychological_infertility"
+		trait = "trait_traditional"
+	}
+	room = "default_room"
+	authority = "auth_oligarchic"
+	government = gov_science_directorate
+	civics = { "civic_lfg_applied_biosciences" "civic_technocracy" "civic_meritocracy" }
+	ethic = "ethic_egalitarian"
+	ethic = "ethic_xenophile"
+	ethic = "ethic_materialist"
+	origin = "origin_remnants"
+	flag = lfg_empire_bebakian	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_bebakian_planet"
+	planet_class = "pc_continental"
+	system_name = "lfg_empire_bebakian_system"
+	graphical_culture = "humanoid_01"
+	city_graphical_culture = "humanoid_01"
+	empire_flag = {
+		icon = { category = "spherical" file = "flag_spherical_10.dds" }
+		background = { category = "backgrounds" file = "flag_BG_45.dds" }
+		colors = { "light_blue" "white" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_bebakian_ruler"
+		ruler_title = "lfg_empire_bebakian_ruler_title"
+		gender = female
+		portrait = "psionic_10"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_spark_of_genius"
+		leader_class = official
+	}
+}
+
+# Khell'Zen Tempest Syndicate (from the saved design "Khell'Zen Enterprises"; spawns as AI: yes)
+lfg_empire_khellzen = {
+	name = "lfg_empire_khellzen_name"
+	adjective = "lfg_empire_khellzen_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_khellzen_prefix"
+	species = {
+		class = "AVI"
+		portrait = "psionic_08"
+		name = "lfg_empire_khellzen_species"
+		plural = "lfg_empire_khellzen_species_plural"
+		adjective = "lfg_empire_khellzen_species_adj"
+		name_list = "lfg_khellzen"
+		trait = "trait_organic"
+		trait = "trait_storm_touched"
+		trait = "trait_crafted_smiles"
+		trait = "trait_charismatic"
+		trait = "trait_enduring"
+		trait = "trait_unruly"
+		trait = "trait_uncanny_intuition"
+		trait = "trait_sedentary"
+	}
+	room = "default_room"
+	authority = "auth_corporate"
+	government = gov_megacorporation
+	civics = { "civic_storm_callers_megacorp" "civic_corporate_chosen" "civic_corporate_galactic_curators" }
+	ethic = "ethic_egalitarian"
+	ethic = "ethic_xenophile"
+	ethic = "ethic_spiritualist"
+	origin = "origin_overtuned"
+	flag = lfg_empire_khellzen	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_khellzen_planet"
+	planet_class = "pc_tropical"
+	system_name = "lfg_empire_khellzen_system"
+	graphical_culture = "avian_01"
+	city_graphical_culture = "avian_01"
+	empire_flag = {
+		icon = { category = "zoological" file = "flag_zoological_7.dds" }
+		background = { category = "backgrounds" file = "double_hemispheres.dds" }
+		colors = { "intense_purple" "sky_blue" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_khellzen_ruler"
+		ruler_title = "lfg_empire_khellzen_ruler_title"
+		gender = female
+		portrait = "psionic_08"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "trait_ruler_eye_for_talent"
+		leader_class = official
+	}
+}
+
+# Chrome Throne of Alaran (from the saved design "Alarian Kingdom"; spawns as AI: yes)
+lfg_empire_alaran = {
+	name = "lfg_empire_alaran_name"
+	adjective = "lfg_empire_alaran_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_alaran_prefix"
+	species = {
+		class = "MAM"
+		portrait = "cyb6"
+		name = "lfg_empire_alaran_species"
+		plural = "lfg_empire_alaran_species_plural"
+		adjective = "lfg_empire_alaran_species_adj"
+		name_list = "lfg_alaran"
+		trait = "trait_organic"
+		trait = "trait_cyborg_ritualistic_implants"
+		trait = "trait_familial"
+		trait = "trait_seasonal_dormancy"
+		trait = "trait_strong"
+		trait = "trait_unruly"
+		trait = "trait_sedentary"
+	}
+	room = "default_room"
+	authority = "auth_imperial"
+	government = gov_theocratic_monarchy
+	civics = { "civic_corvee_system" "civic_police_state" "civic_twisted_experimenters" }
+	ethic = "ethic_fanatic_xenophobe"
+	ethic = "ethic_spiritualist"
+	origin = "origin_cybernetic_creed"
+	flag = lfg_empire_alaran	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_alaran_planet"
+	planet_class = "pc_desert"
+	system_name = "lfg_empire_alaran_system"
+	graphical_culture = "cybernetics_01"
+	city_graphical_culture = "cybernetics_01"
+	empire_flag = {
+		icon = { category = "imperial" file = "imperial_05.dds" }
+		background = { category = "backgrounds" file = "flag_BG_27.dds" }
+		colors = { "silver_steel" "burgundy" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_alaran_ruler"
+		ruler_title = "lfg_empire_alaran_ruler_title"
+		gender = female
+		portrait = "cyb6"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_principled"
+		leader_class = official
+	}
+}

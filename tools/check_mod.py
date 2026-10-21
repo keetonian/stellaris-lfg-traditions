@@ -105,6 +105,9 @@ ALLOWED_FILES = [
     r"interface/lfg_[^/]+\.gui",  # our tradition tree layouts
     r"common/global_ship_designs/lfg_[^/]+\.txt",  # generated: the growing drakes' designs
     r"gfx/projectiles/lfg_[^/]+\.txt",  # projectile looks (the Dragon's Breath)
+    r"prescripted_countries/lfg_[^/]+\.txt",  # premade empires
+    r"common/prescripted_flags/lfg_[^/]+\.txt",  # their country flags (stories)
+    r"common/name_lists/lfg_[^/]+\.txt",  # their name lists
     r"gfx/interface/traditions/(lfg_|tradition_hex_bg_lfg_)[^/]+\.dds",  # art/make_tempest_art.py
     r"gfx/interface/tiles/tradition_category_tile_lfg_[^/]+\.dds",  # art/make_tempest_art.py
     r"gfx/event_pictures/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py

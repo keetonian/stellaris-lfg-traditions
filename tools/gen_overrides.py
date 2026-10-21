@@ -1123,7 +1123,9 @@ DRAKE_ELDER_STEP = 11
 DRAKE_STEP_YEARS = 4  # keep in step with lfg_dragons.1 (48 months)
 DRAKE_MAX_STEP = 24
 DRAKE_BASE_HP = 10000
-DRAKE_GROWTH, DRAKE_LEGEND_GROWTH = 1.75, 1.5
+DRAKE_GROWTH, DRAKE_LEGEND_GROWTH = 1.75, 1.5  # size (model) growth
+# Legendary durability grows slower than its size: x1.35 a step (cap ~230M, ~1.8x the Mothership's 127M).
+DRAKE_LEGEND_DURABILITY_GROWTH = 1.35
 # Weapon damage has its own curve: half the durability growth up to the Elder, then x1.3 a Legendary step (durability:
 # x1.5), so a capped Legendary hits ~x7,100 a baby's breath, not x91,750.
 DRAKE_DAMAGE_FACTOR, DRAKE_LEGEND_DAMAGE_GROWTH = 0.5, 1.3
@@ -1135,12 +1137,12 @@ DRAKE_BREATH = "LFG_DRAKE_BREATH"
 DRAKE_KEEP_SLOTS = {"SECONDARY_GUN_01", "SECONDARY_GUN_02", "SECONDARY_GUN_03", "SECONDARY_GUN_04",
                     "TERTIARY_GUN_01", "TERTIARY_GUN_02"}
 # Durability split at every step: mostly hull and armour, a token shield; plus damage reduction and living regeneration.
-DRAKE_HULL_SHARE, DRAKE_ARMOR_SHARE, DRAKE_SHIELD_SHARE = 0.50, 0.48, 0.002  # shields: 2% at first, -90%
-DRAKE_DAMAGE_REDUCTION = 0.25
-DRAKE_REGEN = 0.25  # hull and armour regeneration (% of max), at the top of vanilla's range
+DRAKE_HULL_SHARE, DRAKE_ARMOR_SHARE, DRAKE_SHIELD_SHARE = 0.62, 0.36, 0.002  # shields: 2% at first, -90%; a quarter of the armour (0.48) moved to hull
+DRAKE_DAMAGE_REDUCTION = 0.10
+DRAKE_REGEN = 0.005  # hull and armour regeneration (0.25 meant it never took lasting damage)
 # The Legendary Dragon's hull grows extra: x1 at the Elder's step, rising evenly to x2 at step 24 (~917M hull, under the
 # ~2.1 billion the game can hold).
-DRAKE_LEGEND_HULL_BONUS = 1.0
+DRAKE_LEGEND_HULL_BONUS = 0.0  # was 1.0 (x2 hull at step 24); dropped with DRAKE_LEGEND_DURABILITY_GROWTH
 DRAKE_RANGE_PER_STEP = 0.05  # weapon range per growth step: +120% at step 24 (the breath: 320 -> ~704)
 DRAKE_STAGES = [(3, "Baby Drake"), (6, "Juvenile Dragon"), (10, "Dragon"), (11, "Elder Dragon"), (DRAKE_MAX_STEP, "Legendary Dragon")]
 # The Dragon's Breath, one per step (its damage and splash baked in: a ship_weapon_damage modifier on the ship size
@@ -1235,7 +1237,7 @@ def drake_steps() -> list[tuple[str, int, bool]]:
 def drake_stats(n: int) -> dict:
     growth = DRAKE_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
     food = DRAKE_FOOD * DRAKE_FOOD_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_FOOD_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
-    total = DRAKE_BASE_HP * growth
+    total = DRAKE_BASE_HP * DRAKE_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_DURABILITY_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
     armor, shield = total * DRAKE_ARMOR_SHARE, total * DRAKE_SHIELD_SHARE
     hull = total * DRAKE_HULL_SHARE * (1 + DRAKE_LEGEND_HULL_BONUS * max(0, n - DRAKE_ELDER_STEP) / (DRAKE_MAX_STEP - DRAKE_ELDER_STEP))
     damage = DRAKE_DAMAGE_FACTOR * DRAKE_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_DAMAGE_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
