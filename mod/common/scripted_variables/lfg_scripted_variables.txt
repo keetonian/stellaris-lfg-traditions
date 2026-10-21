@@ -79,7 +79,7 @@
 # Nanite Forge origin: days between the broken harvester's doublings (lfg_nanite_forge.2; vanilla harvesters: 5 years).
 @lfg_broken_harvester_days = 1095
 # Nanite Forge origin: pops removed from the homeworld at game start, in hundreds (15 = 1,500).
-@lfg_nanite_forge_pops_removed_hundreds = 18
+@lfg_nanite_forge_pops_removed_hundreds = 20
 # Ancient Nanite Harvester upkeep: energy per upkeep unit (vanilla's harvester: 4) and the units each of steps 10-16 adds.
 @lfg_ancient_harvester_energy = 6
 @lfg_ancient_harvester_units_per_step = 256
@@ -115,6 +115,18 @@
 # Its upgrade, the Nanite Overmind Core (Mothership perk tech): all of it, twice the upkeep.
 @lfg_nanite_core_2_automation = 1.0
 @lfg_nanite_core_2_upkeep_per_district = 1000
+# Trade per district from the automation buildings: 75% of the logistics cost of their nanite upkeep
+# (nanites' deficit_trade_conversion_mult is 2.5 trade per nanite: upkeep x 2.5 x 0.75 = upkeep x 1.875).
+@lfg_nanite_hub_trade_per_district = 56.25
+@lfg_nanite_core_trade_per_district = 937.5
+@lfg_nanite_core_2_trade_per_district = 1875
+# On a Nanite World (pc_nanotech) all of these are halved (@lfg_nanite_world_discount; written out, one multiplier per block).
+@lfg_nanite_hub_upkeep_per_district_nanite_world = 15
+@lfg_nanite_core_upkeep_per_district_nanite_world = 250
+@lfg_nanite_core_2_upkeep_per_district_nanite_world = 500
+@lfg_nanite_hub_trade_per_district_nanite_world = 28.125
+@lfg_nanite_core_trade_per_district_nanite_world = 468.75
+@lfg_nanite_core_2_trade_per_district_nanite_world = 937.5
 # Both nanite automation buildings cost this share (build cost and upkeep) on Nanite Worlds (pc_nanotech).
 @lfg_nanite_world_discount = 0.5
 # Nanotensile Converter (after Nanotech, supertensiles on): monthly energy + nanites in, supertensiles out.

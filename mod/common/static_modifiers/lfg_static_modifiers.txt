@@ -170,7 +170,7 @@ lfg_nanite_siege_driver_debuff = {
 	ship_shield_hardening_add = -0.20
 }
 
-# Stationcraft (tr_lfg_stationcraft_adopt): station output per colony / starbase / kilostructure / megastructure owned.
+# Stationcraft (tr_lfg_stationcraft_adopt): station output per colony / starbase tier / kilostructure / megastructure owned.
 # lfg_stationcraft.1 adds each with multiplier = the count (country variables lfg_sc_*), re-adding it when the count changes.
 lfg_stationcraft_per_colony = {
 	station_gatherers_produces_mult = 0.03
@@ -190,4 +190,19 @@ lfg_stationcraft_per_kilostructure = {
 lfg_stationcraft_per_megastructure = {
 	station_gatherers_produces_mult = 0.1
 	station_researchers_produces_mult = 0.1
+}
+
+# Nanite Automation Hub (building_lfg_nanite_automation): 50% of Technician, Miner and Farmer jobs (and their drones)
+# automated, kept on planets with the building active by lfg_nanite_forge.5; one tooltip line.
+lfg_nanite_hub_automation = {
+	show_only_custom_tooltip = yes
+	custom_tooltip = lfg_nanite_hub_automation_tt
+	icon = "gfx/interface/icons/planet_modifiers/pm_nanite_world.dds"
+	icon_frame = 1
+	job_technician_automated_workforce_mult = @lfg_nanite_hub_automation
+	job_technician_drone_automated_workforce_mult = @lfg_nanite_hub_automation
+	job_miner_automated_workforce_mult = @lfg_nanite_hub_automation
+	job_mining_drone_automated_workforce_mult = @lfg_nanite_hub_automation
+	job_farmer_automated_workforce_mult = @lfg_nanite_hub_automation
+	job_agri_drone_automated_workforce_mult = @lfg_nanite_hub_automation
 }

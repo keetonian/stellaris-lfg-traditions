@@ -25,13 +25,10 @@ building_lfg_nanite_automation = {
 
 	prerequisites = { "tech_lfg_nanite_automation" }
 
-	planet_modifier = {
-		job_technician_automated_workforce_mult = @lfg_nanite_hub_automation
-		job_technician_drone_automated_workforce_mult = @lfg_nanite_hub_automation
-		job_miner_automated_workforce_mult = @lfg_nanite_hub_automation
-		job_mining_drone_automated_workforce_mult = @lfg_nanite_hub_automation
-		job_farmer_automated_workforce_mult = @lfg_nanite_hub_automation
-		job_agri_drone_automated_workforce_mult = @lfg_nanite_hub_automation
+	# The automation is the static modifier lfg_nanite_hub_automation (one tooltip line), kept on planets with the
+	# building active by lfg_nanite_forge.5.
+	triggered_desc = {
+		text = building_lfg_nanite_automation_effects
 	}
 
 	resources = {
@@ -47,8 +44,26 @@ building_lfg_nanite_automation = {
 			nanites = 100
 			mult = @lfg_nanite_world_discount
 		}
+		# Half on a Nanite World (pc_nanotech), like the build cost.
 		upkeep = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
 			nanites = @lfg_nanite_hub_upkeep_per_district
+			mult = value:lfg_resource_districts
+		}
+		upkeep = {
+			trigger = { is_planet_class = pc_nanotech }
+			nanites = @lfg_nanite_hub_upkeep_per_district_nanite_world
+			mult = value:lfg_resource_districts
+		}
+		# Trade to cover 75% of the planetary logistics cost of that nanite upkeep (2.5 trade per nanite of deficit).
+		produces = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
+			trade = @lfg_nanite_hub_trade_per_district
+			mult = value:lfg_resource_districts
+		}
+		produces = {
+			trigger = { is_planet_class = pc_nanotech }
+			trade = @lfg_nanite_hub_trade_per_district_nanite_world
 			mult = value:lfg_resource_districts
 		}
 	}
@@ -92,8 +107,26 @@ building_lfg_nanite_cognition_core = {
 			nanites = 500
 			mult = @lfg_nanite_world_discount
 		}
+		# Half on a Nanite World (pc_nanotech), like the build cost.
 		upkeep = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
 			nanites = @lfg_nanite_core_upkeep_per_district
+			mult = value:lfg_all_districts
+		}
+		upkeep = {
+			trigger = { is_planet_class = pc_nanotech }
+			nanites = @lfg_nanite_core_upkeep_per_district_nanite_world
+			mult = value:lfg_all_districts
+		}
+		# Trade to cover 75% of the planetary logistics cost of that nanite upkeep (2.5 trade per nanite of deficit).
+		produces = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
+			trade = @lfg_nanite_core_trade_per_district
+			mult = value:lfg_all_districts
+		}
+		produces = {
+			trigger = { is_planet_class = pc_nanotech }
+			trade = @lfg_nanite_core_trade_per_district_nanite_world
 			mult = value:lfg_all_districts
 		}
 	}
@@ -137,8 +170,26 @@ building_lfg_nanite_cognition_core_2 = {
 			nanites = 1000
 			mult = @lfg_nanite_world_discount
 		}
+		# Half on a Nanite World (pc_nanotech), like the build cost.
 		upkeep = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
 			nanites = @lfg_nanite_core_2_upkeep_per_district
+			mult = value:lfg_all_districts
+		}
+		upkeep = {
+			trigger = { is_planet_class = pc_nanotech }
+			nanites = @lfg_nanite_core_2_upkeep_per_district_nanite_world
+			mult = value:lfg_all_districts
+		}
+		# Trade to cover 75% of the planetary logistics cost of that nanite upkeep (2.5 trade per nanite of deficit).
+		produces = {
+			trigger = { NOT = { is_planet_class = pc_nanotech } }
+			trade = @lfg_nanite_core_2_trade_per_district
+			mult = value:lfg_all_districts
+		}
+		produces = {
+			trigger = { is_planet_class = pc_nanotech }
+			trade = @lfg_nanite_core_2_trade_per_district_nanite_world
 			mult = value:lfg_all_districts
 		}
 	}

@@ -20,7 +20,7 @@ country_event = {
 		# A nanite vein in the homeworld (planetary deposit, +15 nanites), and 50 nanites to start with.
 		capital_scope = { add_deposit = d_lfg_nanite_vein }
 		add_resource = { nanites = 50 }
-		# A small homeworld: 1,800 fewer pops, taken 100 at a time from its largest pop group.
+		# A small homeworld: 2,000 fewer pops, taken 100 at a time from its largest pop group.
 		capital_scope = {
 			while = {
 				count = @lfg_nanite_forge_pops_removed_hundreds
@@ -200,7 +200,8 @@ system_event = {
 	}
 }
 
-# Monthly (on_monthly_pulse_country): keep lfg_nanite_specialist_automation (Nanite Cognition Core) on our planets that
+# Monthly (on_monthly_pulse_country): keep lfg_nanite_hub_automation (Nanite Automation Hub) and
+# lfg_nanite_specialist_automation(_full) (Cognition / Overmind Core) on our planets that
 # have the building active (not disabled or ruined; there's no on_action for toggling one), and only there. Only countries that finished Nanotech, or had the modifier applied, loop planets.
 country_event = {
 	id = lfg_nanite_forge.5
@@ -210,6 +211,7 @@ country_event = {
 	trigger = {
 		OR = {
 			has_tradition = tr_nanotech_finish
+			has_origin = origin_lfg_nanite_forge
 			has_country_flag = lfg_nanite_core_applied
 		}
 	}
@@ -217,6 +219,19 @@ country_event = {
 	immediate = {
 		remove_country_flag = lfg_nanite_core_applied
 		every_owned_planet = {
+			# Nanite Automation Hub (origin): its own modifier, alongside either Core's.
+			if = {
+				limit = { has_active_building = building_lfg_nanite_automation }
+				if = {
+					limit = { NOT = { has_modifier = lfg_nanite_hub_automation } }
+					add_modifier = { modifier = lfg_nanite_hub_automation days = -1 }
+				}
+				owner = { set_country_flag = lfg_nanite_core_applied }
+			}
+			else_if = {
+				limit = { has_modifier = lfg_nanite_hub_automation }
+				remove_modifier = lfg_nanite_hub_automation
+			}
 			if = {
 				limit = { has_active_building = building_lfg_nanite_cognition_core_2 }	# not while disabled or ruined
 				remove_modifier = lfg_nanite_specialist_automation

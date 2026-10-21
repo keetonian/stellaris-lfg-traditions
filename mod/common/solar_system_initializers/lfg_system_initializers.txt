@@ -380,7 +380,7 @@ lfg_nanite_forge_start = {
 		class = ideal_planet_class
 		orbit_distance = 18
 		orbit_angle = { min = 90 max = 270 }
-		size = 10	# the game makes it a size 12 homeworld; lfg_nanite_forge.1 also removes 1,800 of its pops
+		size = 10	# the game makes it a size 12 homeworld; lfg_nanite_forge.1 also removes 2,000 of its pops
 		starting_planet = yes
 		deposit_blockers = none
 		modifiers = none
@@ -437,12 +437,26 @@ lfg_nanite_forge_start = {
 	# The forge: eight size 60 molten worlds (big enough for all 16 harvester steps) evenly around one orbit.
 	change_orbit = 60
 	planet = {
-		count = 8
+		count = 7
 		class = pc_molten
 		orbit_distance = 0
 		orbit_angle = 45
 		size = 60
 		has_ring = no
+	}
+	# The eighth, on the same orbit 45 degrees on: starts with +10 minerals (ignore_startup_effect keeps it through
+	# vanilla's home-system setup).
+	planet = {
+		class = pc_molten
+		orbit_distance = 0
+		orbit_angle = 45
+		size = 60
+		has_ring = no
+		flags = { ignore_startup_effect }
+		init_effect = {
+			clear_deposits = yes
+			add_deposit = d_minerals_10
+		}
 	}
 
 	planet = {
@@ -475,6 +489,20 @@ lfg_nanite_forge_start = {
 		orbit_distance = 25
 		orbit_angle = 60
 		size = { min = 2 max = 5 }
+	}
+
+	# A research asteroid on the outer belt, between its rocks: +5 society (ignore_startup_effect keeps the deposit
+	# through vanilla's home-system setup, like the inner belt's +3 physics asteroid).
+	planet = {
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = 30
+		size = 4
+		flags = { ignore_startup_effect }
+		init_effect = {
+			clear_deposits = yes
+			add_deposit = d_society_5
+		}
 	}
 
 	planet = {

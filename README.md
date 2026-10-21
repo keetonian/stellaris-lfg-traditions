@@ -107,7 +107,7 @@ kilostructure (+5%) and megastructure (+10%) you own, uncapped, but **jobs produ
 
 | Tradition | Effect |
 |---|---|
-| Adopt ⚙ | Station output +3% per colony, +2% per starbase, +5% per kilostructure, +10% per megastructure · resources from jobs −35% |
+| Adopt ⚙ | Station output +3% per colony, +2% per starbase tier (outpost 1 … citadel 5), +5% per kilostructure, +10% per megastructure · resources from jobs −35% |
 | 1. Orbital Logistics | Starbase capacity +3 · starbase upkeep −25% · starbase influence cost −25% |
 | 2. Kilostructure Doctrine | Megastructure build speed +20% · megastructure cost −10% |
 | 3. Bastion Starbases (needs 1) | Starbase hull and armour +25% · +3 defense platforms · starbase build speed +50% |
@@ -121,7 +121,9 @@ the empire's modifiers) at `multiplier =` each count (`lfg_stationcraft_sync`, r
 bonus can lag a month. (The tradition's own `triggered_modifier` with `mult = value:...` didn't grow in game.) Losing the
 tree removes them on the next monthly run. Kilostructures are
 Gigastructural's `is_kilostructure`; megastructures are every other owned megastructure that isn't ruined or technical
-(Giga's `is_ruined_mega` / `is_technical_mega`); starbases include outposts. Colonies are every owned planet (`every_owned_planet`).
+(Giga's `is_ruined_mega` / `is_technical_mega`); starbase tiers: outpost 1, starport 2, starhold 3, star fortress 4, citadel 5 (`has_starbase_size`), so upgrading adds up;
+with **NSC3**, its stronghold counts 6 and headquarters 7 (`has_starbase_size > starbase_citadel` +1, `is_ship_size =
+starbase_headquarters` +1; without NSC3 that ship size is unknown and the check is false, possibly with a log line). Colonies are every owned planet (`every_owned_planet`).
 
 ### Lineage: every trait is an advantage
 **Who:** any empire. **Hook:** scales with your main species' traits, your species and subspecies, and the planet types you live on (all uncapped).
@@ -259,15 +261,16 @@ gas giants are size 62; one base district per size). Initializer: `lfg_emberfall
 **Nanite Vein** deposit (`d_lfg_nanite_vein`, +15 nanites; not orbital), **50 nanites** to start with, and the founder species the **Nanite Substrate**
 trait (`trait_lfg_nanite_substrate`, can't be added, removed or merged by species modification): pops **+20% job
 efficiency** and **+0.3 nanites upkeep** (per 100 pops); mechanical pop assembly speed **−30%** where they're assembled (there is
-no mechanical-only modifier). The deposit is added at game start by `lfg_nanite_forge.1`; the trait through the origin's
+no mechanical-only modifier). **Neither applies on a Nanite World** (`pc_nanotech`): the upkeep's `trigger` and the
+assembly block's `potential` check the planet. The deposit is added at game start by `lfg_nanite_forge.1`; the trait through the origin's
 `traits = { trait = trait_lfg_nanite_substrate }`, like vanilla's Evolutionary Predators (shown added and locked in the
 species designer). Needs The Machine Age
 (nanites and the Nanotech tree).
 **Home system** (`lfg_nanite_forge_start`): a **blue B-class star** with a **+22 energy** deposit (`d_lfg_nanite_forge_star`,
 mined by a mining station; set at game start by `lfg_nanite_forge.1`, because vanilla's home-system setup re-rolls the
-star's deposits to +5 energy), a **size 12 homeworld** (the initializer says 10; the game makes home planets 12; with a moon; `lfg_nanite_forge.1` also removes **1,800 of its pops**, 100 at a time from the
-largest pop group, `@lfg_nanite_forge_pops_removed_hundreds`), **eight size 60 molten worlds** evenly spaced on one orbit, a **broken world with +8 engineering** and a **research
-asteroid with +3 physics** (both flagged `ignore_startup_effect` so vanilla's home-system setup keeps their deposits), a
+star's deposits to +5 energy), a **size 12 homeworld** (the initializer says 10; the game makes home planets 12; with a moon; `lfg_nanite_forge.1` also removes **2,000 of its pops**, 100 at a time from the
+largest pop group, `@lfg_nanite_forge_pops_removed_hundreds`), **eight size 60 molten worlds** evenly spaced on one orbit (one starts with a **+10 minerals** deposit, `d_minerals_10`), a **broken world with +8 engineering** and a **research
+asteroid with +3 physics** (inner belt), another with **+5 society** (outer belt) (both flagged `ignore_startup_effect` so vanilla's home-system setup keeps their deposits), a
 small molten world, barren, toxic, frozen and cold barren worlds with moons, two asteroid belts (12 asteroids) and a gas giant
 with 3 moons.
 **Starting starbase:** the origin starts with **Starholds** researched (`tech_starbase_3`) and the home starbase upgraded
@@ -331,7 +334,8 @@ grey goo, with vanilla's unity symbol and 1-4 tier pips. **Replicators:** with t
 
 **Nanite Automation Hub** (`building_lfg_nanite_automation`, this origin only, needs the engineering tech **Nanite Automation** (`tech_lfg_nanite_automation`, tier 1, offered at game start), one per planet, in an energy, mining or
 farming specialization like vanilla's automation buildings): automates **50%** of Technician, Miner and Farmer jobs (and
-their drone versions). Costs 600 minerals + 100 nanites; upkeep **30 nanites per resource district** on the planet
+their drone versions), through the static modifier `lfg_nanite_hub_automation` (one tooltip line; kept on planets with
+the building active by the monthly `lfg_nanite_forge.5`, like the Cognition Core's). Costs 600 minerals + 100 nanites; upkeep **30 nanites per resource district** on the planet
 (`value:lfg_resource_districts`: energy, mining and food districts, including habitat, ring world, machine, hive and ark
 versions). Automated jobs still pay vanilla's automation upkeep. On a **Nanite World** (`pc_nanotech`) it costs **half**
 (build cost and upkeep; `@lfg_nanite_world_discount`), like the Cognition Core. It can stack with vanilla's own automation buildings.
@@ -363,7 +367,12 @@ within a month; the game has no on_action for toggling a building). Tunables: `@
 (`tech_lfg_cognition_core_2`, a society research option the **Mothership** perk adds). Automates **100%** of every
 specialist and complex drone job (generated `lfg_nanite_specialist_automation_full`; the monthly check swaps the 50%
 modifier for it). Costs 2,000 alloys + 1,000 nanites; upkeep **1,000 nanites per district** (both halved on a Nanite
-World). Tunables: `@lfg_nanite_core_2_*`. Icons (`art/make_building_icons.py`): the Automation Hub is vanilla's Automation building in nanite colours;
+World). Tunables: `@lfg_nanite_core_2_*`.
+
+**Logistics offset:** the Automation Hub and both Cores also produce **trade = 1.875 × their nanite upkeep** (per district,
+`@lfg_nanite_*_trade_per_district`: 56.25 / 937.5 / 1,875): 75% of the planetary logistics cost of that upkeep when the
+planet is short of nanites (vanilla charges 2.5 trade per nanite of a planet's deficit). On a Nanite World the upkeep and this trade are
+both halved (`@lfg_nanite_*_per_district_nanite_world`). Icons (`art/make_building_icons.py`): the Automation Hub is vanilla's Automation building in nanite colours;
 the Cognition and Overmind Cores vanilla's Nanite Transmuter with a glowing cyan core (the Overmind crowned by a ring).
 
 ## Building: Nanotensile Converter (Nanotech, supertensiles)

@@ -1,7 +1,7 @@
 # LFG Traditions - Stationcraft events.
 namespace = lfg_stationcraft
 
-# Monthly (on_monthly_pulse_country) and on adoption: count our colonies, starbases, kilostructures and megastructures into
+# Monthly (on_monthly_pulse_country) and on adoption: count our colonies, starbase tiers, kilostructures and megastructures into
 # country variables lfg_sc_*, and keep the lfg_stationcraft_per_* country modifiers at multiplier = each count (re-added only
 # when a count changes; the pattern of lfg_sync_arc_neighbours, verified in game). A tradition's own triggered_modifier
 # with mult = value:... didn't update in game. Without the tree, one last run removes the modifiers (country flag
@@ -40,8 +40,17 @@ country_event = {
 			every_owned_planet = {
 				prev = { change_variable = { which = lfg_sc_colonies_now value = 1 } }
 			}
+			# Starbase tiers: outpost 1, starport 2, starhold 3, star fortress 4, citadel 5; with NSC3, its stronghold 6 and
+			# headquarters 7 (anything above the citadel counts 6, NSC3's headquarters ship size 7; without NSC3 that ship
+			# size doesn't exist and the check is just false).
 			every_owned_starbase = {
 				prev = { change_variable = { which = lfg_sc_starbases_now value = 1 } }
+				if = { limit = { has_starbase_size >= starbase_starport } prev = { change_variable = { which = lfg_sc_starbases_now value = 1 } } }
+				if = { limit = { has_starbase_size >= starbase_starhold } prev = { change_variable = { which = lfg_sc_starbases_now value = 1 } } }
+				if = { limit = { has_starbase_size >= starbase_starfortress } prev = { change_variable = { which = lfg_sc_starbases_now value = 1 } } }
+				if = { limit = { has_starbase_size >= starbase_citadel } prev = { change_variable = { which = lfg_sc_starbases_now value = 1 } } }
+				if = { limit = { has_starbase_size > starbase_citadel } prev = { change_variable = { which = lfg_sc_starbases_now value = 1 } } }	# NSC3 stronghold+
+				if = { limit = { is_ship_size = starbase_headquarters } prev = { change_variable = { which = lfg_sc_starbases_now value = 1 } } }	# NSC3 headquarters
 			}
 			every_owned_megastructure = {
 				limit = {
