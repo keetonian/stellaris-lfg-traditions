@@ -9,3 +9,24 @@ lfg_main_species_eats_food = {
 		has_trait = trait_organic
 	}
 }
+
+# Storm Sovereignty. Country scope: Storm Chasers who took the perk ignore cosmic storms' penalties.
+lfg_storm_immune_country = {
+	has_origin = origin_storm_chasers
+	has_ascension_perk = ap_lfg_storm_sovereignty
+}
+
+# Country scope: owns a finished Tempest Lodestar and has Storm Sovereignty (bonuses inside nexus storms). A Lodestar
+# captured by an empire without the perk does nothing for it.
+lfg_has_tempest_lodestar = {
+	has_megastructure = lfg_tempest_lodestar_1
+	has_ascension_perk = ap_lfg_storm_sovereignty
+}
+
+# Country scope: gets Storm Sovereignty's nexus storm bonuses: a Tempest Lodestar's owner, or Storm Chasers with the perk.
+lfg_nexus_storm_bonuses = {
+	OR = {
+		lfg_has_tempest_lodestar = yes
+		lfg_storm_immune_country = yes
+	}
+}

@@ -34,6 +34,33 @@ def pulse() -> Image.Image:
     return out
 
 
+NEXUS = (190, 90, 255)  # nexus storm violet
+
+
+def tint(src: Image.Image, colour: tuple, keep: float = 0.35) -> Image.Image:
+    """Every pixel recoloured to `colour` at its own brightness, keeping a little of the original."""
+    out = Image.new("RGBA", src.size)
+    for y in range(src.height):
+        for x in range(src.width):
+            r, g, b, a = src.getpixel((x, y))
+            v = max(r, g, b) / 255
+            out.putpixel((x, y), tuple(int(c * v * (1 - keep) + o * keep) for c, o in zip(colour, (r, g, b))) + (a,))
+    return out
+
+
+def storm_icons() -> dict:
+    """Storm Sovereignty, in nexus violet: the perk (vanilla's Galactic Weather Control perk icon), the Summon Nexus
+    Storm button (45x45) and the Tempest Lodestar's build icon (52x52), both from the Advanced Storm Manipulation tech."""
+    manip = Image.open(GAME / "gfx/interface/icons/technologies/tech_advanced_storm_manipulation.dds").convert("RGBA")
+    return {
+        Path("mod/gfx/interface/icons/ascension_perks/ap_lfg_storm_sovereignty.dds"):
+            tint(Image.open(GAME / "gfx/interface/icons/ascension_perks/ap_weather_control.dds").convert("RGBA"), NEXUS),
+        Path("mod/gfx/interface/icons/megastructures/lfg_summon_nexus_storm.dds"):
+            tint(manip, NEXUS).resize((45, 45), Image.LANCZOS),
+        Path("mod/gfx/interface/icons/megastructures/lfg_tempest_lodestar.dds"): tint(manip, NEXUS),
+    }
+
+
 def swarmforge() -> Image.Image:
     src = Image.open(GAME / "gfx/interface/icons/technologies/tech_mega_shipyard.dds").convert("RGBA")
     # Hue shift: every pixel becomes nanite cyan at its own brightness, so the dark starfield stays dark.
@@ -51,6 +78,10 @@ def swarmforge() -> Image.Image:
 if __name__ == "__main__":
     icon = swarmforge()
     for out in (OUT, TECH_OUT):
+        out.parent.mkdir(parents=True, exist_ok=True)
+        icon.save(out)
+        print(f"wrote {out}")
+    for out, icon in storm_icons().items():
         out.parent.mkdir(parents=True, exist_ok=True)
         icon.save(out)
         print(f"wrote {out}")

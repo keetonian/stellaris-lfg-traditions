@@ -206,3 +206,57 @@ lfg_nanite_hub_automation = {
 	job_farmer_automated_workforce_mult = @lfg_nanite_hub_automation
 	job_agri_drone_automated_workforce_mult = @lfg_nanite_hub_automation
 }
+
+# Storm Sovereignty: Storm Chasers' storm immunity (added by the perk). The other penalties are switched off in the
+# generated storm_types override and by lfg_storms.1 (aftermath).
+lfg_storm_immunity = {
+	icon = "gfx/interface/icons/modifiers/mod_planet_storm_devastation_mult.dds"
+	planet_storm_devastation_mult = -1
+	storm_ship_hull_breaker_mult = -1
+}
+
+# Tempest Lodestar: its own system always counts as inside a nexus storm for its owner (lfg_storms.7, monthly; not while
+# a real nexus storm covers it, whose bonuses are the same). Same numbers as the nexus_storm override.
+lfg_lodestar_eye = {
+	icon = "gfx/interface/icons/modifiers/mod_planet_storm_devastation_mult.dds"
+	planet_jobs_produces_mult = @lfg_lodestar_storm_jobs
+	planet_stability_add = @lfg_lodestar_storm_stability
+}
+# ... plus, for Storm Chasers with the perk, their own job bonus and Harnessed Storms.
+lfg_lodestar_eye_chaser = {
+	icon = "gfx/interface/icons/modifiers/mod_planet_storm_devastation_mult.dds"
+	planet_jobs_produces_mult = @lfg_storm_chaser_storm_jobs
+	planet_jobs_upkeep_mult = @lfg_harnessed_storms_upkeep
+}
+lfg_lodestar_eye_fleet = {
+	icon = "gfx/interface/icons/modifiers/mod_planet_storm_devastation_mult.dds"
+	ship_fire_rate_mult = @lfg_lodestar_storm_fire_rate
+	ship_speed_mult = @lfg_lodestar_storm_speed
+	ship_evasion_mult = @lfg_lodestar_storm_evasion
+}
+
+# Storm Sovereignty: +5% job efficiency per nexus storm this colony survived (multiplier = planet variable
+# lfg_nexus_storms_survived; lfg_nexus_storm_passes).
+lfg_storm_enthusiasts = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_electric_aftermath_modifier.dds"
+	icon_frame = 1
+	pop_bonus_workforce_mult = @lfg_storm_enthusiasts_efficiency
+}
+# Nexus Afterglow: Storm Chasers' colonies after a nexus storm, instead of its random aftermath - the bonuses of every
+# severity-3 aftermath (electric, gravity, magnetic, solar, shroud here; particle's motes and celestial's crystals per
+# pop in the generated inline_scripts/pop_resources/pop_misc_production.txt), none of their drawbacks.
+lfg_nexus_storm_boon = {
+	icon = "gfx/interface/icons/planet_modifiers/pm_electric_aftermath_modifier.dds"
+	icon_frame = 2
+	planet_jobs_energy_produces_mult = 0.3
+	planet_bureaucrats_unity_produces_mult = 0.6
+	planet_metallurgists_upkeep_mult = -0.3
+	army_defense_damage_mult = 0.4
+	psionic_pop_bonus_workforce_mult = 0.75
+	custom_tooltip = lfg_nexus_storm_boon_tt
+}
+
+# Tempest Lodestar: its star pulls cosmic storms toward the system (vanilla's storm_attraction_field_modifier is 1).
+lfg_lodestar_storm_pull = {
+	system_storm_influence_add = @lfg_lodestar_storm_pull
+}

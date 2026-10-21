@@ -102,6 +102,31 @@
 @lfg_nanite_pulse_cost_per_body = 10000
 @lfg_nanite_pulse_payout_mult = 12	# a body that doesn't grow pays this many months of its harvester deposits
 @lfg_nanite_pulse_cooldown_days = 1000
+# Storm Sovereignty: Summon Nexus Storm (the Lodestar's button, common/scripted_actions).
+@lfg_nexus_summon_energy = 30000
+@lfg_nexus_summon_strategic = 3000	# each of volatile motes, exotic gases and rare crystals
+@lfg_nexus_summon_dark_matter = 100
+@lfg_nexus_summon_influence = 100
+@lfg_nexus_summon_cooldown_days = 3600
+# The Tempest Lodestar's owner inside a nexus storm (generated nexus_storm override): planets, ships.
+@lfg_lodestar_storm_jobs = 0.5	# with a finished Lodestar
+@lfg_storm_chaser_storm_jobs = 0.5	# Storm Chasers with the perk (adds to the Lodestar's)
+@lfg_harnessed_storms_upkeep = -0.25	# Storm Chasers with Storm Sovereignty, inside a nexus storm
+@lfg_lodestar_storm_pull = 2	# storm influence on the Lodestar's system (vanilla's attraction buildings: 0.4-1)
+@lfg_lodestar_storm_stability = 5
+@lfg_lodestar_storm_fire_rate = 0.25
+@lfg_lodestar_storm_speed = 0.5
+@lfg_lodestar_storm_evasion = 0.2
+# Storm Chasers' summoned nexus storms (lfg_storms.5): enemies (at war, rivals, the target) lose 4% max hull a month (down to 20%, can't kill) and
+# 50% sublight speed; other empires half that; allies gain speed instead.
+@lfg_storm_wrath_damage = 0.04
+@lfg_storm_enthusiasts_efficiency = 0.05	# job efficiency per nexus storm a colony survived (perk owners)
+@lfg_storm_wrath_hull_floor = 0.2	# their damage stops at 20% hull, like vanilla storms (can't kill)
+@lfg_storm_chaser_storm_repair = 0.03	# Storm Chasers' own ships and stations inside a storm: shields, armour and hull a month (lfg_storms.1)
+@lfg_storm_wrath_damage_half = 0.02
+@lfg_storm_wrath_speed = -0.5
+@lfg_storm_wrath_speed_half = -0.25
+@lfg_storm_wrath_ally_speed = 0.25
 
 # Nanite Forge origin buildings (common/buildings/lfg_buildings.txt).
 # Nanite Automation Hub: share of Technician / Miner / Farmer jobs (and drone versions) automated, and nanite upkeep per

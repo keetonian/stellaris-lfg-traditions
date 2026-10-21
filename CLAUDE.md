@@ -48,6 +48,16 @@ mod/                                  # exactly what ships
   interface/lfg_megastructures.gfx                           # megastructure build / outliner icons
   interface/lfg_components.gfx                               # component icons (gfx/interface/icons/ship_parts/lfg_*.dds: art/make_component_icons.py)
   common/component_sets/lfg_component_sets.txt               # their sets (name / icon)
+  common/storm_types/zz_lfg_storm_type_overrides.txt         # GENERATED (STORM_PENALTIES): Storm Chaser immunity + Tempest Lodestar nexus bonuses
+  common/opinion_modifiers/lfg_opinion_modifiers.txt         # lfg_nexus_storm_summoned
+  events/lfg_storms_events.txt                               # lfg_storms.1: immune Storm Chasers shed storm aftermath penalties (monthly);
+                                                             #   .2 Summon Nexus Storm: hold / let it rage, .4 release a held storm,
+                                                             #   .5 Storm Chasers' summoned storms damage / slow others' fleets (monthly), .6 the Lodestar's button fired,
+                                                             #   .7 Eye of the Storm: nexus bonuses in the Lodestar's system (monthly)
+  common/scripted_actions/lfg_scripted_actions.txt           # lfg_summon_nexus_storm: the Tempest Lodestar's Summon Nexus Storm button (-> on_lfg_summon_nexus_storm)
+  common/scripted_effects/zz_lfg_scripted_effect_overrides.txt # GENERATED: vanilla nexus_storm_remove + lfg_nexus_storm_passes
+  common/inline_scripts/pop_resources/pop_misc_production.txt  # GENERATED whole-file override: Nexus Afterglow's per-pop motes / crystals
+  common/scripted_effects/lfg_storms_effects.txt             # lfg_spawn_nexus_storm, lfg_nexus_storm_passes, lfg_nexus_storm_penalties, lfg_storm_wrath_fleet / _damage
   common/scripted_modifiers/lfg_scripted_modifiers.txt      # custom ship modifiers of the Mothership's swarm modules (read by lfg_mothership.2)
   common/technology/lfg_technology.txt                       # tech_lfg_swarmforge / _nanite_war_moon / _nanite_planetcraft (offered by the perk); _lm_accelerator_2 / _lm_armor_6 (galvanic civics)
   common/buildings/lfg_buildings.txt                         # building_lfg_nanite_automation + _nanite_consensus_1-4 (origin), _nanite_cognition_core, _nanotensile_converter (Nanotech)
@@ -148,6 +158,14 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
   - `planet_maintenance_drones_produces_mult` doesn't exist
   - Jobless pops of regular empires are **Civilians** (uncapped `civilian` job), not unemployed: `num_unemployed` is 0
     for them. Count `num_assigned_jobs = { job = civilian }` (verified: Idle Hands showed no bonus with num_unemployed).
+  - A script value reads a variable with `modifier = { add = <var> is_variable_set = <var> }` (vanilla's way), never a
+    `complex_trigger_modifier` on `check_variable` (error.log: "trigger does not support it"; the value stays 0).
+  - Storms can't be aimed: `spawn_random_storm = { type = "nexus_storm" cosmic_storm_start_position = <system> immediate = yes }`
+    works (vanilla cstorms.3230); it rejects `cosmic_storm_end_position`, and `create_cosmic_storm` with start / end created nothing.
+  - Megastructure scripted actions (verified with the Lodestar's button): hook `on_started`; with no `required_progress`
+    `on_completed` never ran and the action's own `cost` was never taken, so pay in the event. In `possible` (this = target), `from` / `fromfrom` didn't resolve to the megastructure
+    or its owner in game; check the target's own contents instead. Same in the `on_completed` on_action's event: a trigger on
+    `from.owner` silently stopped `lfg_storms.6`, so it finds the summoner from the target system too.
   - Magnitudes: civilian `_produces_add` ~0.1–0.5, `planet_stability_add` 2–5, `planet_amenities_add` is in hundreds (100–500).
 - **Supertensiles** = Giga resource `giga_sr_amb_megaconstruction`. It exists only when global flag `giga_buildcap_j` is set.
   Put supertensile modifiers in `triggered_modifier = { potential = { has_global_flag = giga_buildcap_j } ... }` with a

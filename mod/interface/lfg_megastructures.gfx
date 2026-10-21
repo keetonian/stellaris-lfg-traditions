@@ -16,6 +16,15 @@ spriteTypes = {
 	spriteType = { name = "GFX_lfg_progenitor_forge_1_outliner_icon" textureFile = "gfx/interface/icons/megastructures/nidavellir_hyperforge.dds" }
 	spriteType = { name = "GFX_lfg_progenitor_forge_2_outliner_icon" textureFile = "gfx/interface/icons/megastructures/nidavellir_hyperforge.dds" }
 
+	### Tempest Lodestar: Summon Nexus Storm button (art/make_megastructure_icons.py) ###
+	spriteType = { name = "GFX_lfg_summon_nexus_storm" textureFile = "gfx/interface/icons/megastructures/lfg_summon_nexus_storm.dds" }
+	spriteType = { name = "GFX_lfg_summon_nexus_storm_selected" textureFile = "gfx/interface/icons/megastructures/lfg_summon_nexus_storm.dds" }
+
 	### Nanite Forge origin: the Ancient Nanite Harvester's module icon (art/make_building_icons.py) ###
 	spriteType = { name = "GFX_starbase_lfg_ancient_nanite_harvester" textureFile = "gfx/interface/icons/modules/lfg_ancient_nanite_harvester.dds" }
+
+	### Tempest Lodestar (Storm Sovereignty) ###
+	spriteType = { name = "GFX_lfg_tempest_lodestar_0_build_icon" textureFile = "gfx/interface/icons/megastructures/lfg_tempest_lodestar.dds" }	# art/make_megastructure_icons.py
+	spriteType = { name = "GFX_lfg_tempest_lodestar_0_outliner_icon" textureFile = "gfx/interface/icons/megastructures/dyson_swarm_3.dds" }
+	spriteType = { name = "GFX_lfg_tempest_lodestar_1_outliner_icon" textureFile = "gfx/interface/icons/megastructures/dyson_swarm_3.dds" }
 }

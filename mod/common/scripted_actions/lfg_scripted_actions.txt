@@ -1,0 +1,70 @@
+# LFG Traditions - megastructure buttons (scripted_action = { ... } on the megastructure; format: vanilla's
+# common/scripted_actions/99_README_SCRIPTED_ACTIONS.txt, pattern: the Dyson Gun's dyson_shoot).
+
+# Storm Sovereignty: Summon Nexus Storm, on the finished Tempest Lodestar (lfg_tempest_lodestar_1). The storm forms in
+# the targeted system, which needs one of our science ships with its scientist there. Paid by lfg_storms.6; on_started -> on_lfg_summon_nexus_storm -> lfg_storms.6 -> the hold / let it
+# rage popup (lfg_storms.2).
+# This = target system, from = the Lodestar.
+lfg_summon_nexus_storm = {
+	user_scope = megastructure
+	scope = galactic_object
+
+	# This = target system. The user's scopes don't resolve here (from.solar_system and fromfrom as the owner both
+	# rejected every system in game; vanilla's dyson_shoot only uses fromfrom inside a NOT, which passes either way), so
+	# the scientist's own empire is checked instead: it must own a finished Lodestar and have the perk.
+	possible = {
+		custom_tooltip = {
+			fail_text = lfg_summon_nexus_storm_needs_scientist
+			# A science ship (a fleet of one) with its scientist.
+			any_fleet_in_system = {
+				is_ship_class = shipclass_science_ship
+				exists = leader
+				leader = { leader_class = scientist }
+				exists = owner
+				owner = { lfg_has_tempest_lodestar = yes }
+			}
+		}
+	}
+
+	# Only for owners with Storm Sovereignty (e.g. not after the Lodestar is captured by another empire).
+	button_visible = {
+		exists = owner
+		owner = { has_ascension_perk = ap_lfg_storm_sovereignty }
+	}
+	button_clickable = {
+		custom_tooltip = {
+			fail_text = lfg_requires_storm_sovereignty
+			owner = { has_ascension_perk = ap_lfg_storm_sovereignty }
+		}
+		# The cost is paid by lfg_storms.6 (an action's own cost is taken when it completes, which ours never did in game).
+		custom_tooltip = {
+			fail_text = lfg_summon_nexus_storm_cant_afford
+			owner = {
+				has_resource = { type = energy amount >= @lfg_nexus_summon_energy }
+				has_resource = { type = volatile_motes amount >= @lfg_nexus_summon_strategic }
+				has_resource = { type = exotic_gases amount >= @lfg_nexus_summon_strategic }
+				has_resource = { type = rare_crystals amount >= @lfg_nexus_summon_strategic }
+				has_resource = { type = sr_dark_matter amount >= @lfg_nexus_summon_dark_matter }
+				has_resource = { type = influence amount >= @lfg_nexus_summon_influence }
+			}
+		}
+	}
+
+	cooldown = @lfg_nexus_summon_cooldown_days
+
+	ai = {
+		weight = {
+			base = 0
+		}
+	}
+
+	icon = GFX_lfg_summon_nexus_storm
+	icon_selected = GFX_lfg_summon_nexus_storm_selected
+	# on_started, not on_completed: with on_completed the cooldown started but its on_action never ran in game (no
+	# required_progress, so maybe it never "completes"); vanilla's dyson_shoot uses both.
+	on_started = on_lfg_summon_nexus_storm
+	context_menu_name = lfg_summon_nexus_storm_menu
+	activity_key = lfg_summon_nexus_storm_activity
+	tooltip = lfg_summon_nexus_storm_button
+	important = yes
+}

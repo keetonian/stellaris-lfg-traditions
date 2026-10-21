@@ -366,3 +366,134 @@ entity = {
 	attach = { "loc101" = "lfg_swarmforge_docks_entity" }
 	scale = @lfg_swarmforge_scale
 }
+
+##### TEMPEST LODESTAR (lfg_tempest_lodestar_1): a storm held around its star #####
+# - core: a scaled-down copy of vanilla's electric storm (electric_storm_entity, the cosmic storm visual) wrapped around
+#   the star, so the star sits in a permanent storm
+# - a ring of eight ion cannon pylons (vanilla's arthropoid ion cannon section) aimed at the star, each crackling with
+#   vanilla's Mega Shipyard lightning
+# - an outer ring of twelve lightning strikes (vanilla's storm lightning meshes) arcing slowly around it
+# Under construction: the pylon ring only. Each ring is laid flat around the star by a wrapper turned { 0 0 90 } (as
+# Gigastructural's and the Progenitor Forge's rings are; without it they stood on edge in game). Sizes are first
+# guesses: tune in game.
+@lfg_lodestar_scale = 1.5
+@lfg_lodestar_storm_scale = 0.35
+@lfg_lodestar_pylon_scale = 4
+@lfg_lodestar_arc_scale = 3
+
+entity = {
+	name = "lfg_lodestar_pylon_entity"
+	cull_radius = 5000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 180 0 } }
+	locator = { name = "spark" position = { 0 0 -30 } }
+	attach = { "loc101" = "arthropoid_01_ion_cannon_section_entity" }
+	default_state = "idle"
+	state = { name = "idle" state_time = 6
+		event = { time = 0 node = "spark" particle = "mega_shipyard_core_lightning_effect" keep_particle = yes trigger_once = yes }
+	}
+	scale = @lfg_lodestar_pylon_scale
+}
+
+entity = {
+	name = "lfg_lodestar_pylon_two_entity"
+	cull_radius = 5000
+	locator = { name = "loc101" position = { 0 0 -240 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 240 } rotation = { 0 180 0 } }
+	attach = { "loc101" = "lfg_lodestar_pylon_entity" }
+	attach = { "loc102" = "lfg_lodestar_pylon_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_lodestar_pylon_ring_entity"
+	cull_radius = 5000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 45 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 135 0 } }
+	attach = { "loc101" = "lfg_lodestar_pylon_two_entity" }
+	attach = { "loc102" = "lfg_lodestar_pylon_two_entity" }
+	attach = { "loc103" = "lfg_lodestar_pylon_two_entity" }
+	attach = { "loc104" = "lfg_lodestar_pylon_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_lodestar_pylon_ring_flat_entity"
+	cull_radius = 5000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 90 } }
+	attach = { "loc101" = "lfg_lodestar_pylon_ring_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_lodestar_arc_entity"
+	cull_radius = 5000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "Lightning_strike_mesh" }
+	scale = @lfg_lodestar_arc_scale
+}
+
+entity = {
+	name = "lfg_lodestar_arc_two_entity"
+	cull_radius = 5000
+	locator = { name = "loc101" position = { 0 0 -380 } rotation = { 0 90 0 } }
+	locator = { name = "loc102" position = { 0 0 380 } rotation = { 0 270 0 } }
+	attach = { "loc101" = "lfg_lodestar_arc_entity" }
+	attach = { "loc102" = "lfg_lodestar_arc_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_lodestar_arc_ring_entity"
+	cull_radius = 5000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	locator = { name = "loc102" position = { 0 0 0 } rotation = { 0 30 0 } }
+	locator = { name = "loc103" position = { 0 0 0 } rotation = { 0 60 0 } }
+	locator = { name = "loc104" position = { 0 0 0 } rotation = { 0 90 0 } }
+	locator = { name = "loc105" position = { 0 0 0 } rotation = { 0 120 0 } }
+	locator = { name = "loc106" position = { 0 0 0 } rotation = { 0 150 0 } }
+	attach = { "loc101" = "lfg_lodestar_arc_two_entity" }
+	attach = { "loc102" = "lfg_lodestar_arc_two_entity" }
+	attach = { "loc103" = "lfg_lodestar_arc_two_entity" }
+	attach = { "loc104" = "lfg_lodestar_arc_two_entity" }
+	attach = { "loc105" = "lfg_lodestar_arc_two_entity" }
+	attach = { "loc106" = "lfg_lodestar_arc_two_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_lodestar_arc_ring_flat_entity"
+	cull_radius = 5000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 90 } }
+	attach = { "loc101" = "lfg_lodestar_arc_ring_entity" }
+	scale = 1
+}
+
+entity = {
+	name = "lfg_lodestar_storm_entity"
+	cull_radius = 20000
+	locator = { name = "loc101" position = { 0 0 0 } }
+	attach = { "loc101" = "electric_storm_entity" }
+	scale = @lfg_lodestar_storm_scale
+}
+
+# Finished.
+entity = {
+	name = "lfg_tempest_lodestar_entity"
+	cull_radius = 20000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_lodestar_storm_entity" }
+	attach = { "loc101" = "lfg_lodestar_pylon_ring_flat_entity" }
+	attach = { "loc101" = "lfg_lodestar_arc_ring_flat_entity" }
+	scale = @lfg_lodestar_scale
+}
+
+# Under construction.
+entity = {
+	name = "lfg_tempest_lodestar_construction_entity"
+	cull_radius = 20000
+	locator = { name = "loc101" position = { 0 0 0 } rotation = { 0 0 0 } }
+	attach = { "loc101" = "lfg_lodestar_pylon_ring_flat_entity" }
+	scale = @lfg_lodestar_scale
+}

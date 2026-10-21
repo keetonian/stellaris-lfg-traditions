@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Nine new tradition trees, six council agendas, four ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Nine new tradition trees, six council agendas, five ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
@@ -102,7 +102,7 @@ Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
 [/list]
 
 [h2]Nanites[/h2]
-[b]Nanite Forge[/b] (machines): a unique home system, a Starhold and a broken nanite harvester that doubles their nanites every 3 years. Nanotech restores it. Unlocks nanite automation and unity buildings.
+[b]Nanite Forge[/b] (machines): a unique home system, a Starhold and a broken nanite harvester that Nanotech restores. Nanite automation, unity and trade buildings.
 
 After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's specialist jobs, the [b]Nanotensile Converter[/b] makes supertensiles, and the [b]Nanite Pulse[/b] decision overloads a harvester.
 
@@ -116,9 +116,11 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 
 [b]Nanite Armada:[/b] nanite Attack Moons and Planetcraft; faster, cheaper shipyards.
 
+[b]Storm Sovereignty:[/b] summon nexus storms; Storm Chasers become storm-immune and turn them on enemies.
+
 [b]Massed Assault:[/b] +10 ground combat width; every general boosts the armies they lead.
 
-[b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]): a [b]Shelve[/b] edict for every repeatable technology, keeping it out of your research options (2,000 unity, 200 influence, monthly research).
+[b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]): a [b]Shelve[/b] edict for every repeatable technology, keeping it out of your research options.
 
 [h2]Changes to vanilla content[/h2]
 [list]

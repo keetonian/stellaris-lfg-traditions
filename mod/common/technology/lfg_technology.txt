@@ -307,3 +307,23 @@ tech_lfg_nanite_consensus_4 = {
 		factor = 2
 	}
 }
+
+# Storm Sovereignty (ap_lfg_storm_sovereignty): the Tempest Lodestar megastructure (lfg_tempest_lodestar_0 -> _1).
+tech_lfg_tempest_lodestar = {
+	icon = tech_storm_manipulation
+	prereqfor_desc = {
+		custom = { title = "lfg_allow_tempest_lodestar" desc = "lfg_allow_tempest_lodestar_desc" }
+	}
+	cost = @giga_tier6cost1
+	area = physics
+	tier = 5
+	category = { particles }
+	is_rare = yes
+	weight = 0
+	potential = {
+		has_ascension_perk = ap_lfg_storm_sovereignty
+	}
+	ai_weight = {
+		factor = 0
+	}
+}

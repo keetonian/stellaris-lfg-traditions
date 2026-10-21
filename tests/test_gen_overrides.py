@@ -194,6 +194,22 @@ class GenOverridesTests(unittest.TestCase):
         (self.game / "common/starbase_buildings/00_starbase_buildings.txt").write_text(
             "nanite_harvester = {\n\tpossible = {\n\t\talways = yes\n\t}\n}\n")
         (self.game / "common/pop_jobs").mkdir()
+        (self.game / "common/storm_types").mkdir(exist_ok=True)
+        storms = {}
+        for storm, line, _who in gen_overrides.STORM_PENALTIES:
+            storms.setdefault(storm, "")
+            storms[storm] += ("\ttriggered_planet_modifier = {\n\t\tpotential = {\n\t\t\talways = yes\n\t\t}\n"
+                              f"\t\t{line.replace(chr(92), '')}\n\t}}\n")
+        storms["nexus_storm"] = ("\tspawn_weight = {\n\t\tmodifier = {\n\t\t\tfactor = 0\n\t\t\tmid_game_years_passed < 1\n\t\t}\n\t}\n"
+                                 "\tdescription = nexus_storm_lore_description\n" + storms["nexus_storm"])
+        (self.game / "common/scripted_effects").mkdir(exist_ok=True)
+        (self.game / "common/scripted_effects/cosmic_storms_scripted_effects.txt").write_text(
+            "nexus_storm_remove = {\n\tremove_star_flag = storm_system\n\tnexus_storm_apply_aftermath_modifier = yes\n}\n")
+        (self.game / "common/inline_scripts/pop_resources").mkdir(parents=True, exist_ok=True)
+        (self.game / "common/inline_scripts/pop_resources/pop_misc_production.txt").write_text(
+            "produces = {\n\tvolatile_motes = 0.06\n}\n\nproduces = {\n\trare_crystals = 0.06\n}\n\n")
+        (self.game / "common/storm_types/00_storm_types.txt").write_text(
+            "".join(f"{k} = {{\n{v}}}\n" for k, v in storms.items()))
         (self.game / "common/deposits").mkdir(exist_ok=True)
         (self.game / "common/deposits/13_machine_age_deposits.txt").write_text("".join(
             f"{key} = {{\n\tresources = {{\n\t\tproduces = {{\n\t\t\tnanites = {amount}\n\t\t}}\n\t}}\n}}\n"

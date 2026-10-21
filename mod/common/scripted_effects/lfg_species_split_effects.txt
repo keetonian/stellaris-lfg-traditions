@@ -57,5 +57,5 @@ lfg_split_species = {
 		}
 		change_variable = { which = lfg_split_remaining value = -1 }
 	}
-	remove_variable = lfg_split_remaining
+	clear_variable = lfg_split_remaining
 }

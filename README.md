@@ -4,7 +4,7 @@ A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games th
 
 - **9 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
 - **6 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
-- **4 ascension perks:** **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
+- **5 ascension perks:** **Storm Sovereignty** (needs Galactic Wonders and Galactic Weather Control) unlocks the Tempest Lodestar megastructure that summons nexus storms, and makes Storm Chasers immune to storm penalties; **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
 - **1 origin, Nanite Forge** (machines): eight size 40 molten worlds around a blue star, a broken nanite harvester that doubles their nanite deposits every 3 years, and a nanite-fuelled automation building.
 - **Nanite harvesters** (all of them) yield **twice** vanilla's nanites at every step and get three more doubling steps, up to 819.2 nanites per planet.
 - **Nanite Cognition Core** (after finishing Nanotech): automates 50% of a planet's specialist jobs for a lot of nanites.
@@ -622,6 +622,94 @@ traditions finished** (its escort's Swarmers and Interdictors need the 4th and 5
 Verified in game: `create_ship` adds ships to an existing escort fleet (vanilla only uses it inside `create_fleet`).
 **Unverified in game:** the escort deploying on battle, following its Mothership and being recalled once the system is
 clear; the Mothership's look and swarm size.
+
+## Ascension perk: Storm Sovereignty (Cosmic Storms)
+
+`ap_lfg_storm_sovereignty`: any empire with the Cosmic Storms DLC, after **Galactic Wonders** and **Galactic Weather Control**.
+Adds the physics research option **Tempest Lodestar** (`tech_lfg_tempest_lodestar`).
+
+- **Needs the perk to use:** both stages need it to build, and the button, the storm bonuses (`lfg_has_tempest_lodestar`)
+  and `lfg_storms.6` check the owner has it, so a captured Lodestar does nothing for an empire without it (its storm
+  pull, a modifier on the star, still applies).
+- **Tempest Lodestar** (`lfg_tempest_lodestar_0` → `_1`): around **any star in our borders** without another megastructure,
+  **one per empire**. Site: 15,000 alloys + 200 influence, 3 years; finished: 35,000 alloys + 25,000 energy, 5 years; upkeep
+  100 energy. Its model (`lfg_megastructures.asset`): a scaled-down copy of vanilla's electric storm around the star,
+  eight ion cannon pylons aimed at it crackling with lightning, and an outer ring of lightning strikes (sizes
+  `@lfg_lodestar_*scale`, first guesses).
+- **Summon Nexus Storm**: a button on the finished Lodestar (its description, `lfg_tempest_lodestar_1_DESC`, lists the
+  Lodestar's effects: `custom_tooltip` and `custom_tooltip_with_modifiers` both showed twice in the hover tooltip) (scripted action `lfg_summon_nexus_storm` in
+  `common/scripted_actions/lfg_scripted_actions.txt`, like the Dyson Gun's; target a system with one of our science ships (with its scientist) in it - its
+  empire owns a Lodestar and has the perk: the action's user scopes (`from`, `fromfrom`) didn't resolve in its
+  `possible` in game; then
+  `on_started` (`on_completed` never ran in game) -> `on_lfg_summon_nexus_storm` -> `lfg_storms.6`, which finds the summoner from that science ship; **verified in
+  game**: targeting, popup, cost and the storm forming in an unclaimed system): **30,000 energy, 3,000 each of volatile
+  motes, exotic gases and rare crystals, 100 dark matter and 100 influence**, once every **10 years** (the action's `cooldown`; `@lfg_nexus_summon_*`). The cost is checked by the button
+  (`button_clickable`) and paid by `lfg_storms.6`: an action's own `cost` is taken when it completes, which never happened.
+  The storm forms **in the targeted system** (`event_target:lfg_storm_system`). A popup (`lfg_storms.2`) asks how:
+  - **Hold it there** (only offered in our own systems): it stays (`lock_storm_in_place`, storm flag `lfg_held_storm`) until the Lodestar can summon again
+    (10 years; `lfg_storms.4` releases it, else it would never end).
+  - **Let it rage:** it moves on like any storm.
+  A storm can't be aimed: `spawn_random_storm` takes only a start position and rejects `cosmic_storm_end_position`, and
+  `create_cosmic_storm` with start / end positions created nothing in game. Vanilla gives `nexus_storm` spawn weight 0
+  before the midgame, which `spawn_random_storm` obeys even with the type named, so the summon sets global flag
+  `lfg_summoning_nexus_storm` around the spawn and the generated override skips that factor while it's set.
+  **If another empire owns the system** (`lfg_nexus_storm_penalties`), it's the target: every empire we know **-30 opinion**
+  (`lfg_nexus_storm_summoned`, decaying 1 a month: 2.5 years), the target **-75** (`lfg_nexus_storm_targeted`, about
+  6 years). Our own or unclaimed space: no penalty.
+  Spawned like vanilla's Storm Chasers summoning (`spawn_random_storm`, `is_nexus_spawner` skips our notification;
+  `lfg_spawn_nexus_storm` / `lfg_nexus_storm_penalties` in `lfg_storms_effects.txt`).
+- **Storm Enthusiasts** (any empire with the perk): every colony gains **+5% job efficiency for each nexus storm it
+  survives** (`lfg_storm_enthusiasts`, `pop_bonus_workforce_mult` x planet variable `lfg_nexus_storms_survived`,
+  `@lfg_storm_enthusiasts_efficiency`; uncapped). Counted when a nexus storm leaves the colony's system:
+  `lfg_nexus_storm_passes`, run from vanilla's `nexus_storm_remove` (generated
+  `scripted_effects/zz_lfg_scripted_effect_overrides.txt`). Reset when the colony changes owner (`lfg_planet.1`).
+- **Nexus Afterglow** (Storm Chasers with the perk): a nexus storm leaving their colonies doesn't give vanilla's random
+  severity-3 aftermath (removed) but `lfg_nexus_storm_boon` for as long (`@Severity3Duration`, 3 years): the bonuses of
+  every storm's severity-3 aftermath, no drawbacks - +30% energy from jobs (electric), +60% bureaucrat unity
+  (gravity), -30% metallurgist upkeep (magnetic), +40% army defense damage (solar), +75% psionic job efficiency
+  (shroud), +0.06 volatile motes (particle) and +0.06 rare crystals (celestial) per pop. The per-pop resources need a
+  generated whole-file override of vanilla's `inline_scripts/pop_resources/pop_misc_production.txt`.
+- **Eye of the Storm** (`lfg_storms.7`, monthly): the finished Lodestar's own system always counts as inside a nexus
+  storm for its owner, without a real storm there (static modifiers `lfg_lodestar_eye` on colonies: +50% jobs, +5
+  stability; `lfg_lodestar_eye_chaser` for Storm Chasers with the perk: another +50% jobs, -25% job upkeep;
+  `lfg_lodestar_eye_fleet` on fleets in the system: the fleet bonuses). Skipped while a real nexus storm covers the
+  system (no stacking); removed from anything that leaves, and if the Lodestar is lost (`lfg_planet.1` on owner change).
+  Chosen over a permanent one-system storm: a system holds one storm at a time, so other storms passing would clear it.
+- **Storm pull:** the finished Lodestar's star draws cosmic storms toward its system (`lfg_lodestar_storm_pull`:
+  `system_storm_influence_add` +2, `@lfg_lodestar_storm_pull`, plus an influence field, like vanilla's storm attraction
+  buildings, which give 0.4-1).
+- **Inside a nexus storm**, the Lodestar's owner gets (generated `nexus_storm` override, `@lfg_lodestar_storm_*`):
+  colonies inside the storm **+50% resources from jobs** (`@lfg_lodestar_storm_jobs`) and **+5 stability**; fleets **+25% fire rate**, **+50% speed**, **+20% evasion**.
+  **Storm Chasers with the perk get these too, Lodestar or not**: their own **+50% from jobs**
+  (`@lfg_storm_chaser_storm_jobs`), so +100% with a Lodestar as well (`lfg_nexus_storm_bonuses`), and **Harnessed Storms**:
+  job upkeep **-25%** on their planets inside a nexus storm (`@lfg_harnessed_storms_upkeep`).
+- **Weaponized storms** (Storm Chasers with the perk only): each month (`lfg_storms.5`), every other empire's fleets and
+  stations inside a nexus storm they summoned (storm flag `lfg_summoned_by@<country>`, set by `lfg_spawn_nexus_storm`) are
+  hit by `lfg_storm_wrath_fleet` (`@lfg_storm_wrath_*`):
+  - **enemies** (at war, rivals either way, the owner of the system it was summoned in - country flag `lfg_storm_targeted_by@<country>`
+    for 10 years - and hostile non-empires): **4% of max hull** lost a month (`damage_ship`; stops at **20% hull**, `@lfg_storm_wrath_hull_floor`, like vanilla storms: **can't destroy them**),
+    **-50% sublight speed** and **no armour regeneration** (`ship_armor_regen_mult -1`);
+  - **everyone else**: half (2%, -25% speed), and no armour regeneration either;
+  - **allies** (federation, defensive pact, overlord or subject): no damage, **+25% sublight speed**.
+  Speed comes from 31-day fleet flags (`lfg_storm_lashed` / `_buffeted` / `_favoured`) read by the generated `nexus_storm`
+  override. Max hull = current hull / hull fraction (`export_trigger_value_to_variable` of `has_hp` and
+  `has_hp_percentage`). **Unverified in game:** those exports, `every_fleet_in_system` including stations, and how
+  `damage_ship` treats a starbase at 0 hull.
+- **Storm Chasers** (the origin) who take the perk become **immune to cosmic storms' penalties** (`lfg_storm_immune_country`):
+  - no planet devastation (`lfg_storm_immunity`, added by the perk). Its `storm_ship_hull_breaker_mult -1` did **not**
+    stop storms' ship damage in game (the engine's, 60 a month to shields, armour and hull), so `lfg_storms.1` gives
+    their fleets and stations inside a storm that much back each month (`@storm_monthly_dmg_high`). Storms stop regeneration, so they
+    also repair **3%** of shields, armour and hull a month there (`@lfg_storm_chaser_storm_repair`). **Verified in
+    game:** repair works; small ships (science ships) still show empty shields, since the storm's 60 a month exceeds their
+    shields and lands after the repair (accepted as is);
+  - every penalty block of the storm types is skipped (generated `common/storm_types/zz_lfg_storm_type_overrides.txt`,
+    `STORM_PENALTIES`: particle and magnetic ship upkeep, gravity upkeep and weapon damage, magnetic build speeds and
+    station upkeep, celestial upkeep and speed, shroud stability, the nexus storm's fleet penalty); storm **bonuses stay**;
+  - the purely negative aftermath modifiers (particle, solar, celestial) are removed monthly (`lfg_storms.1`); mixed
+    ones (electric, gravity, magnetic, shroud), which carry a bonus too, stay.
+  - **Not covered:** a storm's ban on hull, armour and shield regeneration inside it (engine-side) and storm events.
+- **Unverified in game:** the decision on the Lodestar's star; the storm spawn; the model; the overrides loading over
+  vanilla's storm types.
 
 ## Ascension perk: Curated Progress
 

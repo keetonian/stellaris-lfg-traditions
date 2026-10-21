@@ -24,12 +24,9 @@ lfg_species_split_share = {
 # lfg_anomalies_studied, counted by lfg_xenoarchaeology.1). Uncapped.
 lfg_anomalies_studied = {
 	base = 0
-	complex_trigger_modifier = {
-		trigger = check_variable
-		parameters = {
-			which = lfg_anomalies_studied
-		}
-		mode = add
+	modifier = {
+		add = lfg_anomalies_studied
+		is_variable_set = lfg_anomalies_studied
 	}
 }
 
@@ -111,12 +108,9 @@ lfg_resort_worker_hundreds = {
 # lfg_tourists is refreshed monthly by lfg_resorts.1.
 lfg_tourist_thousands = {
 	base = 0
-	complex_trigger_modifier = {
-		trigger = check_variable
-		parameters = {
-			which = lfg_tourists
-		}
-		mode = add
+	modifier = {
+		add = lfg_tourists
+		is_variable_set = lfg_tourists
 	}
 	divide = 1000
 	max = 30	# diplomatic weight +1% each: capped at +30%
@@ -126,12 +120,9 @@ lfg_tourist_thousands = {
 # 1st..5th expansion, i.e. 1 + expansions already made (planet variable lfg_resort_expansions).
 lfg_resort_expansion_cost_mult = {
 	base = 1
-	complex_trigger_modifier = {
-		trigger = check_variable
-		parameters = {
-			which = lfg_resort_expansions
-		}
-		mode = add
+	modifier = {
+		add = lfg_resort_expansions
+		is_variable_set = lfg_resort_expansions
 	}
 }
 
@@ -216,12 +207,9 @@ lfg_num_subspecies = {
 # Penitence - Expand the Cell Blocks cost multiplier (planet scope): 1 + expansions already made (planet variable lfg_cell_blocks).
 lfg_cell_blocks_cost_mult = {
 	base = 1
-	complex_trigger_modifier = {
-		trigger = check_variable
-		parameters = {
-			which = lfg_cell_blocks
-		}
-		mode = add
+	modifier = {
+		add = lfg_cell_blocks
+		is_variable_set = lfg_cell_blocks
 	}
 }
 
@@ -376,12 +364,9 @@ lfg_all_districts = {
 # generated) into the country variable lfg_world_types, so the tradition's modifier doesn't recount ~50 classes.
 lfg_num_world_types = {
 	base = 0
-	complex_trigger_modifier = {
-		trigger = check_variable
-		parameters = {
-			which = lfg_world_types
-		}
-		mode = add
+	modifier = {
+		add = lfg_world_types
+		is_variable_set = lfg_world_types
 	}
 }
 

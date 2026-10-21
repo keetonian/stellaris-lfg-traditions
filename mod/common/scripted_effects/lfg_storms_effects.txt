@@ -1,0 +1,156 @@
+# LFG Traditions - Storm Sovereignty (events/lfg_storms_events.txt). Country scope (the summoner).
+
+# A nexus storm forming at $START$ (a system), exactly as vanilla's Storm Chasers summon theirs (cstorms.3230:
+# spawn_random_storm with a type and a start); is_nexus_spawner skips our own storm notification. A storm can't be aimed:
+# spawn_random_storm rejects cosmic_storm_end_position, and create_cosmic_storm with start / end positions created
+# nothing in game, so it forms in the system the Lodestar's button targeted.
+lfg_spawn_nexus_storm = {
+	set_timed_country_flag = { flag = is_nexus_spawner days = 1 }
+	# Lifts nexus_storm's no-spawn-before-midgame weight (generated storm_types override) for this spawn only.
+	set_global_flag = lfg_summoning_nexus_storm
+	spawn_random_storm = {
+		type = "nexus_storm"
+		cosmic_storm_start_position = $START$
+		immediate = yes
+	}
+	remove_global_flag = lfg_summoning_nexus_storm
+	# Mark it as ours (lfg_storms.5 weaponizes Storm Chasers' storms; Hold finds it by the flag).
+	random_cosmic_storm = {
+		limit = {
+			is_storm_type = nexus_storm
+			NOT = { has_storm_flag = lfg_summoned_storm }
+			any_system_within_storm = { is_same_value = $START$ }
+		}
+		set_storm_flag = lfg_summoned_storm
+		set_storm_flag = lfg_summoned_by@root
+	}
+}
+
+# The storm formed in event_target:lfg_storm_system. If another empire owns that system, it's our target: every empire we
+# know thinks less of us, the target far less, and our storms treat it as an enemy (lfg_storms.5) for 10 years.
+lfg_nexus_storm_penalties = {
+	if = {
+		limit = {
+			event_target:lfg_storm_system = {
+				exists = space_owner
+				space_owner = {
+					is_country_type = default
+					NOT = { is_same_value = root }
+				}
+			}
+		}
+		event_target:lfg_storm_system.space_owner = { save_event_target_as = lfg_storm_target }
+		every_playable_country = {
+			limit = {
+				is_country_type = default
+				has_communications = root
+				NOT = { is_same_value = root }
+			}
+			add_opinion_modifier = { who = root modifier = lfg_nexus_storm_summoned }
+		}
+		event_target:lfg_storm_target = {
+			add_opinion_modifier = { who = root modifier = lfg_nexus_storm_targeted }
+			set_timed_country_flag = { flag = lfg_storm_targeted_by@root days = @lfg_nexus_summon_cooldown_days }
+		}
+	}
+}
+
+# Fleet scope, root = Storm Chasers with Storm Sovereignty, the fleet inside one of their summoned nexus storms (lfg_storms.5).
+# Allies (federation, defensive pact, overlord / subject): faster. Enemies (at war, rivals either way, the storm's target,
+# hostile non-empires): 4% max hull a month (not below 20%) and slower. Everyone else: half of that. Speed comes from timed fleet flags
+# read by the nexus_storm override (generated storm_types/zz_lfg_storm_type_overrides.txt).
+lfg_storm_wrath_fleet = {
+	if = {
+		limit = {
+			owner = {
+				OR = {
+					is_in_federation_with = root
+					has_defensive_pact = root
+					overlord? = { is_same_value = root }
+					root.overlord? = { is_same_value = prev }
+				}
+			}
+		}
+		set_timed_fleet_flag = { flag = lfg_storm_favoured days = 31 }
+	}
+	else_if = {
+		limit = {
+			owner = {
+				OR = {
+					is_at_war_with = root
+					has_rival = root
+					root = { has_rival = prev }
+					has_country_flag = lfg_storm_targeted_by@root
+					AND = {
+						NOT = { is_country_type = default }
+						is_hostile = root
+					}
+				}
+			}
+		}
+		set_timed_fleet_flag = { flag = lfg_storm_lashed days = 31 }
+		every_owned_ship = { lfg_storm_wrath_damage = { SHARE = @lfg_storm_wrath_damage } }
+	}
+	else = {
+		set_timed_fleet_flag = { flag = lfg_storm_buffeted days = 31 }
+		every_owned_ship = { lfg_storm_wrath_damage = { SHARE = @lfg_storm_wrath_damage_half } }
+	}
+}
+
+# Ship scope: damage $SHARE$ of the ship's max hull (current hull / hull fraction), but never below
+# @lfg_storm_wrath_hull_floor of it (vanilla storms stop at 20% too): it can't destroy a ship.
+lfg_storm_wrath_damage = {
+	export_trigger_value_to_variable = { trigger = has_hp variable = lfg_storm_wrath_dmg }
+	export_trigger_value_to_variable = { trigger = has_hp_percentage variable = lfg_storm_wrath_hp_frac }
+	# The share of max hull to take: $SHARE$, or less if that would go under the floor.
+	set_variable = { which = lfg_storm_wrath_share value = lfg_storm_wrath_hp_frac }
+	subtract_variable = { which = lfg_storm_wrath_share value = @lfg_storm_wrath_hull_floor }
+	if = {
+		limit = { check_variable = { which = lfg_storm_wrath_share value > $SHARE$ } }
+		set_variable = { which = lfg_storm_wrath_share value = $SHARE$ }
+	}
+	if = {
+		limit = { check_variable = { which = lfg_storm_wrath_share value > 0 } }
+		divide_variable = { which = lfg_storm_wrath_dmg value = lfg_storm_wrath_hp_frac }
+		multiply_variable = { which = lfg_storm_wrath_dmg value = lfg_storm_wrath_share }
+		damage_ship = { amount = lfg_storm_wrath_dmg }
+	}
+	clear_variable = lfg_storm_wrath_dmg
+	clear_variable = lfg_storm_wrath_hp_frac
+	clear_variable = lfg_storm_wrath_share
+}
+
+# System scope: a nexus storm just left this system (vanilla's nexus_storm_remove, via the generated
+# scripted_effects/zz_lfg_scripted_effect_overrides.txt), after vanilla gave its colonies a random severity-3 aftermath.
+# - Storm Sovereignty colonies survived it: Storm Enthusiasts, +5% job efficiency per nexus storm survived (planet
+#   variable lfg_nexus_storms_survived).
+# - Storm Chasers with the perk: instead of that aftermath, the Nexus Afterglow - every other storm's aftermath bonus,
+#   none of the drawbacks (lfg_nexus_storm_boon), for as long as a severity-3 aftermath lasts.
+lfg_nexus_storm_passes = {
+	every_system_planet = {
+		limit = {
+			is_colony = yes
+			exists = owner
+			owner = { has_ascension_perk = ap_lfg_storm_sovereignty }
+		}
+		if = {
+			limit = { NOT = { is_variable_set = lfg_nexus_storms_survived } }
+			set_variable = { which = lfg_nexus_storms_survived value = 0 }
+		}
+		change_variable = { which = lfg_nexus_storms_survived value = 1 }
+		remove_modifier = lfg_storm_enthusiasts
+		add_modifier = { modifier = lfg_storm_enthusiasts days = -1 multiplier = lfg_nexus_storms_survived }
+		if = {
+			limit = { owner = { lfg_storm_immune_country = yes } }
+			remove_modifier = electric_storm_aftermath_modifier_severity_3
+			remove_modifier = particle_storm_aftermath_modifier_severity_3
+			remove_modifier = gravity_storm_aftermath_modifier_severity_3
+			remove_modifier = magnetic_storm_aftermath_modifier_severity_3
+			remove_modifier = solar_storm_aftermath_modifier_severity_3
+			remove_modifier = celestial_storm_aftermath_modifier_severity_3
+			remove_modifier = shroud_storm_aftermath_modifier_severity_3
+			remove_modifier = lfg_nexus_storm_boon
+			add_modifier = { modifier = lfg_nexus_storm_boon days = @Severity3Duration }
+		}
+	}
+}

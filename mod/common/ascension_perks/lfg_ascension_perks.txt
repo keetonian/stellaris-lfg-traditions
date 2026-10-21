@@ -100,3 +100,31 @@ ap_lfg_mothership = {
 		factor = 0
 	}
 }
+
+# Storm Sovereignty: after Galactic Wonders and Galactic Weather Control, any empire (Cosmic Storms DLC). Adds the Tempest Lodestar tech
+# (common/technology/lfg_technology.txt): a megastructure that summons nexus storms (scripted action lfg_summon_nexus_storm) and
+# gives its owner economy and ship bonuses inside nexus storms (generated storm_types override). Storm Chasers who take it
+# become immune to cosmic storms' penalties (lfg_storm_immune_country; storm_types override, lfg_storm_immunity, lfg_storms.1).
+ap_lfg_storm_sovereignty = {
+	on_enabled = {
+		custom_tooltip = ap_lfg_storm_sovereignty_tt
+		hidden_effect = {
+			if = { limit = { NOT = { has_technology = tech_lfg_tempest_lodestar } }	add_research_option = tech_lfg_tempest_lodestar }
+			if = {
+				limit = { has_origin = origin_storm_chasers }
+				add_modifier = { modifier = lfg_storm_immunity days = -1 }
+			}
+		}
+	}
+	possible = {
+		custom_tooltip = { fail_text = "lfg_requires_ap_galactic_wonders"	has_ascension_perk = ap_galactic_wonders }
+		custom_tooltip = { fail_text = "lfg_requires_ap_weather_control"	has_ascension_perk = ap_weather_control }
+	}
+	potential = {
+		NOT = { has_ascension_perk = ap_lfg_storm_sovereignty }
+		has_cosmic_storms_dlc = yes
+	}
+	ai_weight = {
+		factor = 0
+	}
+}

@@ -109,4 +109,5 @@ spriteTypes = {
 	spriteType = { name = "GFX_ap_lfg_mothership" textureFile = "gfx/interface/icons/ascension_perks/ap_galactic_force_projection.dds" }
 	spriteType = { name = "GFX_ap_lfg_nanite_armada" textureFile = "gfx/interface/icons/ascension_perks/ap_colossus_project.dds" }
 	spriteType = { name = "GFX_ap_lfg_curated_progress" textureFile = "gfx/interface/icons/ascension_perks/ap_technological_ascendancy.dds" }
+	spriteType = { name = "GFX_ap_lfg_storm_sovereignty" textureFile = "gfx/interface/icons/ascension_perks/ap_lfg_storm_sovereignty.dds" }	# art/make_megastructure_icons.py
 }

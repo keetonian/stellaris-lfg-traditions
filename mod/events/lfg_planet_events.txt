@@ -10,6 +10,11 @@ planet_event = {
 
 	immediate = {
 		remove_modifier = lfg_shellworld_adopt
+		remove_modifier = lfg_lodestar_eye
+		remove_modifier = lfg_storm_enthusiasts
+		remove_modifier = lfg_nexus_storm_boon
+		clear_variable = lfg_nexus_storms_survived
+		remove_modifier = lfg_lodestar_eye_chaser
 		remove_modifier = lfg_shellworld_compact_living
 		remove_modifier = lfg_shellworld_artificial_gravity
 		remove_modifier = lfg_shellworld_closed_ecology

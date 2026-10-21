@@ -409,6 +409,111 @@ RESORT_WORKER_EXPLOITATION = (
     "\t}\n"
 )
 
+# Storm Sovereignty: cosmic storm penalties that immune Storm Chasers (lfg_storm_immune_country) skip. Each entry is a
+# storm type, the modifier line that identifies the penalty block, and who to check ("owner" for planets, fleets and
+# ships; "space_owner" for system modifiers); the "not immune" line goes into that block's potential. Bonuses stay.
+STORM_TYPES = "common/storm_types/00_storm_types.txt"
+# Storm Sovereignty: run lfg_nexus_storm_passes (lfg_storms_effects.txt) whenever a nexus storm leaves a system (vanilla's
+# nexus_storm_remove, used by nexus_storm's on_moved and on_finished; system scope), after its aftermath.
+STORM_EFFECTS = "common/scripted_effects/cosmic_storms_scripted_effects.txt"
+# Nexus Afterglow (lfg_nexus_storm_boon): the particle / celestial aftermaths' per-pop motes / crystals, which live in
+# this pop resources inline script (whole file: inline scripts can't be overridden per block).
+POP_MISC_PRODUCTION = "common/inline_scripts/pop_resources/pop_misc_production.txt"
+NEXUS_BOON_POP_RESOURCE = (
+    "produces = {\n\ttrigger = {\n\t\texists = planet\n\t\tplanet = {\n\t\t\thas_modifier = lfg_nexus_storm_boon\n"
+    "\t\t}\n\t}\n\t{res} = 0.06\n}}\n\n"
+)
+STORM_PENALTIES = [
+    ("particle_storm", "ships_upkeep_mult = 0\\.5", "owner"),
+    ("gravity_storm", "planet_farmers_consumer_goods_upkeep_add = 1", "owner"),
+    ("gravity_storm", "planet_farmers_energy_upkeep_add = 1", "owner"),
+    ("gravity_storm", "ship_weapon_damage = @gravity_storm_dmg_malus", "owner"),
+    ("magnetic_storm", "planet_building_build_speed_mult = -0\\.5", "owner"),
+    ("magnetic_storm", "starbase_shipyard_build_speed_mult = -0\\.5", "space_owner"),
+    ("magnetic_storm", "stations_upkeep_mult = 1", "owner"),
+    ("magnetic_storm", "ships_upkeep_mult = 1", "owner"),
+    ("celestial_storm", "planet_enforcers_upkeep_mult = 0\\.5", "owner"),
+    ("celestial_storm", "ship_cloaking_strength_add = 10", "owner"),
+    ("shroud_storm", "planet_stability_mult = -0\\.2", "owner"),
+    ("nexus_storm", "nexus_storm_modifier = 1", "owner"),
+]
+
+
+def storm_penalty_anchor(modifier_line: str) -> str:
+    """The `potential = {` line of the block whose first modifier lines include modifier_line (a regex)."""
+    return (r"^\t\tpotential = \{\n(?=(?:\t\t\t.*\n)*\t\t\}\n"
+            r"(?:\t\t(?:modifier = \{|custom_tooltip = .*)\n|\t\t\tcustom_tooltip = .*\n){0,3}\t\t\t?" + modifier_line + ")")
+
+
+# Inside a nexus storm, added to nexus_storm: economy (planets) and ship (fleets) bonuses for the Tempest Lodestar's owner
+# and for Storm Chasers with Storm Sovereignty (lfg_nexus_storm_bonuses: either); for those Storm Chasers also -25% job
+# upkeep ("we have harnessed the storms").
+NEXUS_LODESTAR_BONUSES = (
+    "\ttriggered_planet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\tis_colony = yes\n"
+    "\t\t\towner? = { lfg_nexus_storm_bonuses = yes }\n"
+    "\t\t}\n"
+    "\t\tplanet_stability_add = @lfg_lodestar_storm_stability\n"
+    "\t}\n"
+    # Job output, on our colonies inside the nexus storm: +50% from a finished Lodestar, +50% for Storm Chasers with the
+    # perk (both: +100%).
+    "\ttriggered_planet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\tis_colony = yes\n"
+    "\t\t\towner? = { lfg_has_tempest_lodestar = yes }\n"
+    "\t\t}\n"
+    "\t\tplanet_jobs_produces_mult = @lfg_lodestar_storm_jobs\n"
+    "\t}\n"
+    "\ttriggered_planet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\tis_colony = yes\n"
+    "\t\t\towner? = { lfg_storm_immune_country = yes }\n"
+    "\t\t}\n"
+    "\t\tplanet_jobs_produces_mult = @lfg_storm_chaser_storm_jobs\n"
+    "\t}\n"
+    "\ttriggered_planet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\tis_colony = yes\n"
+    "\t\t\towner? = { lfg_storm_immune_country = yes }\n"
+    "\t\t}\n"
+    "\t\tcustom_tooltip = lfg_harnessed_storms_tt\n"
+    "\t\tplanet_jobs_upkeep_mult = @lfg_harnessed_storms_upkeep\n"
+    "\t}\n"
+    "\ttriggered_fleet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\towner? = { lfg_nexus_storm_bonuses = yes }\n"
+    "\t\t}\n"
+    "\t\tmodifier = {\n"
+    "\t\t\tship_fire_rate_mult = @lfg_lodestar_storm_fire_rate\n"
+    "\t\t\tship_speed_mult = @lfg_lodestar_storm_speed\n"
+    "\t\t\tship_evasion_mult = @lfg_lodestar_storm_evasion\n"
+    "\t\t}\n"
+    "\t}\n"
+    # Storm Chasers' summoned storms (lfg_storms.5 sets these timed fleet flags each month): enemies and neutrals are
+    # slowed and get no armour regeneration (vanilla's affect_armor_regen should already stop it; this makes sure).
+    "\ttriggered_fleet_modifier = {\n"
+    "\t\tpotential = { has_fleet_flag = lfg_storm_lashed }\n"
+    "\t\tcustom_tooltip = lfg_storm_lashed_tt\n"
+    "\t\tmodifier = {\n"
+    "\t\t\tship_speed_mult = @lfg_storm_wrath_speed\n"
+    "\t\t\tship_armor_regen_mult = -1\n"
+    "\t\t}\n"
+    "\t}\n"
+    "\ttriggered_fleet_modifier = {\n"
+    "\t\tpotential = { has_fleet_flag = lfg_storm_buffeted }\n"
+    "\t\tcustom_tooltip = lfg_storm_buffeted_tt\n"
+    "\t\tmodifier = {\n"
+    "\t\t\tship_speed_mult = @lfg_storm_wrath_speed_half\n"
+    "\t\t\tship_armor_regen_mult = -1\n"
+    "\t\t}\n"
+    "\t}\n"
+    "\ttriggered_fleet_modifier = {\n"
+    "\t\tpotential = { has_fleet_flag = lfg_storm_favoured }\n"
+    "\t\tmodifier = { ship_speed_mult = @lfg_storm_wrath_ally_speed }\n"
+    "\t}\n"
+)
+
 REPLICATOR_NANITE_UPKEEP = (
     "\t\tupkeep = {\n"
     "\t\t\ttrigger = { owner = { has_origin = origin_lfg_nanite_forge } }\n"
@@ -453,6 +558,27 @@ OVERRIDES = {
         (NANITE_DEPOSITS, key, rf"^\t\tproduces = \{{\n\t\t\tnanites = {re.escape(amount)}\n\t\t\}}\n",
          f"\t\tproduces = {{\n\t\t\tnanites = {amount}\n\t\t}}\n")
         for key, amount in NANITE_DEPOSIT_AMOUNTS
+    ],
+    # Storm Sovereignty: storm penalties immune Storm Chasers skip; the Tempest Lodestar's nexus storm bonuses.
+    "mod/common/storm_types/zz_lfg_storm_type_overrides.txt": [
+        (STORM_TYPES, storm, storm_penalty_anchor(line), f"\t\t\tNOT = {{ {who}? = {{ lfg_storm_immune_country = yes }} }}\n")
+        for storm, line, who in STORM_PENALTIES
+    ] + [
+        (STORM_TYPES, "nexus_storm", r"^\tdescription = nexus_storm_lore_description\n", NEXUS_LODESTAR_BONUSES),
+        # Vanilla never spawns a nexus storm before the midgame (spawn_weight factor 0), and spawn_random_storm obeys that
+        # even with type = nexus_storm: let the Tempest Lodestar's summon (lfg_spawn_nexus_storm) through.
+        (STORM_TYPES, "nexus_storm", r"^\t\t\tmid_game_years_passed < 1\n",
+         "\t\t\tNOT = { has_global_flag = lfg_summoning_nexus_storm }\n"),
+    ],
+    "mod/common/scripted_effects/zz_lfg_scripted_effect_overrides.txt": [
+        (STORM_EFFECTS, "nexus_storm_remove", r"^\tnexus_storm_apply_aftermath_modifier = yes\n",
+         "\tlfg_nexus_storm_passes = yes\n"),
+    ],
+    "mod/" + POP_MISC_PRODUCTION: [
+        (POP_MISC_PRODUCTION, None, r"^\tvolatile_motes = 0\.06\n\}\n\n",
+         NEXUS_BOON_POP_RESOURCE.replace("{res}", "volatile_motes").replace("}}", "}")),
+        (POP_MISC_PRODUCTION, None, r"^\trare_crystals = 0\.06\n\}\n\n",
+         NEXUS_BOON_POP_RESOURCE.replace("{res}", "rare_crystals").replace("}}", "}")),
     ],
     "mod/common/situations/zz_lfg_situation_overrides.txt": [
         ("common/situations/08_machine_age_situations.txt", "situation_synthetic_fertility_digitization",

@@ -1,0 +1,23 @@
+# LFG Traditions - opinion modifiers.
+
+# Storm Sovereignty: another empire unleashed a nexus storm (the Tempest Lodestar's Summon Nexus Storm). Decays 1 a month: 2.5 years.
+lfg_nexus_storm_summoned = {
+	opinion = {
+		base = -30
+	}
+	decay = {
+		base = 1
+	}
+	min = -30
+}
+
+# Storm Sovereignty: we were the target of a summoned nexus storm. Decays 1 a month: about 6 years.
+lfg_nexus_storm_targeted = {
+	opinion = {
+		base = -75
+	}
+	decay = {
+		base = 1
+	}
+	min = -75
+}

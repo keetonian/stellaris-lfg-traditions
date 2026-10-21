@@ -1,0 +1,253 @@
+# LFG Traditions - Storm Sovereignty (ap_lfg_storm_sovereignty).
+namespace = lfg_storms
+
+# Monthly (on_monthly_pulse_country): immune Storm Chasers shed the purely negative storm aftermath modifiers (particle:
+# assembly / minerals; solar: growth / amenities; celestial: crime / food). Mixed ones with a bonus stay.
+# Storm hull damage is the engine's own (vanilla's tooltip: @storm_monthly_dmg_high a month, to shields, armour and hull)
+# and storm_ship_hull_breaker_mult -1 (lfg_storm_immunity) didn't stop it in game, so their ships and stations inside a
+# storm get that much back each month.
+country_event = {
+	id = lfg_storms.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		lfg_storm_immune_country = yes
+	}
+
+	immediate = {
+		every_owned_fleet = {
+			limit = {
+				exists = solar_system
+				solar_system = { is_inside_storm = yes }
+			}
+			repair_shield_amount = @storm_monthly_dmg_high
+			repair_armor_amount = @storm_monthly_dmg_high
+			repair_amount = @storm_monthly_dmg_high
+			# Storms stop regeneration: 3% of shields, armour and hull a month instead (verified in game; small ships such as science
+			# ships still show empty shields, since the storm's 60 a month exceeds them and lands after this).
+			repair_shield_percentage = @lfg_storm_chaser_storm_repair
+			repair_armor_percentage = @lfg_storm_chaser_storm_repair
+			repair_percentage = @lfg_storm_chaser_storm_repair
+		}
+		every_owned_planet = {
+			if = { limit = { has_modifier = particle_storm_aftermath_modifier_severity_1 } remove_modifier = particle_storm_aftermath_modifier_severity_1 }
+			if = { limit = { has_modifier = particle_storm_aftermath_modifier_severity_2 } remove_modifier = particle_storm_aftermath_modifier_severity_2 }
+			if = { limit = { has_modifier = particle_storm_aftermath_modifier_severity_3 } remove_modifier = particle_storm_aftermath_modifier_severity_3 }
+			if = { limit = { has_modifier = solar_storm_aftermath_modifier_severity_1 } remove_modifier = solar_storm_aftermath_modifier_severity_1 }
+			if = { limit = { has_modifier = solar_storm_aftermath_modifier_severity_2 } remove_modifier = solar_storm_aftermath_modifier_severity_2 }
+			if = { limit = { has_modifier = solar_storm_aftermath_modifier_severity_3 } remove_modifier = solar_storm_aftermath_modifier_severity_3 }
+			if = { limit = { has_modifier = celestial_storm_aftermath_modifier_severity_1 } remove_modifier = celestial_storm_aftermath_modifier_severity_1 }
+			if = { limit = { has_modifier = celestial_storm_aftermath_modifier_severity_2 } remove_modifier = celestial_storm_aftermath_modifier_severity_2 }
+			if = { limit = { has_modifier = celestial_storm_aftermath_modifier_severity_3 } remove_modifier = celestial_storm_aftermath_modifier_severity_3 }
+		}
+	}
+}
+
+# Summon Nexus Storm (the Lodestar's button, via lfg_storms.6): the storm forms in the system we targeted
+# (event_target:lfg_storm_system). If another empire owns it, lfg_nexus_storm_penalties applies.
+country_event = {
+	id = lfg_storms.2
+	title = lfg_storms.2.name
+	desc = lfg_storms.2.desc
+	picture = GFX_evt_cosmic_storms_nexus_storm
+	location = event_target:lfg_storm_system
+	is_triggered_only = yes
+
+	# Hold: the storm stays there (lock_storm_in_place) until the Lodestar can summon again (lfg_storms.4). Only in our
+	# own systems.
+	option = {
+		name = lfg_storms.2.a
+		trigger = {
+			event_target:lfg_storm_system = {
+				exists = space_owner
+				space_owner = { is_same_value = root }
+			}
+		}
+		custom_tooltip = lfg_storms.2.a.tt
+		hidden_effect = {
+			lfg_spawn_nexus_storm = { START = event_target:lfg_storm_system }
+			random_cosmic_storm = {
+				limit = {
+					is_storm_type = nexus_storm
+					has_storm_flag = lfg_summoned_by@root
+					any_system_within_storm = { is_same_value = event_target:lfg_storm_system }
+				}
+				lock_storm_in_place = yes
+				set_storm_flag = lfg_held_storm
+			}
+			# Held until the Lodestar can summon again; then it moves on like any storm.
+			country_event = { id = lfg_storms.4 days = @lfg_nexus_summon_cooldown_days }
+			lfg_nexus_storm_penalties = yes
+		}
+	}
+	# Let it rage: it moves on like any storm.
+	option = {
+		name = lfg_storms.2.b
+		custom_tooltip = lfg_storms.2.b.tt
+		hidden_effect = {
+			lfg_spawn_nexus_storm = { START = event_target:lfg_storm_system }
+			lfg_nexus_storm_penalties = yes
+		}
+	}
+}
+
+# A held storm's time is up (the Lodestar's summon cooldown): release it (storm flag lfg_held_storm).
+country_event = {
+	id = lfg_storms.4
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		every_cosmic_storm = {
+			limit = { has_storm_flag = lfg_held_storm }
+			lock_storm_in_place = no
+		}
+	}
+}
+
+# Monthly (on_monthly_pulse_country): Storm Chasers with Storm Sovereignty weaponize the nexus storms they summoned
+# (lfg_summoned_by@<country>): every other empire's fleets and stations inside take lfg_storm_wrath_fleet.
+country_event = {
+	id = lfg_storms.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		lfg_storm_immune_country = yes
+		any_cosmic_storm = { has_storm_flag = lfg_summoned_by@root }
+	}
+
+	immediate = {
+		every_cosmic_storm = {
+			limit = { has_storm_flag = lfg_summoned_by@root }
+			every_system_within_storm = {
+				every_fleet_in_system = {
+					limit = {
+						exists = owner
+						NOT = { owner = { is_same_value = root } }
+					}
+					lfg_storm_wrath_fleet = yes
+				}
+			}
+		}
+	}
+}
+
+# The Summon Nexus Storm button fired (on_lfg_summon_nexus_storm; this = the targeted system): the summoner chooses how
+# to use the storm (lfg_storms.2). The summoner is found as the button's target check finds it - the owner of a science
+# ship with its scientist here, with a Lodestar and the perk - because `from` (the Lodestar) didn't resolve in game:
+# a trigger on from.owner silently stopped this event.
+system_event = {
+	id = lfg_storms.6
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		save_event_target_as = lfg_storm_system
+		random_fleet_in_system = {
+			limit = {
+				is_ship_class = shipclass_science_ship
+				exists = leader
+				leader = { leader_class = scientist }
+				exists = owner
+				owner = { lfg_has_tempest_lodestar = yes }
+			}
+			owner = {
+				# The button's cost (see lfg_summon_nexus_storm).
+				add_resource = {
+					energy = @lfg_nexus_summon_energy
+					volatile_motes = @lfg_nexus_summon_strategic
+					exotic_gases = @lfg_nexus_summon_strategic
+					rare_crystals = @lfg_nexus_summon_strategic
+					sr_dark_matter = @lfg_nexus_summon_dark_matter
+					influence = @lfg_nexus_summon_influence
+					mult = -1
+				}
+				country_event = { id = lfg_storms.2 }
+			}
+		}
+	}
+}
+
+# Monthly (on_monthly_pulse_country): the Eye of the Storm. Our colonies and fleets in the Tempest Lodestar's system get the
+# nexus storm bonuses as if a storm were there (lfg_lodestar_eye / _chaser / _fleet), unless a real nexus storm covers it.
+# Anything that left the system, or a Lodestar that's gone or lost its perk, loses them; country flag
+# lfg_lodestar_eye_applied keeps the cleanup run going one month after.
+country_event = {
+	id = lfg_storms.7
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			lfg_has_tempest_lodestar = yes
+			has_country_flag = lfg_lodestar_eye_applied
+		}
+	}
+
+	immediate = {
+		remove_country_flag = lfg_lodestar_eye_applied
+		if = {
+			limit = { lfg_has_tempest_lodestar = yes }
+			random_owned_megastructure = {
+				limit = { is_megastructure_type = lfg_tempest_lodestar_1 }
+				solar_system = {
+					if = {
+						limit = { NOT = { is_inside_storm = nexus_storm } }
+						save_event_target_as = lfg_eye_system
+					}
+				}
+			}
+		}
+		every_owned_planet = {
+			if = {
+				limit = {
+					is_colony = yes
+					exists = event_target:lfg_eye_system
+					solar_system = { is_same_value = event_target:lfg_eye_system }
+				}
+				if = {
+					limit = { NOT = { has_modifier = lfg_lodestar_eye } }
+					add_modifier = { modifier = lfg_lodestar_eye days = -1 }
+				}
+				if = {
+					limit = {
+						root = { lfg_storm_immune_country = yes }
+						NOT = { has_modifier = lfg_lodestar_eye_chaser }
+					}
+					add_modifier = { modifier = lfg_lodestar_eye_chaser days = -1 }
+				}
+				root = { set_country_flag = lfg_lodestar_eye_applied }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						has_modifier = lfg_lodestar_eye
+						has_modifier = lfg_lodestar_eye_chaser
+					}
+				}
+				remove_modifier = lfg_lodestar_eye
+				remove_modifier = lfg_lodestar_eye_chaser
+			}
+		}
+		every_owned_fleet = {
+			if = {
+				limit = {
+					exists = event_target:lfg_eye_system
+					exists = solar_system
+					solar_system = { is_same_value = event_target:lfg_eye_system }
+				}
+				if = {
+					limit = { NOT = { has_modifier = lfg_lodestar_eye_fleet } }
+					add_modifier = { modifier = lfg_lodestar_eye_fleet days = -1 }
+				}
+				root = { set_country_flag = lfg_lodestar_eye_applied }
+			}
+			else_if = {
+				limit = { has_modifier = lfg_lodestar_eye_fleet }
+				remove_modifier = lfg_lodestar_eye_fleet
+			}
+		}
+	}
+}

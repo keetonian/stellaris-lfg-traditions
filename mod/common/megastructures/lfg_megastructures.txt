@@ -231,3 +231,104 @@ lfg_progenitor_forge_2 = {
 		}
 	}
 }
+
+# Storm Sovereignty: the Tempest Lodestar, around any star in our borders; one per empire. Finished, it has the Summon
+# Nexus Storm button (scripted action lfg_summon_nexus_storm) and its owner gets bonuses inside nexus storms. Model:
+# mod/gfx/models/ships/lfg_megastructures.asset (a storm held around the star by a ring of lightning pylons).
+lfg_tempest_lodestar_0 = {
+	entity = "giga_consite_7_7_entity"
+	construction_entity = "giga_consite_7_7_entity"
+	portrait = "GFX_megastructure_construction_background"
+	place_entity_on_planet_plane = no
+	build_time = 1080
+	resources = {
+		category = megastructures
+		cost = {
+			alloys = 15000
+			influence = 200
+		}
+		upkeep = {
+			energy = 20
+		}
+	}
+	prerequisites = { "tech_lfg_tempest_lodestar" }
+	potential = {
+		has_ascension_perk = ap_lfg_storm_sovereignty
+	}
+	possible = {
+		hidden_trigger = {
+			exists = starbase
+		}
+		custom_tooltip = {
+			fail_text = "requires_inside_border"
+			is_inside_border = from
+		}
+		custom_tooltip = {
+			fail_text = "requires_no_existing_megastructure"
+			has_no_non_gate_megastructure = yes
+		}
+		custom_tooltip = {
+			fail_text = "lfg_requires_one_tempest_lodestar"
+			from = {
+				NOR = {
+					has_megastructure = lfg_tempest_lodestar_0
+					has_megastructure = lfg_tempest_lodestar_1
+				}
+			}
+		}
+	}
+	placement_rules = {
+		planet_possible = {
+			custom_tooltip = {
+				fail_text = "lfg_requires_star"
+				is_star = yes
+			}
+		}
+	}
+	on_build_complete = {
+		from = { set_country_flag = has_built_or_repaired_megastructure }
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+lfg_tempest_lodestar_1 = {
+	entity = "lfg_tempest_lodestar_entity"
+	construction_entity = "lfg_tempest_lodestar_construction_entity"
+	portrait = "GFX_megastructure_construction_background"
+	place_entity_on_planet_plane = no
+	build_time = 1800
+	upgrade_from = {
+		lfg_tempest_lodestar_0
+	}
+	resources = {
+		category = megastructures
+		cost = {
+			alloys = 35000
+			energy = 25000
+		}
+		upkeep = {
+			energy = 100
+		}
+	}
+	prerequisites = { "tech_lfg_tempest_lodestar" }
+	# A captured site can't be finished without the perk.
+	potential = {
+		has_ascension_perk = ap_lfg_storm_sovereignty
+	}
+	# Its effects are scripted (storm overrides, lfg_lodestar_storm_pull), so its description (lfg_tempest_lodestar_1_DESC)
+	# lists them: custom_tooltip and custom_tooltip_with_modifiers both showed twice in the hover tooltip in game.
+	# Summon Nexus Storm button (common/scripted_actions/lfg_scripted_actions.txt).
+	scripted_action = { lfg_summon_nexus_storm }
+	on_build_complete = {
+		from = { set_country_flag = has_built_or_repaired_megastructure }
+		# Its star pulls storms toward the system (like vanilla's storm attraction buildings: a planet modifier with
+		# system_storm_influence_add plus an influence field around the system).
+		fromfrom.planet = {
+			set_planet_flag = lfg_tempest_lodestar
+			add_modifier = { modifier = lfg_lodestar_storm_pull days = -1 }
+			create_influence_field_if_needed = yes
+		}
+	}
+}

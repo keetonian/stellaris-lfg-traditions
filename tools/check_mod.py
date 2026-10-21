@@ -51,6 +51,7 @@ ALLOWED_FILES = [
     r"common/ascension_perks/[^/]+\.txt",
     r"common/technology/zz_lfg_[^/]+\.txt",
     r"common/inline_scripts/technology/giga_mega_repeatable\.txt",  # generated whole-file override of Giga's
+    r"common/inline_scripts/pop_resources/pop_misc_production\.txt",  # generated whole-file override of vanilla's
     r"common/situations/zz_lfg_[^/]+\.txt",
     r"common/districts/zz_lfg_[^/]+\.txt",
     r"common/buildings/zz_lfg_[^/]+\.txt",
@@ -79,6 +80,9 @@ ALLOWED_FILES = [
     r"common/on_actions/[^/]+\.txt",
     r"common/policies/[^/]+\.txt",
     r"common/decisions/[^/]+\.txt",
+    r"common/scripted_actions/lfg_[^/]+\.txt",
+    r"common/opinion_modifiers/lfg_[^/]+\.txt",
+    r"common/storm_types/zz_lfg_[^/]+\.txt",
     r"common/traits/[^/]+\.txt",
     r"common/solar_system_initializers/[^/]+\.txt",
     r"events/[^/]+\.txt",
@@ -95,6 +99,7 @@ ALLOWED_FILES = [
     r"gfx/interface/icons/traditions/tree_icons/tradition_icon_lfg_[^/]+\.dds",  # art/make_glyph_icons.py
     r"gfx/interface/icons/agenda_icons/agenda_lfg_[^/]+\.dds",  # art/make_glyph_icons.py
     r"gfx/interface/icons/decisions/decision_lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
+    r"gfx/interface/icons/ascension_perks/ap_lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
     r"gfx/interface/icons/modules/lfg_[^/]+\.dds",  # art/make_building_icons.py
     r"gfx/event_pictures/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py
     r"gfx/models/ships/lfg_[^/]+\.asset",  # generated: nanite hulls' look

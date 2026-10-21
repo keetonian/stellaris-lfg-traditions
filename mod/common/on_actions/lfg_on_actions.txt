@@ -29,6 +29,9 @@ on_monthly_pulse_country = {
 		lfg_lineage.1	# Every Shore: monthly planet-type count
 		lfg_stationcraft.1	# Stationcraft: monthly starbase / kilostructure / megastructure counts
 		lfg_mothership.1	# Mothership: monthly nanite swarmers / interdictors
+		lfg_storms.1	# Storm Sovereignty: immune Storm Chasers shed storm aftermath penalties
+		lfg_storms.5	# Storm Sovereignty: Storm Chasers' summoned nexus storms hit other empires' fleets
+		lfg_storms.7	# Storm Sovereignty: the Lodestar's system counts as inside a nexus storm
 	}
 }
 
@@ -89,5 +92,12 @@ on_destroy_planet_with_LFG_NANITE_DISASSEMBLER_queued = {
 on_destroy_planet_with_LFG_NANITE_DISASSEMBLER_unqueued = {
 	events = {
 		lfg_mothership.9
+	}
+}
+
+# Summon Nexus Storm button (scripted action lfg_summon_nexus_storm). This = target system.
+on_lfg_summon_nexus_storm = {
+	events = {
+		lfg_storms.6
 	}
 }
