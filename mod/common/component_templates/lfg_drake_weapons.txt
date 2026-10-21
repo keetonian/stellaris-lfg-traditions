@@ -2,7 +2,7 @@
 # Here Be Dragons' growing drakes, from vanilla's baby drake (Stellaris v4.5.2).
 # The Dragon's Breath and the claws, one of each per growth step, damage times the step's growth.
 
-# Step 0: x1.0
+# Step 0: damage x0.50
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_0"
 	size = large
@@ -11,7 +11,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 5000 max = 9000 }
+	damage = { min = 2500 max = 4500 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -43,8 +43,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 2500
-						max = 8100
+						min = 1250
+						max = 4050
 						rounded = yes
 					}
 					damage_ship = {
@@ -71,7 +71,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 100 max = 150 }
+	damage = { min = 50 max = 75 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -99,7 +99,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 1: x1.8
+# Step 1: damage x0.88
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_1"
 	size = large
@@ -108,7 +108,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 8750 max = 15750 }
+	damage = { min = 4375 max = 7875 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -140,8 +140,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 4375
-						max = 14175
+						min = 2188
+						max = 7088
 						rounded = yes
 					}
 					damage_ship = {
@@ -168,7 +168,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 175 max = 262 }
+	damage = { min = 88 max = 131 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -196,7 +196,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 2: x3.1
+# Step 2: damage x1.53
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_2"
 	size = large
@@ -205,7 +205,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 15312 max = 27562 }
+	damage = { min = 7656 max = 13781 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -237,8 +237,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 7656
-						max = 24806
+						min = 3828
+						max = 12403
 						rounded = yes
 					}
 					damage_ship = {
@@ -265,7 +265,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 306 max = 459 }
+	damage = { min = 153 max = 230 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -293,7 +293,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 3: x5.4
+# Step 3: damage x2.68
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_3"
 	size = large
@@ -302,7 +302,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 26797 max = 48234 }
+	damage = { min = 13398 max = 24117 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -334,8 +334,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 13398
-						max = 43411
+						min = 6699
+						max = 21705
 						rounded = yes
 					}
 					damage_ship = {
@@ -362,7 +362,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 536 max = 804 }
+	damage = { min = 268 max = 402 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -390,7 +390,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 4: x9.4
+# Step 4: damage x4.69
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_4"
 	size = large
@@ -399,7 +399,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 46895 max = 84410 }
+	damage = { min = 23447 max = 42205 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -431,8 +431,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 23447
-						max = 75969
+						min = 11724
+						max = 37985
 						rounded = yes
 					}
 					damage_ship = {
@@ -459,7 +459,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 938 max = 1407 }
+	damage = { min = 469 max = 703 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -487,7 +487,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 5: x16.4
+# Step 5: damage x8.21
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_5"
 	size = large
@@ -496,7 +496,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 82065 max = 147718 }
+	damage = { min = 41033 max = 73859 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -528,8 +528,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 41033
-						max = 132946
+						min = 20516
+						max = 66473
 						rounded = yes
 					}
 					damage_ship = {
@@ -556,7 +556,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 1641 max = 2462 }
+	damage = { min = 821 max = 1231 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -584,7 +584,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 6: x28.7
+# Step 6: damage x14.36
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_6"
 	size = large
@@ -593,7 +593,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 143615 max = 258506 }
+	damage = { min = 71807 max = 129253 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -625,8 +625,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 71807
-						max = 232655
+						min = 35904
+						max = 116328
 						rounded = yes
 					}
 					damage_ship = {
@@ -653,7 +653,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 2872 max = 4308 }
+	damage = { min = 1436 max = 2154 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -681,7 +681,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 7: x50.3
+# Step 7: damage x25.13
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_7"
 	size = large
@@ -690,7 +690,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 251325 max = 452386 }
+	damage = { min = 125663 max = 226193 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -722,8 +722,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 125663
-						max = 407147
+						min = 62831
+						max = 203574
 						rounded = yes
 					}
 					damage_ship = {
@@ -750,7 +750,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 5027 max = 7540 }
+	damage = { min = 2513 max = 3770 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -778,7 +778,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 8: x88.0
+# Step 8: damage x43.98
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_8"
 	size = large
@@ -787,7 +787,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 439819 max = 791675 }
+	damage = { min = 219910 max = 395837 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -819,8 +819,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 219910
-						max = 712507
+						min = 109955
+						max = 356254
 						rounded = yes
 					}
 					damage_ship = {
@@ -847,7 +847,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 8796 max = 13195 }
+	damage = { min = 4398 max = 6597 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -875,7 +875,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 9: x153.9
+# Step 9: damage x76.97
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_9"
 	size = large
@@ -884,7 +884,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 769684 max = 1385431 }
+	damage = { min = 384842 max = 692716 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -916,8 +916,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 384842
-						max = 1246888
+						min = 192421
+						max = 623444
 						rounded = yes
 					}
 					damage_ship = {
@@ -944,7 +944,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 15394 max = 23091 }
+	damage = { min = 7697 max = 11545 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -972,7 +972,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 10: x269.4
+# Step 10: damage x134.69
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_10"
 	size = large
@@ -981,7 +981,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 1346947 max = 2424505 }
+	damage = { min = 673473 max = 1212252 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1013,8 +1013,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 673473
-						max = 2182054
+						min = 336737
+						max = 1091027
 						rounded = yes
 					}
 					damage_ship = {
@@ -1041,7 +1041,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 26939 max = 40408 }
+	damage = { min = 13469 max = 20204 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1069,7 +1069,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 11: x471.4
+# Step 11: damage x235.72
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_11"
 	size = large
@@ -1078,7 +1078,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 2357157 max = 4242883 }
+	damage = { min = 1178579 max = 2121441 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1110,8 +1110,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 1178579
-						max = 3818595
+						min = 589289
+						max = 1909297
 						rounded = yes
 					}
 					damage_ship = {
@@ -1138,7 +1138,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 47143 max = 70715 }
+	damage = { min = 23572 max = 35357 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1166,7 +1166,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 12: x707.1
+# Step 12: damage x306.43
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_12"
 	size = large
@@ -1175,7 +1175,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 3535736 max = 6364324 }
+	damage = { min = 1532152 max = 2757874 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1207,8 +1207,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 1767868
-						max = 5727892
+						min = 766076
+						max = 2482086
 						rounded = yes
 					}
 					damage_ship = {
@@ -1235,7 +1235,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 70715 max = 106072 }
+	damage = { min = 30643 max = 45965 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1263,7 +1263,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 13: x1,060.7
+# Step 13: damage x398.36
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_13"
 	size = large
@@ -1272,7 +1272,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 5303604 max = 9546487 }
+	damage = { min = 1991798 max = 3585236 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1304,8 +1304,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 2651802
-						max = 8591838
+						min = 995899
+						max = 3226712
 						rounded = yes
 					}
 					damage_ship = {
@@ -1332,7 +1332,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 106072 max = 159108 }
+	damage = { min = 39836 max = 59754 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1360,7 +1360,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 14: x1,591.1
+# Step 14: damage x517.87
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_14"
 	size = large
@@ -1369,7 +1369,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 7955405 max = 14319730 }
+	damage = { min = 2589337 max = 4660807 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1401,8 +1401,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 3977703
-						max = 12887757
+						min = 1294669
+						max = 4194726
 						rounded = yes
 					}
 					damage_ship = {
@@ -1429,7 +1429,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 159108 max = 238662 }
+	damage = { min = 51787 max = 77680 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1457,7 +1457,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 15: x2,386.6
+# Step 15: damage x673.23
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_15"
 	size = large
@@ -1466,7 +1466,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 11933108 max = 21479595 }
+	damage = { min = 3366138 max = 6059049 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1498,8 +1498,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 5966554
-						max = 19331635
+						min = 1683069
+						max = 5453144
 						rounded = yes
 					}
 					damage_ship = {
@@ -1526,7 +1526,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 238662 max = 357993 }
+	damage = { min = 67323 max = 100984 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1554,7 +1554,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 16: x3,579.9
+# Step 16: damage x875.20
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_16"
 	size = large
@@ -1563,7 +1563,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 17899662 max = 32219392 }
+	damage = { min = 4375980 max = 7876764 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1595,8 +1595,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 8949831
-						max = 28997453
+						min = 2187990
+						max = 7089087
 						rounded = yes
 					}
 					damage_ship = {
@@ -1623,7 +1623,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 357993 max = 536990 }
+	damage = { min = 87520 max = 131279 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1651,7 +1651,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 17: x5,369.9
+# Step 17: damage x1,137.75
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_17"
 	size = large
@@ -1660,7 +1660,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 26849493 max = 48329088 }
+	damage = { min = 5688774 max = 10239793 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1692,8 +1692,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 13424747
-						max = 43496179
+						min = 2844387
+						max = 9215813
 						rounded = yes
 					}
 					damage_ship = {
@@ -1720,7 +1720,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 536990 max = 805485 }
+	damage = { min = 113775 max = 170663 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1748,7 +1748,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 18: x8,054.8
+# Step 18: damage x1,479.08
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_18"
 	size = large
@@ -1757,7 +1757,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 40274240 max = 72493632 }
+	damage = { min = 7395406 max = 13311730 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1789,8 +1789,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 20137120
-						max = 65244269
+						min = 3697703
+						max = 11980557
 						rounded = yes
 					}
 					damage_ship = {
@@ -1817,7 +1817,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 805485 max = 1208227 }
+	damage = { min = 147908 max = 221862 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1845,7 +1845,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 19: x12,082.3
+# Step 19: damage x1,922.81
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_19"
 	size = large
@@ -1854,7 +1854,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 60411360 max = 108740448 }
+	damage = { min = 9614028 max = 17305250 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1886,8 +1886,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 30205680
-						max = 97866403
+						min = 4807014
+						max = 15574725
 						rounded = yes
 					}
 					damage_ship = {
@@ -1914,7 +1914,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 1208227 max = 1812341 }
+	damage = { min = 192281 max = 288421 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -1942,7 +1942,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 20: x18,123.4
+# Step 20: damage x2,499.65
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_20"
 	size = large
@@ -1951,7 +1951,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 90617040 max = 163110672 }
+	damage = { min = 12498236 max = 22496824 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -1983,8 +1983,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 45308520
-						max = 146799605
+						min = 6249118
+						max = 20247142
 						rounded = yes
 					}
 					damage_ship = {
@@ -2011,7 +2011,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 1812341 max = 2718511 }
+	damage = { min = 249965 max = 374947 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -2039,7 +2039,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 21: x27,185.1
+# Step 21: damage x3,249.54
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_21"
 	size = large
@@ -2048,7 +2048,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 135925560 max = 244666008 }
+	damage = { min = 16247707 max = 29245872 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -2080,8 +2080,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 67962780
-						max = 220199407
+						min = 8123853
+						max = 26321285
 						rounded = yes
 					}
 					damage_ship = {
@@ -2108,7 +2108,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 2718511 max = 4077767 }
+	damage = { min = 324954 max = 487431 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -2136,7 +2136,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 22: x40,777.7
+# Step 22: damage x4,224.40
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_22"
 	size = large
@@ -2145,7 +2145,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 203888340 max = 366999012 }
+	damage = { min = 21122019 max = 38019633 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -2177,8 +2177,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 101944170
-						max = 330299110
+						min = 10561009
+						max = 34217670
 						rounded = yes
 					}
 					damage_ship = {
@@ -2205,7 +2205,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 4077767 max = 6116650 }
+	damage = { min = 422440 max = 633661 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -2233,7 +2233,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 23: x61,166.5
+# Step 23: damage x5,491.72
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_23"
 	size = large
@@ -2242,7 +2242,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 305832510 max = 550498517 }
+	damage = { min = 27458624 max = 49425523 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -2274,8 +2274,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 152916255
-						max = 495448666
+						min = 13729312
+						max = 44482971
 						rounded = yes
 					}
 					damage_ship = {
@@ -2302,7 +2302,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 6116650 max = 9174975 }
+	damage = { min = 549172 max = 823759 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80
@@ -2330,7 +2330,7 @@ weapon_component_template = {
 	}
 }
 
-# Step 24: x91,749.8
+# Step 24: damage x7,139.24
 weapon_component_template = {
 	key = "LFG_DRAKE_BREATH_24"
 	size = large
@@ -2339,7 +2339,7 @@ weapon_component_template = {
 	type = instant
 	prio_projectile = yes
 
-	damage = { min = 458748764 max = 825747776 }
+	damage = { min = 35696211 max = 64253180 }
 	windup = { min = 5 max = 15 }
 	total_fire_time = @lfg_drake_breath_cooldown
 	range = @lfg_drake_breath_range
@@ -2371,8 +2371,8 @@ weapon_component_template = {
 					}
 					set_variable_to_random_value = {
 						which = lfg_drake_splash_damage
-						min = 229374382
-						max = 743172998
+						min = 17848106
+						max = 57827862
 						rounded = yes
 					}
 					damage_ship = {
@@ -2399,7 +2399,7 @@ weapon_component_template = {
 	size = medium
 	entity = "invisible_turret_entity"
 	type = instant
-	damage = { min = 9174975 max = 13762463 }
+	damage = { min = 713924 max = 1070886 }
 	windup = { min = 2 max = 7 }
 	total_fire_time = 10
 	range = 80

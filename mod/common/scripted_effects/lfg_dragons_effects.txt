@@ -65,7 +65,7 @@ lfg_drake_starve = {
 }
 
 # Ship scope: an Elder Dragon becomes the Legendary Dragon (ap_lfg_legendary_dragons): same strength, the Legendary
-# Elder's design (its stage name), and it grows again, a step every 5 years from now, up to step 24.
+# Elder's design (its stage name), and it grows again, a step every 4 years from now, up to step 24.
 lfg_anoint_legendary_dragon = {
 	set_ship_flag = lfg_legendary_dragon
 	set_variable = { which = lfg_drake_months value = 0 }

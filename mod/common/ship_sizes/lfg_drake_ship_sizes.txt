@@ -34,12 +34,12 @@ lfg_drake_0 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 36
+			food = 42
 		}
 	}
 }
 
-# Step 1 (5 years): Baby Drake, durability 17,500, damage x1.8, model x1.15
+# Step 1 (4 years): Baby Drake, durability 17,500, damage x1.8, model x1.15
 lfg_drake_1 = {
 	entity = "lfg_drake_1_entity"
 	is_space_object = yes
@@ -72,12 +72,12 @@ lfg_drake_1 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 52
+			food = 60
 		}
 	}
 }
 
-# Step 2 (10 years): Baby Drake, durability 30,624, damage x3.1, model x1.32
+# Step 2 (8 years): Baby Drake, durability 30,624, damage x3.1, model x1.32
 lfg_drake_2 = {
 	entity = "lfg_drake_2_entity"
 	is_space_object = yes
@@ -110,12 +110,12 @@ lfg_drake_2 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 76
+			food = 87
 		}
 	}
 }
 
-# Step 3 (15 years): Baby Drake, durability 53,594, damage x5.4, model x1.52
+# Step 3 (12 years): Baby Drake, durability 53,594, damage x5.4, model x1.52
 lfg_drake_3 = {
 	entity = "lfg_drake_3_entity"
 	is_space_object = yes
@@ -148,12 +148,12 @@ lfg_drake_3 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 110
+			food = 127
 		}
 	}
 }
 
-# Step 4 (20 years): Juvenile Dragon, durability 93,790, damage x9.4, model x1.75
+# Step 4 (16 years): Juvenile Dragon, durability 93,790, damage x9.4, model x1.75
 lfg_drake_4 = {
 	entity = "lfg_drake_4_entity"
 	is_space_object = yes
@@ -186,12 +186,12 @@ lfg_drake_4 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 159
+			food = 184
 		}
 	}
 }
 
-# Step 5 (25 years): Juvenile Dragon, durability 164,131, damage x16.4, model x2.01
+# Step 5 (20 years): Juvenile Dragon, durability 164,131, damage x16.4, model x2.01
 lfg_drake_5 = {
 	entity = "lfg_drake_5_entity"
 	is_space_object = yes
@@ -224,12 +224,12 @@ lfg_drake_5 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 231
+			food = 267
 		}
 	}
 }
 
-# Step 6 (30 years): Juvenile Dragon, durability 287,230, damage x28.7, model x2.32
+# Step 6 (24 years): Juvenile Dragon, durability 287,230, damage x28.7, model x2.32
 lfg_drake_6 = {
 	entity = "lfg_drake_6_entity"
 	is_space_object = yes
@@ -262,12 +262,12 @@ lfg_drake_6 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 335
+			food = 386
 		}
 	}
 }
 
-# Step 7 (35 years): Dragon, durability 502,650, damage x50.3, model x2.66
+# Step 7 (28 years): Dragon, durability 502,650, damage x50.3, model x2.66
 lfg_drake_7 = {
 	entity = "lfg_drake_7_entity"
 	is_space_object = yes
@@ -300,12 +300,12 @@ lfg_drake_7 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 485
+			food = 560
 		}
 	}
 }
 
-# Step 8 (40 years): Dragon, durability 879,639, damage x88.0, model x3.06
+# Step 8 (32 years): Dragon, durability 879,639, damage x88.0, model x3.06
 lfg_drake_8 = {
 	entity = "lfg_drake_8_entity"
 	is_space_object = yes
@@ -338,12 +338,12 @@ lfg_drake_8 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 703
+			food = 813
 		}
 	}
 }
 
-# Step 9 (45 years): Dragon, durability 1,539,368, damage x153.9, model x3.52
+# Step 9 (36 years): Dragon, durability 1,539,368, damage x153.9, model x3.52
 lfg_drake_9 = {
 	entity = "lfg_drake_9_entity"
 	is_space_object = yes
@@ -376,12 +376,12 @@ lfg_drake_9 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 1020
+			food = 1178
 		}
 	}
 }
 
-# Step 10 (50 years): Dragon, durability 2,693,894, damage x269.4, model x4.05
+# Step 10 (40 years): Dragon, durability 2,693,894, damage x269.4, model x4.05
 lfg_drake_10 = {
 	entity = "lfg_drake_10_entity"
 	is_space_object = yes
@@ -414,12 +414,12 @@ lfg_drake_10 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 1479
+			food = 1708
 		}
 	}
 }
 
-# Step 11 (55 years): Elder Dragon, durability 4,714,314, damage x471.4, model x4.66
+# Step 11 (44 years): Elder Dragon, durability 4,714,314, damage x471.4, model x4.66
 lfg_drake_11 = {
 	entity = "lfg_drake_11_entity"
 	is_space_object = yes
@@ -452,12 +452,12 @@ lfg_drake_11 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 2145
+			food = 2477
 		}
 	}
 }
 
-# Step 11 (55 years): Legendary Dragon, durability 4,714,314, damage x471.4, model x4.66
+# Step 11 (44 years): Legendary Dragon, durability 4,714,314, damage x471.4, model x4.66
 lfg_drake_11_legendary = {
 	entity = "lfg_drake_11_legendary_entity"
 	is_space_object = yes
@@ -490,12 +490,12 @@ lfg_drake_11_legendary = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 2145
+			food = 2477
 		}
 	}
 }
 
-# Step 12 (60 years): Legendary Dragon, durability 7,343,450, damage x707.1, model x5.16
+# Step 12 (48 years): Legendary Dragon, durability 7,343,450, damage x707.1, model x5.16
 lfg_drake_12 = {
 	entity = "lfg_drake_12_entity"
 	is_space_object = yes
@@ -528,12 +528,12 @@ lfg_drake_12 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 2771
+			food = 3200
 		}
 	}
 }
 
-# Step 13 (65 years): Legendary Dragon, durability 11,423,146, damage x1,060.7, model x5.71
+# Step 13 (52 years): Legendary Dragon, durability 11,423,146, damage x1,060.7, model x5.71
 lfg_drake_13 = {
 	entity = "lfg_drake_13_entity"
 	is_space_object = yes
@@ -566,12 +566,12 @@ lfg_drake_13 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 3580
+			food = 4135
 		}
 	}
 }
 
-# Step 14 (70 years): Legendary Dragon, durability 17,746,673, damage x1,591.1, model x6.32
+# Step 14 (56 years): Legendary Dragon, durability 17,746,673, damage x1,591.1, model x6.32
 lfg_drake_14 = {
 	entity = "lfg_drake_14_entity"
 	is_space_object = yes
@@ -604,12 +604,12 @@ lfg_drake_14 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 4625
+			food = 5342
 		}
 	}
 }
 
-# Step 15 (75 years): Legendary Dragon, durability 27,537,942, damage x2,386.6, model x6.99
+# Step 15 (60 years): Legendary Dragon, durability 27,537,942, damage x2,386.6, model x6.99
 lfg_drake_15 = {
 	entity = "lfg_drake_15_entity"
 	is_space_object = yes
@@ -642,12 +642,12 @@ lfg_drake_15 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 5976
+			food = 6902
 		}
 	}
 }
 
-# Step 16 (80 years): Legendary Dragon, durability 42,683,810, damage x3,579.9, model x7.74
+# Step 16 (64 years): Legendary Dragon, durability 42,683,810, damage x3,579.9, model x7.74
 lfg_drake_16 = {
 	entity = "lfg_drake_16_entity"
 	is_space_object = yes
@@ -680,12 +680,12 @@ lfg_drake_16 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 7721
+			food = 8918
 		}
 	}
 }
 
-# Step 17 (85 years): Legendary Dragon, durability 66,091,061, damage x5,369.9, model x8.56
+# Step 17 (68 years): Legendary Dragon, durability 66,091,061, damage x5,369.9, model x8.56
 lfg_drake_17 = {
 	entity = "lfg_drake_17_entity"
 	is_space_object = yes
@@ -718,12 +718,12 @@ lfg_drake_17 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 9975
+			food = 11521
 		}
 	}
 }
 
-# Step 18 (90 years): Legendary Dragon, durability 102,234,609, damage x8,054.8, model x9.47
+# Step 18 (72 years): Legendary Dragon, durability 102,234,609, damage x8,054.8, model x9.47
 lfg_drake_18 = {
 	entity = "lfg_drake_18_entity"
 	is_space_object = yes
@@ -756,12 +756,12 @@ lfg_drake_18 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 12888
+			food = 14886
 		}
 	}
 }
 
-# Step 19 (95 years): Legendary Dragon, durability 157,998,941, damage x12,082.3, model x10.48
+# Step 19 (76 years): Legendary Dragon, durability 157,998,941, damage x12,082.3, model x10.48
 lfg_drake_19 = {
 	entity = "lfg_drake_19_entity"
 	is_space_object = yes
@@ -794,12 +794,12 @@ lfg_drake_19 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 16651
+			food = 19232
 		}
 	}
 }
 
-# Step 20 (100 years): Legendary Dragon, durability 243,968,954, damage x18,123.4, model x11.60
+# Step 20 (80 years): Legendary Dragon, durability 243,968,954, damage x18,123.4, model x11.60
 lfg_drake_20 = {
 	entity = "lfg_drake_20_entity"
 	is_space_object = yes
@@ -832,12 +832,12 @@ lfg_drake_20 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 21514
+			food = 24848
 		}
 	}
 }
 
-# Step 21 (105 years): Legendary Dragon, durability 376,409,242, damage x27,185.1, model x12.84
+# Step 21 (84 years): Legendary Dragon, durability 376,409,242, damage x27,185.1, model x12.84
 lfg_drake_21 = {
 	entity = "lfg_drake_21_entity"
 	is_space_object = yes
@@ -870,12 +870,12 @@ lfg_drake_21 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 27796
+			food = 32104
 		}
 	}
 }
 
-# Step 22 (110 years): Legendary Dragon, durability 580,297,583, damage x40,777.7, model x14.21
+# Step 22 (88 years): Legendary Dragon, durability 580,297,583, damage x40,777.7, model x14.21
 lfg_drake_22 = {
 	entity = "lfg_drake_22_entity"
 	is_space_object = yes
@@ -908,12 +908,12 @@ lfg_drake_22 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 35912
+			food = 41478
 		}
 	}
 }
 
-# Step 23 (115 years): Legendary Dragon, durability 893,971,951, damage x61,166.5, model x15.73
+# Step 23 (92 years): Legendary Dragon, durability 893,971,951, damage x61,166.5, model x15.73
 lfg_drake_23 = {
 	entity = "lfg_drake_23_entity"
 	is_space_object = yes
@@ -946,12 +946,12 @@ lfg_drake_23 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 46398
+			food = 53590
 		}
 	}
 }
 
-# Step 24 (120 years): Legendary Dragon, durability 1,376,246,294, damage x91,749.8, model x17.40
+# Step 24 (96 years): Legendary Dragon, durability 1,376,246,294, damage x91,749.8, model x17.40
 lfg_drake_24 = {
 	entity = "lfg_drake_24_entity"
 	is_space_object = yes
@@ -984,7 +984,7 @@ lfg_drake_24 = {
 	resources = {
 		category = ships
 		upkeep = {
-			food = 59946
+			food = 69238
 		}
 	}
 }

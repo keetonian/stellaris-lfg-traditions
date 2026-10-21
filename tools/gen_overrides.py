@@ -1103,11 +1103,11 @@ def generate_nanite_entities(game: Path, giga: Path) -> str:
 
 # ---- Here Be Dragons: growing drakes (ap_lfg_legendary_dragons; events/lfg_dragons_events.txt) ----
 # The origin's Baby Drakes (vanilla space_dragon_origin_baby) become our step 0 (lfg_drake_0) at once, then grow one step
-# every 5 years: durability (hull, plus
+# every 4 years (DRAKE_STEP_YEARS; lfg_dragons.1 counts 48 months): durability (hull, plus
 # armour from the Juvenile stage) and weapon damage x1.75 per step up to the Elder (step 11, about a Gigastructural
 # Planetcraft), then, for the one Legendary Dragon, x1.5 per step up to step 24 (~917M, under the engine's ~2 billion).
 # The model grows by the 1/4 power of that (capped Legendary: ~1,070 long, a systemcraft +12%). Food upkeep x1.45 per
-# step to the Elder (2,144), then x1.292 per Legendary step (~60,000 at step 24); 25% under the first numbers. One ship size, section, design and
+# step to the Elder (2,477), then x1.292 per Legendary step (~69,000 at step 24). One ship size, section, design and
 # model per step, copied from vanilla's baby drake; the designs carry the Dragon's Breath (LFG_DRAKE_BREATH,
 # common/component_templates/lfg_components.txt) and six of vanilla's twelve smaller weapons (DRAKE_KEEP_SLOTS).
 DRAKE_SOURCES = {
@@ -1120,10 +1120,14 @@ DRAKE_SOURCES = {
 }
 DRAKE_BABY_SIZE = "space_dragon_origin_baby"
 DRAKE_ELDER_STEP = 11
+DRAKE_STEP_YEARS = 4  # keep in step with lfg_dragons.1 (48 months)
 DRAKE_MAX_STEP = 24
 DRAKE_BASE_HP = 10000
 DRAKE_GROWTH, DRAKE_LEGEND_GROWTH = 1.75, 1.5
-DRAKE_FOOD, DRAKE_FOOD_GROWTH, DRAKE_LEGEND_FOOD_GROWTH = 36, 1.45, 1.292  # 48 at first, -25% at every step
+# Weapon damage has its own curve: half the durability growth up to the Elder, then x1.3 a Legendary step (durability:
+# x1.5), so a capped Legendary hits ~x7,100 a baby's breath, not x91,750.
+DRAKE_DAMAGE_FACTOR, DRAKE_LEGEND_DAMAGE_GROWTH = 0.5, 1.3
+DRAKE_FOOD, DRAKE_FOOD_GROWTH, DRAKE_LEGEND_FOOD_GROWTH = 41.58, 1.45, 1.292  # 48 at first, -25%, then +10%, then +5% at every step
 DRAKE_BREATH = "LFG_DRAKE_BREATH"
 # Vanilla weapon slots kept beside the breath: four claw / wing strikes (our LFG_DRAKE_CLAW_<step>: vanilla's
 # DRAGON_SECONDARY_WEAPON_ICE, 100-150 every ~15 days, times the step's growth) and two point defence
@@ -1234,7 +1238,8 @@ def drake_stats(n: int) -> dict:
     total = DRAKE_BASE_HP * growth
     armor, shield = total * DRAKE_ARMOR_SHARE, total * DRAKE_SHIELD_SHARE
     hull = (total - armor - shield) * (1 + DRAKE_LEGEND_HULL_BONUS * max(0, n - DRAKE_ELDER_STEP) / (DRAKE_MAX_STEP - DRAKE_ELDER_STEP))
-    return {"growth": growth, "hp": round(hull), "armor": round(armor), "shield": round(shield),
+    damage = DRAKE_DAMAGE_FACTOR * DRAKE_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_DAMAGE_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
+    return {"growth": growth, "damage": damage, "hp": round(hull), "armor": round(armor), "shield": round(shield),
             "food": round(food), "length": growth ** 0.25}
 
 
@@ -1296,7 +1301,7 @@ def generate_drakes(game: Path) -> dict[str, str]:
         s = drake_stats(n)
         stage = drake_stage(n, legendary)
         sizes.append(f"""
-# Step {n} ({n * 5} years): {stage}, durability {s['hp'] + s['armor'] + s['shield']:,}, damage x{s['growth']:,.1f}, model x{s['length']:.2f}
+# Step {n} ({n * DRAKE_STEP_YEARS} years): {stage}, durability {s['hp'] + s['armor'] + s['shield']:,}, damage x{s['growth']:,.1f}, model x{s['length']:.2f}
 {key} = {{
 	entity = "{key}_entity"
 	is_space_object = yes
@@ -1357,10 +1362,10 @@ def generate_drakes(game: Path) -> dict[str, str]:
         entities.append("\n" + root + "\n" + body)
         loc += [(key, stage), (f"{key}_plural", stage + "s"), (drake_design(key), stage)]
         if not legendary or n != DRAKE_ELDER_STEP:  # the Legendary Elder shares step 11's weapons
-            g = s["growth"]
+            g = s["damage"]
             bkey = f"{DRAKE_BREATH}_{n}"
             radius = DRAKE_SPLASH_RADIUS + DRAKE_LEGEND_SPLASH_RADIUS_STEP * max(0, n - DRAKE_ELDER_STEP)
-            weapons.append(f"\n# Step {n}: x{g:,.1f}\n" + DRAKE_BREATH_TEMPLATE.format(
+            weapons.append(f"\n# Step {n}: damage x{g:,.2f}\n" + DRAKE_BREATH_TEMPLATE.format(
                 key=bkey, dmin=round(DRAKE_BREATH_DAMAGE[0] * g), dmax=round(DRAKE_BREATH_DAMAGE[1] * g),
                 smin=round(DRAKE_BREATH_SPLASH[0] * g), smax=round(DRAKE_BREATH_SPLASH[1] * g), radius=radius))
             stat_lines = (f"\tdamage = {{ min = {round(dmin * g)} max = {round(dmax * g)} }}\n"

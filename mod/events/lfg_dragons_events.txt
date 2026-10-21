@@ -4,7 +4,7 @@ namespace = lfg_dragons
 # Monthly (on_monthly_pulse_country), Here Be Dragons empires owning drakes:
 # - a new vanilla Baby Drake becomes our step 0 (lfg_drake_0, with the Dragon's Breath and food upkeep);
 # - a drake without flag lfg_drake_design_v2 is refitted once onto its step's design (older saves);
-# - every drake ages a month (ship variable lfg_drake_months) and grows a step every 60 months (lfg_drake_step), up to
+# - every drake ages a month (ship variable lfg_drake_months) and grows a step every 48 months (lfg_drake_step), up to
 #   the Elder (step 11), or, for the Legendary Dragon (ship flag lfg_legendary_dragon), up to step 24;
 # - a drake that becomes an Elder while we have the perk and no Legendary Dragon: popup lfg_dragons.4;
 # - with no food stored and a food deficit, every drake not fed in the last year eats pops (lfg_drake_starve).
@@ -39,7 +39,7 @@ country_event = {
 				change_variable = { which = lfg_drake_months value = 1 }
 				if = {
 					limit = {
-						check_variable = { which = lfg_drake_months value >= 60 }
+						check_variable = { which = lfg_drake_months value >= 48 }
 						OR = {
 							check_variable = { which = lfg_drake_step value < 11 }
 							AND = {
