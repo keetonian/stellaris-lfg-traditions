@@ -760,7 +760,7 @@ another ship size (it keeps its name), so the replacement is only a safety net.
   36M–64M, splash 18M–58M, ~0.95M a day against hull, overtaking the Mothership's ~0.38M around step 21).
 - **Durability** ×1.75 a step to the **Elder Dragon** (step 11, 44 years: 4.7M ≈ a Gigastructural Planetcraft),
   where growth stops; the **Legendary Dragon** goes on ×1.5 a step to step 24 (96 years: 917M, under the ~2 billion the
-  game's numbers can hold). Durability: 50% hull, 48% armour, 2% shields, and the Legendary's hull grows extra, ×1 → ×2
+  game's numbers can hold). Durability: 50% hull, 48% armour, 0.2% shields (cut 90% from 2%), and the Legendary's hull grows extra, ×1 → ×2
 from step 11 to 24 (`DRAKE_LEGEND_HULL_BONUS`: ~917M hull at full growth); plus 25% damage reduction
   (`ship_damage_reduction_mult`) and +25% hull and armour regeneration. The design's four Dragonscale Armor plates and
   auto-repair (vanilla's baby design) come on top.

@@ -1135,7 +1135,7 @@ DRAKE_BREATH = "LFG_DRAKE_BREATH"
 DRAKE_KEEP_SLOTS = {"SECONDARY_GUN_01", "SECONDARY_GUN_02", "SECONDARY_GUN_03", "SECONDARY_GUN_04",
                     "TERTIARY_GUN_01", "TERTIARY_GUN_02"}
 # Durability split at every step: mostly hull and armour, a token shield; plus damage reduction and living regeneration.
-DRAKE_ARMOR_SHARE, DRAKE_SHIELD_SHARE = 0.48, 0.02
+DRAKE_HULL_SHARE, DRAKE_ARMOR_SHARE, DRAKE_SHIELD_SHARE = 0.50, 0.48, 0.002  # shields: 2% at first, -90%
 DRAKE_DAMAGE_REDUCTION = 0.25
 DRAKE_REGEN = 0.25  # hull and armour regeneration (% of max), at the top of vanilla's range
 # The Legendary Dragon's hull grows extra: x1 at the Elder's step, rising evenly to x2 at step 24 (~917M hull, under the
@@ -1237,7 +1237,7 @@ def drake_stats(n: int) -> dict:
     food = DRAKE_FOOD * DRAKE_FOOD_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_FOOD_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
     total = DRAKE_BASE_HP * growth
     armor, shield = total * DRAKE_ARMOR_SHARE, total * DRAKE_SHIELD_SHARE
-    hull = (total - armor - shield) * (1 + DRAKE_LEGEND_HULL_BONUS * max(0, n - DRAKE_ELDER_STEP) / (DRAKE_MAX_STEP - DRAKE_ELDER_STEP))
+    hull = total * DRAKE_HULL_SHARE * (1 + DRAKE_LEGEND_HULL_BONUS * max(0, n - DRAKE_ELDER_STEP) / (DRAKE_MAX_STEP - DRAKE_ELDER_STEP))
     damage = DRAKE_DAMAGE_FACTOR * DRAKE_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_DAMAGE_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
     return {"growth": growth, "damage": damage, "hp": round(hull), "armor": round(armor), "shield": round(shield),
             "food": round(food), "length": growth ** 0.25}
