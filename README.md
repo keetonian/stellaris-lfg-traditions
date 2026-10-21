@@ -312,7 +312,9 @@ bodies**, all with their deposits cleared. Anomalies can spawn; Gigastructural's
 
 **Nanite Consensus** (`building_lfg_nanite_consensus_1` → `_4`, this origin only): unity from thinking nanites, **any
 number per planet**, in capital or unity slots. Built for minerals and nanites, upkeep in energy and nanites; upgrades
-three times. Per tier (`@lfg_nanite_consensus_*`):
+three times. **Each tier needs its society tech** (`tech_lfg_nanite_consensus_1` → `_4`: Nanite Consensus, Consensus
+Arrays, Lattices, Cores; tiers 1-4, each needing the last; the first offered at game start by `lfg_nanite_forge.1`).
+Per tier (`@lfg_nanite_consensus_*`):
 
 | Tier | Unity | Cost (minerals / nanites) | Upkeep (energy / nanites) |
 |---|---|---|---|
@@ -326,16 +328,30 @@ grey goo, with vanilla's unity symbol and 1-4 tier pips. **Replicators:** with t
 **+0.5 nanites** upkeep (per job, i.e. per 100 pops working it; generated override of vanilla's `replicator` job,
 `common/pop_jobs/zz_lfg_job_overrides.txt`, `@lfg_nanite_forge_replicator_upkeep`).
 
-**Nanite Automation Hub** (`building_lfg_nanite_automation`, this origin only, one per planet, in an energy, mining or
+**Nanite Automation Hub** (`building_lfg_nanite_automation`, this origin only, needs the engineering tech **Nanite Automation** (`tech_lfg_nanite_automation`, tier 1, offered at game start), one per planet, in an energy, mining or
 farming specialization like vanilla's automation buildings): automates **50%** of Technician, Miner and Farmer jobs (and
 their drone versions). Costs 600 minerals + 100 nanites; upkeep **30 nanites per resource district** on the planet
 (`value:lfg_resource_districts`: energy, mining and food districts, including habitat, ring world, machine, hive and ark
 versions). Automated jobs still pay vanilla's automation upkeep. On a **Nanite World** (`pc_nanotech`) it costs **half**
 (build cost and upkeep; `@lfg_nanite_world_discount`), like the Cognition Core. It can stack with vanilla's own automation buildings.
 
+## Buildings: Nanite Freight (Nanite Forge origin)
+
+`building_lfg_nanite_freight_1` → `_2` → `_3` (**Relay**, **Network**, **Lattice**): this origin only, **one per
+planet**, in a city or capital slot (trade category). Pays nanites for trade, to offset planetary logistics costs:
+
+| Level | Nanites upkeep | Trade | Build cost (minerals / nanites) | Tech (engineering) |
+|---|---|---|---|---|
+| Relay | 10 | 150 | 300 / 50 | `tech_lfg_nanite_freight_1` (tier 1; offered as a research option at game start by `lfg_nanite_forge.1`) |
+| Network | 20 | 300 | 500 / 100 | `tech_lfg_nanite_freight_2` (tier 2) |
+| Lattice | 30 | 450 | 800 / 200 | `tech_lfg_nanite_freight_3` (tier 3) |
+
+Tunables: `@lfg_nanite_freight_*`. Icons (`art/make_building_icons.py`): vanilla's Commercial Zone, Forum and Megaplex in
+nanite colours with the nanite and trade symbols; the techs show the Relay.
+
 ## Building: Nanite Cognition Core (Nanotech)
 
-`building_lfg_nanite_cognition_core`: any empire that has **finished Nanotech**; one per planet, in a city or capital
+`building_lfg_nanite_cognition_core`: any empire that has **finished Nanotech** and researched **Nanite Cognition** (`tech_lfg_nanite_cognition_core`, society tier 3, drawn once Nanotech is finished); one per planet, in a city or capital
 slot. Automates **50% of every specialist and complex drone job** on the planet (vanilla and Gigastructural, ~220 jobs).
 Costs 1,000 alloys + 500 nanites; upkeep **500 nanites per district** (both **halved on a Nanite World**) (any kind, `value:lfg_all_districts`) a month. The job list is the generated static modifier
 `lfg_nanite_specialist_automation` (`tools/gen_overrides.py`, one tooltip line), which the monthly `lfg_nanite_forge.5`
@@ -393,7 +409,7 @@ pulse again after **1,000 days** (timed planet flag). Then **a coin for every bo
 station on a harvested deposit) **grows one harvester step** (`lfg_forge_harvester_step`; with vanilla's harvester it may
 take steps 8-12 too, steps 13-16 stay the Ancient harvester's); tails, or a world that didn't grow (no station, or already
 at its last step), **12 months of that body's harvested nanites** (the in-game text only says it's based on deposit size) (`value:lfg_pulse_deposit_nanites` × `@lfg_nanite_pulse_payout_mult`:
-its harvester deposits counted with `count_deposits`, at the doubled amounts; nothing without one), times the empire's
+its harvester deposits counted with `count_deposits` (`type =`; a `limit` there is ignored, which once paid out every deposit at every size), at the doubled amounts; nothing without one), times the empire's
 mining station nanite multiplier (1 + `station_gatherers_produces_mult`, `station_gatherers_nanites_produces_mult`,
 `stations_produces_mult`, `stations_nanites_produces_mult`, `country_nanites_produces_mult`, read with
 `export_modifier_to_variable`). Modifiers on a single station or planet aren't included. So early pulses cost

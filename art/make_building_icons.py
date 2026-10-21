@@ -9,6 +9,8 @@ art/make_component_icons.py:
   Nanites symbol and rising motes;
 - Nanite Cognition Core / Overmind Core (78x78): vanilla's Nanite Transmuter in gunmetal with a glowing cyan core and the
   Nanites symbol; the Overmind brighter, crowned by a glowing ring, more motes.
+- Nanite Freight Relay / Network / Lattice (78x78): vanilla's Commercial Zone, Forum and Megaplex in gunmetal with
+  cyan glow, the nanite and trade symbols side by side (the Relay also on a tile as the Nanite Freight techs' icon; the Automation Hub, Cognition Core and Consensus tiers likewise for theirs);
 - Ancient Nanite Harvester (58x58, a starbase module icon): vanilla's nanite harvester module in ancient bronze with a
   cyan nanite glow.
 
@@ -112,6 +114,16 @@ def cognition(tier: int) -> Image.Image:
     return im
 
 
+def freight(tier: int) -> Image.Image:
+    src = ("building_commercial_zone", "building_commercial_forum", "building_commercial_megaplex")[tier - 1]
+    im = nanite_metal(clear(load(GAME / f"gfx/interface/icons/buildings/{src}.dds"), (46, 0, 77, 22)),
+                      lambda r, g, b: max(cyan_seams(r, g, b), warm_parts(r, g, b), max(0, b - r - 20) / 120))
+    im.alpha_composite(symbol(GAME / "gfx/interface/icons/resources/nanites.dds", 15), (46, 3))
+    im.alpha_composite(symbol(GAME / "gfx/interface/icons/resources/trade.dds", 15), (61, 3))
+    motes(im, (20, 40), (-14, 20), 6 + 4 * tier, 70 + tier)
+    return im
+
+
 def ancient_harvester() -> Image.Image:
     src = load(GAME / "gfx/interface/icons/modules/sb_nanite_harvester.dds")
     out = src.copy()
@@ -142,6 +154,17 @@ if __name__ == "__main__":
         converter(t).save(BUILDINGS / f"lfg_nanotensile_converter_{t}.dds")
     ancient_harvester().save(MODULES / "lfg_ancient_nanite_harvester.dds")
     automation_hub().save(BUILDINGS / "lfg_nanite_automation.dds")
+    for t in (1, 2, 3):
+        freight(t).save(BUILDINGS / f"lfg_nanite_freight_{t}.dds")
+    tech = Image.new("RGBA", (52, 52), (8, 20, 30, 255))  # its techs' icon: the Relay on a dark tile
+    tech.alpha_composite(freight(1).resize((52, 52), Image.LANCZOS))
+    tech.save(Path("mod/gfx/interface/icons/technologies/tech_lfg_nanite_freight.dds"))
+    techs = [("tech_lfg_nanite_automation", automation_hub()), ("tech_lfg_nanite_cognition_core", cognition(1))]
+    techs += [(f"tech_lfg_nanite_consensus_{t}", consensus(t)) for t in range(1, 5)]
+    for name, icon in techs:
+        tech = Image.new("RGBA", (52, 52), (8, 20, 30, 255))  # the building on a dark tile
+        tech.alpha_composite(icon.resize((52, 52), Image.LANCZOS))
+        tech.save(Path(f"mod/gfx/interface/icons/technologies/{name}.dds"))
     cognition(1).save(BUILDINGS / "lfg_nanite_cognition_core.dds")
     cognition(2).save(BUILDINGS / "lfg_nanite_overmind_core.dds")
     print("wrote building icons")

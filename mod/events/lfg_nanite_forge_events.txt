@@ -30,6 +30,9 @@ country_event = {
 				}
 			}
 		}
+		add_research_option = tech_lfg_nanite_freight_1	# Nanite Freight Relay
+		add_research_option = tech_lfg_nanite_automation	# Nanite Automation Hub
+		add_research_option = tech_lfg_nanite_consensus_1	# Nanite Consensus Node
 		give_technology = { tech = tech_starbase_2 message = no }
 		give_technology = { tech = tech_starbase_3 message = no }
 		capital_scope.solar_system = {

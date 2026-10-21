@@ -159,3 +159,151 @@ tech_lfg_cognition_core_2 = {
 		factor = 0
 	}
 }
+
+# Nanite Forge origin: the Nanite Freight buildings' three levels (building_lfg_nanite_freight_1-3). The first is
+# offered at game start (lfg_nanite_forge.1); the others are drawn like normal techs.
+tech_lfg_nanite_freight_1 = {
+	icon = tech_lfg_nanite_freight
+	cost = @tier1cost1
+	area = engineering
+	tier = 1
+	category = { industry }
+	weight = @tier1weight1
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+	ai_weight = {
+		factor = 2
+	}
+}
+
+tech_lfg_nanite_freight_2 = {
+	icon = tech_lfg_nanite_freight
+	cost = @tier2cost1
+	area = engineering
+	tier = 2
+	category = { industry }
+	prerequisites = { "tech_lfg_nanite_freight_1" }
+	weight = @tier2weight1
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+	ai_weight = {
+		factor = 2
+	}
+}
+
+tech_lfg_nanite_freight_3 = {
+	icon = tech_lfg_nanite_freight
+	cost = @tier3cost1
+	area = engineering
+	tier = 3
+	category = { industry }
+	prerequisites = { "tech_lfg_nanite_freight_2" }
+	weight = @tier3weight1
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+	ai_weight = {
+		factor = 2
+	}
+}
+
+# Nanite Forge origin: the Nanite Automation Hub (building_lfg_nanite_automation). Offered at game start
+# (lfg_nanite_forge.1), like Nanite Freight.
+tech_lfg_nanite_automation = {
+	icon = tech_lfg_nanite_automation
+	cost = @tier1cost1
+	area = engineering
+	tier = 1
+	category = { industry }
+	weight = @tier1weight1
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+	ai_weight = {
+		factor = 2
+	}
+}
+
+# Finishing Nanotech: the Nanite Cognition Core (building_lfg_nanite_cognition_core); its upgrade needs
+# tech_lfg_cognition_core_2 (Mothership perk).
+tech_lfg_nanite_cognition_core = {
+	icon = tech_lfg_nanite_cognition_core
+	cost = @tier3cost1
+	area = society
+	tier = 3
+	category = { statecraft }
+	weight = @tier3weight1
+	potential = {
+		has_tradition = tr_nanotech_finish
+	}
+	ai_weight = {
+		factor = 2
+	}
+}
+
+# Nanite Forge origin: the Nanite Consensus buildings' four tiers (building_lfg_nanite_consensus_1-4). The first is
+# offered at game start (lfg_nanite_forge.1); the others are drawn like normal techs.
+tech_lfg_nanite_consensus_1 = {
+	icon = tech_lfg_nanite_consensus_1
+	cost = @tier1cost1
+	area = society
+	tier = 1
+	category = { statecraft }
+	weight = @tier1weight1
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+	ai_weight = {
+		factor = 2
+	}
+}
+
+tech_lfg_nanite_consensus_2 = {
+	icon = tech_lfg_nanite_consensus_2
+	cost = @tier2cost1
+	area = society
+	tier = 2
+	category = { statecraft }
+	prerequisites = { "tech_lfg_nanite_consensus_1" }
+	weight = @tier2weight1
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+	ai_weight = {
+		factor = 2
+	}
+}
+
+tech_lfg_nanite_consensus_3 = {
+	icon = tech_lfg_nanite_consensus_3
+	cost = @tier3cost1
+	area = society
+	tier = 3
+	category = { statecraft }
+	prerequisites = { "tech_lfg_nanite_consensus_2" }
+	weight = @tier3weight1
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+	ai_weight = {
+		factor = 2
+	}
+}
+
+tech_lfg_nanite_consensus_4 = {
+	icon = tech_lfg_nanite_consensus_4
+	cost = @tier4cost1
+	area = society
+	tier = 4
+	category = { statecraft }
+	prerequisites = { "tech_lfg_nanite_consensus_3" }
+	weight = @tier4weight1
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+	ai_weight = {
+		factor = 2
+	}
+}

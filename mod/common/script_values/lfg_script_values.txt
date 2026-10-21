@@ -511,7 +511,7 @@ lfg_pulse_deposit_nanites = {
 	complex_trigger_modifier = {
 		trigger = count_deposits
 		parameters = {
-			limit = { is_deposit_type = d_nanite_harvester_deposit }
+			type = d_nanite_harvester_deposit	# count_deposits filters by type (it ignores limit)
 		}
 		mult = 0.2
 		mode = add
@@ -519,7 +519,7 @@ lfg_pulse_deposit_nanites = {
 	complex_trigger_modifier = {
 		trigger = count_deposits
 		parameters = {
-			limit = { is_deposit_type = d_nanite_harvester_deposit_regular }
+			type = d_nanite_harvester_deposit_regular	# count_deposits filters by type (it ignores limit)
 		}
 		mult = 3.2
 		mode = add
@@ -527,7 +527,7 @@ lfg_pulse_deposit_nanites = {
 	complex_trigger_modifier = {
 		trigger = count_deposits
 		parameters = {
-			limit = { is_deposit_type = d_nanite_harvester_deposit_large }
+			type = d_nanite_harvester_deposit_large	# count_deposits filters by type (it ignores limit)
 		}
 		mult = 51.2
 		mode = add
@@ -535,7 +535,7 @@ lfg_pulse_deposit_nanites = {
 	complex_trigger_modifier = {
 		trigger = count_deposits
 		parameters = {
-			limit = { is_deposit_type = d_lfg_nanite_harvester_deposit_huge }
+			type = d_lfg_nanite_harvester_deposit_huge	# count_deposits filters by type (it ignores limit)
 		}
 		mult = 819.2
 		mode = add
@@ -543,7 +543,7 @@ lfg_pulse_deposit_nanites = {
 	complex_trigger_modifier = {
 		trigger = count_deposits
 		parameters = {
-			limit = { is_deposit_type = d_lfg_nanite_harvester_deposit_vast }
+			type = d_lfg_nanite_harvester_deposit_vast	# count_deposits filters by type (it ignores limit)
 		}
 		mult = 3276.8
 		mode = add

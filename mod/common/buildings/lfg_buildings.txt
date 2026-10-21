@@ -23,6 +23,8 @@ building_lfg_nanite_automation = {
 		owner = { has_origin = origin_lfg_nanite_forge }
 	}
 
+	prerequisites = { "tech_lfg_nanite_automation" }
+
 	planet_modifier = {
 		job_technician_automated_workforce_mult = @lfg_nanite_hub_automation
 		job_technician_drone_automated_workforce_mult = @lfg_nanite_hub_automation
@@ -70,6 +72,8 @@ building_lfg_nanite_cognition_core = {
 		exists = owner
 		owner = { has_tradition = tr_nanotech_finish }
 	}
+
+	prerequisites = { "tech_lfg_nanite_cognition_core" }
 
 	upgrades = {
 		building_lfg_nanite_cognition_core_2
@@ -224,7 +228,8 @@ building_lfg_nanotensile_converter_2 = {
 
 # Nanite Forge origin: the Nanite Consensus line, unity from thinking nanites. Any number per planet, in capital or unity
 # slots. Built for minerals and nanites; upkeep in energy and nanites. Upgrades three times: 10 -> 20 -> 40 -> 60 unity
-# (@lfg_nanite_consensus_*). Icons: art/make_building_icons.py.
+# (@lfg_nanite_consensus_*); each tier needs its society tech (tech_lfg_nanite_consensus_1-4, the first offered at game
+# start by lfg_nanite_forge.1). Icons: art/make_building_icons.py.
 building_lfg_nanite_consensus_1 = {
 	base_buildtime = @b2_time
 	category = unity
@@ -239,6 +244,8 @@ building_lfg_nanite_consensus_1 = {
 		exists = owner
 		owner = { has_origin = origin_lfg_nanite_forge }
 	}
+
+	prerequisites = { "tech_lfg_nanite_consensus_1" }
 
 	upgrades = {
 		building_lfg_nanite_consensus_2
@@ -276,6 +283,8 @@ building_lfg_nanite_consensus_2 = {
 		owner = { has_origin = origin_lfg_nanite_forge }
 	}
 
+	prerequisites = { "tech_lfg_nanite_consensus_2" }
+
 	upgrades = {
 		building_lfg_nanite_consensus_3
 	}
@@ -311,6 +320,8 @@ building_lfg_nanite_consensus_3 = {
 		exists = owner
 		owner = { has_origin = origin_lfg_nanite_forge }
 	}
+
+	prerequisites = { "tech_lfg_nanite_consensus_3" }
 
 	upgrades = {
 		building_lfg_nanite_consensus_4
@@ -348,6 +359,8 @@ building_lfg_nanite_consensus_4 = {
 		owner = { has_origin = origin_lfg_nanite_forge }
 	}
 
+	prerequisites = { "tech_lfg_nanite_consensus_4" }
+
 	resources = {
 		category = planet_buildings
 		cost = {
@@ -360,6 +373,121 @@ building_lfg_nanite_consensus_4 = {
 		}
 		produces = {
 			unity = @lfg_nanite_consensus_4_unity
+		}
+	}
+}
+
+# Nanite Forge origin: the Nanite Freight line, nanites for trade to offset planetary logistics. One per planet, in a
+# city or capital slot; each level needs its engineering tech (tech_lfg_nanite_freight_1-3; the first is offered at game
+# start by lfg_nanite_forge.1). Upkeep / trade: @lfg_nanite_freight_*. Icons: art/make_building_icons.py.
+building_lfg_nanite_freight_1 = {
+	base_buildtime = @b1_time
+	planet_limit = 1
+	category = trade
+	icon = lfg_nanite_freight_1
+
+	building_sets = {
+		government
+		urban
+		trade
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	prerequisites = { "tech_lfg_nanite_freight_1" }
+
+	upgrades = {
+		building_lfg_nanite_freight_2
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = @lfg_nanite_freight_1_minerals
+			nanites = @lfg_nanite_freight_1_nanites
+		}
+		upkeep = {
+			nanites = @lfg_nanite_freight_1_upkeep
+		}
+		produces = {
+			trade = @lfg_nanite_freight_1_trade
+		}
+	}
+}
+
+building_lfg_nanite_freight_2 = {
+	base_buildtime = @b2_time
+	can_build = no
+	planet_limit = 1
+	category = trade
+	icon = lfg_nanite_freight_2
+
+	building_sets = {
+		government
+		urban
+		trade
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	prerequisites = { "tech_lfg_nanite_freight_2" }
+
+	upgrades = {
+		building_lfg_nanite_freight_3
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = @lfg_nanite_freight_2_minerals
+			nanites = @lfg_nanite_freight_2_nanites
+		}
+		upkeep = {
+			nanites = @lfg_nanite_freight_2_upkeep
+		}
+		produces = {
+			trade = @lfg_nanite_freight_2_trade
+		}
+	}
+}
+
+building_lfg_nanite_freight_3 = {
+	base_buildtime = @b3_time
+	can_build = no
+	planet_limit = 1
+	category = trade
+	icon = lfg_nanite_freight_3
+
+	building_sets = {
+		government
+		urban
+		trade
+	}
+
+	potential = {
+		exists = owner
+		owner = { has_origin = origin_lfg_nanite_forge }
+	}
+
+	prerequisites = { "tech_lfg_nanite_freight_3" }
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = @lfg_nanite_freight_3_minerals
+			nanites = @lfg_nanite_freight_3_nanites
+		}
+		upkeep = {
+			nanites = @lfg_nanite_freight_3_upkeep
+		}
+		produces = {
+			trade = @lfg_nanite_freight_3_trade
 		}
 	}
 }

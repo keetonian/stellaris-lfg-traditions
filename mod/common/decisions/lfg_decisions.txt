@@ -180,15 +180,17 @@ decision_lfg_nanite_pulse = {
 					set_planet_flag = lfg_pulse_pays
 					random_list = {
 						50 = {
+							# Can grow: a mining station on a harvested deposit, i.e. any harvester step reached (vanilla's steps replace
+							# their flag, so check them all) or the first deposit already there.
+							lfg_count_nanite_steps = { VAR = lfg_pulse_before }
 							if = {
 								limit = {
 									has_mining_station = yes
 									OR = {
 										has_deposit = d_nanite_harvester_deposit
-										has_planet_flag = nanites_doubled_1
+										check_variable = { which = lfg_pulse_before value > 0 }
 									}
 								}
-								lfg_count_nanite_steps = { VAR = lfg_pulse_before }
 								lfg_forge_harvester_step = yes
 								lfg_count_nanite_steps = { VAR = lfg_pulse_after }
 								if = {
@@ -196,9 +198,9 @@ decision_lfg_nanite_pulse = {
 									remove_planet_flag = lfg_pulse_pays
 									event_target:lfg_pulse_country = { change_variable = { which = lfg_pulse_planets value = 1 } }
 								}
-								clear_variable = lfg_pulse_before
 								clear_variable = lfg_pulse_after
 							}
+							clear_variable = lfg_pulse_before
 						}
 						50 = { }
 					}
