@@ -303,12 +303,13 @@ vanilla's 5-year cycle skip any system with it (e.g. a Nomad nanotech waystation
 `lfg_requires_no_ancient_harvester`). Elsewhere you can build vanilla harvesters once you've adopted Nanotech, as usual.
 
 **No extra habitable worlds:** the origin replaces vanilla's guaranteed-colony neighbours (the game setting) with **two
-science neighbours** (`lfg_nanite_forge_science_init`, 1-3 jumps away), and neither has a habitable world. Each is built for Gigastructural's three
+science neighbours** (`lfg_nanite_forge_science_society_init`, 1-2 jumps away, and `_physics_init`, 1-3 jumps), and neither has a habitable world. Each is built for Gigastructural's three
 research kilostructures, which each sit on a host world and put research deposits on every other "science candidate"
 (`giga_is_science_candidate`: not a star, not colonizable, no mining deposit) in the system. It has the three hosts (a
 **frozen** world for the Macroengineering Test Site → engineering, a **gas giant** for the Atmosphere Shredder → physics,
 a **toxic** world for the Orbital Artificial Ecosystem → society) and 25-27 bare rocks, moons and asteroids: **28-30
-bodies**, all with their deposits cleared. Anomalies can spawn; Gigastructural's kilostructures need them researched first.
+bodies**, all with their deposits cleared, except one inner asteroid each: a **4 society** deposit (`d_society_4`) in the
+first, a **3 physics** deposit (`d_physics_3`) in the second (both for research stations). Anomalies can spawn; Gigastructural's kilostructures need them researched first.
 
 **Nanite Consensus** (`building_lfg_nanite_consensus_1` → `_4`, this origin only): unity from thinking nanites, **any
 number per planet**, in capital or unity slots. Built for minerals and nanites, upkeep in energy and nanites; upgrades
