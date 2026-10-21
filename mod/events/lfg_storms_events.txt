@@ -251,3 +251,39 @@ country_event = {
 		}
 	}
 }
+
+# Monthly (on_monthly_pulse_country) and when Storm Logs / Storm Harvest are adopted: the Tempest tree's counts - storms
+# weathered (value:lfg_storms_weathered, max 20) and storm exploitation buildings (value:lfg_storm_buildings, max 15) -
+# kept in country modifiers lfg_tempest_per_storm / _per_storm_building at multiplier = each count (lfg_stationcraft_sync,
+# re-added only when a count changes). Without the traditions, one last run removes them (country flag lfg_tempest_active).
+country_event = {
+	id = lfg_storms.8
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_tradition = tr_lfg_tempest_storm_logs
+			has_country_flag = lfg_tempest_active
+		}
+	}
+
+	immediate = {
+		set_variable = { which = lfg_tempest_storms_now value = 0 }
+		set_variable = { which = lfg_tempest_buildings_now value = 0 }
+		if = {
+			limit = { has_tradition = tr_lfg_tempest_storm_logs }
+			set_country_flag = lfg_tempest_active
+			set_variable = { which = lfg_tempest_storms_now value = value:lfg_storms_weathered }
+		}
+		else = {
+			remove_country_flag = lfg_tempest_active
+		}
+		if = {
+			limit = { has_tradition = tr_lfg_tempest_storm_harvest }
+			set_variable = { which = lfg_tempest_buildings_now value = value:lfg_storm_buildings }
+		}
+		lfg_stationcraft_sync = { MODIFIER = lfg_tempest_per_storm COUNT = lfg_tempest_storms }
+		lfg_stationcraft_sync = { MODIFIER = lfg_tempest_per_storm_building COUNT = lfg_tempest_buildings }
+	}
+}

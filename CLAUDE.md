@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 9 tradition trees, 7 council agenda definitions (6 agendas), the Evolutionary
+Stellaris 4.5 gameplay mod (requires Gigastructural Engineering 4.5): 10 tradition trees, 8 council agenda definitions (7 agendas), the Evolutionary
 Predators edict `lfg_species_experimentation`, the ascension perk
 `ap_lfg_curated_progress` + 27 generated Shelve edicts, and generated overrides of 1 situation +
 1 district (district_resort) + 8 resort zones + 12 city zones (Prison Industry) + 3 buildings (holomuseums) + 24 repeatable techs + Giga's megastructure-capacity inline script
@@ -25,7 +25,8 @@ Python 3.9+ stdlib only. Always run with `-I`.
 
 ```
 mod/                                  # exactly what ships
-  common/tradition_categories/00_<tree name>_lfg.txt         # 8 trees, one per file (sort order, see below)
+  common/tradition_categories/00_<tree name>_lfg.txt         # 10 trees, one per file (sort order, see below)
+  interface/lfg_tradition_trees.gui                          # our own tree layouts (tree_lfg_vortex: Tempest); art/make_tempest_art.py draws its arrows
   common/traditions/lfg_traditions.txt                       # adopt/finish + 5 traditions per tree
   common/governments/civics/lfg_civics.txt                   # civic_lfg_applied_biosciences (Biologists: society -> some physics/engineering)
   common/megastructures/lfg_megastructures.txt               # Swarmforge (Nanite Armada perk): lfg_swarmforge_0 -> _ready (a shipyard)
@@ -98,7 +99,7 @@ mod/                                  # exactly what ships
   common/solar_system_initializers/lfg_system_initializers.txt # lfg_lone_tide_init, lfg_emberfall_init (usage_odds = 0)
   common/script_values/lfg_world_types_values.txt            # GENERATED lfg_count_world_types (colonizable planet classes; cached monthly by lfg_lineage.1)
   events/00_lfg_event_overrides.txt                          # GENERATED (machine_age.4400: Virtuality block); 00_ = loads first
-  common/council_agendas/lfg_council_agendas.txt             # 7 agendas, unlocked by tree finishers
+  common/council_agendas/lfg_council_agendas.txt             # 8 agenda definitions, unlocked by trees
   common/static_modifiers/lfg_static_modifiers.txt           # agenda finish modifiers + per-planet tradition modifiers
   common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1 + lfg_shellworlders.1, anomaly_success -> lfg_xenoarchaeology.1,
                                                              #   colony transfer/ownerless -> lfg_planet.1
@@ -194,6 +195,9 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
    With `tree_21_11`, slot 4 needs `possible = { has_tradition = <slot1> has_tradition = <slot2> }` and slot 5 needs `<slot3>`.
    Penitence uses `tree_111_11` (two chains: 2 needs 1, 3 needs 2, 5 needs 4). No vanilla layout draws "three into one".
    Other layouts: see `interface/topbar_traditions_view.gui` in the game, and add their prerequisite shapes to `TEMPLATE_PREREQS` in `check_mod.py`.
+   Our own layouts are top-level `containerWindowType`s named `tree_lfg_*` (slots `<name>_tradition_<n>`, 44x44) in
+   `interface/lfg_tradition_trees.gui`; the checker picks them up from there (`tree_templates`). Tempest's vortex
+   (`tree_lfg_vortex`) is a chain; its arrow image positions are in `art/make_tempest_art.py` and must match the gui.
 3. `interface/lfg_traditions.gfx`: `GFX_tradition_hex_bg_<cat>`, `GFX_tradition_category_bg_<cat>`,
    `GFX_tradition_category_tile_<cat>` (`corneredTileSpriteType`, `borderSize = { x = 140 y = 140 }`),
    `GFX_tradition_category_icon_<cat>`, and `GFX_tr_lfg_<tradition>` for the 5 traditions. Point them at vanilla art under

@@ -32,3 +32,7 @@
  agenda_lfg_feast_of_plenty_finish:0 "$council_agenda_agenda_lfg_feast_of_plenty_name$"
  agenda_lfg_feast_of_plenty_finish_desc:0 "$council_agenda_agenda_lfg_feast_of_plenty_desc$"
  agenda_lfg_feast_of_plenty_finish_tt:0 "Doubles §YBumper Crops§! (Abundance finisher): another §G+1%§! organic pop growth speed for every §Y1,000§! £food£ Food produced per month."
+ council_agenda_agenda_lfg_storm_season_name:0 "Storm Season"
+ council_agenda_agenda_lfg_storm_season_desc:0 "A decade of chasing the storms: our scientists fly into every front and our fields call them closer. Not everyone enjoys the weather."
+ agenda_lfg_storm_season_finish:0 "$council_agenda_agenda_lfg_storm_season_name$"
+ agenda_lfg_storm_season_finish_desc:0 "$council_agenda_agenda_lfg_storm_season_desc$"

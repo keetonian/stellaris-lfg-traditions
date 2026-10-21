@@ -5,6 +5,7 @@ spriteTypes = {
 	spriteType = { name = "GFX_council_agenda_icon_agenda_lfg_grand_expedition" textureFile = "gfx/interface/icons/agenda_icons/agenda_lfg_grand_expedition.dds" }
 	spriteType = { name = "GFX_council_agenda_icon_agenda_lfg_harvest_tithe" textureFile = "gfx/interface/icons/agenda_icons/agenda_lfg_harvest_tithe.dds" }
 	spriteType = { name = "GFX_council_agenda_icon_agenda_lfg_gala_season" textureFile = "gfx/interface/icons/agenda_icons/agenda_lfg_gala_season.dds" }
+	spriteType = { name = "GFX_council_agenda_icon_agenda_lfg_storm_season" textureFile = "gfx/interface/icons/agenda_icons/agenda_lfg_storm_season.dds" }	# art/make_tempest_art.py
 	spriteType = { name = "GFX_council_agenda_icon_agenda_lfg_grand_tour_season" textureFile = "gfx/interface/icons/agenda_icons/agenda_lfg_grand_tour_season.dds" }
 	spriteType = { name = "GFX_council_agenda_icon_agenda_lfg_feast_of_plenty" textureFile = "gfx/interface/icons/agenda_icons/agenda_lfg_feast_of_plenty.dds" }
 }

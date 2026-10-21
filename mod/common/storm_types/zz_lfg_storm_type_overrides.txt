@@ -22,6 +22,31 @@ particle_storm = {
 
 	spawn_weight = 1
 	description = particle_storm_lore_description
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_eye_walkers }
+		}
+		planet_jobs_produces_mult = @lfg_tempest_storm_jobs
+		planet_stability_add = @lfg_tempest_storm_stability
+	}
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_finish }
+		}
+		planet_building_build_speed_mult = @lfg_tempest_storm_build_speed
+	}
+	triggered_fleet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }
+		}
+		modifier = {
+			ship_fire_rate_mult = @lfg_tempest_storm_fire_rate
+			ship_speed_mult = @lfg_tempest_storm_speed
+		}
+	}
 
 	### positive effects ###
 
@@ -99,6 +124,31 @@ gravity_storm = {
 
 	spawn_weight = 1
 	description = gravity_storm_lore_description
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_eye_walkers }
+		}
+		planet_jobs_produces_mult = @lfg_tempest_storm_jobs
+		planet_stability_add = @lfg_tempest_storm_stability
+	}
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_finish }
+		}
+		planet_building_build_speed_mult = @lfg_tempest_storm_build_speed
+	}
+	triggered_fleet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }
+		}
+		modifier = {
+			ship_fire_rate_mult = @lfg_tempest_storm_fire_rate
+			ship_speed_mult = @lfg_tempest_storm_speed
+		}
+	}
 
 	### positive effects ###
 
@@ -230,6 +280,31 @@ magnetic_storm = {
 
 	spawn_weight = 1
 	description = magnetic_storm_lore_description
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_eye_walkers }
+		}
+		planet_jobs_produces_mult = @lfg_tempest_storm_jobs
+		planet_stability_add = @lfg_tempest_storm_stability
+	}
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_finish }
+		}
+		planet_building_build_speed_mult = @lfg_tempest_storm_build_speed
+	}
+	triggered_fleet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }
+		}
+		modifier = {
+			ship_fire_rate_mult = @lfg_tempest_storm_fire_rate
+			ship_speed_mult = @lfg_tempest_storm_speed
+		}
+	}
 
 	### positive effects ###
 
@@ -352,6 +427,31 @@ celestial_storm = {
 
 	spawn_weight = 1
 	description = celestial_storm_lore_description
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_eye_walkers }
+		}
+		planet_jobs_produces_mult = @lfg_tempest_storm_jobs
+		planet_stability_add = @lfg_tempest_storm_stability
+	}
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_finish }
+		}
+		planet_building_build_speed_mult = @lfg_tempest_storm_build_speed
+	}
+	triggered_fleet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }
+		}
+		modifier = {
+			ship_fire_rate_mult = @lfg_tempest_storm_fire_rate
+			ship_speed_mult = @lfg_tempest_storm_speed
+		}
+	}
 
 
 	### positive effects ###
@@ -468,6 +568,31 @@ shroud_storm = {
 		}
 	}
 	description = shroud_storm_lore_description
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_eye_walkers }
+		}
+		planet_jobs_produces_mult = @lfg_tempest_storm_jobs
+		planet_stability_add = @lfg_tempest_storm_stability
+	}
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_finish }
+		}
+		planet_building_build_speed_mult = @lfg_tempest_storm_build_speed
+	}
+	triggered_fleet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }
+		}
+		modifier = {
+			ship_fire_rate_mult = @lfg_tempest_storm_fire_rate
+			ship_speed_mult = @lfg_tempest_storm_speed
+		}
+	}
 
 	### positive effects ###
 
@@ -601,6 +726,31 @@ nexus_storm = {
 	triggered_planet_modifier = {
 		potential = {
 			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_eye_walkers }
+		}
+		planet_jobs_produces_mult = @lfg_tempest_storm_jobs
+		planet_stability_add = @lfg_tempest_storm_stability
+	}
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_finish }
+		}
+		planet_building_build_speed_mult = @lfg_tempest_storm_build_speed
+	}
+	triggered_fleet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }
+		}
+		modifier = {
+			ship_fire_rate_mult = @lfg_tempest_storm_fire_rate
+			ship_speed_mult = @lfg_tempest_storm_speed
+		}
+	}
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
 			owner? = { lfg_nexus_storm_bonuses = yes }
 		}
 		planet_stability_add = @lfg_lodestar_storm_stability
@@ -713,4 +863,221 @@ nexus_storm = {
 	show_notification = {
 		NOT = { has_country_flag = is_nexus_spawner }
 	}
+}
+
+# from common/storm_types/00_storm_types.txt
+electric_storm = {
+	inline_script = "cosmic_storms/BaseModifier"
+
+	inline_script = {
+		script = "cosmic_storms/StormConfig"
+		MIN_RADIUS = 25
+		MAX_RADIUS = 50
+		MIN_RANGE = value:storm_range_min
+		MAX_RANGE = value:storm_range_max
+		STORM_SPEED = 0.02
+		ACTIVATION_PERIOD_IN_MONTHS = 12
+		MONTHLY_ADDED_DEVASTATION = @cosmic_storm_base_monthly_devastation
+	}
+	affect_shield_regen = yes
+
+	spawn_weight = 1
+	description = electric_storm_lore_description
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_eye_walkers }
+		}
+		planet_jobs_produces_mult = @lfg_tempest_storm_jobs
+		planet_stability_add = @lfg_tempest_storm_stability
+	}
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_finish }
+		}
+		planet_building_build_speed_mult = @lfg_tempest_storm_build_speed
+	}
+	triggered_fleet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }
+		}
+		modifier = {
+			ship_fire_rate_mult = @lfg_tempest_storm_fire_rate
+			ship_speed_mult = @lfg_tempest_storm_speed
+		}
+	}
+
+	### positive effects ###
+
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+		}
+		planet_jobs_produces_mult = 0.25
+	}
+
+	triggered_fleet_modifier = {
+		potential = {
+			always = yes
+		}
+		modifier = {
+			ship_speed_mult = 1
+		}
+	}
+
+	### negative effects ###
+
+	triggered_fleet_modifier = {
+		potential = {
+			always = yes
+		}
+		modifier = {
+			custom_tooltip = electric_storm_fleet_tt
+		}
+	}
+
+	###
+
+	on_start = {
+		every_system_within_storm = {
+			added_to_storm_base_effect = yes
+			electric_storm_add = yes
+		}
+	}
+
+	on_moved = {
+		every_system_added_to_storm = {
+			added_to_storm_base_effect = yes
+			electric_storm_add = yes
+		}
+
+		every_system_removed_from_storm = {
+			removed_from_storm_base_effect = yes
+			electric_storm_remove = yes
+		}
+	}
+
+	on_finished = {
+		every_system_within_storm = {
+			removed_from_storm_base_effect = yes
+			electric_storm_remove = yes
+		}
+	}
+
+	cosmic_storm_texture_path = "gfx/map/storms/NebulaOpacity.dds"
+	cosmic_storm_texture_color_path = "gfx/map/storms/electric_storm_color.dds"
+	cosmic_storm_event_sprite = "GFX_electric_storm"
+	icon = GFX_planetview_storm_electric_modifier_frame
+
+	cosmic_storm_texture_lightning_paths = {
+		"gfx/map/storms/lightning/lightning_big_storm_01.dds"
+		"gfx/map/storms/lightning/lightning_big_storm_02.dds"
+		"gfx/map/storms/lightning/lightning_mid_storm_01.dds"
+		"gfx/map/storms/lightning/lightning_mid_storm_02.dds"
+	}
+
+	cosmic_storm_galaxy_lightning_time = 5.0
+	cosmic_storm_galaxy_max_opacity = 0.4
+}
+
+# from common/storm_types/00_storm_types.txt
+solar_storm = {
+	inline_script = "cosmic_storms/BaseModifier"
+
+	inline_script = {
+		script = "cosmic_storms/StormConfig"
+		MIN_RADIUS = 25
+		MAX_RADIUS = 50
+		MIN_RANGE = value:storm_range_min
+		MAX_RANGE = value:storm_range_max
+		STORM_SPEED = 0.02
+		ACTIVATION_PERIOD_IN_MONTHS = 12
+		MONTHLY_ADDED_DEVASTATION = @cosmic_storm_base_monthly_devastation
+	}
+
+	spawn_weight = 1
+	description = solar_storm_lore_description
+	# LFG: added by stellaris-lfg-traditions
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_eye_walkers }
+		}
+		planet_jobs_produces_mult = @lfg_tempest_storm_jobs
+		planet_stability_add = @lfg_tempest_storm_stability
+	}
+	triggered_planet_modifier = {
+		potential = {
+			is_colony = yes
+			owner? = { has_tradition = tr_lfg_tempest_finish }
+		}
+		planet_building_build_speed_mult = @lfg_tempest_storm_build_speed
+	}
+	triggered_fleet_modifier = {
+		potential = {
+			owner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }
+		}
+		modifier = {
+			ship_fire_rate_mult = @lfg_tempest_storm_fire_rate
+			ship_speed_mult = @lfg_tempest_storm_speed
+		}
+	}
+	custom_tooltip = "solar_storm_tt"
+
+	### positive effects ###
+
+	triggered_system_modifier = {
+		potential = {
+			always = yes
+		}
+		station_gatherers_produces_mult = 2
+		station_researchers_produces_mult = 2
+	}
+
+	### negative effects ###
+
+	###
+
+	on_start = {
+		every_system_within_storm = {
+			added_to_storm_base_effect = yes
+			solar_storm_add = yes
+		}
+	}
+
+	on_finished = {
+		every_system_within_storm = {
+			removed_from_storm_base_effect = yes
+			solar_storm_remove = yes
+		}
+	}
+
+	on_moved = {
+		every_system_added_to_storm = {
+			added_to_storm_base_effect = yes
+			solar_storm_add = yes
+		}
+
+		every_system_removed_from_storm = {
+			removed_from_storm_base_effect = yes
+			solar_storm_remove = yes
+		}
+	}
+
+	cosmic_storm_texture_path = "gfx/map/storms/NebulaOpacity.dds"
+	cosmic_storm_texture_color_path = "gfx/map/storms/solar_storm_color.dds"
+	cosmic_storm_event_sprite = "GFX_solar_storm"
+	icon = GFX_planetview_storm_solar_modifier_frame
+
+	cosmic_storm_texture_lightning_paths = {
+		"gfx/map/storms/lightning/lightning_small_storm_01.dds"
+		"gfx/map/storms/lightning/lightning_small_storm_02.dds"
+		"gfx/map/storms/lightning/lightning_mid_storm_01.dds"
+		"gfx/map/storms/lightning/lightning_mid_storm_02.dds"
+	}
+
+	cosmic_storm_galaxy_lightning_time = 10.0
+	cosmic_storm_galaxy_max_opacity = 0.4
 }

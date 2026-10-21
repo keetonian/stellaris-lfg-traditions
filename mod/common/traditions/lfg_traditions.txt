@@ -822,3 +822,89 @@ tr_lfg_stationcraft_self_repairing_frames = {
 	}
 	ai_weight = { factor = 1000 }
 }
+
+#####################################################################
+# TEMPEST - hook: cosmic storms as an asset. Bonuses inside any storm over our space (generated storm_types override,
+# TEMPEST_STORM_BONUSES), research per storm weathered and unity per storm exploitation building (country modifiers
+# lfg_tempest_per_storm / _per_storm_building at multiplier = the count, kept by lfg_storms.8 monthly, as Stationcraft
+# does: a triggered_modifier with mult = value:... didn't update in game). Vortex layout (tree_lfg_vortex): a chain,
+# each slot requiring the one before.
+#####################################################################
+
+tr_lfg_tempest_adopt = {
+	unlocks_agenda = agenda_lfg_storm_season
+	modifier = {
+		country_storm_location_intel_add = 1
+	}
+}
+
+# Hook: inside any cosmic storm, our colonies +50% infrastructure build speed (storm_types override).
+tr_lfg_tempest_finish = {
+	custom_tooltip = tr_lfg_tempest_finish_tt
+	modifier = {
+		ascension_perks_add = 1
+	}
+}
+
+# Hook: +1% research speed per storm weathered (unique storms encountered), up to +20%.
+tr_lfg_tempest_storm_logs = {
+	custom_tooltip = tr_lfg_tempest_storm_logs_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_storms.8 } }
+	}
+	modifier = {
+		country_storm_movement_intel_add = 1
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: inside any cosmic storm, our colonies +10% resources from jobs and +5 stability (storm_types override).
+tr_lfg_tempest_eye_walkers = {
+	possible = {
+		has_tradition = tr_lfg_tempest_storm_logs
+	}
+	custom_tooltip = tr_lfg_tempest_eye_walkers_tt
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: +2% unity per storm exploitation building, up to +30%; their upkeep -50%.
+tr_lfg_tempest_storm_harvest = {
+	possible = {
+		has_tradition = tr_lfg_tempest_eye_walkers
+	}
+	custom_tooltip = tr_lfg_tempest_storm_harvest_tt
+	on_enabled = {
+		hidden_effect = { country_event = { id = lfg_storms.8 } }
+	}
+	modifier = {
+		planet_buildings_storm_tech_upkeep_mult = -0.5
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Steering: stronger storm attraction and repulsion fields, better storm intel.
+tr_lfg_tempest_lightning_rods = {
+	possible = {
+		has_tradition = tr_lfg_tempest_storm_harvest
+	}
+	modifier = {
+		country_storm_attraction_influence_add = 0.25
+		country_storm_repulsion_influence_add = 0.25
+		country_storm_location_intel_add = 1
+		country_storm_movement_intel_add = 1
+	}
+	ai_weight = { factor = 1000 }
+}
+
+# Hook: inside any cosmic storm, our fleets +20% fire rate and +25% speed (storm_types override); storms harm our ships
+# half as much.
+tr_lfg_tempest_ride_the_lightning = {
+	possible = {
+		has_tradition = tr_lfg_tempest_lightning_rods
+	}
+	custom_tooltip = tr_lfg_tempest_ride_the_lightning_tt
+	modifier = {
+		storm_ship_hull_breaker_mult = -0.5
+	}
+	ai_weight = { factor = 1000 }
+}

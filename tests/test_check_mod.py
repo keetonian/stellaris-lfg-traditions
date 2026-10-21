@@ -47,8 +47,8 @@ class RealModTests(unittest.TestCase):
 
     def test_mod_contents(self):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
-        self.assertEqual(len(mod.top("common/tradition_categories")), 9)
-        self.assertEqual(len(mod.top("common/traditions")), 9 * 7)
+        self.assertEqual(len(mod.top("common/tradition_categories")), 10)
+        self.assertEqual(len(mod.top("common/traditions")), 10 * 7)
         self.assertEqual(set(mod.top("common/governments/civics")), {"civic_lfg_applied_biosciences", "origin_lfg_nanite_forge"})
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_xenoarchaeology.1", "lfg_xenoarchaeology.2", "lfg_xenoarchaeology.3",
@@ -60,10 +60,10 @@ class RealModTests(unittest.TestCase):
                                                             "lfg_nanite_forge.4", "lfg_nanite_forge.6",
                                                             "lfg_lineage.1", "lfg_stationcraft.1", "lfg_mothership.1", "lfg_mothership.2",
                                                             "lfg_mothership.3", "lfg_mothership.4", "lfg_mothership.5",
-                                                            "lfg_mothership.6", "lfg_mothership.7", "lfg_mothership.8", "lfg_mothership.9", "lfg_mothership.10", "lfg_storms.1", "lfg_storms.2", "lfg_storms.4", "lfg_storms.5", "lfg_storms.6", "lfg_storms.7",
+                                                            "lfg_mothership.6", "lfg_mothership.7", "lfg_mothership.8", "lfg_mothership.9", "lfg_mothership.10", "lfg_storms.1", "lfg_storms.2", "lfg_storms.4", "lfg_storms.5", "lfg_storms.6", "lfg_storms.7", "lfg_storms.8",
                                                             "lfg_mothership.11", "lfg_mothership.12", "lfg_mothership.13", "lfg_mothership.14",
                                                             "lfg_nanite_pulse.1"})
-        self.assertEqual(len(mod.top("common/council_agendas")), 7)
+        self.assertEqual(len(mod.top("common/council_agendas")), 8)
         self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress", "ap_lfg_massed_assault", "ap_lfg_nanite_armada", "ap_lfg_mothership", "ap_lfg_storm_sovereignty"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
         self.assertEqual(len(shelve), 24 + 3)  # one per repeatable tech + megastructure capacity per research area

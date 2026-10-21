@@ -39,7 +39,8 @@ KNOWN_TREE_TEMPLATES = {
 }
 # Required prerequisites per layout: slot index -> slots it must require (1-based).
 TEMPLATE_PREREQS = {"tree_21_11": {4: {1, 2}, 5: {3}}, "tree_111_11": {2: {1}, 3: {2}, 5: {4}},
-                    "tree_12_12": {3: {1}, 4: {1, 2}, 5: {2}}}
+                    "tree_12_12": {3: {1}, 4: {1, 2}, 5: {2}},
+                    "tree_lfg_vortex": {2: {1}, 3: {2}, 4: {3}, 5: {4}}}  # ours: interface/lfg_tradition_trees.gui
 
 ALLOWED_FILES = [
     r"descriptor\.mod",
@@ -101,6 +102,9 @@ ALLOWED_FILES = [
     r"gfx/interface/icons/decisions/decision_lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
     r"gfx/interface/icons/ascension_perks/ap_lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
     r"gfx/interface/icons/modules/lfg_[^/]+\.dds",  # art/make_building_icons.py
+    r"interface/lfg_[^/]+\.gui",  # our tradition tree layouts
+    r"gfx/interface/traditions/(lfg_|tradition_hex_bg_lfg_)[^/]+\.dds",  # art/make_tempest_art.py
+    r"gfx/interface/tiles/tradition_category_tile_lfg_[^/]+\.dds",  # art/make_tempest_art.py
     r"gfx/event_pictures/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py
     r"gfx/models/ships/lfg_[^/]+\.asset",  # generated: nanite hulls' look
     r"localisation/english/[^/]+_l_english\.yml",
@@ -778,12 +782,16 @@ def check_overrides(mod: Mod, game: Optional[Path], giga: Optional[Path], r: Rep
             r.fail(f"{out_rel} is stale: run python3 -I tools/gen_overrides.py and review the diff")
 
 
-def tree_templates(game: Optional[Path], r: Report) -> Set[str]:
+def tree_templates(game: Optional[Path], r: Report, mod_dir: Optional[Path] = None) -> Set[str]:
+    """Vanilla's layouts plus our own (tree_lfg_*, top-level in mod/interface/lfg_*.gui)."""
+    ours: Set[str] = set()
+    for gui in sorted(mod_dir.glob("interface/lfg_*.gui")) if mod_dir else []:
+        ours |= set(re.findall(r'^\t\tname = "(tree_lfg_[a-z0-9_]+)"', gui.read_text(encoding="utf-8-sig"), re.M))
     gui = game / "interface/topbar_traditions_view.gui" if game else None
     if gui is None or not gui.exists():
         r.skip("tree templates from the installed game (using the built-in 4.5 list)")
-        return KNOWN_TREE_TEMPLATES
-    return set(re.findall(r'name = "(tree_[0-9_]+)"', gui.read_text(encoding="utf-8-sig", errors="replace")))
+        return KNOWN_TREE_TEMPLATES | ours
+    return set(re.findall(r'name = "(tree_[0-9_]+)"', gui.read_text(encoding="utf-8-sig", errors="replace"))) | ours
 
 
 def run(mod_dir: Path, game: Optional[Path], giga: Optional[Path], modifiers_log: Optional[Path],
@@ -795,7 +803,7 @@ def run(mod_dir: Path, game: Optional[Path], giga: Optional[Path], modifiers_log
     check_layout(mod, r)
     check_descriptor(mod, r)
     loc = load_loc(mod, r)
-    check_traditions(mod, loc, tree_templates(game, r), r)
+    check_traditions(mod, loc, tree_templates(game, r, mod_dir), r)
     check_tree_files(mod, loc, r)
     check_civics(mod, loc, r)
     check_loc_references(mod, loc, r)

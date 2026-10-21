@@ -1,23 +1,22 @@
 [h1]LFG Traditions[/h1]
 
-Nine new tradition trees, six council agendas, five ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Ten new tradition trees, seven council agendas, five ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
 [h3]Megaforge[/h3]
 [i]Megastructures over the normal economy.[/i] Needs Mega-Engineering or Supertensile Materials.
 [list]
-[*]Works with supertensiles on or off.
-[*][b]Grand Works Priority:[/b] megastructures and all infrastructure build faster, but infrastructure costs 30% more.
+[*][b]Grand Works Priority:[/b] megastructures and infrastructure build faster; infrastructure costs 30% more.
 [*][b]Monument Economy:[/b] +10 monthly supertensiles and a policy: per megastructure, favour megastructure or job output.
 [*]Finisher: +1 Megaconstruction Logistics Hub (or +1 megastructure under construction).
 [/list]
 
 [h3]Shellworlders[/h3]
-[i]Life on artificial worlds.[/i] Artificial-world origins (including Gigastructural's), or after Orbital Habitats / Ring World.
+[i]Life on artificial worlds.[/i] Artificial-world origins, or after Orbital Habitats / Ring World.
 [list]
-[*]On your artificial worlds (habitats, rings, Alderson slices, Gigastructural worlds): more efficient jobs, less housing usage, more stability, less crime.
-[*][b]Arc Neighbours:[/b] artificial worlds work better for each other one in their system.
+[*]Artificial worlds: more efficient jobs, less housing use, more stability, less crime.
+[*][b]Arc Neighbours:[/b] artificial worlds boost each other in a shared system.
 [*][b]Downsides:[/b] slower growth and assembly; [b]Closed Ecology[/b] unsettles natural worlds.
 [*][b]Arc Foundries:[/b] +5% megastructure build speed for every artificial world you own.
 [*]Finisher: +1 max districts on artificial worlds.
@@ -26,10 +25,10 @@ Nine new tradition trees, six council agendas, five ascension perks, an origin, 
 [h3]Xenoarchaeology[/h3]
 [i]Scientists hunt anomalies and relics.[/i] Needs Ancient Relics.
 [list]
-[*]More anomalies, faster anomaly research and surveys.
+[*]More anomalies; faster anomaly research and surveys.
 [*][b]Anomaly Studies:[/b] +0.25% research speed per anomaly researched; each yields minor artifacts.
 [*][b]Reverse Engineering:[/b] +5% research speed per relic you own.
-[*][b]Commissioned Digs:[/b] spend 2,000 minor artifacts on a new dig site, anomaly or astral rift in your borders.
+[*][b]Commissioned Digs:[/b] buy a dig site, anomaly or astral rift with minor artifacts.
 [*][b]Downside:[/b] scientists cost more.
 [/list]
 
@@ -45,18 +44,18 @@ Nine new tradition trees, six council agendas, five ascension perks, an origin, 
 [list]
 [*][b]Strength Through Hardship:[/b] negative traits speed up pop growth.
 [*][b]Honed Strengths:[/b] every positive trait makes jobs more efficient.
-[*]Ship speed per species, society research per genetic variant of your main species, and diplomatic weight per planet type you live on.
+[*]Ship speed per species, research per genetic variant, diplomatic weight per planet type.
 [*]Cheaper species modification; the finisher gives an extra trait point and pick.
 [/list]
 
 [h3]Penitence[/h3]
 [i]Your penal colony runs the economy.[/i] Regular empires, needs Penal Colonies.
 [list]
-[*]Harder-working, better-guarded camps; less crime; the unemployed are shipped to the colony.
+[*]Harder-working, better-guarded camps; less crime; the unemployed are sent to the colony.
 [*][b]Idle Hands:[/b] colony jobs +1% per 100 unemployed, but they riot and die off.
 [*][b]Prison Industry:[/b] +50% jobs from the colony's district specializations.
-[*]Finisher: supertensile and bulk matter Prison District specializations; a decision to expand the cell blocks.
-[*][b]Downsides:[/b] workers everywhere are less happy, and Chain Gangs make the colony miserable.
+[*]Finisher: new Prison District specializations and a cell block expansion decision.
+[*][b]Downsides:[/b] unhappier workers everywhere; Chain Gangs make the colony miserable.
 [/list]
 
 [h3]Abundance[/h3]
@@ -66,14 +65,14 @@ Nine new tradition trees, six council agendas, five ascension perks, an origin, 
 [*][b]Tithe Barns:[/b] full granaries bring stability and growth; empty ones, unrest.
 [*]Up to +20% unity from stored food.
 [*][b]Grain Reserves:[/b] huge food storage, but your people eat three times as much.
-[*]Food surpluses buy influence; farmers gain political power.
-[*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth for every 1,000 food produced per month.
+[*]Food surpluses buy influence; farmers gain clout.
+[*]Finisher, [b]Bumper Crops:[/b] +1% organic pop growth per 1,000 monthly food.
 [/list]
 
 [h3]Broadcast[/h3]
 [i]Entertainment for the whole galaxy.[/i] Non-gestalt empires.
 [list]
-[*]+1% trade for every empire you have contact with (up to +20%).
+[*]+1% trade per empire contacted (up to +20%).
 [*][b]Holo-Museums:[/b] holomuseums grant their base bonuses again.
 [*][b]Ratings War:[/b] less war exhaustion and more entertainer output while at war.
 [*][b]Syndication Deals:[/b] entertainers earn trade per commercial pact.
@@ -81,7 +80,7 @@ Nine new tradition trees, six council agendas, five ascension perks, an origin, 
 [/list]
 
 [h3]Tourism[/h3]
-[i]Your resort world as the jewel of the galaxy.[/i] Regular empires, needs Resort Colonies. Works for Pleasure Worlds too.
+[i]Your resort world is the galaxy's jewel.[/i] Regular empires, needs Resort Colonies. Works for Pleasure Worlds too.
 [list]
 [*][b]Hospitality Academies:[/b] +50% jobs from Accommodation Districts and resort specializations.
 [*][b]Package Holidays:[/b] unity and happiness grow with your Resort Workers.
@@ -90,15 +89,24 @@ Nine new tradition trees, six council agendas, five ascension perks, an origin, 
 [*]Finisher: +10% job efficiency on the resort world.
 [/list]
 
+[h3]Tempest[/h3]
+[i]Storms are an asset.[/i] Cosmic Storms DLC, after a first storm.
+[list]
+[*]Colonies and fleets grow stronger inside any storm; colonies build faster there.
+[*]Research per storm weathered; unity per storm building.
+[*]A new vortex-shaped tree.
+[/list]
+
 [h2]Council agendas[/h2]
-Six new agendas (Galactic Paragons DLC), each lasting 10 years after launch:
+Seven agendas (Galactic Paragons DLC), each lasting 10 years:
 [list]
 [*][b]The Great Project[/b] (Megaforge): much faster, cheaper megastructures (and more supertensiles); workers produce less.
-[*][b]Grand Expedition[/b] (Xenoarchaeology): +50% anomaly research, survey and excavation speed; less research.
+[*][b]Grand Expedition[/b] (Xenoarchaeology): +50% anomaly, survey and dig speed; less research.
 [*][b]Feast of Plenty[/b] (Granary): doubles Bumper Crops' growth.
 [*][b]The Harvest Tithe[/b] (Granary): food into influence and unity, then more food.
 [*][b]Gala Season[/b] (Broadcast): happiness and unity; trade suffers.
 [*][b]Grand Tour Season[/b] (Tourism): happiness, trade and much harder-working resort workers.
+[*][b]Storm Season[/b] (Tempest): research and stronger storm fields; less happiness.
 [/list]
 
 [h2]Nanites[/h2]
@@ -128,7 +136,7 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 [*]The [b]Accommodation District[/b], resort specializations, [b]holomuseums[/b] and [b]Archaeostudies Faculty[/b] gain our trees' bonuses.
 [*]Repeatable technologies (vanilla and Gigastructural) check their Shelve edicts.
 [*][b]Nanite harvesters[/b] double three more times on size 30+ planets.
-[*][b]Virtuality[/b] is closed to individual machines with Gigastructural's [b]The Great Ring[/b] or [b]Alderson Disk[/b] origin.
+[*][b]Virtuality[/b] is closed to individual machines with The Great Ring or Alderson Disk origins.
 [/list]
 Other mods changing these may conflict.
 

@@ -236,3 +236,12 @@
 @lfg_nanite_consensus_4_nanites = 400
 @lfg_nanite_consensus_4_energy_upkeep = 32
 @lfg_nanite_consensus_4_nanite_upkeep = 16
+
+# Tempest tradition tree
+@lfg_tempest_research_per_storm = 0.01	# Storm Logs: research speed per storm weathered (lfg_storms_weathered, max 20)
+@lfg_tempest_unity_per_building = 0.02	# Storm Harvest: unity per storm exploitation building (lfg_storm_buildings, max 15)
+@lfg_tempest_storm_jobs = 0.10	# Eye Walkers: inside any storm, our colonies
+@lfg_tempest_storm_stability = 5
+@lfg_tempest_storm_build_speed = 0.5	# finisher: inside any storm, our colonies' infrastructure build speed
+@lfg_tempest_storm_fire_rate = 0.20	# Ride the Lightning: inside any storm, our fleets
+@lfg_tempest_storm_speed = 0.25

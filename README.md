@@ -2,8 +2,8 @@
 
 A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games that adds:
 
-- **9 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
-- **6 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
+- **10 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
+- **7 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
 - **5 ascension perks:** **Storm Sovereignty** (needs Galactic Wonders and Galactic Weather Control) unlocks the Tempest Lodestar megastructure that summons nexus storms, and makes Storm Chasers immune to storm penalties; **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
 - **1 origin, Nanite Forge** (machines): eight size 40 molten worlds around a blue star, a broken nanite harvester that doubles their nanite deposits every 3 years, and a nanite-fuelled automation building.
 - **Nanite harvesters** (all of them) yield **twice** vanilla's nanites at every step and get three more doubling steps, up to 819.2 nanites per planet.
@@ -23,7 +23,7 @@ This is a gameplay mod (it adds `common/` files), so it **changes the game check
 - Stellaris 4.5.x
 - [Gigastructural Engineering & More (4.5)](https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237). Required: the Megaforge tree uses its supertensiles, techs and origins.
 - Recommended: [A Lot of Traditions - 24 Tradition Slots](https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981).
-  Vanilla allows 7 trees in total, and this mod adds 9 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
+  Vanilla allows 7 trees in total, and this mod adds 10 more options. Compatible with Expanded Stellaris Traditions and More Traditions (no shared keys).
 
 Load order: after Gigastructural.
 
@@ -31,8 +31,8 @@ Load order: after Gigastructural.
 
 Every tree has a **hook**: bonuses that scale with or depend on the state of your game, so the tree changes how you
 play rather than just adding percentages. Hooks are marked ⚙. Most finishers also unlock a **council agenda**
-(see [Council agendas](#council-agendas)). All trees use the vanilla `tree_21_11` layout: slots 1–3 on top,
-**slot 4 requires 1 + 2**, **slot 5 requires 3**. Every finisher grants **+1 ascension perk**.
+(see [Council agendas](#council-agendas)). Most trees use the vanilla `tree_21_11` layout: slots 1–3 on top,
+**slot 4 requires 1 + 2**, **slot 5 requires 3** (others are noted). Every finisher grants **+1 ascension perk**.
 
 ### Megaforge: megastructures over the normal economy
 **Who:** non-nomadic. **Adopt requires:** *Supertensile Materials* (Giga) or *Mega-Engineering*.
@@ -221,6 +221,34 @@ are new content, modelled on vanilla's Heavy Industry zone and Gigastructural's 
   1,000 unity, rising by that much again with each expansion (5th: 2,500 / 2,500 / 5,000). If the planet ever stops
   being a resort world, the expansions it already has stay.
 
+### Tempest: cosmic storms as an asset
+**Who:** Cosmic Storms DLC, once the empire has encountered a cosmic storm (`num_cosmic_storms_encountered >= 1`);
+Storm Chasers from the start. **Hook:** bonuses inside any storm over our space, from storms weathered and from storm
+exploitation buildings. **Layout: our own vortex** (`tree_lfg_vortex`, `interface/lfg_tradition_trees.gui`): five slots
+in a ring around an empty eye, each requiring the one before (1 → 2 → 3 → 4 → 5), with curved arrows spiralling
+clockwise. Vanilla's layouts are top-level GUI types looked up by name, so ours lives in its own file instead of
+replacing `topbar_traditions_view.gui` (which UI Overhaul Dynamic and A Lot of Traditions replace, keeping vanilla's
+positions). **Unverified in game:** that the traditions window finds a layout defined in another `.gui` file.
+**Art** (`art/make_tempest_art.py`): the five tradition icons, the tree icon, the vortex arrows
+(`gfx/interface/traditions/lfg_vortex_arrows.dds`) and a storm-blue tile and hex strip (vanilla's Synchronicity ones, tinted).
+
+| Tradition | Effect |
+|---|---|
+| Adopt | Storm location intel +1 · unlocks agenda **Storm Season** |
+| 1. Storm Logs ⚙ | Research speed +1% per storm weathered (unique storms encountered, max +20%) · storm movement intel +1 |
+| 2. Eye Walkers ⚙ | Inside any cosmic storm, our colonies: resources from jobs +10%, stability +5 |
+| 3. Storm Harvest ⚙ | Unity +2% per storm exploitation building (max +30%) · their upkeep −50% |
+| 4. Lightning Rods | Storm attraction and repulsion fields +0.25 · storm location and movement intel +1 |
+| 5. Ride the Lightning ⚙ | Inside any cosmic storm, our fleets: fire rate +20%, speed +25% · storm effects on ship defenses −50% |
+| Finish ⚙ | Inside any cosmic storm, our colonies: infrastructure build speed +50% (`planet_building_build_speed_mult`) |
+
+"Inside any storm" is added to every storm type by the generated storm_types override (`TEMPEST_STORM_BONUSES`,
+`@lfg_tempest_storm_*`), so it applies exactly while a storm covers the colony or fleet. Storms weathered and storm
+buildings (vanilla's `num_unique_cosmic_storms_encountered` / `num_storm_exploitation_buildings`, script values
+`lfg_storms_weathered` / `lfg_storm_buildings`) are counted monthly and on adoption by `lfg_storms.8` into country
+modifiers `lfg_tempest_per_storm` / `_per_storm_building` at `multiplier =` each count (`lfg_stationcraft_sync`), as
+Stationcraft does; so the bonus can lag a month.
+
 ## Council agendas
 
 Unlocked by finishing the matching tree (The Great Project: by adopting Megaforge). Each has its own icon
@@ -235,6 +263,7 @@ prepares an agenda over time; when launched, its effect lasts **10 years**.
 | The Harvest Tithe | Granary | Farmer output +5% | On launch, if you have 3,000 food: −3,000 food, +150 influence, +2,000 unity. Then food +10%, stability +2 |
 | Gala Season | Broadcast | Entertainer output +5% | Happiness +10%, unity +10% · trade −10% |
 | Grand Tour Season | Tourism (on adoption) | Resort Worker workforce +5% | Happiness +10%, trade +15%, Resort Worker workforce +25% · worker output −5% |
+| Storm Season | Tempest (on adoption; Cosmic Storms DLC) | Storm movement intel +1 | Research speed +15%, storm attraction and repulsion fields +0.5 · happiness −5% (icon: `art/make_tempest_art.py`) |
 
 ## Special system: Lone Tide (secret: not on the Steam page)
 

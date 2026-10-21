@@ -123,3 +123,19 @@ agenda_lfg_feast_of_plenty = {
 	}
 	finish_modifier = agenda_lfg_feast_of_plenty_finish
 }
+
+# Tempest (adoption): a decade of chasing the storms - faster research, stronger storm fields; people tire of it.
+agenda_lfg_storm_season = {
+	agenda_cost = @lfg_agenda_cost
+	allow = {
+		has_tradition = tr_lfg_tempest_adopt
+	}
+	potential = {
+		has_paragon_dlc = yes
+		has_cosmic_storms_dlc = yes
+	}
+	modifier = {
+		country_storm_movement_intel_add = 1
+	}
+	finish_modifier = agenda_lfg_storm_season_finish
+}

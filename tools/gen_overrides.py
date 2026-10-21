@@ -514,6 +514,38 @@ NEXUS_LODESTAR_BONUSES = (
     "\t}\n"
 )
 
+# Tempest tradition tree: inside any cosmic storm, our colonies (Eye Walkers; the finisher's infrastructure build speed)
+# and fleets (Ride the Lightning). Added to
+# every storm type, after its lore description line.
+STORM_TYPE_KEYS = ["electric_storm", "particle_storm", "gravity_storm", "magnetic_storm", "solar_storm", "celestial_storm",
+                   "shroud_storm", "nexus_storm"]
+TEMPEST_STORM_BONUSES = (
+    "\ttriggered_planet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\tis_colony = yes\n"
+    "\t\t\towner? = { has_tradition = tr_lfg_tempest_eye_walkers }\n"
+    "\t\t}\n"
+    "\t\tplanet_jobs_produces_mult = @lfg_tempest_storm_jobs\n"
+    "\t\tplanet_stability_add = @lfg_tempest_storm_stability\n"
+    "\t}\n"
+    "\ttriggered_planet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\tis_colony = yes\n"
+    "\t\t\towner? = { has_tradition = tr_lfg_tempest_finish }\n"
+    "\t\t}\n"
+    "\t\tplanet_building_build_speed_mult = @lfg_tempest_storm_build_speed\n"
+    "\t}\n"
+    "\ttriggered_fleet_modifier = {\n"
+    "\t\tpotential = {\n"
+    "\t\t\towner? = { has_tradition = tr_lfg_tempest_ride_the_lightning }\n"
+    "\t\t}\n"
+    "\t\tmodifier = {\n"
+    "\t\t\tship_fire_rate_mult = @lfg_tempest_storm_fire_rate\n"
+    "\t\t\tship_speed_mult = @lfg_tempest_storm_speed\n"
+    "\t\t}\n"
+    "\t}\n"
+)
+
 REPLICATOR_NANITE_UPKEEP = (
     "\t\tupkeep = {\n"
     "\t\t\ttrigger = { owner = { has_origin = origin_lfg_nanite_forge } }\n"
@@ -565,6 +597,9 @@ OVERRIDES = {
         for storm, line, who in STORM_PENALTIES
     ] + [
         (STORM_TYPES, "nexus_storm", r"^\tdescription = nexus_storm_lore_description\n", NEXUS_LODESTAR_BONUSES),
+    ] + [
+        (STORM_TYPES, storm, rf"^\tdescription = {storm}_lore_description\n", TEMPEST_STORM_BONUSES) for storm in STORM_TYPE_KEYS
+    ] + [
         # Vanilla never spawns a nexus storm before the midgame (spawn_weight factor 0), and spawn_random_storm obeys that
         # even with type = nexus_storm: let the Tempest Lodestar's summon (lfg_spawn_nexus_storm) through.
         (STORM_TYPES, "nexus_storm", r"^\t\t\tmid_game_years_passed < 1\n",

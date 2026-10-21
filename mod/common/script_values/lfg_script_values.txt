@@ -534,3 +534,23 @@ lfg_pulse_deposit_nanites = {
 		mode = add
 	}
 }
+
+# Tempest - Storm Logs: storms weathered (unique cosmic storms the empire has encountered), up to 20.
+lfg_storms_weathered = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = num_unique_cosmic_storms_encountered
+		mode = add
+	}
+	max = 20
+}
+
+# Tempest - Storm Harvest: storm exploitation buildings (vanilla's count), up to 15.
+lfg_storm_buildings = {
+	base = 0
+	complex_trigger_modifier = {
+		trigger = num_storm_exploitation_buildings
+		mode = add
+	}
+	max = 15
+}

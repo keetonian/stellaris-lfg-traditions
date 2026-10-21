@@ -1,0 +1,35 @@
+# LFG Traditions - tradition tree (tempest).
+# This tree uses our own vortex layout (tree_lfg_vortex, interface/lfg_tradition_trees.gui): five slots in a ring, each
+# requiring the one before (1 -> 2 -> 3 -> 4 -> 5), arrows spiralling around an empty eye.
+# The order of `traditions` maps to slots 1..5. Prerequisites live in common/traditions/lfg_traditions.txt.
+# One tree per file, named 00_<English tree name>_lfg.txt (see 00_stationcraft_lfg.txt).
+
+# Cosmic storms as an asset: bonuses inside storms, from storms weathered and from storm buildings. Cosmic Storms DLC;
+# after the empire's first storm (Storm Chasers from the start).
+tradition_lfg_tempest = {
+	desc = tradition_lfg_tempest_desc
+	tree_template = "tree_lfg_vortex"
+	potential = {
+		has_cosmic_storms_dlc = yes
+		OR = {
+			has_origin = origin_storm_chasers
+			num_cosmic_storms_encountered >= 1
+		}
+	}
+	adoption_bonus = "tr_lfg_tempest_adopt"
+	finish_bonus = "tr_lfg_tempest_finish"
+	traditions = {
+		"tr_lfg_tempest_storm_logs"
+		"tr_lfg_tempest_eye_walkers"
+		"tr_lfg_tempest_storm_harvest"
+		"tr_lfg_tempest_lightning_rods"
+		"tr_lfg_tempest_ride_the_lightning"
+	}
+	ai_weight = {
+		factor = 2
+		modifier = {
+			factor = @ap_pending_tradition_suppress
+			has_ap_pending = yes
+		}
+	}
+}

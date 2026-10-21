@@ -40,3 +40,10 @@ the Nanite Substrate trait icon is a teal disc like vanilla's positive trait ico
 (`mod/gfx/interface/icons/traits/trait_lfg_nanite_substrate.dds`); the picture is a 220x115 crop of vanilla's "gray gooed planet" event picture
 (`mod/gfx/event_pictures/origins/lfg_origin_nanite_forge.dds`, sprite `GFX_origin_lfg_nanite_forge` in
 `mod/interface/lfg_megastructures.gfx`).
+
+# Tempest tree art
+
+`python3 art/make_tempest_art.py` (Pillow) draws the Tempest tree's five tradition icons and tree icon (our own
+symbols, using `make_glyph_icons.py`'s renderers), its storm-blue category tile and hex strip (vanilla's Synchronicity
+ones tinted) and the vortex layout's arrows (`mod/gfx/interface/traditions/lfg_vortex_arrows.dds`). The arrow image is
+drawn for the slot positions in `mod/interface/lfg_tradition_trees.gui`: change both together.

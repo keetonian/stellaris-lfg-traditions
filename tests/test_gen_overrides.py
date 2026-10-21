@@ -200,6 +200,10 @@ class GenOverridesTests(unittest.TestCase):
             storms.setdefault(storm, "")
             storms[storm] += ("\ttriggered_planet_modifier = {\n\t\tpotential = {\n\t\t\talways = yes\n\t\t}\n"
                               f"\t\t{line.replace(chr(92), '')}\n\t}}\n")
+        for storm in gen_overrides.STORM_TYPE_KEYS:
+            storms.setdefault(storm, "")
+            if storm != "nexus_storm":
+                storms[storm] = f"\tdescription = {storm}_lore_description\n" + storms[storm]
         storms["nexus_storm"] = ("\tspawn_weight = {\n\t\tmodifier = {\n\t\t\tfactor = 0\n\t\t\tmid_game_years_passed < 1\n\t\t}\n\t}\n"
                                  "\tdescription = nexus_storm_lore_description\n" + storms["nexus_storm"])
         (self.game / "common/scripted_effects").mkdir(exist_ok=True)
