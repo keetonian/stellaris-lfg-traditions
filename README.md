@@ -763,19 +763,19 @@ from step 11 to 24 (`DRAKE_LEGEND_HULL_BONUS`: ~917M hull at full growth); plus 
   auto-repair (vanilla's baby design) come on top.
 - **Model** grows by the ¼ power of that (×1.15 a step, ×1.10 as a Legendary): baby 63 long (the dragon mesh is 210 at
   scale 1), Elder 292, capped Legendary ~1,070, a Gigastructural systemcraft (956) +12%.
-- **Food upkeep** (the only upkeep; `components_add_to_cost = no`) ×1.45 a step to the Elder (48 → 2,859), then ×1.292
-  a Legendary step (~80,000 at step 24).
+- **Food upkeep** (the only upkeep; `components_add_to_cost = no`) ×1.45 a step to the Elder (36 → 2,145), then ×1.292
+  a Legendary step (~60,000 at step 24); 25% under the first numbers.
 - **Stages:** Baby Drake (steps 0–3), Juvenile Dragon (4–6), Dragon (7–10), Elder Dragon (11), Legendary Dragon.
 
 | Years | Stage | Durability | Model length | Food / month |
 |---|---|---|---|---|
-| 0 | Baby Drake | 10,000 | 63 | 48 |
-| 20 | Juvenile Dragon | 94k | 110 | 212 |
-| 35 | Dragon | 503k | 167 | 647 |
-| 55 | Elder Dragon | 4.7M | 292 | 2,859 |
-| 80 | Legendary | 35.8M | 482 | ~10,500 |
-| 100 | Legendary | 181M | 719 | ~29,000 |
-| 120 | Legendary (cap) | 917M | 1,072 | ~80,000 |
+| 0 | Baby Drake | 10,000 | 63 | 36 |
+| 20 | Juvenile Dragon | 94k | 110 | 159 |
+| 35 | Dragon | 503k | 167 | 485 |
+| 55 | Elder Dragon | 4.7M | 292 | 2,145 |
+| 80 | Legendary | 35.8M | 482 | ~7,700 |
+| 100 | Legendary | 181M | 719 | ~21,500 |
+| 120 | Legendary (cap) | 917M | 1,072 | ~60,000 |
 
 **The Dragon's Breath** (generated per step: `LFG_DRAKE_BREATH_<step>` in `component_templates/lfg_drake_weapons.txt`,
 `DRAKE_BREATH_*` in `tools/gen_overrides.py`; a `ship_weapon_damage` modifier on the ship sizes didn't raise its damage

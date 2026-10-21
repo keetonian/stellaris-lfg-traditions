@@ -1107,7 +1107,7 @@ def generate_nanite_entities(game: Path, giga: Path) -> str:
 # armour from the Juvenile stage) and weapon damage x1.75 per step up to the Elder (step 11, about a Gigastructural
 # Planetcraft), then, for the one Legendary Dragon, x1.5 per step up to step 24 (~917M, under the engine's ~2 billion).
 # The model grows by the 1/4 power of that (capped Legendary: ~1,070 long, a systemcraft +12%). Food upkeep x1.45 per
-# step to the Elder (2,859), then x1.292 per Legendary step (~80,000 at step 24). One ship size, section, design and
+# step to the Elder (2,144), then x1.292 per Legendary step (~60,000 at step 24); 25% under the first numbers. One ship size, section, design and
 # model per step, copied from vanilla's baby drake; the designs carry the Dragon's Breath (LFG_DRAKE_BREATH,
 # common/component_templates/lfg_components.txt) and six of vanilla's twelve smaller weapons (DRAKE_KEEP_SLOTS).
 DRAKE_SOURCES = {
@@ -1123,7 +1123,7 @@ DRAKE_ELDER_STEP = 11
 DRAKE_MAX_STEP = 24
 DRAKE_BASE_HP = 10000
 DRAKE_GROWTH, DRAKE_LEGEND_GROWTH = 1.75, 1.5
-DRAKE_FOOD, DRAKE_FOOD_GROWTH, DRAKE_LEGEND_FOOD_GROWTH = 48, 1.45, 1.292
+DRAKE_FOOD, DRAKE_FOOD_GROWTH, DRAKE_LEGEND_FOOD_GROWTH = 36, 1.45, 1.292  # 48 at first, -25% at every step
 DRAKE_BREATH = "LFG_DRAKE_BREATH"
 # Vanilla weapon slots kept beside the breath: four claw / wing strikes (our LFG_DRAKE_CLAW_<step>: vanilla's
 # DRAGON_SECONDARY_WEAPON_ICE, 100-150 every ~15 days, times the step's growth) and two point defence
