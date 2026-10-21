@@ -1,0 +1,53 @@
+# LFG Traditions - the Dragon's Breath impact (gfx/projectiles/lfg_projectiles.txt): vanilla's dragon breath hit
+# (aquatic_dragon_weapon_hit_effect) as one huge blast at the target and eight big ones in a ring around it, staggered,
+# so the hit reads as a splash. Sizes are first guesses: tune in game.
+
+entity = {
+	name = "lfg_drake_breath_blast_entity"
+	scale = 3.0
+	cull_radius = 60.0
+	default_state = "idle"
+	state = { name = "idle" state_time = 3 looping = no
+		event = { time = 1.0 particle = "aquatic_dragon_weapon_hit_effect" keep_particle = yes }
+		event = { time = 1.6 particle = "aquatic_dragon_weapon_hit_effect" keep_particle = yes }
+	}
+	state = { name = "stop" state_time = 0.5 looping = no }
+}
+
+entity = {
+	name = "lfg_drake_breath_blast_big_entity"
+	scale = 6.0
+	cull_radius = 100.0
+	default_state = "idle"
+	state = { name = "idle" state_time = 3 looping = no
+		event = { time = 0.8 particle = "aquatic_dragon_weapon_hit_effect" keep_particle = yes }
+	}
+	state = { name = "stop" state_time = 0.5 looping = no }
+}
+
+entity = {
+	name = "lfg_drake_breath_hit_entity"
+	pdxmesh = "locator_mesh"
+	cull_radius = 120.0
+	locator = { name = "centre" position = { 0 0 0 } }
+	locator = { name = "ring_1" position = { 40.0 6 0.0 } }
+	locator = { name = "ring_2" position = { 19.8 -6 19.8 } }
+	locator = { name = "ring_3" position = { 0.0 6 40.0 } }
+	locator = { name = "ring_4" position = { -19.8 -6 19.8 } }
+	locator = { name = "ring_5" position = { -40.0 6 0.0 } }
+	locator = { name = "ring_6" position = { -19.8 -6 -19.8 } }
+	locator = { name = "ring_7" position = { -0.0 6 -40.0 } }
+	locator = { name = "ring_8" position = { 19.8 -6 -19.8 } }
+	attach = { centre = "lfg_drake_breath_blast_big_entity" }
+	attach = { ring_1 = "lfg_drake_breath_blast_entity" }
+	attach = { ring_2 = "lfg_drake_breath_blast_entity" }
+	attach = { ring_3 = "lfg_drake_breath_blast_entity" }
+	attach = { ring_4 = "lfg_drake_breath_blast_entity" }
+	attach = { ring_5 = "lfg_drake_breath_blast_entity" }
+	attach = { ring_6 = "lfg_drake_breath_blast_entity" }
+	attach = { ring_7 = "lfg_drake_breath_blast_entity" }
+	attach = { ring_8 = "lfg_drake_breath_blast_entity" }
+	default_state = "idle"
+	state = { name = "idle" state_time = 3.5 looping = no }
+	state = { name = "stop" state_time = 0.5 looping = no }
+}

@@ -33,6 +33,7 @@ on_monthly_pulse_country = {
 		lfg_storms.5	# Storm Sovereignty: Storm Chasers' summoned nexus storms hit other empires' fleets
 		lfg_storms.7	# Storm Sovereignty: the Lodestar's system counts as inside a nexus storm
 		lfg_storms.8	# Tempest tree: storms weathered / storm buildings counts
+		lfg_dragons.1	# Here Be Dragons: drakes grow, and eat pops when unfed
 	}
 }
 

@@ -1,0 +1,290 @@
+# LFG Traditions - Here Be Dragons: growing drakes and the Legendary Dragon (ap_lfg_legendary_dragons).
+namespace = lfg_dragons
+
+# Monthly (on_monthly_pulse_country), Here Be Dragons empires owning drakes:
+# - a new vanilla Baby Drake becomes our step 0 (lfg_drake_0, with the Dragon's Breath and food upkeep);
+# - a drake without flag lfg_drake_design_v2 is refitted once onto its step's design (older saves);
+# - every drake ages a month (ship variable lfg_drake_months) and grows a step every 60 months (lfg_drake_step), up to
+#   the Elder (step 11), or, for the Legendary Dragon (ship flag lfg_legendary_dragon), up to step 24;
+# - a drake that becomes an Elder while we have the perk and no Legendary Dragon: popup lfg_dragons.4;
+# - with no food stored and a food deficit, every drake not fed in the last year eats pops (lfg_drake_starve).
+country_event = {
+	id = lfg_dragons.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_here_be_dragons
+		any_owned_ship = { lfg_is_drake = yes }
+	}
+
+	immediate = {
+		every_owned_ship = {
+			limit = { lfg_is_drake = yes }
+			if = {
+				limit = { is_ship_size = space_dragon_origin_baby }
+				set_variable = { which = lfg_drake_step value = 0 }
+				set_variable = { which = lfg_drake_months value = 0 }
+				set_ship_flag = lfg_drake_design_v2
+				lfg_drake_set_design = yes
+			}
+			else = {
+				# Refit once onto its step's current design (saves from before a weapon change keep the old design,
+				# whose missing components the game drops). Bump the flag when the drake designs change again.
+				if = {
+					limit = { NOT = { has_ship_flag = lfg_drake_design_v2 } }
+					set_ship_flag = lfg_drake_design_v2
+					lfg_drake_set_design = yes
+				}
+				change_variable = { which = lfg_drake_months value = 1 }
+				if = {
+					limit = {
+						check_variable = { which = lfg_drake_months value >= 60 }
+						OR = {
+							check_variable = { which = lfg_drake_step value < 11 }
+							AND = {
+								has_ship_flag = lfg_legendary_dragon
+								check_variable = { which = lfg_drake_step value < 24 }
+							}
+						}
+					}
+					change_variable = { which = lfg_drake_step value = 1 }
+					set_variable = { which = lfg_drake_months value = 0 }
+					lfg_drake_set_design = yes
+					# A new Elder, and no Legendary Dragon yet: tell the owner they can anoint one (lfg_dragons.4).
+					if = {
+						limit = {
+							check_variable = { which = lfg_drake_step value = 11 }
+							NOT = { has_ship_flag = lfg_legendary_dragon }
+							root = {
+								has_ascension_perk = ap_lfg_legendary_dragons
+								NOT = { lfg_has_legendary_dragon = yes }
+							}
+						}
+						save_event_target_as = lfg_new_elder
+						root = { country_event = { id = lfg_dragons.4 } }
+					}
+				}
+			}
+		}
+		# Only when they can't be fed: no food stored and a monthly food deficit.
+		if = {
+			limit = {
+				resource_stockpile_compare = { resource = food value < 1 }
+				resource_income_compare = { resource = food value < 0 }
+			}
+			every_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					NOT = { has_ship_flag = lfg_drake_fed_recently }
+				}
+				lfg_drake_starve = yes
+			}
+		}
+	}
+}
+
+# A starving drake ate (lfg_drake_starve; event_target:lfg_hungry_drake, event_target:lfg_drake_meal_planet).
+country_event = {
+	id = lfg_dragons.2
+	title = lfg_dragons.2.name
+	desc = lfg_dragons.2.desc
+	picture = GFX_evt_here_be_dragons
+	show_sound = event_aqu_dragon
+	location = event_target:lfg_drake_meal_planet
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_dragons.2.a
+	}
+}
+
+# A drake became an Elder (lfg_dragons.1; event_target:lfg_new_elder) and we have no Legendary Dragon: the decision
+# on our capital can anoint one.
+country_event = {
+	id = lfg_dragons.4
+	title = lfg_dragons.4.name
+	desc = lfg_dragons.4.desc
+	picture = GFX_evt_here_be_dragons
+	show_sound = event_aqu_dragon
+	location = event_target:lfg_new_elder
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_dragons.4.a
+		custom_tooltip = lfg_dragons.4.a.tt
+	}
+}
+
+# Anoint a Legendary Dragon (decision_lfg_legendary_dragon): up to four of our Elder Dragons
+# (event_target:lfg_elder_1-4); "Show others" draws again. The chosen one keeps growing (lfg_dragons.1).
+country_event = {
+	id = lfg_dragons.3
+	title = lfg_dragons.3.name
+	desc = lfg_dragons.3.desc
+	picture = GFX_evt_here_be_dragons
+	show_sound = event_aqu_dragon
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_ship = {
+				limit = { lfg_is_elder_drake = yes }
+				save_event_target_as = lfg_elder_1
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_elder_drake = yes
+					NOT = { is_same_value = event_target:lfg_elder_1 }
+				}
+				save_event_target_as = lfg_elder_2
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_elder_drake = yes
+					NOT = { is_same_value = event_target:lfg_elder_1 }
+					NOT = { is_same_value = event_target:lfg_elder_2 }
+				}
+				save_event_target_as = lfg_elder_3
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_elder_drake = yes
+					NOT = { is_same_value = event_target:lfg_elder_1 }
+					NOT = { is_same_value = event_target:lfg_elder_2 }
+					NOT = { is_same_value = event_target:lfg_elder_3 }
+				}
+				save_event_target_as = lfg_elder_4
+			}
+		}
+	}
+
+	option = {
+		name = lfg_dragons.3.elder_1
+		trigger = { exists = event_target:lfg_elder_1 }
+		custom_tooltip = lfg_dragons.3.elder_tt
+		hidden_effect = { event_target:lfg_elder_1 = { lfg_anoint_legendary_dragon = yes } }
+	}
+	option = {
+		name = lfg_dragons.3.elder_2
+		trigger = { exists = event_target:lfg_elder_2 }
+		custom_tooltip = lfg_dragons.3.elder_tt
+		hidden_effect = { event_target:lfg_elder_2 = { lfg_anoint_legendary_dragon = yes } }
+	}
+	option = {
+		name = lfg_dragons.3.elder_3
+		trigger = { exists = event_target:lfg_elder_3 }
+		custom_tooltip = lfg_dragons.3.elder_tt
+		hidden_effect = { event_target:lfg_elder_3 = { lfg_anoint_legendary_dragon = yes } }
+	}
+	option = {
+		name = lfg_dragons.3.elder_4
+		trigger = { exists = event_target:lfg_elder_4 }
+		custom_tooltip = lfg_dragons.3.elder_tt
+		hidden_effect = { event_target:lfg_elder_4 = { lfg_anoint_legendary_dragon = yes } }
+	}
+	option = {
+		name = lfg_dragons.3.others
+		hidden_effect = { country_event = { id = lfg_dragons.3 } }
+	}
+	option = {
+		name = lfg_dragons.3.cancel
+	}
+}
+
+# Testing menu, from the console only: `event lfg_dragons.10`. Spawns a drake, grows every drake (up to its cap: the
+# Elder's step 11, or 24 for the Legendary Dragon), makes an Elder Legendary without the perk, or makes every drake eat
+# now. Each choice reopens the menu.
+country_event = {
+	id = lfg_dragons.10
+	title = lfg_dragons.10.name
+	desc = lfg_dragons.10.desc
+	picture = GFX_evt_here_be_dragons
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_dragons.10.spawn
+		hidden_effect = {
+			capital_scope = {
+				create_fleet = {
+					name = "NAME_Sky_Dragon_Baby"
+					effect = {
+						set_owner = root
+						create_ship = {
+							name = random
+							design = "NAME_LFG_Drake_0"
+							effect = {
+								set_variable = { which = lfg_drake_step value = 0 }
+								set_variable = { which = lfg_drake_months value = 0 }
+								set_variable = { which = lfg_drake_growth value = 1 }
+							}
+						}
+						set_location = {
+							target = prev
+							distance = 20
+							angle = random
+						}
+					}
+				}
+			}
+			country_event = { id = lfg_dragons.10 }
+		}
+	}
+	option = {
+		name = lfg_dragons.10.grow_1
+		hidden_effect = {
+			every_owned_ship = {
+				limit = { lfg_is_drake = yes }
+				lfg_drake_debug_grow = { STEPS = 1 }
+			}
+			country_event = { id = lfg_dragons.10 }
+		}
+	}
+	option = {
+		name = lfg_dragons.10.grow_5
+		hidden_effect = {
+			every_owned_ship = {
+				limit = { lfg_is_drake = yes }
+				lfg_drake_debug_grow = { STEPS = 5 }
+			}
+			country_event = { id = lfg_dragons.10 }
+		}
+	}
+	option = {
+		name = lfg_dragons.10.grow_max
+		hidden_effect = {
+			every_owned_ship = {
+				limit = { lfg_is_drake = yes }
+				lfg_drake_debug_grow = { STEPS = 24 }
+			}
+			country_event = { id = lfg_dragons.10 }
+		}
+	}
+	option = {
+		name = lfg_dragons.10.legendary
+		trigger = {
+			any_owned_ship = { lfg_is_elder_drake = yes }
+			NOT = { lfg_has_legendary_dragon = yes }
+		}
+		hidden_effect = {
+			random_owned_ship = {
+				limit = { lfg_is_elder_drake = yes }
+				lfg_anoint_legendary_dragon = yes
+			}
+			country_event = { id = lfg_dragons.10 }
+		}
+	}
+	option = {
+		name = lfg_dragons.10.starve
+		hidden_effect = {
+			every_owned_ship = {
+				limit = { lfg_is_drake = yes }
+				remove_ship_flag = lfg_drake_fed_recently
+				lfg_drake_starve = yes
+			}
+		}
+	}
+	option = {
+		name = lfg_dragons.10.close
+	}
+}

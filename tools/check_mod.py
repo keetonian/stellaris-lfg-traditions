@@ -103,6 +103,8 @@ ALLOWED_FILES = [
     r"gfx/interface/icons/ascension_perks/ap_lfg_[^/]+\.dds",  # art/make_megastructure_icons.py
     r"gfx/interface/icons/modules/lfg_[^/]+\.dds",  # art/make_building_icons.py
     r"interface/lfg_[^/]+\.gui",  # our tradition tree layouts
+    r"common/global_ship_designs/lfg_[^/]+\.txt",  # generated: the growing drakes' designs
+    r"gfx/projectiles/lfg_[^/]+\.txt",  # projectile looks (the Dragon's Breath)
     r"gfx/interface/traditions/(lfg_|tradition_hex_bg_lfg_)[^/]+\.dds",  # art/make_tempest_art.py
     r"gfx/interface/tiles/tradition_category_tile_lfg_[^/]+\.dds",  # art/make_tempest_art.py
     r"gfx/event_pictures/origins/lfg_[^/]+\.dds",  # art/make_origin_art.py
@@ -115,7 +117,8 @@ KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "ori
                 "@lfg_", "can_destroy_planet_with_LFG_")  # the last: the game's name for an lfg planet killer's targeting trigger
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/", "common/section_templates/", "common/component_templates/",
-                         "common/component_sets/", "common/start_screen_messages/")  # sections: ship_section_template, keyed inside
+                         "common/component_sets/", "common/start_screen_messages/",
+                         "common/global_ship_designs/")  # sections: ship_section_template, designs: ship_design, keyed inside
 # Single-category values used by vanilla policies (common/policies/00_policies.txt, 4.5).
 POLICY_CATEGORIES = {"diplomacy", "economy", "military", "research", "society"}
 STATIC_MODIFIER_NON_MODIFIERS = {"icon", "icon_frame", "custom_tooltip", "hide_in_tooltip", "show_only_custom_tooltip"}

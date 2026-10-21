@@ -30,3 +30,14 @@ lfg_nexus_storm_bonuses = {
 		lfg_storm_immune_country = yes
 	}
 }
+
+# Here Be Dragons. Ship scope: an Elder Dragon that isn't the Legendary one (the ship size of growth step 11).
+lfg_is_elder_drake = {
+	is_ship_size = lfg_drake_11
+	NOT = { has_ship_flag = lfg_legendary_dragon }
+}
+
+# Country scope: owns the Legendary Dragon (only one at a time; ap_lfg_legendary_dragons).
+lfg_has_legendary_dragon = {
+	any_owned_ship = { has_ship_flag = lfg_legendary_dragon }
+}

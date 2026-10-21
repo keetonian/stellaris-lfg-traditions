@@ -58,6 +58,17 @@ mod/                                  # exactly what ships
   common/scripted_actions/lfg_scripted_actions.txt           # lfg_summon_nexus_storm: the Tempest Lodestar's Summon Nexus Storm button (-> on_lfg_summon_nexus_storm)
   common/scripted_effects/zz_lfg_scripted_effect_overrides.txt # GENERATED: vanilla nexus_storm_remove + lfg_nexus_storm_passes
   common/inline_scripts/pop_resources/pop_misc_production.txt  # GENERATED whole-file override: Nexus Afterglow's per-pop motes / crystals
+  common/ship_sizes/lfg_drake_ship_sizes.txt                 # GENERATED (DRAKE_*): Here Be Dragons' growing drakes, one ship size per 5-year step
+  common/section_templates/lfg_drake_section_templates.txt   # GENERATED: their sections
+  common/global_ship_designs/lfg_drake_designs.txt           # GENERATED: their designs
+  common/component_templates/lfg_drake_weapons.txt           # GENERATED: Dragon's Breath + Dragon Claws per step (damage baked in;
+                                                             #   ship_weapon_damage on the ship size didn't work in game)
+  gfx/models/ships/lfg_drakes.asset                          # GENERATED: their models, scaled per step
+  common/scripted_effects/lfg_drake_steps_effects.txt        # GENERATED: lfg_drake_set_design (switch, or replace via lfg_drake_replace)
+  common/scripted_triggers/lfg_drake_steps_triggers.txt      # GENERATED: lfg_is_drake
+  common/scripted_effects/lfg_dragons_effects.txt            # lfg_drake_replace, lfg_drake_starve, lfg_anoint_legendary_dragon
+  events/lfg_dragons_events.txt                              # .1 monthly growth + starvation, .2 hungry dragon popup, .3 Legendary picker, .4 new Elder popup, .10 testing menu (console)
+  gfx/projectiles/lfg_projectiles.txt                        # the Dragon's Breath beam; its splash blasts: gfx/models/ships/lfg_drake_breath.asset
   common/scripted_effects/lfg_storms_effects.txt             # lfg_spawn_nexus_storm, lfg_nexus_storm_passes, lfg_nexus_storm_penalties, lfg_storm_wrath_fleet / _damage
   common/scripted_modifiers/lfg_scripted_modifiers.txt      # custom ship modifiers of the Mothership's swarm modules (read by lfg_mothership.2)
   common/technology/lfg_technology.txt                       # tech_lfg_swarmforge / _nanite_war_moon / _nanite_planetcraft (offered by the perk); _lm_accelerator_2 / _lm_armor_6 (galvanic civics)
@@ -163,6 +174,10 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
     `complex_trigger_modifier` on `check_variable` (error.log: "trigger does not support it"; the value stays 0).
   - Storms can't be aimed: `spawn_random_storm = { type = "nexus_storm" cosmic_storm_start_position = <system> immediate = yes }`
     works (vanilla cstorms.3230); it rejects `cosmic_storm_end_position`, and `create_cosmic_storm` with start / end created nothing.
+  - A big `ship_weapon_damage` in a ship size's `modifier` didn't raise its weapons' damage in game (the drakes): bake
+    damage into per-size weapon components instead (`lfg_drake_weapons.txt`).
+  - `set_ship_design = { design = <global design> }` moves an existing ship onto a design of **another ship size**,
+    keeping its name (verified with the growing drakes, `lfg_drake_set_design`).
   - Megastructure scripted actions (verified with the Lodestar's button): hook `on_started`; with no `required_progress`
     `on_completed` never ran and the action's own `cost` was never taken, so pay in the event. In `possible` (this = target), `from` / `fromfrom` didn't resolve to the megastructure
     or its owner in game; check the target's own contents instead. Same in the `on_completed` on_action's event: a trigger on

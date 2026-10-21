@@ -128,3 +128,25 @@ ap_lfg_storm_sovereignty = {
 		factor = 0
 	}
 }
+
+# Legendary Dragons: Here Be Dragons only, once the Sky Dragon has entrusted its young to us (vanilla's dragon_breeders
+# flag, aquatics.120). Unlocks decision_lfg_legendary_dragon: anoint one Elder Dragon (lfg_drake_11) as the Legendary
+# Dragon, which keeps growing (events/lfg_dragons_events.txt). One at a time; if it dies, anoint another.
+ap_lfg_legendary_dragons = {
+	on_enabled = {
+		custom_tooltip = ap_lfg_legendary_dragons_tt
+	}
+	possible = {
+		custom_tooltip = {
+			fail_text = "lfg_requires_dragon_breeders"
+			has_country_flag = dragon_breeders
+		}
+	}
+	potential = {
+		has_origin = origin_here_be_dragons
+		NOT = { has_ascension_perk = ap_lfg_legendary_dragons }
+	}
+	ai_weight = {
+		factor = 0
+	}
+}

@@ -268,3 +268,36 @@ decision_lfg_mothership_crew = {
 		weight = 0
 	}
 }
+
+# Legendary Dragons (ap_lfg_legendary_dragons), on the capital: anoint one of our Elder Dragons as the Legendary Dragon
+# (lfg_dragons.3 picks it). Only while we have none.
+decision_lfg_legendary_dragon = {
+	owned_planets_only = yes
+	sound = event_administrative_work
+	icon = decision_lfg_legendary_dragon
+	potential = {
+		is_capital = yes
+		owner = { has_ascension_perk = ap_lfg_legendary_dragons }
+	}
+	allow = {
+		owner = {
+			custom_tooltip = {
+				fail_text = lfg_legendary_dragon_exists
+				NOT = { lfg_has_legendary_dragon = yes }
+			}
+			custom_tooltip = {
+				fail_text = lfg_needs_elder_dragon
+				any_owned_ship = { lfg_is_elder_drake = yes }
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = decision_lfg_legendary_dragon_effect_tt
+		hidden_effect = {
+			owner = { country_event = { id = lfg_dragons.3 } }
+		}
+	}
+	ai_weight = {
+		weight = 1
+	}
+}

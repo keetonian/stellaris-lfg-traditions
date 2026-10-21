@@ -4,7 +4,7 @@ A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games th
 
 - **10 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
 - **7 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
-- **5 ascension perks:** **Storm Sovereignty** (needs Galactic Wonders and Galactic Weather Control) unlocks the Tempest Lodestar megastructure that summons nexus storms, and makes Storm Chasers immune to storm penalties; **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
+- **6 ascension perks:** **Legendary Dragons** (Here Be Dragons) lets one Elder Dragon keep growing - the origin's drakes now grow for 55 years with a splashing Dragon's Breath; **Storm Sovereignty** (needs Galactic Wonders and Galactic Weather Control) unlocks the Tempest Lodestar megastructure that summons nexus storms, and makes Storm Chasers immune to storm penalties; **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
 - **1 origin, Nanite Forge** (machines): eight size 40 molten worlds around a blue star, a broken nanite harvester that doubles their nanite deposits every 3 years, and a nanite-fuelled automation building.
 - **Nanite harvesters** (all of them) yield **twice** vanilla's nanites at every step and get three more doubling steps, up to 819.2 nanites per planet.
 - **Nanite Cognition Core** (after finishing Nanotech): automates 50% of a planet's specialist jobs for a lot of nanites.
@@ -505,7 +505,8 @@ the 1,000,000-nanite Planetcraft needs no storage bonus):
   Site: 10,000 alloys, 50,000 nanites, 100 influence, 5 years; finishing it: 25,000 alloys, 150,000 nanites, 10 years;
   upkeep 100 energy + 50 nanites. Finished, it's a shipyard (`starbase_shipyard_capacity_add`, like vanilla's Mega
   Shipyard; `@lfg_swarmforge_shipyard_capacity` = 50). Finished, it also gives the **whole empire** shipyards **+100% build
-  speed** (`starbase_shipyard_build_speed_mult`) and ships **-10% cost** (`ships_cost_mult`). **Its model** (`mod/gfx/models/ships/lfg_megastructures.asset`)
+  speed** (`starbase_shipyard_build_speed_mult`) and ships **-10% cost** (`ships_cost_mult`), and produces **+300
+  engineering research** a month (`@lfg_swarmforge_engineering`, like vanilla's Science Nexus). **Its model** (`mod/gfx/models/ships/lfg_megastructures.asset`)
   is built **over the star**: a nanite cage of six great circles of 12 Nanite Swarmers meeting at the poles, four nanite
   hive stations on the equator as docks and four grey goo clouds (under construction: three circles and the docks);
   sizes `@lfg_swarmforge_*scale`. Build icon: `art/make_megastructure_icons.py` (vanilla's Mega Shipyard tech icon in
@@ -555,7 +556,8 @@ traditions finished** (its escort's Swarmers and Interdictors need the 4th and 5
   `giga_is_o_star_for_megas`: its own O stars, about 1 per 70 systems, and Real Space's), in your borders, with no other
   megastructure. Three stages, **50,000,000 nanites** in all (5M, 15M, 30M; `@lfg_progenitor_forge_*_nanites`) plus
   alloys and influence; 5 + 10 + 10 years. Finished, it's a shipyard building **300 ships at once** (`@lfg_progenitor_forge_shipyard_capacity`), the only place
-  Motherships can be built, and it also builds the nanite Attack Moons and Planetcraft.
+  Motherships can be built, and it also builds the nanite Attack Moons and Planetcraft. Finished, it produces **+900
+  engineering research** a month (`@lfg_progenitor_forge_engineering`).
   **When its site (stage 1) is done, its swarms consume the system**: every world Gigastructural allows to be dismantled
   for bulk matter (`can_dismantle_planet_for_bm`: not the star, colonies, habitats, megastructure anchors, holy worlds...)
   gives its builder **1 bulk matter per size** (Giga's rate) and is removed, along with the debris and asteroid belts
@@ -739,6 +741,68 @@ Adds the physics research option **Tempest Lodestar** (`tech_lfg_tempest_lodesta
   - **Not covered:** a storm's ban on hull, armour and shield regeneration inside it (engine-side) and storm events.
 - **Unverified in game:** the decision on the Lodestar's star; the storm spawn; the model; the overrides loading over
   vanilla's storm types.
+
+## Ascension perk: Legendary Dragons (Here Be Dragons)
+
+**Growing drakes.** The **Here Be Dragons** origin's Baby Drakes (vanilla `space_dragon_origin_baby`, from the Dragon
+Hatcheries once the Sky Dragon entrusts its young to you) grow for this mod. The first month after hatching they become
+our step 0 (`lfg_drake_0`), then grow **one step every 5 years** (`lfg_dragons.1`, monthly: ship variables
+`lfg_drake_months` / `lfg_drake_step`). Each step is its own generated ship size, section, design, model and name
+(`DRAKE_*` in `tools/gen_overrides.py` → `ship_sizes/lfg_drake_ship_sizes.txt`, `section_templates/lfg_drake_section_templates.txt`,
+`global_ship_designs/lfg_drake_designs.txt`, `gfx/models/ships/lfg_drakes.asset`, `lfg_drake_steps_effects.txt`); the
+event moves the ship onto the next step's design (`set_ship_design`) and, **if the game won't switch a ship to another
+ship size**, replaces it with a new drake in the same fleet (`lfg_drake_replace`: keeps its step, age and Legendary
+flag, loses its name and experience). **Verified in game:** drakes grow every 5 years, and `set_ship_design` does move a ship onto
+another ship size (it keeps its name), so the replacement is only a safety net.
+
+- **Durability and damage** ×1.75 a step to the **Elder Dragon** (step 11, 55 years: 4.7M ≈ a Gigastructural Planetcraft),
+  where growth stops; the **Legendary Dragon** goes on ×1.5 a step to step 24 (120 years: 917M, under the ~2 billion the
+  game's numbers can hold). Durability: 50% hull, 48% armour, 2% shields, and the Legendary's hull grows extra, ×1 → ×2
+from step 11 to 24 (`DRAKE_LEGEND_HULL_BONUS`: ~917M hull at full growth); plus 25% damage reduction
+  (`ship_damage_reduction_mult`) and +25% hull and armour regeneration. The design's four Dragonscale Armor plates and
+  auto-repair (vanilla's baby design) come on top.
+- **Model** grows by the ¼ power of that (×1.15 a step, ×1.10 as a Legendary): baby 63 long (the dragon mesh is 210 at
+  scale 1), Elder 292, capped Legendary ~1,070, a Gigastructural systemcraft (956) +12%.
+- **Food upkeep** (the only upkeep; `components_add_to_cost = no`) ×1.45 a step to the Elder (48 → 2,859), then ×1.292
+  a Legendary step (~80,000 at step 24).
+- **Stages:** Baby Drake (steps 0–3), Juvenile Dragon (4–6), Dragon (7–10), Elder Dragon (11), Legendary Dragon.
+
+| Years | Stage | Durability | Model length | Food / month |
+|---|---|---|---|---|
+| 0 | Baby Drake | 10,000 | 63 | 48 |
+| 20 | Juvenile Dragon | 94k | 110 | 212 |
+| 35 | Dragon | 503k | 167 | 647 |
+| 55 | Elder Dragon | 4.7M | 292 | 2,859 |
+| 80 | Legendary | 35.8M | 482 | ~10,500 |
+| 100 | Legendary | 181M | 719 | ~29,000 |
+| 120 | Legendary (cap) | 917M | 1,072 | ~80,000 |
+
+**The Dragon's Breath** (generated per step: `LFG_DRAKE_BREATH_<step>` in `component_templates/lfg_drake_weapons.txt`,
+`DRAKE_BREATH_*` in `tools/gen_overrides.py`; a `ship_weapon_damage` modifier on the ship sizes didn't raise its damage
+in game, so each step's damage is baked into its own weapon): 5,000–9,000 × the step's growth (150% against hull, 125%
+against armour and shields), 5–15 days windup, 90 days between breaths (`@lfg_drake_breath_cooldown`), 100% accuracy,
+range 320 (`@lfg_drake_breath_range`; +5% weapon range per growth step, `ship_weapon_range_mult`: ~704 at step 24).
+**Splash:** every other hostile ship within **120** of the target (+10 a Legendary step: **250** at step 24) takes
+2,500–8,100 × the growth (`on_hit`, `damage_ship`). Look (`gfx/projectiles/lfg_projectiles.txt`,
+`gfx/models/ships/lfg_drake_breath.asset`): vanilla's ice breath 4× as wide, ending in a huge ice blast at the target and
+eight more in a ring around it. Beside it, four **Dragon Claws** (`LFG_DRAKE_CLAW_<step>`: vanilla's
+`DRAGON_SECONDARY_WEAPON_ICE` stats from its CSV row, damage × growth) and two of vanilla's point defence
+(`DRAGON_TERTIARY_WEAPON_ICE`, unchanged); `DRAKE_KEEP_SLOTS`.
+
+**Starving dragons:** only while the food stockpile is **empty** and monthly food income is **negative**
+(`resource_stockpile_compare` < 1 and `resource_income_compare` < 0), each drake not fed in the last year
+(`lfg_drake_fed_recently`) eats **100 pops per growth step** (at least 1; **×2 for the Legendary**) from the most populous
+colony (`lfg_drake_starve`), with a popup (`lfg_dragons.2`).
+
+**The perk** `ap_lfg_legendary_dragons` (Here Be Dragons only, after the Sky Dragon entrusted its young: vanilla's
+`dragon_breeders` flag) unlocks **Anoint a Legendary Dragon** (`decision_lfg_legendary_dragon`, on the capital): pick one
+of your Elder Dragons (`lfg_dragons.3`; when a drake becomes an Elder while you have the perk and no Legendary,
+popup `lfg_dragons.4` points you to the decision); it becomes the **Legendary Dragon** (ship flag `lfg_legendary_dragon`, the
+Legendary Elder's design) and grows again every 5 years. **One at a time**: if it dies, anoint another.
+
+**Testing:** console `event lfg_dragons.10` opens a menu: spawn a Baby Drake at the capital, grow every drake 1 / 5
+steps or to its cap (`lfg_drake_debug_grow`), make an Elder Legendary (no perk needed), or make every drake eat now. Icons:
+`art/make_dragon_art.py` (the origin's dragon in gold).
 
 ## Ascension perk: Curated Progress
 

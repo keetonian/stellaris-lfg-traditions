@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Ten new tradition trees, seven council agendas, five ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Ten new tradition trees, seven council agendas, six ascension perks, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
 
 [h2]Tradition trees[/h2]
 
@@ -115,12 +115,12 @@ Seven agendas (Galactic Paragons DLC), each lasting 10 years:
 After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's specialist jobs, the [b]Nanotensile Converter[/b] makes supertensiles, and the [b]Nanite Pulse[/b] decision overloads a harvester.
 
 [h2]Civics[/h2]
-[b]Applied Biosciences[/b] (Materialist, non-machine): Biologists research -1 society, +0.4 physics, +0.4 engineering. Its councilor boosts Biologists.
+[b]Applied Biosciences[/b] (Materialist, non-machine): Biologists trade some society for physics and engineering research.
 
-[b]Galvanic civics:[/b] a new tier of galvanic armour and Reshaping Accelerator.
+[b]Galvanic civics:[/b] a new galvanic armour and accelerator tier.
 
 [h2]Ascension perks[/h2]
-[b]Mothership:[/b] one system-sized carrier per empire, with escort, cannon, armour and a fleet aura; its forge boosts the navy.
+[b]Mothership:[/b] one system-sized carrier per empire with escorts and a fleet aura; its forge boosts the navy.
 
 [b]Nanite Armada:[/b] nanite Attack Moons and Planetcraft; faster, cheaper shipyards.
 
@@ -128,13 +128,15 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 
 [b]Massed Assault:[/b] +10 ground combat width; every general boosts the armies they lead.
 
-[b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]): a [b]Shelve[/b] edict for every repeatable technology, keeping it out of your research options.
+[b]Legendary Dragons[/b] (Here Be Dragons): drakes grow for decades and breathe splashing ice; one can grow far beyond.
+
+[b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]): a [b]Shelve[/b] edict per repeatable tech, keeping it out of research options.
 
 [h2]Changes to vanilla content[/h2]
 [list]
 [*][b]Synthetic Fertility[/b]: the uploading situation speeds up every year and uploads more pops.
 [*]The [b]Accommodation District[/b], resort specializations, [b]holomuseums[/b] and [b]Archaeostudies Faculty[/b] gain our trees' bonuses.
-[*]Repeatable technologies (vanilla and Gigastructural) check their Shelve edicts.
+[*]Repeatable techs check their Shelve edicts.
 [*][b]Nanite harvesters[/b] double three more times on size 30+ planets.
 [*][b]Virtuality[/b] is closed to individual machines with The Great Ring or Alderson Disk origins.
 [/list]

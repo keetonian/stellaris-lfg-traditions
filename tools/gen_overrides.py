@@ -1101,6 +1101,319 @@ def generate_nanite_entities(game: Path, giga: Path) -> str:
     return "".join(parts)
 
 
+# ---- Here Be Dragons: growing drakes (ap_lfg_legendary_dragons; events/lfg_dragons_events.txt) ----
+# The origin's Baby Drakes (vanilla space_dragon_origin_baby) become our step 0 (lfg_drake_0) at once, then grow one step
+# every 5 years: durability (hull, plus
+# armour from the Juvenile stage) and weapon damage x1.75 per step up to the Elder (step 11, about a Gigastructural
+# Planetcraft), then, for the one Legendary Dragon, x1.5 per step up to step 24 (~917M, under the engine's ~2 billion).
+# The model grows by the 1/4 power of that (capped Legendary: ~1,070 long, a systemcraft +12%). Food upkeep x1.45 per
+# step to the Elder (2,859), then x1.292 per Legendary step (~80,000 at step 24). One ship size, section, design and
+# model per step, copied from vanilla's baby drake; the designs carry the Dragon's Breath (LFG_DRAKE_BREATH,
+# common/component_templates/lfg_components.txt) and six of vanilla's twelve smaller weapons (DRAKE_KEEP_SLOTS).
+DRAKE_SOURCES = {
+    "weapons": "common/component_templates/00_leviathans_weapons.txt",
+    "weapon_stats": "common/component_templates/weapon_components.csv",
+    "size": "common/ship_sizes/11_leviathans.txt",
+    "section": "common/section_templates/leviathans.txt",
+    "design": "common/global_ship_designs/leviathans_designs.txt",
+    "asset": "gfx/models/ships/guardians/space_dragon/guardian_01_space_dragon.asset",
+}
+DRAKE_BABY_SIZE = "space_dragon_origin_baby"
+DRAKE_ELDER_STEP = 11
+DRAKE_MAX_STEP = 24
+DRAKE_BASE_HP = 10000
+DRAKE_GROWTH, DRAKE_LEGEND_GROWTH = 1.75, 1.5
+DRAKE_FOOD, DRAKE_FOOD_GROWTH, DRAKE_LEGEND_FOOD_GROWTH = 48, 1.45, 1.292
+DRAKE_BREATH = "LFG_DRAKE_BREATH"
+# Vanilla weapon slots kept beside the breath: four claw / wing strikes (our LFG_DRAKE_CLAW_<step>: vanilla's
+# DRAGON_SECONDARY_WEAPON_ICE, 100-150 every ~15 days, times the step's growth) and two point defence
+# (DRAGON_TERTIARY_WEAPON_ICE, unchanged): steady fire between breaths.
+DRAKE_KEEP_SLOTS = {"SECONDARY_GUN_01", "SECONDARY_GUN_02", "SECONDARY_GUN_03", "SECONDARY_GUN_04",
+                    "TERTIARY_GUN_01", "TERTIARY_GUN_02"}
+# Durability split at every step: mostly hull and armour, a token shield; plus damage reduction and living regeneration.
+DRAKE_ARMOR_SHARE, DRAKE_SHIELD_SHARE = 0.48, 0.02
+DRAKE_DAMAGE_REDUCTION = 0.25
+DRAKE_REGEN = 0.25  # hull and armour regeneration (% of max), at the top of vanilla's range
+# The Legendary Dragon's hull grows extra: x1 at the Elder's step, rising evenly to x2 at step 24 (~917M hull, under the
+# ~2.1 billion the game can hold).
+DRAKE_LEGEND_HULL_BONUS = 1.0
+DRAKE_RANGE_PER_STEP = 0.05  # weapon range per growth step: +120% at step 24 (the breath: 320 -> ~704)
+DRAKE_STAGES = [(3, "Baby Drake"), (6, "Juvenile Dragon"), (10, "Dragon"), (11, "Elder Dragon"), (DRAKE_MAX_STEP, "Legendary Dragon")]
+# The Dragon's Breath, one per step (its damage and splash baked in: a ship_weapon_damage modifier on the ship size
+# didn't raise its damage in game): base damage and splash, times the step's growth.
+DRAKE_BREATH_DAMAGE = (5000, 9000)
+DRAKE_BREATH_SPLASH = (2500, 8100)
+DRAKE_SPLASH_RADIUS, DRAKE_LEGEND_SPLASH_RADIUS_STEP = 120, 10  # +10 a Legendary step: 250 at step 24
+DRAKE_BREATH_TEMPLATE = """weapon_component_template = {{
+	key = "{key}"
+	size = large
+	icon = "GFX_ship_part_energy_lance_2"
+	icon_frame = 1
+	type = instant
+	prio_projectile = yes
+
+	damage = {{ min = {dmin} max = {dmax} }}
+	windup = {{ min = 5 max = 15 }}
+	total_fire_time = @lfg_drake_breath_cooldown
+	range = @lfg_drake_breath_range
+	accuracy = 1.0
+	power = 0
+	hull_damage = 1.5	# 150% against hull
+	armor_penetration = 0.25
+	armor_damage = 1.25
+	shield_penetration = 0.25
+	shield_damage = 1.25
+	tracking = 1.0
+
+	firing_arc = 30.0
+	min_range = 0
+	hidden = yes
+
+	on_hit = {{
+		hidden_effect = {{
+			solar_system = {{
+				every_ship_in_system = {{
+					limit = {{
+						NOT = {{ is_same_value = root }}
+						controller = {{ is_hostile = from.controller }}
+						distance = {{
+							source = root
+							max_distance <= {radius}
+							same_solar_system = yes
+						}}
+					}}
+					set_variable_to_random_value = {{
+						which = lfg_drake_splash_damage
+						min = {smin}
+						max = {smax}
+						rounded = yes
+					}}
+					damage_ship = {{
+						amount = lfg_drake_splash_damage
+						attacker = from
+					}}
+					clear_variable = lfg_drake_splash_damage
+				}}
+			}}
+		}}
+		custom_tooltip = {key}_ON_HIT_TT
+	}}
+
+	projectile_gfx = "lfg_drake_breath"
+	tags = {{
+		weapon_type_energy
+		weapon_type_space_fauna
+		l_slot
+	}}
+}}
+"""
+# The claws: vanilla's secondary ice weapon (its stats from weapon_components.csv), damage times the step's growth.
+DRAKE_CLAW_SOURCE = "DRAGON_SECONDARY_WEAPON_ICE"
+DRAKE_FILES = {
+    "size": "mod/common/ship_sizes/lfg_drake_ship_sizes.txt",
+    "section": "mod/common/section_templates/lfg_drake_section_templates.txt",
+    "design": "mod/common/global_ship_designs/lfg_drake_designs.txt",
+    "asset": "mod/gfx/models/ships/lfg_drakes.asset",
+    "effects": "mod/common/scripted_effects/lfg_drake_steps_effects.txt",
+    "triggers": "mod/common/scripted_triggers/lfg_drake_steps_triggers.txt",
+    "loc": "mod/localisation/english/lfg_drakes_l_english.yml",
+    "weapons": "mod/common/component_templates/lfg_drake_weapons.txt",
+}
+
+
+def drake_steps() -> list[tuple[str, int, bool]]:
+    """(ship size key, step, legendary) for our sizes: steps 1..11, the Legendary Elder, then 12..24."""
+    steps = [(f"lfg_drake_{n}", n, False) for n in range(0, DRAKE_ELDER_STEP + 1)]
+    steps.append((f"lfg_drake_{DRAKE_ELDER_STEP}_legendary", DRAKE_ELDER_STEP, True))
+    return steps + [(f"lfg_drake_{n}", n, True) for n in range(DRAKE_ELDER_STEP + 1, DRAKE_MAX_STEP + 1)]
+
+
+def drake_stats(n: int) -> dict:
+    growth = DRAKE_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
+    food = DRAKE_FOOD * DRAKE_FOOD_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_FOOD_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
+    total = DRAKE_BASE_HP * growth
+    armor, shield = total * DRAKE_ARMOR_SHARE, total * DRAKE_SHIELD_SHARE
+    hull = (total - armor - shield) * (1 + DRAKE_LEGEND_HULL_BONUS * max(0, n - DRAKE_ELDER_STEP) / (DRAKE_MAX_STEP - DRAKE_ELDER_STEP))
+    return {"growth": growth, "hp": round(hull), "armor": round(armor), "shield": round(shield),
+            "food": round(food), "length": growth ** 0.25}
+
+
+def drake_stage(n: int, legendary: bool) -> str:
+    if legendary:
+        return DRAKE_STAGES[-1][1]
+    return next(name for last, name in DRAKE_STAGES if n <= last)
+
+
+def drake_design(key: str) -> str:
+    return "NAME_LFG_" + key.title().replace("Lfg_", "")
+
+
+def generate_drakes(game: Path) -> dict[str, str]:
+    header = ("# GENERATED by tools/gen_overrides.py - do not edit by hand.\n"
+              f"# Here Be Dragons' growing drakes, from vanilla's baby drake (Stellaris {game_version(game)}).\n")
+    asset = read_source(DRAKE_SOURCES["asset"], game, DEFAULT_GIGA)
+    section = None
+    text = read_source(DRAKE_SOURCES["section"], game, DEFAULT_GIGA)
+    for m in re.finditer(r"^ship_section_template\s*=\s*\{", text, re.M):
+        block = extract_block(text[m.start():], "ship_section_template", first=True)
+        if re.search(rf"^\tship_size = {DRAKE_BABY_SIZE}\s*$", block, re.M):
+            section = block
+    design = None
+    text = read_source(DRAKE_SOURCES["design"], game, DEFAULT_GIGA)
+    for m in re.finditer(r"^ship_design\s*=\s*\{", text, re.M):
+        block = extract_block(text[m.start():], "ship_design", first=True)
+        if re.search(rf"^\tship_size = {DRAKE_BABY_SIZE}\s*$", block, re.M):
+            design = block
+    if section is None or design is None:
+        raise GenError(f"no section template / design for {DRAKE_BABY_SIZE}")
+    root_entity = extract_entity(asset, "aquatic_dragon_baby_entity")
+    body_entity = extract_entity(asset, "aquatic_dragon_baby_section_entity")
+    base_scale = float(re.search(r"^\tscale = ([\d.]+)", body_entity, re.M).group(1))
+    size_block = extract_block(read_source(DRAKE_SOURCES["size"], game, DEFAULT_GIGA), DRAKE_BABY_SIZE)
+    base_radius = float(re.search(r"^\tcollision_radius = ([\d.]+)", size_block, re.M).group(1))
+    base_size = float(re.search(r"^\tsize_multiplier = ([\d.]+)", size_block, re.M).group(1))
+    speed = re.search(r"^\tmax_speed = (\S+)", size_block, re.M).group(1)
+
+    # The claws' stats: vanilla's CSV row (key;cost;power;min_damage;max_damage;hull;shield;shield_pen;armor;armor_pen;
+    # min_windup;max_windup;cooldown;range;accuracy;tracking;...) and its txt block (look, tags).
+    stats = None
+    for line in read_source(DRAKE_SOURCES["weapon_stats"], game, DEFAULT_GIGA).splitlines():
+        if line.startswith(DRAKE_CLAW_SOURCE + ";"):
+            stats = [float(v) for v in line.split(";")[1:16]]
+    text = read_source(DRAKE_SOURCES["weapons"], game, DEFAULT_GIGA)
+    claw = None
+    for m in re.finditer(r"^weapon_component_template\s*=\s*\{", text, re.M):
+        block = extract_block(text[m.start():], "weapon_component_template", first=True)
+        if f'key = "{DRAKE_CLAW_SOURCE}"' in block:
+            claw = block
+    if stats is None or claw is None:
+        raise GenError(f"{DRAKE_CLAW_SOURCE} not found in {DRAKE_SOURCES['weapon_stats']} / {DRAKE_SOURCES['weapons']}")
+    (_cost, _power, dmin, dmax, hull, shield, shield_pen, armor, armor_pen, wmin, wmax, cooldown, rng, acc, track) = stats
+    weapons = [header, "# The Dragon's Breath and the claws, one of each per growth step, damage times the step's growth.\n"]
+
+    sizes, sections, designs, entities, effects, loc = [header], [header], [header], [header], [header], []
+    for key, n, legendary in drake_steps():
+        s = drake_stats(n)
+        stage = drake_stage(n, legendary)
+        sizes.append(f"""
+# Step {n} ({n * 5} years): {stage}, durability {s['hp'] + s['armor'] + s['shield']:,}, damage x{s['growth']:,.1f}, model x{s['length']:.2f}
+{key} = {{
+	entity = "{key}_entity"
+	is_space_object = yes
+	graphical_culture = no
+	can_be_inspected = no
+	max_speed = {speed}
+	acceleration = 0.8
+	rotation_speed = 0.8
+	collision_radius = {base_radius * s['length']:.1f}
+	modifier = {{
+		ship_evasion_add = 25
+		ship_armor_add = {s['armor']}
+		ship_shield_add = {s['shield']}
+		ship_damage_reduction_mult = {DRAKE_DAMAGE_REDUCTION}
+		ship_hull_regen_add_perc = {DRAKE_REGEN}
+		ship_armor_regen_add_perc = {DRAKE_REGEN}
+		ship_weapon_range_mult = {DRAKE_RANGE_PER_STEP * n:.2f}
+	}}
+	max_hitpoints = {s['hp']}
+	size_multiplier = {round(base_size * s['length'])}
+	map_counter_icon = ship_counter_32
+	icon = ship_size_space_monster
+	fleet_slot_size = 8
+	section_slots = {{ "mid" = {{ locator = "part1" }} }}
+	num_target_locators = 0
+	is_space_station = no
+	class = shipclass_military
+	is_designable = no
+	components_add_to_cost = no
+	resources = {{
+		category = ships
+		upkeep = {{
+			food = {s['food']}
+		}}
+	}}
+}}
+""")
+        block = section.replace(f'key = "{DRAKE_BABY_SIZE}_key"', f'key = "{key}_key"', 1)
+        block = re.sub(rf"^(\tship_size = ){DRAKE_BABY_SIZE}\s*$", rf"\g<1>{key}", block, flags=re.M)
+        block = re.sub(r'^\tentity = "aquatic_dragon_baby_section_entity"', f'\tentity = "{key}_section_entity"', block, flags=re.M)
+        sections.append("\n" + block)
+        block = re.sub(r'^\tname = "[^"]+"', f'\tname = "{drake_design(key)}"', design, count=1, flags=re.M)
+        block = re.sub(rf"^(\tship_size = ){DRAKE_BABY_SIZE}\s*$", rf"\g<1>{key}", block, flags=re.M)
+        block = block.replace(f'template = "{DRAKE_BABY_SIZE}_key"', f'template = "{key}_key"')
+        # The breath in vanilla's primary slot, plus a few of vanilla's smaller ice attacks (DRAKE_KEEP_SLOTS: claws and
+        # wings, two point defence); the other slots left empty.
+        block = re.sub(r'\t\tcomponent = \{\n\t\t\tslot = "((?:SECONDARY|TERTIARY)_GUN_\d+)"\n\t\t\ttemplate = "[^"]+"\n\t\t\}\n',
+                       lambda m: m.group(0) if m.group(1) in DRAKE_KEEP_SLOTS else "", block)
+        block = block.replace('template = "DRAGON_WEAPON_ICE"', f'template = "{DRAKE_BREATH}_{n}"')
+        block = block.replace(f'template = "{DRAKE_CLAW_SOURCE}"', f'template = "LFG_DRAKE_CLAW_{n}"')
+        if f"{DRAKE_BREATH}_{n}" not in block:
+            raise GenError(f"{DRAKE_BABY_SIZE}'s design changed: can't swap its weapons for {DRAKE_BREATH}")
+        designs.append("\n" + block)
+        root = root_entity.replace('name = "aquatic_dragon_baby_entity"', f'name = "{key}_entity"', 1)
+        root = re.sub(r"^\tcull_radius = [\d.]+", f"\tcull_radius = {10 * s['length']:.1f}", root, flags=re.M)
+        body = body_entity.replace('name = "aquatic_dragon_baby_section_entity"', f'name = "{key}_section_entity"', 1)
+        body = re.sub(r"^\tscale = [\d.]+", f"\tscale = {base_scale * s['length']:.3f}", body, count=1, flags=re.M)
+        entities.append("\n" + root + "\n" + body)
+        loc += [(key, stage), (f"{key}_plural", stage + "s"), (drake_design(key), stage)]
+        if not legendary or n != DRAKE_ELDER_STEP:  # the Legendary Elder shares step 11's weapons
+            g = s["growth"]
+            bkey = f"{DRAKE_BREATH}_{n}"
+            radius = DRAKE_SPLASH_RADIUS + DRAKE_LEGEND_SPLASH_RADIUS_STEP * max(0, n - DRAKE_ELDER_STEP)
+            weapons.append(f"\n# Step {n}: x{g:,.1f}\n" + DRAKE_BREATH_TEMPLATE.format(
+                key=bkey, dmin=round(DRAKE_BREATH_DAMAGE[0] * g), dmax=round(DRAKE_BREATH_DAMAGE[1] * g),
+                smin=round(DRAKE_BREATH_SPLASH[0] * g), smax=round(DRAKE_BREATH_SPLASH[1] * g), radius=radius))
+            stat_lines = (f"\tdamage = {{ min = {round(dmin * g)} max = {round(dmax * g)} }}\n"
+                          f"\twindup = {{ min = {wmin:g} max = {wmax:g} }}\n\ttotal_fire_time = {cooldown:g}\n"
+                          f"\trange = {rng:g}\n\taccuracy = {acc:g}\n\ttracking = {track:g}\n\tpower = 0\n"
+                          f"\thull_damage = {hull:g}\n\tshield_damage = {shield:g}\n\tshield_penetration = {shield_pen:g}\n"
+                          f"\tarmor_damage = {armor:g}\n\tarmor_penetration = {armor_pen:g}\n")
+            block = claw.replace(f'key = "{DRAKE_CLAW_SOURCE}"', f'key = "LFG_DRAKE_CLAW_{n}"', 1)
+            block = block.replace("\ttype = instant\n", "\ttype = instant\n" + stat_lines, 1)
+            weapons.append("\n" + block)
+            loc += [(bkey, "Dragon's Breath"),
+                    (f"{bkey}_DESC", "A torrent of frozen fire that grows with the dragon."),
+                    (f"{bkey}_ON_HIT_TT", f"§HSplash:§! every other hostile ship within §Y{radius}§! of the target takes "
+                                          f"§R{round(DRAKE_BREATH_SPLASH[0] * g):,}-{round(DRAKE_BREATH_SPLASH[1] * g):,}§! damage."),
+                    (f"LFG_DRAKE_CLAW_{n}", "Dragon Claws"),
+                    (f"LFG_DRAKE_CLAW_{n}_DESC", "Ice-sheathed claws and wings, as big as the dragon.")]
+
+    # Move a drake (ship scope, ship variable lfg_drake_step already set to its new step) onto that step's design; if the
+    # game won't switch a ship to another ship size, replace it with a new ship of that design in the same fleet.
+    effects.append("\n# Ship scope: switch to the design of ship variable lfg_drake_step (and the Legendary Elder's with flag\n"
+                   "# lfg_legendary_dragon), and store its growth (ship variable lfg_drake_growth: the Dragon's Breath splash\n"
+                   "# reads it). If the ship size didn't change, it's replaced (lfg_drake_replace).\n"
+                   "lfg_drake_set_design = {\n")
+    first = True
+    for key, n, legendary in drake_steps():
+        cond = f"check_variable = {{ which = lfg_drake_step value = {n} }}"
+        if n == DRAKE_ELDER_STEP:
+            cond += " has_ship_flag = lfg_legendary_dragon" if legendary else " NOT = { has_ship_flag = lfg_legendary_dragon }"
+        effects.append(f"\t{'if' if first else 'else_if'} = {{\n\t\tlimit = {{ {cond} }}\n"
+                       f"\t\tset_variable = {{ which = lfg_drake_growth value = {drake_stats(n)['growth']:.2f} }}\n"
+                       f"\t\tset_ship_design = {{ design = \"{drake_design(key)}\" }}\n"
+                       f"\t\tif = {{\n\t\t\tlimit = {{ NOT = {{ is_ship_size = {key} }} }}\n"
+                       f"\t\t\tlfg_drake_replace = {{ DESIGN = \"{drake_design(key)}\" }}\n\t\t}}\n\t}}\n")
+        first = False
+    effects.append("}\n")
+    sizes_list = "\n".join(f"\t\tis_ship_size = {key}" for key, _n, _l in drake_steps())
+    triggers = header + f"""
+# Ship scope: one of the origin's drakes (vanilla's Baby Drake, or one of our growth steps).
+lfg_is_drake = {{
+	OR = {{
+		is_ship_size = {DRAKE_BABY_SIZE}
+{sizes_list}
+	}}
+}}
+"""
+    loc_text = "﻿l_english:\n # GENERATED by tools/gen_overrides.py - do not edit by hand. Growing drake stage names.\n" + \
+        "".join(f' {k}:0 "{v}"\n' for k, v in loc)
+    return {DRAKE_FILES["size"]: "".join(sizes), DRAKE_FILES["section"]: "".join(sections),
+            DRAKE_FILES["design"]: "".join(designs), DRAKE_FILES["asset"]: "".join(entities),
+            DRAKE_FILES["effects"]: "".join(effects), DRAKE_FILES["triggers"]: triggers, DRAKE_FILES["loc"]: loc_text,
+            DRAKE_FILES["weapons"]: "".join(weapons)}
+
+
 def generate(game: Path, giga: Path = DEFAULT_GIGA) -> dict[str, str]:
     out: dict[str, str] = {}
     for out_path, items in OVERRIDES.items():
@@ -1145,6 +1458,7 @@ def generate(game: Path, giga: Path = DEFAULT_GIGA) -> dict[str, str]:
     out[NANITE_SECTIONS_FILE] = generate_nanite_sections(game, giga)
     out[NANITE_SECTIONS_LOC_FILE] = generate_nanite_sections_loc(game, giga)
     out[NANITE_ENTITIES_FILE] = generate_nanite_entities(game, giga)
+    out.update(generate_drakes(game))
     return out
 
 

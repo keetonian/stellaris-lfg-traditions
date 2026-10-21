@@ -245,3 +245,11 @@
 @lfg_tempest_storm_build_speed = 0.5	# finisher: inside any storm, our colonies' infrastructure build speed
 @lfg_tempest_storm_fire_rate = 0.20	# Ride the Lightning: inside any storm, our fleets
 @lfg_tempest_storm_speed = 0.25
+
+# Nanite megastructures: flat engineering research once finished (vanilla's Science Nexus pattern)
+@lfg_swarmforge_engineering = 300	# Swarmforge (lfg_swarmforge_ready)
+@lfg_progenitor_forge_engineering = 900	# Progenitor Forge (lfg_progenitor_forge_2)
+
+# Here Be Dragons: the Dragon's Breath (generated per growth step, DRAKE_* in tools/gen_overrides.py)
+@lfg_drake_breath_cooldown = 90
+@lfg_drake_breath_range = 320	# twice the 160 first used; drakes add weapon range per growth step (DRAKE_RANGE_PER_STEP)

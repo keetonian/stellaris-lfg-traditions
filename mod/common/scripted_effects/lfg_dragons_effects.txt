@@ -1,0 +1,99 @@
+# LFG Traditions - Here Be Dragons: growing drakes (events/lfg_dragons_events.txt). The per-step designs and
+# lfg_drake_set_design are generated (lfg_drake_steps_effects.txt, from DRAKE_* in tools/gen_overrides.py).
+
+# Ship scope: the game didn't move this drake onto $DESIGN$'s ship size, so a new drake of that design takes its place in
+# its fleet, with its step, age, growth and Legendary flag (it loses its name and experience).
+lfg_drake_replace = {
+	save_event_target_as = lfg_old_drake
+	fleet = {
+		create_ship = {
+			name = random
+			design = $DESIGN$
+			effect = {
+				set_variable = { which = lfg_drake_step value = event_target:lfg_old_drake.lfg_drake_step }
+				set_variable = { which = lfg_drake_months value = event_target:lfg_old_drake.lfg_drake_months }
+				set_variable = { which = lfg_drake_growth value = event_target:lfg_old_drake.lfg_drake_growth }
+				if = {
+					limit = { event_target:lfg_old_drake = { has_ship_flag = lfg_legendary_dragon } }
+					set_ship_flag = lfg_legendary_dragon
+				}
+				set_ship_flag = lfg_drake_design_v2
+			}
+		}
+	}
+	event_target:lfg_old_drake = { delete_ship = this }
+}
+
+# Ship scope (a drake), root = its owner, which is out of food: once a year per drake, it eats 100 pops per growth step
+# (at least 1; twice that for the Legendary Dragon) from the owner's most populous colony, 100 at a time from its
+# largest pop group, and the owner gets a popup (lfg_dragons.2).
+lfg_drake_starve = {
+	set_timed_ship_flag = { flag = lfg_drake_fed_recently days = 360 }
+	save_event_target_as = lfg_hungry_drake
+	set_variable = { which = lfg_drake_meal value = lfg_drake_step }
+	if = {
+		limit = { check_variable = { which = lfg_drake_meal value < 1 } }
+		set_variable = { which = lfg_drake_meal value = 1 }
+	}
+	if = {
+		limit = { has_ship_flag = lfg_legendary_dragon }
+		multiply_variable = { which = lfg_drake_meal value = 2 }
+	}
+	set_variable = { which = lfg_drake_pops_eaten value = 0 }
+	root = {
+		ordered_owned_planet = {
+			order_by = trigger:pop_amount
+			limit = { is_colony = yes }
+			save_event_target_as = lfg_drake_meal_planet
+			set_variable = { which = lfg_drake_meal_left value = event_target:lfg_hungry_drake.lfg_drake_meal }
+			while = {
+				limit = {
+					check_variable = { which = lfg_drake_meal_left value > 0 }
+					any_owned_pop_group = { always = yes }
+				}
+				ordered_owned_pop_group = {
+					order_by = trigger:pop_group_size
+					remove_pop_amount = 100
+				}
+				subtract_variable = { which = lfg_drake_meal_left value = 1 }
+				event_target:lfg_hungry_drake = { change_variable = { which = lfg_drake_pops_eaten value = 100 } }
+			}
+			clear_variable = lfg_drake_meal_left
+		}
+		country_event = { id = lfg_dragons.2 }
+	}
+}
+
+# Ship scope: an Elder Dragon becomes the Legendary Dragon (ap_lfg_legendary_dragons): same strength, the Legendary
+# Elder's design (its stage name), and it grows again, a step every 5 years from now, up to step 24.
+lfg_anoint_legendary_dragon = {
+	set_ship_flag = lfg_legendary_dragon
+	set_variable = { which = lfg_drake_months value = 0 }
+	lfg_drake_set_design = yes
+}
+
+# Ship scope (a drake), testing only (lfg_dragons.10): grow up to $STEPS$ steps at once, stopping at its cap (the
+# Elder's step 11, or 24 for the Legendary Dragon); a vanilla Baby Drake starts at step 0. Age resets.
+lfg_drake_debug_grow = {
+	if = {
+		limit = { NOT = { is_variable_set = lfg_drake_step } }
+		set_variable = { which = lfg_drake_step value = 0 }
+	}
+	while = {
+		count = $STEPS$
+		if = {
+			limit = {
+				OR = {
+					check_variable = { which = lfg_drake_step value < 11 }
+					AND = {
+						has_ship_flag = lfg_legendary_dragon
+						check_variable = { which = lfg_drake_step value < 24 }
+					}
+				}
+			}
+			change_variable = { which = lfg_drake_step value = 1 }
+		}
+	}
+	set_variable = { which = lfg_drake_months value = 0 }
+	lfg_drake_set_design = yes
+}

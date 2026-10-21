@@ -206,6 +206,31 @@ class GenOverridesTests(unittest.TestCase):
                 storms[storm] = f"\tdescription = {storm}_lore_description\n" + storms[storm]
         storms["nexus_storm"] = ("\tspawn_weight = {\n\t\tmodifier = {\n\t\t\tfactor = 0\n\t\t\tmid_game_years_passed < 1\n\t\t}\n\t}\n"
                                  "\tdescription = nexus_storm_lore_description\n" + storms["nexus_storm"])
+        # Here Be Dragons' baby drake (generate_drakes copies it per growth step).
+        (self.game / "common/ship_sizes").mkdir(parents=True, exist_ok=True)
+        (self.game / "common/ship_sizes/11_leviathans.txt").write_text(
+            "space_dragon_origin_baby = {\n\tmax_speed = 200\n\tcollision_radius = 15\n\tsize_multiplier = 40\n}\n")
+        (self.game / "common/section_templates").mkdir(parents=True, exist_ok=True)
+        (self.game / "common/section_templates/leviathans.txt").write_text(
+            'ship_section_template = {\n\tkey = "space_dragon_origin_baby_key"\n\tship_size = space_dragon_origin_baby\n'
+            '\tentity = "aquatic_dragon_baby_section_entity"\n}\n')
+        (self.game / "common/global_ship_designs").mkdir(parents=True, exist_ok=True)
+        (self.game / "common/global_ship_designs/leviathans_designs.txt").write_text(
+            'ship_design = {\n\tname = "NAME_Sky_Dragon_Baby"\n\tship_size = space_dragon_origin_baby\n\tsection = {\n'
+            '\t\ttemplate = "space_dragon_origin_baby_key"\n\t\tcomponent = {\n\t\t\tslot = "PRIMARY_GUN_01"\n'
+            '\t\t\ttemplate = "DRAGON_WEAPON_ICE"\n\t\t}\n\t\tcomponent = {\n\t\t\tslot = "SECONDARY_GUN_01"\n'
+            '\t\t\ttemplate = "DRAGON_SECONDARY_WEAPON_ICE"\n\t\t}\n\t}\n}\n')
+        (self.game / "common/component_templates").mkdir(parents=True, exist_ok=True)
+        (self.game / "common/component_templates/00_leviathans_weapons.txt").write_text(
+            'weapon_component_template = {\n\tkey = "DRAGON_SECONDARY_WEAPON_ICE"\n\tsize = medium\n\ttype = instant\n}\n')
+        (self.game / "common/component_templates/weapon_components.csv").write_text(
+            "key;cost;power;min_damage;max_damage\n"
+            "DRAGON_SECONDARY_WEAPON_ICE;0;0;100;150;1;0.8;0;1;0;2;7;10;80;0.8;0.75;0;1;0;0;0;0;0;0;\n")
+        dragon = self.game / "gfx/models/ships/guardians/space_dragon"
+        dragon.mkdir(parents=True, exist_ok=True)
+        (dragon / "guardian_01_space_dragon.asset").write_text(
+            'entity = {\n\tname = "aquatic_dragon_baby_entity"\n\tpdxmesh = "locator_mesh"\n\tcull_radius = 10.0\n}\n'
+            'entity = {\n\tname = "aquatic_dragon_baby_section_entity"\n\tpdxmesh = "aquatic_dragon_01_mesh"\n\tscale = 0.3\n}\n')
         (self.game / "common/scripted_effects").mkdir(exist_ok=True)
         (self.game / "common/scripted_effects/cosmic_storms_scripted_effects.txt").write_text(
             "nexus_storm_remove = {\n\tremove_star_flag = storm_system\n\tnexus_storm_apply_aftermath_modifier = yes\n}\n")

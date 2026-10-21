@@ -77,6 +77,10 @@ lfg_swarmforge_ready = {
 			energy = 100
 			nanites = 50
 		}
+		# Like vanilla's Science Nexus (produces in the resources block).
+		produces = {
+			engineering_research = @lfg_swarmforge_engineering
+		}
 	}
 
 	prerequisites = { "tech_lfg_swarmforge" }
@@ -207,6 +211,9 @@ lfg_progenitor_forge_2 = {
 		upkeep = {
 			energy = 500
 			nanites = 500
+		}
+		produces = {
+			engineering_research = @lfg_progenitor_forge_engineering
 		}
 	}
 
