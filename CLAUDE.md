@@ -182,6 +182,9 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
     damage into per-size weapon components instead (`lfg_drake_weapons.txt`).
   - `set_ship_design = { design = <global design> }` moves an existing ship onto a design of **another ship size**,
     keeping its name (verified with the growing drakes, `lfg_drake_set_design`).
+  - Premade empires (`prescripted_countries`): a ruler trait must fit the ruler's `leader_class` (e.g. Spark of Genius is
+    a scientist trait); otherwise the game silently hides the design (error.log: "Hiding invalid prescripted empire design").
+    Name lists, like loc, must be UTF-8 with BOM.
   - Megastructure scripted actions (verified with the Lodestar's button): hook `on_started`; with no `required_progress`
     `on_completed` never ran and the action's own `cost` was never taken, so pay in the event. In `possible` (this = target), `from` / `fromfrom` didn't resolve to the megastructure
     or its owner in game; check the target's own contents instead. Same in the `on_completed` on_action's event: a trigger on

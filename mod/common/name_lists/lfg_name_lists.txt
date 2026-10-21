@@ -1,4 +1,4 @@
-# LFG Traditions - name lists for the premade empires (prescripted_countries/lfg_prescripted_countries.txt). Names
+﻿# LFG Traditions - name lists for the premade empires (prescripted_countries/lfg_prescripted_countries.txt). Names
 # are literal; sequential fleet and army names are localised (lfg_empire_<key>_seq_*).
 
 lfg_myrran = {

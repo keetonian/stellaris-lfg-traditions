@@ -52,7 +52,7 @@ lfg_empire_myrran = {
 		attachment = 0
 		clothes = 0
 		trait = "leader_trait_spark_of_genius"
-		leader_class = official
+		leader_class = scientist
 	}
 }
 
@@ -205,7 +205,7 @@ lfg_empire_veyl = {
 		attachment = 0
 		clothes = 0
 		trait = "leader_trait_spark_of_genius"
-		leader_class = official
+		leader_class = scientist
 	}
 }
 
@@ -271,7 +271,7 @@ lfg_empire_korinth = {
 		attachment = 0
 		clothes = 0
 		trait = "leader_trait_spark_of_genius"
-		leader_class = official
+		leader_class = scientist
 	}
 }
 
@@ -429,7 +429,7 @@ lfg_empire_bebakian = {
 		attachment = 0
 		clothes = 0
 		trait = "leader_trait_spark_of_genius"
-		leader_class = official
+		leader_class = scientist
 	}
 }
 
