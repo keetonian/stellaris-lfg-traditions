@@ -931,7 +931,7 @@ exposes no trade volume or fee paid), so this is the fee rate applied to the pay
 
 ## Premade empires
 
-Twelve empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
+Thirteen empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
 mechanics are theirs, unchanged: species, portrait and traits, ethics, authority, government, all **three civics**
 (played with a +1 civics mod) and origin. Names, homeworld and system, ruler and title, ship set, flag, a name list
 (`common/name_lists/lfg_name_lists.txt`, literal names; fleet and army sequences localised) and a start-screen story are
@@ -953,6 +953,7 @@ new. Each empire's prescripted flag (`common/prescripted_flags/lfg_empire_flags.
 | Chrome Throne of Alaran (Alarian Kingdom) | Alarans | Cybernetic Creed | Cybernetic | yes |
 | Cevelli Stormbloom Cooperative (Cevellian Cooperative) | Cevelli, on the tropical world Thunderloam | Storm Chasers | Psionic | yes |
 | Priman Ringwright Exchange (Priman Mercantile Union) | Primes (individual machines) | Shattered Ring | Humanoid | yes |
+| Obadin Undertow Syndicate (Obadin Syndicate) | Obadin, on the ocean world Tebbran Shallows | Payback | Molluscoid | yes |
 
 Changed from the saved designs: the Myrran homeworld is a vanilla **ocean** world and the Cevelli one a **tropical** world
 (both were Planetary Diversity's), and

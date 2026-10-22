@@ -49,3 +49,7 @@ lfg_empire_cevelli = {
 lfg_empire_priman = {
 	flags = { lfg_empire_priman custom_start_screen }
 }
+
+lfg_empire_obadin = {
+	flags = { lfg_empire_obadin custom_start_screen }
+}

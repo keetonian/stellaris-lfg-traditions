@@ -645,3 +645,56 @@ lfg_empire_priman = {
 		leader_class = official
 	}
 }
+
+# Obadin Undertow Syndicate (from the author's "Obadin Syndicate"; spawns as AI: yes)
+lfg_empire_obadin = {
+	name = "lfg_empire_obadin_name"
+	adjective = "lfg_empire_obadin_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_obadin_prefix"
+	species = {
+		class = "MOL"
+		portrait = "stargazer_01"
+		name = "lfg_empire_obadin_species"
+		plural = "lfg_empire_obadin_species_plural"
+		adjective = "lfg_empire_obadin_species_adj"
+		name_list = "lfg_obadin"
+		trait = "trait_organic"
+		trait = "trait_cyborg_trading_algorithms"
+		trait = "trait_thrifty"
+		trait = "trait_unruly"
+		trait = "trait_charismatic"
+		trait = "trait_sedentary"
+	}
+	room = "default_room"
+	authority = "auth_corporate"
+	government = gov_criminal_syndicate
+	civics = { "civic_free_traders" "civic_criminal_heritage" "civic_augmentation_bazaars" }
+	ethic = "ethic_egalitarian"
+	ethic = "ethic_xenophile"
+	ethic = "ethic_militarist"
+	origin = "origin_payback"
+	flag = lfg_empire_obadin	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_obadin_planet"
+	planet_class = "pc_ocean"
+	system_name = "lfg_empire_obadin_system"
+	graphical_culture = "molluscoid_01"
+	city_graphical_culture = "molluscoid_01"
+	empire_flag = {
+		icon = { category = "pointy" file = "flag_pointy_19.dds" }
+		background = { category = "backgrounds" file = "flag_BG_20.dds" }
+		colors = { "ocean_turquoise" "black" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_obadin_ruler"
+		ruler_title = "lfg_empire_obadin_ruler_title"
+		gender = female
+		portrait = "stargazer_01"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_principled"
+		leader_class = official
+	}
+}

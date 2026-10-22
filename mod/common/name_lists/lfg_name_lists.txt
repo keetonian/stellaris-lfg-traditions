@@ -450,3 +450,39 @@ lfg_priman = {
 		}
 	}
 }
+
+lfg_obadin = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Inkwake" "Undertow" "Fair Cut" "Stolen Implant" "Black Tide" "Contraband Current" "Quiet Tentacle" "Bazaar Queen" "Debt Unpaid" "Riptide Deal" "Grey Market" "No Receipts" "Eight Hands" "Smuggler's Grace" "Payback" "Reef of Thieves" "Wet Ledger" "Chrome Gill" "Second Skin" "Backroom Bargain" "Low Tide" "Slick Deal" "Inkcloud" "Fence" "Tentacle Clause" "Overdue Notice" "Shell Game" "Deep Pockets" "Free Agent" "Last Invoice"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Undertow Crew" "Inkwake Flotilla" "Bazaar Escort" "Debt Breakers" "Riptide Gang" "Smuggler's Wing" "Black Tide Squadron" "Tebbran Home Fleet"
+		}
+		sequential_name = lfg_empire_obadin_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_obadin_seq_army }
+		defense_army = { sequential_name = lfg_empire_obadin_seq_defense }
+		assault_army = { sequential_name = lfg_empire_obadin_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_obadin_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_obadin_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Tebbran Shallows" "Inkmere" "Smuggler's Reef" "Bazaar Deep" "Blacktide" "Undertow" "Wetmarket" "Chromereef" "Grey Shoal" "Payback Point" "Riptide" "Shellhaven" "Fencewater" "Saltdebt" "Inkhollow" "Driftmarket" "Kelpden" "Low Tide" "Tebbra Minor" "Free Reef" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Gobb" "Oba" "Tebb" "Inko" "Skell" "Murr" "Drabb" "Quoll" "Varro" "Pilk" }
+			first_names_female = { "Gobba" "Obadia" "Tebba" "Inka" "Skella" "Murra" "Drabba" "Quolla" "Varra" "Pilka" }
+			second_names = { "Inkwake" "Eighthands" "Undertow" "Saltdebt" "Chromegill" "Reefcut" "Shellgame" "Blacktide" "Fencewater" "Quietink" }
+			regnal_first_names = { "Gobba" "Obadia" "Tebba" "Inka" "Gobb" "Oba" "Tebb" "Inko" }
+			regnal_second_names = { "Inkwake" "Eighthands" "Undertow" "Saltdebt" }
+		}
+	}
+}
