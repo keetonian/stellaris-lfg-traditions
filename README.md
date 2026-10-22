@@ -909,7 +909,16 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
 An empire with the **Payback** origin that has finished its revenge (vanilla country flag `payback_revenge_complete`) and
 hosts the **Galactic Market** (`is_market_leader`) collects **market tithes**: every month (`lfg_payback.1`, an early-out
 trigger, so other empires cost one flag check), every other empire with market access (vanilla flag
-`has_market_access`) pays it **its market fee × its monthly trade income**. The fee is vanilla's base 30%
+`has_market_access`) pays it **its market fee × its monthly trade income**. The fee is raised to a floor by the payer's opinion of the
+Payback empire (`opinion_level`), never above 30%:
+
+| Payer's relations | Fee |
+|---|---|
+| good or better | its fee (5-30%) |
+| neutral | at least 10% |
+| poor | at least 15% |
+| terrible, or at war with it | at least 20% |
+ The fee is vanilla's base 30%
 (`MARKET_TRADE_FEE_BASE`) plus the payer's `country_trade_fee` modifier, at least 5% (`value:lfg_market_fee`); the income
 is `has_monthly_income` for trade (`value:lfg_market_trade_income`). It shows as one **Market Tithes** budget line on
 each side: our own economic category `country_lfg_market_tithes` (its generated `_trade_upkeep_add` /

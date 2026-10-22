@@ -3,8 +3,8 @@ namespace = lfg_payback
 
 # Monthly (on_monthly_pulse_country), only the empire that finished Payback's revenge (vanilla flag
 # payback_revenge_complete) and hosts the Galactic Market (is_market_leader): every other empire with market access
-# (vanilla flag has_market_access) pays it its market fee share of its monthly trade income (value:lfg_market_fee x
-# value:lfg_market_trade_income). Shown as one budget line each side (lfg_market_tithe_paid / _income, 32-day modifiers
+# (vanilla flag has_market_access) pays it its market fee share of its monthly trade income (value:lfg_market_fee, raised to a floor
+# by its opinion of us, x value:lfg_market_trade_income). Shown as one budget line each side (lfg_market_tithe_paid / _income, 32-day modifiers
 # re-added monthly, so they lapse by themselves), plus a one-time opinion penalty toward the Payback empire.
 country_event = {
 	id = lfg_payback.1
@@ -23,8 +23,35 @@ country_event = {
 				NOT = { is_same_value = root }
 				has_country_flag = has_market_access
 			}
+			# The fee: its normal market fee (5-30%), raised to a floor by its opinion of us - neutral 10%, poor 15%,
+			# terrible or at war 20%. Never above 30%.
+			set_variable = { which = lfg_market_tithe_fee value = value:lfg_market_fee }
+			if = {
+				limit = {
+					OR = {
+						is_at_war_with = root
+						opinion_level = { who = root level <= terrible }
+					}
+					check_variable = { which = lfg_market_tithe_fee value < 0.2 }
+				}
+				set_variable = { which = lfg_market_tithe_fee value = 0.2 }
+			}
+			else_if = {
+				limit = {
+					opinion_level = { who = root level <= poor }
+					check_variable = { which = lfg_market_tithe_fee value < 0.15 }
+				}
+				set_variable = { which = lfg_market_tithe_fee value = 0.15 }
+			}
+			else_if = {
+				limit = {
+					opinion_level = { who = root level < good }
+					check_variable = { which = lfg_market_tithe_fee value < 0.1 }
+				}
+				set_variable = { which = lfg_market_tithe_fee value = 0.1 }
+			}
 			set_variable = { which = lfg_market_tithe value = value:lfg_market_trade_income }
-			multiply_variable = { which = lfg_market_tithe value = value:lfg_market_fee }
+			multiply_variable = { which = lfg_market_tithe value = lfg_market_tithe_fee }
 			remove_modifier = lfg_market_tithe_paid
 			if = {
 				limit = { check_variable = { which = lfg_market_tithe value > 0 } }
@@ -38,6 +65,7 @@ country_event = {
 				root = { change_variable = { which = lfg_market_tithes value = prev.lfg_market_tithe } }
 			}
 			clear_variable = lfg_market_tithe
+			clear_variable = lfg_market_tithe_fee
 		}
 		remove_modifier = lfg_market_tithe_income
 		if = {
