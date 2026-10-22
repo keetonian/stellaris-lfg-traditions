@@ -189,8 +189,8 @@ lfg_empire_veyl = {
 	planet_name = "lfg_empire_veyl_planet"
 	planet_class = "pc_alpine"
 	system_name = "lfg_empire_veyl_system"
-	graphical_culture = "solarpunk_01"
-	city_graphical_culture = "mammalian_01"
+	graphical_culture = "synthetics_01"
+	city_graphical_culture = "synthetics_01"
 	empire_flag = {
 		icon = { category = "pointy" file = "flag_pointy_8.dds" }
 		background = { category = "backgrounds" file = "flag_BG_11.dds" }
@@ -585,6 +585,59 @@ lfg_empire_cevelli = {
 		ruler_title = "lfg_empire_cevelli_ruler_title"
 		gender = female
 		portrait = "fun16"
+		texture = 0
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_principled"
+		leader_class = official
+	}
+}
+
+# Priman Ringwright Exchange (from the author's "Priman Mercantile Union"; spawns as AI: yes)
+lfg_empire_priman = {
+	name = "lfg_empire_priman_name"
+	adjective = "lfg_empire_priman_adj"
+	spawn_enabled = yes
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_priman_prefix"
+	species = {
+		class = "MACHINE"
+		portrait = "synth_machine_05"
+		name = "lfg_empire_priman_species"
+		plural = "lfg_empire_priman_species_plural"
+		adjective = "lfg_empire_priman_species_adj"
+		name_list = "lfg_priman"
+		trait = "trait_machine_unit"
+		trait = "trait_robot_history_chatbot"
+		trait = "trait_robot_trading_algorithms"
+		trait = "trait_robot_high_bandwidth"
+		trait = "trait_robot_high_maintenance"
+		trait = "trait_robot_recycled"
+	}
+	room = "default_room"
+	authority = "auth_corporate"
+	government = gov_trade_league
+	civics = { "civic_free_traders" "civic_gospel_of_the_masses" "civic_corporate_dark_consortium" }
+	ethic = "ethic_fanatic_xenophile"
+	ethic = "ethic_spiritualist"
+	origin = "origin_shattered_ring"
+	flag = lfg_empire_priman	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_priman_planet"
+	planet_class = "pc_continental"
+	initializer = "shattered_ring_start"
+	system_name = "lfg_empire_priman_system"
+	graphical_culture = "humanoid_01"
+	city_graphical_culture = "humanoid_01"
+	empire_flag = {
+		icon = { category = "corporate" file = "corporate_05.dds" }
+		background = { category = "backgrounds" file = "flag_BG_19.dds" }
+		colors = { "yellow" "dark_blue" "null" "null" }
+	}
+	ruler = {
+		name = "lfg_empire_priman_ruler"
+		ruler_title = "lfg_empire_priman_ruler_title"
+		gender = female
+		portrait = "synth_machine_05"
 		texture = 0
 		attachment = 0
 		clothes = 0

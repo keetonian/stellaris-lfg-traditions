@@ -417,3 +417,36 @@ lfg_cevelli = {
 		}
 	}
 }
+
+lfg_priman = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Fair Exchange" "Ledger of the Ring" "Broken Halo" "Dark Dividend" "Shardmarket" "Margin Call" "Prosperity Gospel" "Arbitrage" "Ringwright" "Blessed Return" "Compound Interest" "Null Matter Venture" "Haloshard" "Open Book" "Quiet Commission" "Tithe Engine" "Bull Market" "Shadow Ledger" "Exchange Rate" "Futures" "Promissory Note" "Halo's Credit" "Dark Asset" "Clearing House" "Good Faith" "Bid and Ask" "Commission Prime" "Market Maker" "Settled Account" "The Last Segment"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Exchange Escort" "Ringwright Convoy" "Halo Guard" "Dark Matter Flotilla" "Ledger Patrol" "Commission Squadron" "Arbitrage Wing" "Prima Home Fleet"
+		}
+		sequential_name = lfg_empire_priman_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_priman_seq_army }
+		defense_army = { sequential_name = lfg_empire_priman_seq_defense }
+		assault_army = { sequential_name = lfg_empire_priman_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_priman_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_priman_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Shardhaven" "Second Segment" "Halo's Edge" "Brokenreach" "Ledgerfall" "Prima Minor" "Exchange Point" "Ringrest" "Darkmarket" "Margin" "Arbitra" "Haloholm" "Settlement" "Commission" "Clearwater" "Tithe" "Futura" "Creditor" "Haloshard" "Segment Nine" }
+		}
+	}
+	character_names = {
+		default = {
+			full_names = { "Calculator-1" "Calculator-5" "Calculator-8" "Calculator-13" "Calculator-21" "Calculator-34" "Icosahedron-1" "Icosahedron-5" "Icosahedron-8" "Icosahedron-13" "Icosahedron-21" "Icosahedron-34" "Arbiter-1" "Arbiter-5" "Arbiter-8" "Arbiter-13" "Arbiter-21" "Arbiter-34" "Ledger-1" "Ledger-5" "Ledger-8" "Ledger-13" "Ledger-21" "Ledger-34" "Broker-1" "Broker-5" "Broker-8" "Broker-13" "Broker-21" "Broker-34" }
+			regnal_full_names = { "Calculator Icosahedra" "Chief Arbiter" "The Exchange" "Prime Ledger" "The Market-Mind" }
+		}
+	}
+}

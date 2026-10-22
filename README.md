@@ -906,20 +906,20 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
 
 ## Premade empires
 
-Eleven empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
+Twelve empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
 mechanics are theirs, unchanged: species, portrait and traits, ethics, authority, government, all **three civics**
 (played with a +1 civics mod) and origin. Names, homeworld and system, ruler and title, ship set, flag, a name list
 (`common/name_lists/lfg_name_lists.txt`, literal names; fleet and army sequences localised) and a start-screen story are
 new. Each empire's prescripted flag (`common/prescripted_flags/lfg_empire_flags.txt`) sets country flag
 `lfg_empire_<key>`, which picks its story (`common/start_screen_messages/lfg_empire_start_screens.txt`), plus vanilla's
-`custom_start_screen`, which hides the generic homeworld text. Built once by a throwaway script; edit the files directly.
+`custom_start_screen`, which hides the generic homeworld text. They are owned by the mod now: edit the files directly (the author's saved designs are gone; nothing reads them).
 
 | Empire (saved design) | Species | Origin | Ship set | Spawns as AI |
 |---|---|---|---|---|
 | Myrran Gene-Tide Exchange (Myrran Trade Commission) | Myrran, on the ocean world Vael Myrrhos | Evolutionary Predators | Aquatic | yes |
 | Halcyon Ring Reliquary (food aura) | Thalassi | The Great Ring (Giga) | Psionic | **no** |
 | Cevantian Sporeweb Cooperative (Cevantian Commerce League) | Cevanti | Synthetic Fertility | Fungoid | yes |
-| Veyl Groundskeeping Directive (Island) | Groundskeepers | Incohesive (Giga) | Solarpunk | **no** |
+| Veyl Groundskeeping Directive (Island) | Groundskeepers | Incohesive (Giga) | Synthetic | **no** |
 | Hearthkeepers of the Korinth Disk (Servitors) | Attendants + Korinthi | Alderson Disk (Giga) | Mindwarden | **no** |
 | Cevantian Nanoforge Directorate (Cevantian Forge) | Forgeminds | Nanite Forge | Synthetic | **no** |
 | Drakesworn Dominion of Alar (Sovereign Alarian Nations) | Alari | Here Be Dragons | Reptilian | yes |
@@ -927,11 +927,12 @@ new. Each empire's prescripted flag (`common/prescripted_flags/lfg_empire_flags.
 | Khell'Zen Tempest Syndicate (Khell'Zen Enterprises) | Khell'Zen | Overtuned | Avian | yes |
 | Chrome Throne of Alaran (Alarian Kingdom) | Alarans | Cybernetic Creed | Cybernetic | yes |
 | Cevelli Stormbloom Cooperative (Cevellian Cooperative) | Cevelli, on the tropical world Thunderloam | Storm Chasers | Psionic | yes |
+| Priman Ringwright Exchange (Priman Mercantile Union) | Primes (individual machines) | Shattered Ring | Humanoid | yes |
 
 Changed from the saved designs: the Myrran homeworld is a vanilla **ocean** world and the Cevelli one a **tropical** world
 (both were Planetary Diversity's), and
 the two that started in Sol (`sol_system_initializer`) get a random home system instead. **Unverified in game:** the
-stories (prescripted flag → start screen), `ruler_title`, and the Mindwarden / Solarpunk ship sets with mammalian cities.
+stories (prescripted flag → start screen), `ruler_title`, and the Mindwarden ship set with mammalian cities.
 
 ## Overrides of vanilla and Gigastructural content
 
