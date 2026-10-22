@@ -71,7 +71,7 @@ lfg_operation_shadow_branch = {
 	}
 }
 
-# Remove Branch Office (Shadow Transactions): closes a random branch office - anyone's but ours -
+# Forced Audit (Shadow Transactions): closes a random branch office - anyone's but ours -
 # on one of the target's planets (lfg_sealed_ring.24). Costlier and harder than Shadow Branch Office: three stages at
 # difficulty 7 / 7 / 8 (vanilla's @diff_t3 / @diff_t4).
 lfg_operation_remove_branch = {

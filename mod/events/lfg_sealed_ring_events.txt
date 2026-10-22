@@ -842,7 +842,7 @@ espionage_operation_event = {
 	}
 }
 
-# Remove Branch Office (lfg_operation_remove_branch; this = the operation, owner = us, target = the target empire).
+# Forced Audit (lfg_operation_remove_branch; this = the operation, owner = us, target = the target empire).
 # Stages 1-2: finding the office and its weak points.
 espionage_operation_event = {
 	id = lfg_sealed_ring.22

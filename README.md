@@ -4,7 +4,7 @@ A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games th
 
 - **10 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
 - **7 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
-- **7 ascension perks:** **Legendary Dragons** (Here Be Dragons) lets one Elder Dragon keep growing - the origin's drakes now grow for 44 years with a splashing Dragon's Breath; **Storm Sovereignty** (needs Galactic Wonders and Galactic Weather Control) unlocks the Tempest Lodestar megastructure that summons nexus storms, and makes Storm Chasers immune to storm penalties; **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead. **Shadow Transactions** (Swallowed Whole with Criminal Heritage, any time): Shadow Branch Office and Remove Branch Office espionage operations, cheaper branch offices, +10 intel on every empire, +1 decryption.
+- **7 ascension perks:** **Legendary Dragons** (Here Be Dragons) lets one Elder Dragon keep growing - the origin's drakes now grow for 44 years with a splashing Dragon's Breath; **Storm Sovereignty** (needs Galactic Wonders and Galactic Weather Control) unlocks the Tempest Lodestar megastructure that summons nexus storms, and makes Storm Chasers immune to storm penalties; **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead. **Shadow Transactions** (Swallowed Whole with Criminal Heritage, any time): Shadow Branch Office and Disrupt Branch Office espionage operations, +10 intel on every empire, +1 decryption.
 - **2 origins:** **Nanite Forge** (machines): eight size 40 molten worlds around a blue star, a broken nanite harvester that doubles their nanite deposits every 3 years, and a nanite-fuelled automation building. **Swallowed Whole** (non-machine): an intact ring world dropped beyond the galactic rim by a Tiyanki Matriarch; clear its Leviathan Residue to unlock the jump drives that reach the galaxy, trade Quasi-Negative Mass with the Urmazin, and hunt the Legendary Matriarch for Polymelic DNA.
 - **Nanite harvesters** (all of them) yield **twice** vanilla's nanites at every step and get three more doubling steps, up to 819.2 nanites per planet.
 - **Nanite Cognition Core** (after finishing Nanotech): automates 50% of a planet's specialist jobs for a lot of nanites.
@@ -382,15 +382,15 @@ without a first visit; the kill event's scopes; the dig site's wormhole pair (va
 second pair into the Matriarch's system when two empires finish the dig.
 
 **Shadow Transactions** (`ap_lfg_shadow_transactions`; secret: not on the Steam page): only for Swallowed Whole empires with **Criminal Heritage**
-(which blocks vanilla's Universal Transactions), with no other perks needed first. **−50% branch office cost** (both
-`country_branch_office_influence_cost_mult` and `planet_branch_offices_cost_mult`), **+10 base intel** on every empire
-(`add_base_country_intel`, as the Spy Orb gives), **+1 decryption**. The influence −50% does little from beyond the rim: the game applies it *before* its 1,000 cap
-(`BRANCH_OFFICE_INFLUENCE_MAX_COST`), and with no hyperlane route the distance term is huge. So the perk's real prize is
-the **Shadow Branch Office** espionage operation (`lfg_operation_shadow_branch`, needs Nemesis like vanilla's): 2 stages
+(which blocks vanilla's Universal Transactions), with no other perks needed first. **+10 base intel** on every empire
+(`add_base_country_intel`, as the Spy Orb gives), **+1 decryption**, and two espionage operations. From beyond the rim
+there's no hyperlane route, so opening a branch office normally always costs the game's 1,000-influence cap
+(`BRANCH_OFFICE_INFLUENCE_MAX_COST`; `country_branch_office_influence_cost_mult` applies before the cap, so a discount
+wouldn't help). The **Shadow Branch Office** espionage operation (`lfg_operation_shadow_branch`, needs Nemesis like vanilla's): 2 stages
 at difficulty 6 (vanilla's tier 2), 50 influence, 6 energy upkeep, 30 spy power. It opens a branch office
 (`establish_branch_office`, `lfg_sealed_ring.21`) on a random planet of the target that has none and that we know
 (surveyed by a science ship, or through intel); the target must be able to host branch offices (a regular, non-gestalt
-empire; Fanatic Purifiers only for their own species). If no planet qualifies by then, the influence is refunded. It also unlocks **Remove Branch Office** (`lfg_operation_remove_branch`): 3 stages at difficulty 7 / 7 /
+empire; Fanatic Purifiers only for their own species). If no planet qualifies by then, the influence is refunded. It also unlocks **Disrupt Branch Office** (`lfg_operation_remove_branch`): 3 stages at difficulty 7 / 7 /
 8 (vanilla's tiers 3 / 4), 100 influence, 10 energy upkeep, 45 spy power. It closes (`close_branch_office`,
 `lfg_sealed_ring.24`) a random branch office on one of the target's planets - anyone's but ours;
 none left by then: the influence is refunded. Icon: Universal Transactions turned blood red
