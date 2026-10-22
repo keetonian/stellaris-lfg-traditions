@@ -1,0 +1,48 @@
+# LFG Traditions - Payback origin: market tithes.
+namespace = lfg_payback
+
+# Monthly (on_monthly_pulse_country), only the empire that finished Payback's revenge (vanilla flag
+# payback_revenge_complete) and hosts the Galactic Market (is_market_leader): every other empire with market access
+# (vanilla flag has_market_access) pays it its market fee share of its monthly trade income (value:lfg_market_fee x
+# value:lfg_market_trade_income). Shown as one budget line each side (lfg_market_tithe_paid / _income, 32-day modifiers
+# re-added monthly, so they lapse by themselves), plus a one-time opinion penalty toward the Payback empire.
+country_event = {
+	id = lfg_payback.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_country_flag = payback_revenge_complete
+		is_market_leader = yes
+	}
+
+	immediate = {
+		set_variable = { which = lfg_market_tithes value = 0 }
+		every_playable_country = {
+			limit = {
+				NOT = { is_same_value = root }
+				has_country_flag = has_market_access
+			}
+			set_variable = { which = lfg_market_tithe value = value:lfg_market_trade_income }
+			multiply_variable = { which = lfg_market_tithe value = value:lfg_market_fee }
+			remove_modifier = lfg_market_tithe_paid
+			if = {
+				limit = { check_variable = { which = lfg_market_tithe value > 0 } }
+				add_modifier = { modifier = lfg_market_tithe_paid days = 32 multiplier = lfg_market_tithe }
+				# Once per payer, the first time it pays this empire (country flag lfg_paid_market_tithes@<payback empire>).
+				if = {
+					limit = { NOT = { has_country_flag = lfg_paid_market_tithes@root } }
+					set_country_flag = lfg_paid_market_tithes@root
+					add_opinion_modifier = { who = root modifier = lfg_market_tithes }
+				}
+				root = { change_variable = { which = lfg_market_tithes value = prev.lfg_market_tithe } }
+			}
+			clear_variable = lfg_market_tithe
+		}
+		remove_modifier = lfg_market_tithe_income
+		if = {
+			limit = { check_variable = { which = lfg_market_tithes value > 0 } }
+			add_modifier = { modifier = lfg_market_tithe_income days = 32 multiplier = lfg_market_tithes }
+		}
+	}
+}

@@ -904,6 +904,22 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
   trait events can grant it (it's in their "pop output" category, alongside vanilla traits).
 - Never given by **Species Experimentation** (its random trait filter skips it).
 
+## Payback: market tithes
+
+An empire with the **Payback** origin that has finished its revenge (vanilla country flag `payback_revenge_complete`) and
+hosts the **Galactic Market** (`is_market_leader`) collects **market tithes**: every month (`lfg_payback.1`, an early-out
+trigger, so other empires cost one flag check), every other empire with market access (vanilla flag
+`has_market_access`) pays it **its market fee × its monthly trade income**. The fee is vanilla's base 30%
+(`MARKET_TRADE_FEE_BASE`) plus the payer's `country_trade_fee` modifier, at least 5% (`value:lfg_market_fee`); the income
+is `has_monthly_income` for trade (`value:lfg_market_trade_income`). It shows as one **Market Tithes** budget line on
+each side: our own economic category `country_lfg_market_tithes` (its generated `_trade_upkeep_add` /
+`_trade_produces_add`, through the 32-day modifiers `lfg_market_tithe_paid` / `lfg_market_tithe_income`, re-added
+monthly, so everything lapses by itself when the conditions end). Payers get a one-time **-30 opinion** of the Payback empire
+(`lfg_market_tithes`, the first time they pay; fades 1 a month). The trades themselves can't be tracked (the engine
+exposes no trade volume or fee paid), so this is the fee rate applied to the payer's trade income.
+**Unverified in game:** whether `has_monthly_income` is gross or net trade, and reading `country_trade_fee` as a value
+(`complex_trigger_modifier` on `check_modifier_value`; if it fails, everyone pays the base 30%).
+
 ## Premade empires
 
 Twelve empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The

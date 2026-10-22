@@ -21,3 +21,15 @@ lfg_nexus_storm_targeted = {
 	}
 	min = -75
 }
+
+# Payback market tithes (lfg_payback.1): paying the Payback empire for using its market. Once per payer (the first time
+# it pays); fades 1 a month (2.5 years).
+lfg_market_tithes = {
+	opinion = {
+		base = -30
+	}
+	decay = {
+		base = 1
+	}
+	min = -30
+}

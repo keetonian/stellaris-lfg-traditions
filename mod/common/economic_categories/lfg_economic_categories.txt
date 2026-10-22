@@ -15,3 +15,14 @@ planet_lfg_penal_laborers = {
 		upkeep
 	}
 }
+
+# Payback + Galactic Market: market tithes paid to the Payback empire (events/lfg_payback_events.txt). Its own budget line
+# (country_lfg_market_tithes_trade_produces_add / _upkeep_add, via lfg_market_tithe_income / _paid).
+country_lfg_market_tithes = {
+	parent = country_container
+	generate_add_modifiers = {
+		produces
+		upkeep
+	}
+	modifier_category = country
+}

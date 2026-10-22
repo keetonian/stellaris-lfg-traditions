@@ -70,7 +70,8 @@ mod/                                  # exactly what ships
   events/lfg_dragons_events.txt                              # .1 monthly growth + starvation, .2 hungry dragon popup, .3 Legendary picker, .4 new Elder popup, .5 Feast / .6 Tribute pickers,
                                                              #   .7 hunting (on_ship_destroyed_victim) / .8 its popup, .10 testing menu (console)
   gfx/projectiles/lfg_projectiles.txt                        # the Dragon's Breath beam; its splash blasts: gfx/models/ships/lfg_drake_breath.asset
-  prescripted_countries/lfg_prescripted_countries.txt        # 10 premade empires (the author's designs, new flavour)
+  events/lfg_payback_events.txt                              # lfg_payback.1: Payback market tithes (monthly; economic category country_lfg_market_tithes)
+  prescripted_countries/lfg_prescripted_countries.txt        # 12 premade empires (the author's designs, new flavour)
   common/prescripted_flags/lfg_empire_flags.txt              #   their country flags lfg_empire_<key> -> stories
   common/name_lists/lfg_name_lists.txt                       #   their name lists (literal names)
   common/start_screen_messages/lfg_empire_start_screens.txt  #   their stories (loc: lfg_empires_l_english.yml)

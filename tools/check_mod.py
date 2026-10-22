@@ -116,12 +116,15 @@ ALLOWED_FILES = [
     r"localisation/english/replace/lfg_[^/]+_l_english\.yml",  # generated overrides of game/Giga text
 ]
 OVERRIDE_FILES = {Path(p).relative_to("mod").as_posix() for p in gen_overrides.OVERRIDES}
-KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "origin_lfg_", "tech_lfg_", "building_lfg_", "d_lfg_", "councilor_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "lfg_",
+KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "origin_lfg_", "tech_lfg_", "building_lfg_", "d_lfg_", "councilor_lfg_", "agenda_lfg_", "decision_lfg_", "trait_lfg_", "leader_trait_lfg_", "ap_lfg_", "zone_lfg_", "planet_lfg_", "country_lfg_", "lfg_",
                 "@lfg_", "can_destroy_planet_with_LFG_")  # the last: the game's name for an lfg planet killer's targeting trigger
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/", "common/section_templates/", "common/component_templates/",
                          "common/component_sets/", "common/start_screen_messages/",
                          "common/global_ship_designs/")  # sections: ship_section_template, designs: ship_design, keyed inside
+# Resources the game generates economic-category modifiers for (the ones our categories use; extend as needed).
+GENERATED_RESOURCES = ("energy", "minerals", "food", "alloys", "consumer_goods", "trade", "unity", "influence",
+                       "physics_research", "society_research", "engineering_research")
 # Single-category values used by vanilla policies (common/policies/00_policies.txt, 4.5).
 POLICY_CATEGORIES = {"diplomacy", "economy", "military", "research", "society"}
 STATIC_MODIFIER_NON_MODIFIERS = {"icon", "icon_frame", "custom_tooltip", "hide_in_tooltip", "show_only_custom_tooltip"}
@@ -590,6 +593,20 @@ def load_modifiers(log: Optional[Path]) -> Set[str]:
         return {line.strip() for line in f if line.strip() and not line.startswith("#")}
 
 
+def own_category_modifiers(mod: Mod) -> Set[str]:
+    """Modifiers the game generates for our own economic categories (<category>_<resource>_<table>_<add|mult>, from their
+    generate_add_modifiers / generate_mult_modifiers), which aren't in modifiers.log until the game has loaded the mod."""
+    names: Set[str] = set()
+    for key, e in mod.top("common/economic_categories").items():
+        if not e.is_block:
+            continue
+        for kind in ("add", "mult"):
+            for block in pdx.get(e.value, f"generate_{kind}_modifiers"):
+                for table in pdx.bare_values(block.value) if block.is_block else []:
+                    names |= {f"{key}_{res}_{table}_{kind}" for res in GENERATED_RESOURCES}
+    return names
+
+
 def modifier_keys(mod: Mod):
     for folder in ("common/traditions", "common/governments/civics", "common/governments/councilors",
                    "common/council_agendas"):
@@ -818,7 +835,7 @@ def run(mod_dir: Path, game: Optional[Path], giga: Optional[Path], modifiers_log
     check_events(mod, loc, r)
     check_scripted_references(mod, r)
     check_sprites(mod, game, r, giga)
-    known_modifiers = load_modifiers(modifiers_log)
+    known_modifiers = load_modifiers(modifiers_log) | own_category_modifiers(mod)
     check_modifiers(mod, known_modifiers, r)
     check_agendas_and_static_modifiers(mod, loc, known_modifiers, r)
     check_on_actions(mod, r)
