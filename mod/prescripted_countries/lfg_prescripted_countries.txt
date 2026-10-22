@@ -664,8 +664,8 @@ lfg_empire_obadin = {
 		trait = "trait_cyborg_trading_algorithms"
 		trait = "trait_thrifty"
 		trait = "trait_unruly"
-		trait = "trait_charismatic"
-		trait = "trait_sedentary"
+		trait = "trait_shelled"
+		trait = "trait_humanoid_psychological_infertility"
 	}
 	room = "default_room"
 	authority = "auth_corporate"
