@@ -51,7 +51,7 @@ Supertensile bonuses need Gigastructural's job-based build mode (`giga_buildcap_
 
 ### Shellworlders: life on artificial worlds
 **Who:** artificial-world origins (Giga: Frameworld, Decaying Birch World, Great Ring, Interstellar Ring, Alderson Disk;
-vanilla: Shattered Ring, Void Dwellers), or after *Orbital Habitats* / *Ring World*. **Hook:** every bonus applies on your
+vanilla: Shattered Ring, Void Dwellers, Voidforged; this mod: Swallowed Whole), or after *Orbital Habitats* / *Ring World*. **Hook:** every bonus applies on your
 **artificial worlds** (`is_artificial`: habitats, ring segments, Alderson Disk slices, Maginot worlds and Giga's other habitable
 megastructures), and megastructure build speed grows with how many you own.
 

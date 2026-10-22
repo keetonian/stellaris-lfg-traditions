@@ -18,6 +18,8 @@ tradition_lfg_shellworlders = {
 			has_origin = origin_alderson
 			has_origin = origin_shattered_ring
 			has_origin = origin_void_dwellers
+			has_origin = origin_void_machines
+			has_origin = origin_lfg_sealed_ring
 			has_technology = tech_habitat_1
 			has_technology = tech_ring_world
 		}
@@ -44,6 +46,8 @@ tradition_lfg_shellworlders = {
 				has_origin = origin_alderson
 				has_origin = origin_shattered_ring
 				has_origin = origin_void_dwellers
+				has_origin = origin_void_machines
+				has_origin = origin_lfg_sealed_ring
 			}
 		}
 		modifier = {
