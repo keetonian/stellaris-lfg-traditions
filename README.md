@@ -388,8 +388,8 @@ there's no hyperlane route, so opening a branch office normally always costs the
 (`BRANCH_OFFICE_INFLUENCE_MAX_COST`; `country_branch_office_influence_cost_mult` applies before the cap, so a discount
 wouldn't help). The **Shadow Branch Office** espionage operation (`lfg_operation_shadow_branch`, needs Nemesis like vanilla's): 2 stages
 at difficulty 6 (vanilla's tier 2), 50 influence, 6 energy upkeep, 30 spy power. It opens a branch office
-(`establish_branch_office`, `lfg_sealed_ring.21`) on a random planet of the target that has none and that we know
-(surveyed by a science ship, or through intel); the target must be able to host branch offices (a regular, non-gestalt
+(`establish_branch_office`, `lfg_sealed_ring.21`) on a random planet of the target that has none
+(no survey needed: intel shows their colonies but doesn't mark them surveyed); the target must be able to host branch offices (a regular, non-gestalt
 empire; Fanatic Purifiers only for their own species). If no planet qualifies by then, the influence is refunded. It also unlocks **Disrupt Branch Office** (`lfg_operation_remove_branch`): 3 stages at difficulty 7 / 7 /
 8 (vanilla's tiers 3 / 4), 100 influence, 10 energy upkeep, 45 spy power. It closes (`close_branch_office`,
 `lfg_sealed_ring.24`) a random branch office on one of the target's planets - anyone's but ours;

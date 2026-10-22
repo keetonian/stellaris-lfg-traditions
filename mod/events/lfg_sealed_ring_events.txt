@@ -798,8 +798,7 @@ espionage_operation_event = {
 	option = { name = lfg_sealed_ring.20.a }
 }
 
-# Stage 2: the office opens on a random planet of the target that we have surveyed (by science ship or, as vanilla's
-# on_planet_surveyed notes, through intel) and that has no branch office
+# Stage 2: the office opens on a random planet of the target that has no branch office
 # (none left: the influence comes back).
 espionage_operation_event = {
 	id = lfg_sealed_ring.21
@@ -816,7 +815,6 @@ espionage_operation_event = {
 			random_owned_planet = {
 				limit = {
 					has_branch_office = no
-					is_surveyed = { who = root.owner status = yes }
 				}
 				save_event_target_as = lfg_shadow_branch_planet
 			}

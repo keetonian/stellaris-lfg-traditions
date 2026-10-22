@@ -2,7 +2,7 @@
 
 # Shadow Branch Office (Shadow Transactions, ap_lfg_shadow_transactions): from beyond the rim no hyperlane route leads
 # anywhere, so branch offices always cost the 1,000-influence cap; this opens one through the spy network instead, on a
-# random planet of the target we have surveyed that has none yet (lfg_sealed_ring.21). The target must be able to host
+# random planet of the target that has none yet (lfg_sealed_ring.21). The target must be able to host
 # branch offices (vanilla's can_support_branch_offices / can_build_branch_office_on_colony: a regular, non-gestalt
 # empire, and Fanatic Purifiers only for their own species). Difficulty 6 per stage is vanilla's @diff_t2.
 lfg_operation_shadow_branch = {
@@ -30,17 +30,21 @@ lfg_operation_shadow_branch = {
 	}
 	allow = {
 		custom_tooltip = {
-			fail_text = lfg_operation_shadow_branch_no_planet
+			fail_text = lfg_operation_shadow_branch_cant_host
 			target = {
 				is_gestalt = no
 				OR = {
 					NOT = { has_civic = civic_fanatic_purifiers }
 					is_same_species = root.owner
 				}
-				any_owned_planet = {
-					has_branch_office = no
-					is_surveyed = { who = root.owner status = yes }
-				}
+			}
+		}
+		# No survey check: from beyond the rim we usually haven't surveyed their worlds (intel shows colonies but
+		# doesn't set is_surveyed), which hid the operation for every target in game.
+		custom_tooltip = {
+			fail_text = lfg_operation_shadow_branch_no_planet
+			target = {
+				any_owned_planet = { has_branch_office = no }
 			}
 		}
 		custom_tooltip = {
