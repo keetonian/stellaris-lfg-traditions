@@ -301,3 +301,72 @@ decision_lfg_legendary_dragon = {
 		weight = 1
 	}
 }
+
+# Legendary Dragons + tech_lfg_draconic_feast, on the capital: speed a drake's growth (lfg_dragons.5 / .6 pick it).
+# Feast: 5 years of its food upkeep for 4 years of growth (one step).
+decision_lfg_dragon_feast = {
+	owned_planets_only = yes
+	sound = event_administrative_work
+	icon = decision_lfg_legendary_dragon
+	potential = {
+		is_capital = yes
+		owner = { has_ascension_perk = ap_lfg_legendary_dragons }
+	}
+	allow = {
+		owner = {
+			has_technology = tech_lfg_draconic_feast
+			custom_tooltip = {
+				fail_text = lfg_needs_growing_drake
+				any_owned_ship = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+				}
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = decision_lfg_dragon_feast_effect_tt
+		hidden_effect = { owner = { country_event = { id = lfg_dragons.5 } } }
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# Tribute: feed a drake our own people (100 pops x its step, x3 for the Legendary Dragon) for a step of growth; every
+# 6 months at most. Not for xenophiles, hives or virtual machines.
+decision_lfg_dragon_tribute = {
+	owned_planets_only = yes
+	sound = event_administrative_work
+	icon = decision_lfg_legendary_dragon
+	potential = {
+		is_capital = yes
+		owner = {
+			has_ascension_perk = ap_lfg_legendary_dragons
+			lfg_can_feed_pops_to_dragons = yes
+		}
+	}
+	allow = {
+		owner = {
+			has_technology = tech_lfg_draconic_feast
+			custom_tooltip = {
+				fail_text = lfg_dragon_tribute_cooling_down
+				NOT = { has_country_flag = lfg_dragon_tribute_cooldown }
+			}
+			custom_tooltip = {
+				fail_text = lfg_needs_growing_drake
+				any_owned_ship = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+				}
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = decision_lfg_dragon_tribute_effect_tt
+		hidden_effect = { owner = { country_event = { id = lfg_dragons.6 } } }
+	}
+	ai_weight = {
+		weight = 0
+	}
+}

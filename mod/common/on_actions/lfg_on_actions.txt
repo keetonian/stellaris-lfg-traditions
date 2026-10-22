@@ -103,3 +103,10 @@ on_lfg_summon_nexus_storm = {
 		lfg_storms.6
 	}
 }
+
+# Legendary Dragons' hunting: a leviathan slain by our drakes makes them grow (lfg_dragons.7).
+on_ship_destroyed_victim = {
+	events = {
+		lfg_dragons.7
+	}
+}

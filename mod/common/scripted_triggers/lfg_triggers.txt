@@ -41,3 +41,38 @@ lfg_is_elder_drake = {
 lfg_has_legendary_dragon = {
 	any_owned_ship = { has_ship_flag = lfg_legendary_dragon }
 }
+
+# Here Be Dragons. Ship scope (a drake): can still grow (below the Elder, or the Legendary Dragon below step 24).
+lfg_drake_can_grow = {
+	OR = {
+		check_variable = { which = lfg_drake_step value < 11 }
+		AND = {
+			has_ship_flag = lfg_legendary_dragon
+			check_variable = { which = lfg_drake_step value < 24 }
+		}
+	}
+}
+
+# Ship scope: a leviathan whose death feeds a drake's growth (Legendary Dragons' hunting; lfg_dragons.7): the killable
+# organic ones - Dimensional Horror (also the Elder One and the Worm's avatar), Stellar Devourer, Corrupted Avatar,
+# Tiyanki Matriarch, Voidspawn, Toxic God, Ether Drake, Shard and the Sky Dragon.
+lfg_drake_prey = {
+	OR = {
+		is_ship_size = dimensional_horror
+		is_ship_size = stellarite
+		is_ship_size = corrupted_avatar
+		is_ship_size = leviathan_01_elder_tiyanki
+		is_ship_size = leviathan_01_voidspawn
+		is_ship_size = toxic_god
+		is_ship_size = space_dragon_red
+		is_ship_size = space_dragon_blue
+		is_ship_size = space_dragon_origin
+	}
+}
+
+# Country scope: may feed its own pops to a drake (Tribute): not xenophiles, hives or virtual machines.
+lfg_can_feed_pops_to_dragons = {
+	is_xenophile = no
+	is_hive_empire = no
+	NOT = { has_tradition = tr_virtuality_adopt }
+}

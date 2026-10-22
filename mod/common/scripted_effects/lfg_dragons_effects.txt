@@ -17,7 +17,7 @@ lfg_drake_replace = {
 					limit = { event_target:lfg_old_drake = { has_ship_flag = lfg_legendary_dragon } }
 					set_ship_flag = lfg_legendary_dragon
 				}
-				set_ship_flag = lfg_drake_design_v2
+				set_ship_flag = lfg_drake_design_v3
 			}
 		}
 	}
@@ -25,8 +25,8 @@ lfg_drake_replace = {
 }
 
 # Ship scope (a drake), root = its owner, which is out of food: once a year per drake, it eats 100 pops per growth step
-# (at least 1; twice that for the Legendary Dragon) from the owner's most populous colony, 100 at a time from its
-# largest pop group, and the owner gets a popup (lfg_dragons.2).
+# (at least 1; twice that for the Legendary Dragon) from the owner's most populous colony, and the owner gets a popup
+# (lfg_dragons.2).
 lfg_drake_starve = {
 	set_timed_ship_flag = { flag = lfg_drake_fed_recently days = 360 }
 	save_event_target_as = lfg_hungry_drake
@@ -39,6 +39,15 @@ lfg_drake_starve = {
 		limit = { has_ship_flag = lfg_legendary_dragon }
 		multiply_variable = { which = lfg_drake_meal value = 2 }
 	}
+	lfg_drake_eat_pops = yes
+	root = { country_event = { id = lfg_dragons.2 } }
+}
+
+# Ship scope (a drake), root = its owner: it eats ship variable lfg_drake_meal hundred pops from the owner's most populous
+# colony (event_target:lfg_drake_meal_planet), 100 at a time from its largest pop group, while there are any. Ship
+# variable lfg_drake_pops_eaten: how many it ate.
+lfg_drake_eat_pops = {
+	save_event_target_as = lfg_hungry_drake
 	set_variable = { which = lfg_drake_pops_eaten value = 0 }
 	root = {
 		ordered_owned_planet = {
@@ -60,8 +69,33 @@ lfg_drake_starve = {
 			}
 			clear_variable = lfg_drake_meal_left
 		}
-		country_event = { id = lfg_dragons.2 }
 	}
+}
+
+# Ship scope (a drake): grow one step now, if it can (not an Elder, or the Legendary Dragon below step 24). Its months
+# towards the next step are kept.
+lfg_drake_grow_step = {
+	if = {
+		limit = { lfg_drake_can_grow = yes }
+		change_variable = { which = lfg_drake_step value = 1 }
+		lfg_drake_set_design = yes
+	}
+}
+
+# Ship scope (a drake), root = its owner: the Feast (lfg_dragons.5) - pay DRAKE_FEAST_MONTHS of its food upkeep, grow a step.
+lfg_drake_feast = {
+	lfg_drake_pay_feast = yes
+	lfg_drake_grow_step = yes
+}
+
+# Ship scope (a drake), root = its owner: the Tribute (lfg_dragons.6) - it eats ship variable lfg_drake_tribute pops
+# (100 x its step, x3 for the Legendary Dragon) and grows a step; the decision then rests 6 months.
+lfg_drake_tribute = {
+	set_variable = { which = lfg_drake_meal value = lfg_drake_tribute }
+	divide_variable = { which = lfg_drake_meal value = 100 }
+	lfg_drake_eat_pops = yes
+	lfg_drake_grow_step = yes
+	root = { set_timed_country_flag = { flag = lfg_dragon_tribute_cooldown days = 180 } }
 }
 
 # Ship scope: an Elder Dragon becomes the Legendary Dragon (ap_lfg_legendary_dragons): same strength, the Legendary

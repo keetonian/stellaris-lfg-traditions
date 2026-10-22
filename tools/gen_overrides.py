@@ -1143,6 +1143,11 @@ DRAKE_REGEN = 0  # bonus hull / armour regeneration removed (was 25%, then 0.5%)
 # The Legendary Dragon's hull grows extra: x1 at the Elder's step, rising evenly to x2 at step 24 (~917M hull, under the
 # ~2.1 billion the game can hold).
 DRAKE_LEGEND_HULL_BONUS = 0.0  # was 1.0 (x2 hull at step 24); dropped with DRAKE_LEGEND_DURABILITY_GROWTH
+# Speeding growth up (ap_lfg_legendary_dragons + tech_lfg_draconic_feast): a Feast costs DRAKE_FEAST_MONTHS of the drake's
+# current food upkeep for one step (48 months) of growth; a Tribute of pops costs DRAKE_TRIBUTE_PER_STEP x its step (x3 for
+# the Legendary Dragon) hundred pops.
+DRAKE_FEAST_MONTHS = 60
+DRAKE_TRIBUTE_PER_STEP, DRAKE_TRIBUTE_LEGEND_MULT = 1, 3
 DRAKE_RANGE_PER_STEP = 0.05  # weapon range per growth step: +120% at step 24 (the breath: 320 -> ~704)
 DRAKE_STAGES = [(3, "Baby Drake"), (6, "Juvenile Dragon"), (10, "Dragon"), (11, "Elder Dragon"), (DRAKE_MAX_STEP, "Legendary Dragon")]
 # The Dragon's Breath, one per step (its damage and splash baked in: a ship_weapon_damage modifier on the ship size
@@ -1244,6 +1249,15 @@ def drake_stats(n: int) -> dict:
     damage = DRAKE_DAMAGE_FACTOR * DRAKE_GROWTH ** min(n, DRAKE_ELDER_STEP) * DRAKE_LEGEND_DAMAGE_GROWTH ** max(0, n - DRAKE_ELDER_STEP)
     return {"growth": growth, "damage": damage, "hp": round(hull), "armor": round(armor), "shield": round(shield),
             "food": round(food), "length": growth ** 0.25}
+
+
+def drake_feast_cost(n: int) -> int:
+    return drake_stats(n)["food"] * DRAKE_FEAST_MONTHS
+
+
+def drake_tribute(n: int, legendary: bool) -> int:
+    """Hundreds of pops a Tribute costs."""
+    return max(1, n) * DRAKE_TRIBUTE_PER_STEP * (DRAKE_TRIBUTE_LEGEND_MULT if legendary else 1)
 
 
 def drake_stage(n: int, legendary: bool) -> str:
@@ -1399,13 +1413,33 @@ def generate_drakes(game: Path) -> dict[str, str]:
             cond += " has_ship_flag = lfg_legendary_dragon" if legendary else " NOT = { has_ship_flag = lfg_legendary_dragon }"
         effects.append(f"\t{'if' if first else 'else_if'} = {{\n\t\tlimit = {{ {cond} }}\n"
                        f"\t\tset_variable = {{ which = lfg_drake_growth value = {drake_stats(n)['growth']:.2f} }}\n"
+                       f"\t\tset_variable = {{ which = lfg_drake_feast_cost value = {drake_feast_cost(n)} }}\n"
+                       f"\t\tset_variable = {{ which = lfg_drake_tribute value = {drake_tribute(n, legendary) * 100} }}\n"
                        f"\t\tset_ship_design = {{ design = \"{drake_design(key)}\" }}\n"
                        f"\t\tif = {{\n\t\t\tlimit = {{ NOT = {{ is_ship_size = {key} }} }}\n"
                        f"\t\t\tlfg_drake_replace = {{ DESIGN = \"{drake_design(key)}\" }}\n\t\t}}\n\t}}\n")
         first = False
     effects.append("}\n")
+    # Feast and Tribute: per step, as literal numbers (a stockpile can't be compared with a variable).
+    def step_cond(n, legendary):
+        cond = f"check_variable = {{ which = lfg_drake_step value = {n} }}"
+        if n == DRAKE_ELDER_STEP:
+            cond += " has_ship_flag = lfg_legendary_dragon" if legendary else " NOT = { has_ship_flag = lfg_legendary_dragon }"
+        elif n > DRAKE_ELDER_STEP:
+            cond += " has_ship_flag = lfg_legendary_dragon"
+        return cond
+    afford, pay, tribute = [], [], []
+    for key, n, legendary in drake_steps():
+        c = step_cond(n, legendary)
+        afford.append(f"\t\tAND = {{ {c} owner = {{ resource_stockpile_compare = {{ resource = food value >= {drake_feast_cost(n)} }} }} }}\n")
+        pay.append(f"\t{'if' if not pay else 'else_if'} = {{ limit = {{ {c} }} owner = {{ add_resource = {{ food = -{drake_feast_cost(n)} }} }} }}\n")
+        tribute.append(f"\t\tAND = {{ {c} owner = {{ count_owned_pop_amount = {{ count >= {drake_tribute(n, legendary) * 100} }} }} }}\n")
+    effects.append("\n# Ship scope: pay its Feast (DRAKE_FEAST_MONTHS of its current food upkeep).\nlfg_drake_pay_feast = {\n"
+                   + "".join(pay) + "}\n")
     sizes_list = "\n".join(f"\t\tis_ship_size = {key}" for key, _n, _l in drake_steps())
-    triggers = header + f"""
+    triggers = header + "\n# Ship scope: its owner can pay its Feast.\nlfg_drake_can_afford_feast = {\n\tOR = {\n" + "".join(afford) + \
+        "\t}\n}\n\n# Ship scope: its owner has the pops for its Tribute.\nlfg_drake_can_pay_tribute = {\n\tOR = {\n" + \
+        "".join(tribute) + "\t}\n}\n" + f"""
 # Ship scope: one of the origin's drakes (vanilla's Baby Drake, or one of our growth steps).
 lfg_is_drake = {{
 	OR = {{

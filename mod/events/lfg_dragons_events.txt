@@ -3,7 +3,7 @@ namespace = lfg_dragons
 
 # Monthly (on_monthly_pulse_country), Here Be Dragons empires owning drakes:
 # - a new vanilla Baby Drake becomes our step 0 (lfg_drake_0, with the Dragon's Breath and food upkeep);
-# - a drake without flag lfg_drake_design_v2 is refitted once onto its step's design (older saves);
+# - a drake without flag lfg_drake_design_v3 is refitted once onto its step's design (older saves);
 # - every drake ages a month (ship variable lfg_drake_months) and grows a step every 48 months (lfg_drake_step), up to
 #   the Elder (step 11), or, for the Legendary Dragon (ship flag lfg_legendary_dragon), up to step 24;
 # - a drake that becomes an Elder while we have the perk and no Legendary Dragon: popup lfg_dragons.4;
@@ -19,21 +19,30 @@ country_event = {
 	}
 
 	immediate = {
+		# The perk was taken before tech_lfg_draconic_feast existed: offer it now.
+		if = {
+			limit = {
+				has_ascension_perk = ap_lfg_legendary_dragons
+				NOT = { has_technology = tech_lfg_draconic_feast }
+				NOT = { has_tech_option = tech_lfg_draconic_feast }
+			}
+			add_research_option = tech_lfg_draconic_feast
+		}
 		every_owned_ship = {
 			limit = { lfg_is_drake = yes }
 			if = {
 				limit = { is_ship_size = space_dragon_origin_baby }
 				set_variable = { which = lfg_drake_step value = 0 }
 				set_variable = { which = lfg_drake_months value = 0 }
-				set_ship_flag = lfg_drake_design_v2
+				set_ship_flag = lfg_drake_design_v3
 				lfg_drake_set_design = yes
 			}
 			else = {
 				# Refit once onto its step's current design (saves from before a weapon change keep the old design,
 				# whose missing components the game drops). Bump the flag when the drake designs change again.
 				if = {
-					limit = { NOT = { has_ship_flag = lfg_drake_design_v2 } }
-					set_ship_flag = lfg_drake_design_v2
+					limit = { NOT = { has_ship_flag = lfg_drake_design_v3 } }
+					set_ship_flag = lfg_drake_design_v3
 					lfg_drake_set_design = yes
 				}
 				change_variable = { which = lfg_drake_months value = 1 }
@@ -286,5 +295,242 @@ country_event = {
 	}
 	option = {
 		name = lfg_dragons.10.close
+	}
+}
+
+# Feast (decision_lfg_dragon_feast): up to four of our drakes that can still grow (event_target:lfg_feast_1-4);
+# "Show others" draws again.
+country_event = {
+	id = lfg_dragons.5
+	title = lfg_dragons.5.name
+	desc = lfg_dragons.5.desc
+	picture = GFX_evt_here_be_dragons
+	show_sound = event_aqu_dragon
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+
+				}
+				save_event_target_as = lfg_feast_1
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+					NOT = { is_same_value = event_target:lfg_feast_1 }
+				}
+				save_event_target_as = lfg_feast_2
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+					NOT = { is_same_value = event_target:lfg_feast_1 }
+					NOT = { is_same_value = event_target:lfg_feast_2 }
+				}
+				save_event_target_as = lfg_feast_3
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+					NOT = { is_same_value = event_target:lfg_feast_1 }
+					NOT = { is_same_value = event_target:lfg_feast_2 }
+					NOT = { is_same_value = event_target:lfg_feast_3 }
+				}
+				save_event_target_as = lfg_feast_4
+			}
+		}
+	}
+
+	option = {
+		name = lfg_dragons.5.drake_1
+		trigger = { exists = event_target:lfg_feast_1 }
+		allow = { event_target:lfg_feast_1 = { lfg_drake_can_afford_feast = yes } }
+		custom_tooltip = lfg_dragons.5.drake_1.tt
+		hidden_effect = { event_target:lfg_feast_1 = { lfg_drake_feast = yes } }
+	}
+
+	option = {
+		name = lfg_dragons.5.drake_2
+		trigger = { exists = event_target:lfg_feast_2 }
+		allow = { event_target:lfg_feast_2 = { lfg_drake_can_afford_feast = yes } }
+		custom_tooltip = lfg_dragons.5.drake_2.tt
+		hidden_effect = { event_target:lfg_feast_2 = { lfg_drake_feast = yes } }
+	}
+
+	option = {
+		name = lfg_dragons.5.drake_3
+		trigger = { exists = event_target:lfg_feast_3 }
+		allow = { event_target:lfg_feast_3 = { lfg_drake_can_afford_feast = yes } }
+		custom_tooltip = lfg_dragons.5.drake_3.tt
+		hidden_effect = { event_target:lfg_feast_3 = { lfg_drake_feast = yes } }
+	}
+
+	option = {
+		name = lfg_dragons.5.drake_4
+		trigger = { exists = event_target:lfg_feast_4 }
+		allow = { event_target:lfg_feast_4 = { lfg_drake_can_afford_feast = yes } }
+		custom_tooltip = lfg_dragons.5.drake_4.tt
+		hidden_effect = { event_target:lfg_feast_4 = { lfg_drake_feast = yes } }
+	}
+
+	option = {
+		name = lfg_dragons.5.others
+		hidden_effect = { country_event = { id = lfg_dragons.5 } }
+	}
+	option = {
+		name = lfg_dragons.5.cancel
+	}
+}
+
+# Tribute (decision_lfg_dragon_tribute): up to four of our drakes that can still grow (event_target:lfg_tribute_1-4);
+# "Show others" draws again.
+country_event = {
+	id = lfg_dragons.6
+	title = lfg_dragons.6.name
+	desc = lfg_dragons.6.desc
+	picture = GFX_evt_here_be_dragons
+	show_sound = event_aqu_dragon
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+
+				}
+				save_event_target_as = lfg_tribute_1
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+					NOT = { is_same_value = event_target:lfg_tribute_1 }
+				}
+				save_event_target_as = lfg_tribute_2
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+					NOT = { is_same_value = event_target:lfg_tribute_1 }
+					NOT = { is_same_value = event_target:lfg_tribute_2 }
+				}
+				save_event_target_as = lfg_tribute_3
+			}
+			random_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+					NOT = { is_same_value = event_target:lfg_tribute_1 }
+					NOT = { is_same_value = event_target:lfg_tribute_2 }
+					NOT = { is_same_value = event_target:lfg_tribute_3 }
+				}
+				save_event_target_as = lfg_tribute_4
+			}
+		}
+	}
+
+	option = {
+		name = lfg_dragons.6.drake_1
+		trigger = { exists = event_target:lfg_tribute_1 }
+		allow = { event_target:lfg_tribute_1 = { lfg_drake_can_pay_tribute = yes } }
+		custom_tooltip = lfg_dragons.6.drake_1.tt
+		hidden_effect = { event_target:lfg_tribute_1 = { lfg_drake_tribute = yes } }
+	}
+
+	option = {
+		name = lfg_dragons.6.drake_2
+		trigger = { exists = event_target:lfg_tribute_2 }
+		allow = { event_target:lfg_tribute_2 = { lfg_drake_can_pay_tribute = yes } }
+		custom_tooltip = lfg_dragons.6.drake_2.tt
+		hidden_effect = { event_target:lfg_tribute_2 = { lfg_drake_tribute = yes } }
+	}
+
+	option = {
+		name = lfg_dragons.6.drake_3
+		trigger = { exists = event_target:lfg_tribute_3 }
+		allow = { event_target:lfg_tribute_3 = { lfg_drake_can_pay_tribute = yes } }
+		custom_tooltip = lfg_dragons.6.drake_3.tt
+		hidden_effect = { event_target:lfg_tribute_3 = { lfg_drake_tribute = yes } }
+	}
+
+	option = {
+		name = lfg_dragons.6.drake_4
+		trigger = { exists = event_target:lfg_tribute_4 }
+		allow = { event_target:lfg_tribute_4 = { lfg_drake_can_pay_tribute = yes } }
+		custom_tooltip = lfg_dragons.6.drake_4.tt
+		hidden_effect = { event_target:lfg_tribute_4 = { lfg_drake_tribute = yes } }
+	}
+
+	option = {
+		name = lfg_dragons.6.others
+		hidden_effect = { country_event = { id = lfg_dragons.6 } }
+	}
+	option = {
+		name = lfg_dragons.6.cancel
+	}
+}
+
+# Hunting (Legendary Dragons; on_ship_destroyed_victim: this = the dead ship's owner, fromfrom = the dead ship,
+# fromfromfrom = the ship that killed it, may be invalid): a killable organic leviathan (lfg_drake_prey) slain by a fleet
+# with our drakes - every drake in that fleet that can still grow grows a step, and its owner gets a popup.
+country_event = {
+	id = lfg_dragons.7
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = fromfrom
+		fromfrom = { lfg_drake_prey = yes }
+		exists = fromfromfrom
+		fromfromfrom = {
+			exists = owner
+			owner = { has_ascension_perk = ap_lfg_legendary_dragons }
+			exists = fleet
+			fleet = {
+				any_owned_ship = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+				}
+			}
+		}
+	}
+
+	immediate = {
+		fromfromfrom.fleet = {
+			every_owned_ship = {
+				limit = {
+					lfg_is_drake = yes
+					lfg_drake_can_grow = yes
+				}
+				save_event_target_as = lfg_hunter
+				lfg_drake_grow_step = yes
+			}
+		}
+		fromfromfrom.owner = { country_event = { id = lfg_dragons.8 } }
+	}
+}
+
+# A drake grew from a leviathan kill (lfg_dragons.7; event_target:lfg_hunter).
+country_event = {
+	id = lfg_dragons.8
+	title = lfg_dragons.8.name
+	desc = lfg_dragons.8.desc
+	picture = GFX_evt_here_be_dragons
+	show_sound = event_aqu_dragon
+	location = event_target:lfg_hunter
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_dragons.8.a
 	}
 }

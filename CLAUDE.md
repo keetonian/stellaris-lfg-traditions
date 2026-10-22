@@ -67,7 +67,8 @@ mod/                                  # exactly what ships
   common/scripted_effects/lfg_drake_steps_effects.txt        # GENERATED: lfg_drake_set_design (switch, or replace via lfg_drake_replace)
   common/scripted_triggers/lfg_drake_steps_triggers.txt      # GENERATED: lfg_is_drake
   common/scripted_effects/lfg_dragons_effects.txt            # lfg_drake_replace, lfg_drake_starve, lfg_anoint_legendary_dragon
-  events/lfg_dragons_events.txt                              # .1 monthly growth + starvation, .2 hungry dragon popup, .3 Legendary picker, .4 new Elder popup, .10 testing menu (console)
+  events/lfg_dragons_events.txt                              # .1 monthly growth + starvation, .2 hungry dragon popup, .3 Legendary picker, .4 new Elder popup, .5 Feast / .6 Tribute pickers,
+                                                             #   .7 hunting (on_ship_destroyed_victim) / .8 its popup, .10 testing menu (console)
   gfx/projectiles/lfg_projectiles.txt                        # the Dragon's Breath beam; its splash blasts: gfx/models/ships/lfg_drake_breath.asset
   prescripted_countries/lfg_prescripted_countries.txt        # 10 premade empires (the author's designs, new flavour)
   common/prescripted_flags/lfg_empire_flags.txt              #   their country flags lfg_empire_<key> -> stories

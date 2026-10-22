@@ -802,6 +802,23 @@ of your Elder Dragons (`lfg_dragons.3`; when a drake becomes an Elder while you 
 popup `lfg_dragons.4` points you to the decision); it becomes the **Legendary Dragon** (ship flag `lfg_legendary_dragon`, the
 Legendary Elder's design) and grows again every 4 years. **One at a time**: if it dies, anoint another.
 
+**Speeding growth up** (all need the perk; passive growth stays one step every 4 years):
+- **Hunting** (automatic): when a leviathan dies to a ship whose fleet has drakes (`on_ship_destroyed_victim` →
+  `lfg_dragons.7`), every drake in that fleet that can still grow grows a step at once, with a popup (`lfg_dragons.8`).
+  Only the killable organic ones count (`lfg_drake_prey`): Dimensional Horror (also the Elder One and the Worm's avatar),
+  Stellar Devourer, Corrupted Avatar, Tiyanki Matriarch, Voidspawn, Toxic God, Ether Drake, Shard and the Sky Dragon.
+  **Unverified in game:** the killer ship scope (vanilla notes it can be invalid for scripted damage).
+- **Draconic Feasts** (`tech_lfg_draconic_feast`, society, rare; offered by the perk, or by `lfg_dragons.1` for empires
+  that took it earlier) unlocks two capital decisions, each with a drake picker (only drakes that can still grow):
+  - **Feast for a Dragon** (`decision_lfg_dragon_feast` → `lfg_dragons.5`): pay **5 years** of that drake's food upkeep
+    (`DRAKE_FEAST_MONTHS`) for **one step** (4 years) at once. The cost follows its upkeep: ~2.5k for a baby, ~149k for an
+    Elder, ~4.2M at the last Legendary step.
+  - **Tribute of Flesh** (`decision_lfg_dragon_tribute` → `lfg_dragons.6`): it eats **100 pops × its step** (×3 for the
+    Legendary Dragon) from the most populous colony for one step at once; then 6 months' rest (country flag
+    `lfg_dragon_tribute_cooldown`). Not for xenophiles, hive minds or virtual machines (`lfg_can_feed_pops_to_dragons`).
+  The per-step costs are generated (`lfg_drake_can_afford_feast`, `lfg_drake_pay_feast`, `lfg_drake_can_pay_tribute`;
+  ship variables `lfg_drake_feast_cost` / `lfg_drake_tribute` for the tooltips).
+
 **Testing:** console `event lfg_dragons.10` opens a menu: spawn a Baby Drake at the capital, grow every drake 1 / 5
 steps or to its cap (`lfg_drake_debug_grow`), make an Elder Legendary (no perk needed), or make every drake eat now. Icons:
 `art/make_dragon_art.py` (the origin's dragon in gold).

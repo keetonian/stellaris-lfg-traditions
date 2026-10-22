@@ -135,6 +135,9 @@ ap_lfg_storm_sovereignty = {
 ap_lfg_legendary_dragons = {
 	on_enabled = {
 		custom_tooltip = ap_lfg_legendary_dragons_tt
+		hidden_effect = {
+			if = { limit = { NOT = { has_technology = tech_lfg_draconic_feast } } add_research_option = tech_lfg_draconic_feast }
+		}
 	}
 	possible = {
 		custom_tooltip = {
