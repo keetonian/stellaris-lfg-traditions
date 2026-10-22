@@ -1,0 +1,57 @@
+# LFG Traditions - archaeological sites.
+
+# The Whale Road (Sealed Ring origin): placed on a molten world in the ring's neighbour system by lfg_sealed_ring.1,
+# never at random (weight 0: Xenoarchaeology's commissioned digs use create_archaeological_site = random). Six stages,
+# difficulty rising 4 / 4 / 5 / 5 / 5 / 6 (vanilla's sites run 1-9); stages 1-5 give research and minor artifacts, the
+# last opens a wormhole to the Legendary Matriarch's system and brings contact with the Urmazin (lfg_sealed_ring.15).
+lfg_whale_road_digsite = {
+	desc = lfg_whale_road_digsite_desc
+	picture = GFX_evt_tiyanki_observation
+	stages = 6
+
+	weight = { base = 0 }
+
+	allow = {
+		is_ship_class = shipclass_science_ship
+		exists = leader
+	}
+
+	visible = {
+		default_site_visible_trigger = yes
+	}
+
+	stage = {
+		difficulty = 4
+		event = lfg_sealed_ring.10
+		icon = GFX_archaeology_runes_F1
+	}
+	stage = {
+		difficulty = 4
+		event = lfg_sealed_ring.11
+		icon = GFX_archaeology_runes_F2
+	}
+	stage = {
+		difficulty = 5
+		event = lfg_sealed_ring.12
+		icon = GFX_archaeology_runes_F3
+	}
+	stage = {
+		difficulty = 5
+		event = lfg_sealed_ring.13
+		icon = GFX_archaeology_runes_F4
+	}
+	stage = {
+		difficulty = 5
+		event = lfg_sealed_ring.14
+		icon = GFX_archaeology_runes_F5
+	}
+	stage = {
+		difficulty = 6
+		event = lfg_sealed_ring.15
+		icon = GFX_archaeology_runes_F6
+	}
+
+	on_roll_failed = {
+		from = { standard_archaeological_site_on_roll_failed = { RANDOM_EVENTS = all_random_events } }
+	}
+}

@@ -1,0 +1,141 @@
+# LFG Traditions - espionage operations (vanilla's need Nemesis: has_nemesis).
+
+# Shadow Branch Office (Shadow Transactions, ap_lfg_shadow_transactions): from beyond the rim no hyperlane route leads
+# anywhere, so branch offices always cost the 1,000-influence cap; this opens one through the spy network instead, on a
+# random planet of the target we have surveyed that has none yet (lfg_sealed_ring.21). The target must be able to host
+# branch offices (vanilla's can_support_branch_offices / can_build_branch_office_on_colony: a regular, non-gestalt
+# empire, and Fanatic Purifiers only for their own species). Difficulty 6 per stage is vanilla's @diff_t2.
+lfg_operation_shadow_branch = {
+	target = none
+	categories = { op_cat_subterfuge op_cat_economy }
+	picture = GFX_evt_black_market
+	desc = lfg_operation_shadow_branch_desc
+	stages = 2
+
+	resources = {
+		category = operations
+		cost = {
+			influence = 50
+		}
+		upkeep = {
+			energy = 6
+		}
+	}
+
+	spy_power_cost = 30
+	potential = {
+		has_nemesis = yes
+		owner = { has_ascension_perk = ap_lfg_shadow_transactions }
+		target = { is_country_type = default }
+	}
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_operation_shadow_branch_no_planet
+			target = {
+				is_gestalt = no
+				OR = {
+					NOT = { has_civic = civic_fanatic_purifiers }
+					is_same_species = root.owner
+				}
+				any_owned_planet = {
+					has_branch_office = no
+					is_surveyed = { who = root.owner status = yes }
+				}
+			}
+		}
+		custom_tooltip = {
+			is_running_espionage_operation = no
+			fail_text = operation_one_at_a_time
+		}
+	}
+	stage = {
+		difficulty = 6
+		icon = GFX_espionage_chapter_icon_surveillance
+		event = lfg_sealed_ring.20
+	}
+	stage = {
+		difficulty = 6
+		icon = GFX_espionage_chapter_icon_motion
+		event = lfg_sealed_ring.21
+	}
+	on_roll_failed = {
+		standard_espionage_operation_on_roll_failed = { RANDOM_EVENTS = operation_random_events_generic }
+	}
+	on_create = {
+		target = {
+			set_timed_country_flag = {
+				flag = espionage_operation_targeted_by@root.owner	# used in vanilla's random Spy Network events
+				days = 10800
+			}
+		}
+	}
+}
+
+# Remove Branch Office (Shadow Transactions): closes a random branch office - anyone's but ours -
+# on one of the target's planets (lfg_sealed_ring.24). Costlier and harder than Shadow Branch Office: three stages at
+# difficulty 7 / 7 / 8 (vanilla's @diff_t3 / @diff_t4).
+lfg_operation_remove_branch = {
+	target = none
+	categories = { op_cat_sabotage op_cat_economy }
+	picture = GFX_evt_smugglers_in_bar
+	desc = lfg_operation_remove_branch_desc
+	stages = 3
+
+	resources = {
+		category = operations
+		cost = {
+			influence = 100
+		}
+		upkeep = {
+			energy = 10
+		}
+	}
+
+	spy_power_cost = 45
+	potential = {
+		has_nemesis = yes
+		owner = { has_ascension_perk = ap_lfg_shadow_transactions }
+		target = { is_country_type = default }
+	}
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_operation_remove_branch_no_office
+			target = {
+				any_owned_planet = {
+					has_branch_office = yes
+					NOT = { has_branch_office = root.owner }
+				}
+			}
+		}
+		custom_tooltip = {
+			is_running_espionage_operation = no
+			fail_text = operation_one_at_a_time
+		}
+	}
+	stage = {
+		difficulty = 7
+		icon = GFX_espionage_chapter_icon_surveillance
+		event = lfg_sealed_ring.22
+	}
+	stage = {
+		difficulty = 7
+		icon = GFX_espionage_chapter_icon_document
+		event = lfg_sealed_ring.23
+	}
+	stage = {
+		difficulty = 8
+		icon = GFX_espionage_chapter_icon_motion
+		event = lfg_sealed_ring.24
+	}
+	on_roll_failed = {
+		standard_espionage_operation_on_roll_failed = { RANDOM_EVENTS = operation_random_events_generic }
+	}
+	on_create = {
+		target = {
+			set_timed_country_flag = {
+				flag = espionage_operation_targeted_by@root.owner	# used in vanilla's random Spy Network events
+				days = 10800
+			}
+		}
+	}
+}

@@ -231,6 +231,22 @@ class GenOverridesTests(unittest.TestCase):
         (dragon / "guardian_01_space_dragon.asset").write_text(
             'entity = {\n\tname = "aquatic_dragon_baby_entity"\n\tpdxmesh = "locator_mesh"\n\tcull_radius = 10.0\n}\n'
             'entity = {\n\tname = "aquatic_dragon_baby_section_entity"\n\tpdxmesh = "aquatic_dragon_01_mesh"\n\tscale = 0.3\n}\n')
+        # Swallowed Whole's Legendary Matriarch (generate_matriarch copies vanilla's ancient Tiyanki, bigger).
+        (self.game / "common/ship_sizes/13_distant_stars.txt").write_text(
+            "@salvagecostlarge = 5000\n\nleviathan_01_elder_tiyanki = {\n\tmax_hitpoints = 125000\n"
+            "\tresources = {\n\t\tcost = {\n\t\t\tfood = @salvagecostlarge\n\t\t}\n\t}\n}\n")
+        (self.game / "common/section_templates/distant_stars.txt").write_text(
+            ' ship_section_template = {\n\tkey = "elderly_tiyanki_key"\n\tship_size = leviathan_01_elder_tiyanki\n'
+            '\tentity = "leviathan_01_elder_tiyanki_section_entity"\n }\n')
+        (self.game / "common/global_ship_designs/event_ship_designs_distant_stars.txt").write_text(
+            'ship_design = {\n\tname = "NAME_Progenitor"\n\tship_size = leviathan_01_elder_tiyanki\n\tsection = {\n'
+            '\t\ttemplate = "elderly_tiyanki_key"\n\t}\n}\n')
+        tiyanki = self.game / "gfx/models/ships/guardians/elder_tiyanki"
+        tiyanki.mkdir(parents=True, exist_ok=True)
+        (tiyanki / "leviathan_01_elder_tiyanki.asset").write_text(
+            'entity = {\n\tname = "leviathan_01_elder_tiyanki_entity"\n\tlocator = { name = "part1" }\n}\n'
+            'entity = {\n\tname = "leviathan_01_elder_tiyanki_section_entity"\n\tpdxmesh = "leviathan_01_elder_tiyanki_mesh"\n'
+            '\tlocator = { name = "large_gun_01" }\n}\n')
         (self.game / "common/scripted_effects").mkdir(exist_ok=True)
         (self.game / "common/scripted_effects/cosmic_storms_scripted_effects.txt").write_text(
             "nexus_storm_remove = {\n\tremove_star_flag = storm_system\n\tnexus_storm_apply_aftermath_modifier = yes\n}\n")
@@ -535,6 +551,21 @@ class GenOverridesTests(unittest.TestCase):
         (self.game / "common/situations/08_machine_age_situations.txt").write_text("situation_other = { }\n")
         with self.assertRaisesRegex(gen_overrides.GenError, "situation_synthetic_fertility_digitization"):
             self.generate()
+
+    def test_matriarch_is_a_bigger_copy_of_the_ancient_tiyanki(self):
+        out = gen_overrides.generate(self.game, self.giga)
+        files = gen_overrides.MATRIARCH_FILES
+        size = out[files["size"]]
+        self.assertIn('lfg_legendary_matriarch = {\n\tentity = "lfg_legendary_matriarch_entity"', size)
+        self.assertIn("food = 5000", size)
+        self.assertNotIn("@salvage", size)
+        self.assertIn('key = "lfg_legendary_matriarch_key"', out[files["section"]])
+        self.assertIn('entity = "lfg_legendary_matriarch_section_entity"', out[files["section"]])
+        design = out[files["design"]]
+        self.assertIn('name = "NAME_lfg_legendary_matriarch"', design)
+        self.assertIn('template = "lfg_legendary_matriarch_key"', design)
+        self.assertIn(f'pdxmesh = "leviathan_01_elder_tiyanki_mesh"\n\tscale = {gen_overrides.MATRIARCH_SCALE}',
+                      out[files["asset"]])
 
     def test_check_mode_detects_stale_files(self):
         repo = self.tmp / "repo"

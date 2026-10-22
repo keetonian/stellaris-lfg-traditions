@@ -1,4 +1,5 @@
-"""The Steam page (workshop_description.txt) must not reveal the easter eggs (Evolutionary Predators content, Lone Tide)."""
+"""The Steam page (workshop_description.txt) must not reveal the easter eggs (Evolutionary Predators content, Lone Tide,
+Shadow Transactions)."""
 import unittest
 from pathlib import Path
 
@@ -6,7 +7,9 @@ REPO = Path(__file__).resolve().parent.parent
 SECRETS = ("Evolutionary Predators", "Species Experimentation", "Inherited Genius", "lfg_species_experimentation",
            "trait_lfg_inherited_genius", "subspecies",
            # The Lone Tide special system is a surprise too.
-           "Lone Tide", "Thalassa", "special system", "hidden system", "lfg_lone_tide")
+           "Lone Tide", "Thalassa", "special system", "hidden system", "lfg_lone_tide",
+           # Swallowed Whole's Criminal Heritage perk is a secret as well.
+           "Shadow Transactions", "ap_lfg_shadow_transactions")
 
 
 class WorkshopDescriptionTests(unittest.TestCase):

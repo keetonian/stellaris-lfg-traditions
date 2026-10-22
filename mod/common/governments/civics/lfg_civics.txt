@@ -60,3 +60,43 @@ origin_lfg_nanite_forge = {
 	# No modifier of its own; the pop assembly downside is on the Nanite Substrate trait.
 	random_weight = { base = 1 }
 }
+
+# "Swallowed Whole": a Tiyanki Matriarch swallowed our ring world and dropped it beyond the galactic rim. Non-machine.
+# Home system lfg_sealed_ring_start: an intact ring world (four habitable segments) sealed by Leviathan Residue
+# (d_lfg_sealed_section blockers: 3 on the homeworld, 7 on each other segment), moved beyond the rim at game start with
+# one hyperlane to a molten neighbour with Tiyanki (lfg_sealed_ring.1). Clearing every blocker offers Jump Drive and
+# Void Leap Drive (tech_lfg_sealed_ring_drive, +150% jump range), the way back to the galaxy. Further out, unconnected:
+# the Legendary Tiyanki Matriarch (only one, however many empires have the origin; her kill gives Polymelic DNA,
+# lfg_sealed_ring.4), also reached through the Whale Road dig site's wormhole. Starts in contact with
+# Gigastructural's Urmazin Traders, with a +6 Quasi-Negative Mass deposit to trade them.
+origin_lfg_sealed_ring = {
+	is_origin = yes
+	playable = { host_has_dlc = Federations }
+	# Art: art/make_origin_art.py (a Tiyanki rising from a ring world; the ancient Tiyanki over a ring world).
+	icon = "gfx/interface/icons/origins/lfg_origin_sealed_ring.dds"
+	picture = GFX_origin_lfg_sealed_ring
+	flags = { custom_start_screen }
+	starting_colony = pc_ringworld_habitable
+	habitability_preference = pc_ringworld_habitable
+	initializers = { lfg_sealed_ring_start }
+	possible = {
+		species_archetype = { NOT = { value = MACHINE } }
+		civics = {
+			NOT = { value = civic_agrarian_idyll }
+			NOR = {
+				text = civic_tooltip_not_anglers
+				value = civic_anglers
+				value = civic_corporate_anglers
+			}
+		}
+		is_nomadic = no
+	}
+	description = "origin_tooltip_lfg_sealed_ring_effects"
+	# +10% anomaly discovery chance (the game lists it under the origin text).
+	modifier = {
+		ship_anomaly_generation_chance_mult = 0.10
+	}
+	advanced_start = yes
+	# The AI can't plan its way out of the void: only players get it.
+	random_weight = { base = 0 }
+}

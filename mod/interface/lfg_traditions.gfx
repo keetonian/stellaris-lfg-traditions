@@ -124,4 +124,5 @@ spriteTypes = {
 	spriteType = { name = "GFX_ap_lfg_curated_progress" textureFile = "gfx/interface/icons/ascension_perks/ap_technological_ascendancy.dds" }
 	spriteType = { name = "GFX_ap_lfg_legendary_dragons" textureFile = "gfx/interface/icons/ascension_perks/ap_lfg_legendary_dragons.dds" }	# art/make_dragon_art.py
 	spriteType = { name = "GFX_ap_lfg_storm_sovereignty" textureFile = "gfx/interface/icons/ascension_perks/ap_lfg_storm_sovereignty.dds" }	# art/make_megastructure_icons.py
+	spriteType = { name = "GFX_ap_lfg_shadow_transactions" textureFile = "gfx/interface/icons/ascension_perks/ap_lfg_shadow_transactions.dds" }	# art/make_origin_art.py
 }

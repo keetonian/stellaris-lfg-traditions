@@ -4,8 +4,8 @@ A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games th
 
 - **10 tradition trees**, each with a hook that scales with your game state, available only to fitting empires.
 - **7 council agendas** unlocked by the trees (The Great Project has two versions, with and without supertensiles).
-- **6 ascension perks:** **Legendary Dragons** (Here Be Dragons) lets one Elder Dragon keep growing - the origin's drakes now grow for 44 years with a splashing Dragon's Breath; **Storm Sovereignty** (needs Galactic Wonders and Galactic Weather Control) unlocks the Tempest Lodestar megastructure that summons nexus storms, and makes Storm Chasers immune to storm penalties; **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead.
-- **1 origin, Nanite Forge** (machines): eight size 40 molten worlds around a blue star, a broken nanite harvester that doubles their nanite deposits every 3 years, and a nanite-fuelled automation building.
+- **7 ascension perks:** **Legendary Dragons** (Here Be Dragons) lets one Elder Dragon keep growing - the origin's drakes now grow for 44 years with a splashing Dragon's Breath; **Storm Sovereignty** (needs Galactic Wonders and Galactic Weather Control) unlocks the Tempest Lodestar megastructure that summons nexus storms, and makes Storm Chasers immune to storm penalties; **Mothership** (needs Nanite Armada, A Celestial Armada and Nanotech finished) unlocks the Progenitor Forge and the Mothership; **Nanite Armada** (needs Nanotech adopted) unlocks the Swarmforge megastructure and nanite Attack Moons and Planetcraft; **Curated Progress** (after Gigastructural Constructs) unlocks 27 **Shelve** edicts that stop specific repeatable techs from being offered as research options; **Massed Assault** gives +10 ground combat width and a general trait that boosts the armies they lead. **Shadow Transactions** (Swallowed Whole with Criminal Heritage, any time): Shadow Branch Office and Remove Branch Office espionage operations, cheaper branch offices, +10 intel on every empire, +1 decryption.
+- **2 origins:** **Nanite Forge** (machines): eight size 40 molten worlds around a blue star, a broken nanite harvester that doubles their nanite deposits every 3 years, and a nanite-fuelled automation building. **Swallowed Whole** (non-machine): an intact ring world dropped beyond the galactic rim by a Tiyanki Matriarch; clear its Leviathan Residue to unlock the jump drives that reach the galaxy, trade Quasi-Negative Mass with the Urmazin, and hunt the Legendary Matriarch for Polymelic DNA.
 - **Nanite harvesters** (all of them) yield **twice** vanilla's nanites at every step and get three more doubling steps, up to 819.2 nanites per planet.
 - **Nanite Cognition Core** (after finishing Nanotech): automates 50% of a planet's specialist jobs for a lot of nanites.
 - **Nanotensile Converter** (after finishing Nanotech, supertensiles on): turns energy and nanites into supertensiles.
@@ -283,6 +283,118 @@ In **every** game, a hidden `on_game_start` event (`lfg_emberfall.1`) spawns **E
 system (not in an empire's or Fallen Empire's starting cluster), connected by hyperlanes like vanilla's Sealed System.
 It has a single blue **B-class** star and one planet: **Crucible**, a **size 60 molten world** (vanilla's largest
 gas giants are size 62; one base district per size). Initializer: `lfg_emberfall_init`.
+
+## Origin: Swallowed Whole (non-machine)
+
+`origin_lfg_sealed_ring`. Story: a Tiyanki Matriarch swallowed the ring world and spat it out beyond the galactic rim;
+the Urmazin, who follow her, are the only ones who know where it is. The in-game origin texts are deliberately short: they name the ring, the residue, the lone neighbour and the
+Matriarch, and nothing else. **Who:** non-machine species
+(`species_archetype` not MACHINE), not nomadic, not Agrarian Idyll / Anglers (like vanilla's Shattered Ring); needs
+Federations (ring worlds). `random_weight` 0: the AI is never given it. Art: `art/make_origin_art.py` (icon: a Tiyanki
+rising out of a ring world, in the Nanite Forge icon's diamond; picture: vanilla's ancient Tiyanki over its ring world).
+
+**Home system** (`lfg_sealed_ring_start`): a G star with an intact ring world laid out like vanilla's pre-FTL Sanctuary
+(4 habitable `pc_ringworld_habitable` segments, each followed by a tech and a seam segment). The homeworld is the first
+habitable segment; the other three start uncolonized.
+
+**Origin modifier:** **+10% anomaly discovery chance** (`ship_anomaly_generation_chance_mult`, as vanilla's edict and
+scientist traits use). Nothing blocks anomalies in the origin's systems: the neighbour's planets have no
+`prevent_anomaly`, and `empire_cluster` doesn't stop them (vanilla's Shattered Ring flags its whole home cluster with it).
+
+**Game start** (`lfg_sealed_ring.1`, `on_game_start_country`):
+- **No starting ships**: every starting fleet but stations is deleted (`lfg_sealed_ring_remove_starting_fleets`; again a
+  day later in `lfg_sealed_ring.5`). The origin text says so.
+- **`empire_cluster`** on the ring, its neighbour and the Matriarch's system keeps Gigastructural's Mysterious Structures
+  (EHOF pillars, `ehof_pgate_unknown`) and wrecked warships (battleships, titans...) out of them.
+- **No vanilla homeworld blockers**: Industrial Wastelands, Sprawling Slums and the rest (added at empire creation by
+  `game_start.12`) are cleared (`clear_blockers` on the capital colony and the other segments) before the residue goes
+  on. Only the residue seals the ring.
+- **Starting districts** (`lfg_sealed_ring_starting_districts`): **1** city district (hive minds: their ring hive
+  district), **1** energy district (urban district with the ring energy zone) and, if the empire eats food
+  (`country_uses_food_game_start`), **1** food district (urban with the ring food zone), as Gigastructural sets up its
+  ring origins. Other starting urban districts are removed.
+- **Leviathan Residue** (`d_lfg_sealed_section`, blocker): **3** on the homeworld, **7** on each other habitable
+  segment (24 in all). Each: **−1 district**, **−10% habitability** (`pop_environment_tolerance`), **+2 food**; clearing costs **1,000 energy** (360 days) and gives **150 alloys** and
+  **10% progress** in a random new research option (random area; `add_random_research_option`).
+- **Mining**: the homeworld gets Gigastructural's Great Ring **Ringworld Self-Repair System Node**
+  (`d_great_ring_excavated_mountain`: **5 Matter Synthesizer jobs**, miners making 4 minerals each), and the
+  second **Tiyanki Residue** body (across the star from the first) a **+10 minerals** deposit (`d_minerals_10`) for a
+  mining station.
+- **Quasi-Negative Mass**: `d_lfg_sealed_ring_negative_mass` (**+5** `giga_sr_negative_mass`, 2.5x Giga's deposit) on
+  **Tiyanki Residue**, a small body (vanilla's cracked-egg class `pc_egg_cracked`) orbiting outside the ring, with a
+  research station already built. The origin gets **Negative Energy Studies**
+  (`tech_negative_e_s`), without which QNM isn't produced.
+- **Urmazin Traders**: *not* met at game start. The Whale Road's last stage (`lfg_sealed_ring.15`) spawns them with
+  Giga's `ehof_mega_trader.100` if they don't exist yet (it gives **every** regular empire communications with them,
+  as in Giga's normal EHOF story; they then won't spawn again later), establishes contact (`lfg_sealed_ring.8`, a day
+  later, for Urmazin that already existed), and sets `ehof_traders_first_time` so the trade dialogue works from the
+  diplomacy screen without visiting them. They sell one-use relics for QNM.
+- **Beyond the rim**: like Giga's Away On An Island (`ehof_incohesive.3`): a random replacement system takes over the
+  home system's hyperlanes, then `move_system` puts the home system **140–170** from a rim system
+  (`distance_to_core_percent >= 85`), retrying up to 100 times until no galaxy system is within **130**
+  (`lfg_sealed_ring_isolated`). A plain jump drive (range 100) can't reach the galaxy; with Void Leap Drive (250) it can.
+- **Neighbour** (`lfg_sealed_ring_neighbor_init`, 15–25 away, one hyperlane): one star, **9 molten worlds and moons**,
+  gas giants, barren / frozen rocks, two asteroid belts; nothing habitable. Two families of vanilla's garrison
+  Tiyanki (`create_tiyanki_garrison_country`: they don't roam). The empire **starts in contact with the Tiyanki** (vanilla's
+  `tiyanki_encountered` flag + `create_tiyanki_country`, as Fruitful Partnership does). `lfg_sealed_ring.1` logs where it
+  put the neighbour, herds, dig site and Matriarch to `game.log`.
+- **The Whale Road** (`lfg_whale_road_digsite`): a dig site on one of the neighbour's molten worlds (each empire with
+  the origin gets one). **6 stages, difficulty 4 / 4 / 5 / 5 / 5 / 6** (vanilla's sites run 1–9). Stages 1–5
+  (`lfg_sealed_ring.10`–`.14`) give 12 / 12 / 18 / 18 / 24 months of society / physics / engineering / society /
+  physics research and minor artifacts (with Ancient Relics: vanilla's medium artifact reward,
+  300–500 each); stage 6 (`.15`) gives another medium artifact reward and 24 months of
+  physics, brings contact with the Urmazin Traders, and opens a natural **wormhole** pair between the neighbour and the Matriarch's system, and gives **25% progress**
+  (and the research option) in **Wormhole Stabilization** (natural wormholes need it) if missing. The excavating empire also gets the wormholes marked as seen
+  (`lfg_sealed_ring.9`: `add_seen_bypass_type` / `add_seen_bypass`), or ships can't use them; on a save where the
+  wormhole already exists, run `event lfg_sealed_ring.9` in the console. Weight 0, so commissioned digs never roll it.
+- **The Legendary Tiyanki Matriarch** (`lfg_sealed_ring_matriarch_init`, "Matriarch's Deep"): **only one per galaxy**
+  (global flag `lfg_legendary_matriarch_spawned`): no hyperlanes, placed like the ring (140–170 beyond a random rim
+  system, no galaxy system within 130) but **at least 300 from every Swallowed Whole ring**, so somewhere else around the
+  galaxy. Vanilla's `guardian_elderly_tiyanki` country and a **1.75× bigger** copy of its
+  `NAME_Progenitor` design (generated by `tools/gen_overrides.py`: ship size `lfg_legendary_matriarch`, design
+  `NAME_lfg_legendary_matriarch`, model scale `MATRIARCH_SCALE`; 125,000 hull, 3,000 armor), placed 50 from her star with `elderly_tiyanki_power` (+100% damage) and `lfg_legendary_matriarch`: **+500%
+  hull** (750,000), **+400% armor** (161,250: vanilla's 3,000 plus ten 2,925 Tiyanki armor plates, x5), **2% hull and armor regeneration**, **+200% damage** (4x in all), **+50%
+  fire rate**. Void Leap Drive (250) reaches her from the galaxy's edge; the Whale Road's wormhole leads straight to her. Her system is **research-rich** (+6 physics star, three
+  +5 engineering asteroids, +10 physics / +10 engineering gas giants, +8 physics / +8 society / +10 society / +6 society
+  bodies) with a **size 40 Gaia world**, Matriarch's Cradle. Its molten world, **Matriarch's Hearth**, always has vanilla's **Chthonian Biomass**
+  anomaly (`CHTHONIAN_PRESERVATION_CAT`) for the first regular empire that surveys it (`lfg_sealed_ring.6`,
+  `on_survey_planet`, `add_anomaly`), unless it has already found one (has, or is offered, Alloy Fossilization, which
+  its project leads to) or the game lacks The Shroud (`has_shroud_dlc`, as the anomaly's own spawn chance checks).
+
+**The way out** (`lfg_sealed_ring.2`/`.3`): a day after each residue is cleared, if none is left in the ring's system,
+a popup offers **Jump Drive** (10% progress, unless known) and **Void Leap Drive** (`tech_lfg_sealed_ring_drive`,
+10% progress; `@giga_tier7cost1` = 64,000; needs Jump Drive; **+150% jump drive range**).
+
+**Killing the Matriarch** (`lfg_sealed_ring.4`, `on_ship_destroyed_perp`): the killer (any regular empire) gets
+vanilla's `harvested_tiyanki_dna` flag, which lets species modification add **Polymelic** (`trait_tiyanki`) once
+leviathan traits are available (Mutation's Nucleotide Isolation, or Genetics finished with Allelic Expression), as
+killing vanilla's Matriarch does (`distar.212`). Her corpse is left as vanilla's `elderly_tiyanki_dead_object`. **Reanimators** (vanilla's `is_reanimator`: Reanimated Armies,
+Permanent Employment, Cordyceptic Drones and Cordyceptic Symbionts (the Wilderness swap of the same civic), Mechromancy)
+get a second option: the special project `LFG_REANIMATE_LEGENDARY_MATRIARCH` on her corpse (10,000 society, like
+vanilla's Matriarch's), which raises her as vanilla's reanimated Progenitor (`lfg_sealed_ring.16`) with a **hidden
+bonus**: `lfg_reanimated_legendary_matriarch` on the ship doubles her hull, armor and damage (250,000 hull, 64,500 armor,
+2x damage before the empire's own modifiers). The event doesn't mention it.
+
+**Unverified in game:** `move_system` over 100 units (the docs say 0–100; Giga moves systems 10–15) and the
+isolation retries; `spawn_system` / `move_system` on day one with the Urmazin spawning in the same event; the
+replacement system taking the hyperlanes; `create_research_station` at game start; the Urmazin trade dialogue
+without a first visit; the kill event's scopes; the dig site's wormhole pair (vanilla's `distar.290` pattern), and a
+second pair into the Matriarch's system when two empires finish the dig.
+
+**Shadow Transactions** (`ap_lfg_shadow_transactions`; secret: not on the Steam page): only for Swallowed Whole empires with **Criminal Heritage**
+(which blocks vanilla's Universal Transactions), with no other perks needed first. **−50% branch office cost** (both
+`country_branch_office_influence_cost_mult` and `planet_branch_offices_cost_mult`), **+10 base intel** on every empire
+(`add_base_country_intel`, as the Spy Orb gives), **+1 decryption**. The influence −50% does little from beyond the rim: the game applies it *before* its 1,000 cap
+(`BRANCH_OFFICE_INFLUENCE_MAX_COST`), and with no hyperlane route the distance term is huge. So the perk's real prize is
+the **Shadow Branch Office** espionage operation (`lfg_operation_shadow_branch`, needs Nemesis like vanilla's): 2 stages
+at difficulty 6 (vanilla's tier 2), 50 influence, 6 energy upkeep, 30 spy power. It opens a branch office
+(`establish_branch_office`, `lfg_sealed_ring.21`) on a random planet of the target that has none and that we know
+(surveyed by a science ship, or through intel); the target must be able to host branch offices (a regular, non-gestalt
+empire; Fanatic Purifiers only for their own species). If no planet qualifies by then, the influence is refunded. It also unlocks **Remove Branch Office** (`lfg_operation_remove_branch`): 3 stages at difficulty 7 / 7 /
+8 (vanilla's tiers 3 / 4), 100 influence, 10 energy upkeep, 45 spy power. It closes (`close_branch_office`,
+`lfg_sealed_ring.24`) a random branch office on one of the target's planets - anyone's but ours;
+none left by then: the influence is refunded. Icon: Universal Transactions turned blood red
+(`art/make_origin_art.py`).
 
 ## Origin: Nanite Forge (machines)
 
@@ -931,7 +1043,7 @@ exposes no trade volume or fee paid), so this is the fee rate applied to the pay
 
 ## Premade empires
 
-Thirteen empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
+Fourteen empires built from the author's own saved designs (`prescripted_countries/lfg_prescripted_countries.txt`). The
 mechanics are theirs, unchanged: species, portrait and traits, ethics, authority, government, all **three civics**
 (played with a +1 civics mod) and origin. Names, homeworld and system, ruler and title, ship set, flag, a name list
 (`common/name_lists/lfg_name_lists.txt`, literal names; fleet and army sequences localised) and a start-screen story are
@@ -954,10 +1066,12 @@ new. Each empire's prescripted flag (`common/prescripted_flags/lfg_empire_flags.
 | Cevelli Stormbloom Cooperative (Cevellian Cooperative) | Cevelli, on the tropical world Thunderloam | Storm Chasers | Psionic | yes |
 | Priman Ringwright Exchange (Priman Mercantile Union) | Primes (individual machines) | Shattered Ring | Humanoid | yes |
 | Obadin Undertow Syndicate (Obadin Syndicate) | Obadin, on the ocean world Tebbran Shallows | Payback | Molluscoid | yes |
+| Malwegoll Gullet Monopoly (Malwegoll Monopoly) | Malwegoll, on the ring Dabulan | Swallowed Whole | Molluscoid | **no** |
 
 Changed from the saved designs: the Myrran homeworld is a vanilla **ocean** world and the Cevelli one a **tropical** world
 (both were Planetary Diversity's), and
-the two that started in Sol (`sol_system_initializer`) get a random home system instead. **Unverified in game:** the
+the two that started in Sol (`sol_system_initializer`) get a random home system instead. The Malwegoll design spawned as AI; it no
+longer does (an AI can't find its way back from beyond the rim). **Unverified in game:** the
 stories (prescripted flag → start screen), `ruler_title`, and the Mindwarden ship set with mammalian cities.
 
 ## Overrides of vanilla and Gigastructural content

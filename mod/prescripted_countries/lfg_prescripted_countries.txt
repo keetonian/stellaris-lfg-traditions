@@ -698,3 +698,58 @@ lfg_empire_obadin = {
 		leader_class = official
 	}
 }
+
+# Malwegoll Gullet Monopoly (from the author's "Malwegoll Monopoly"). Swallowed Whole: the AI can't find its way back
+# from beyond the rim, so it doesn't spawn as AI (the saved design had spawn_enabled = yes).
+lfg_empire_malwegoll = {
+	name = "lfg_empire_malwegoll_name"
+	adjective = "lfg_empire_malwegoll_adj"
+	spawn_enabled = no
+	ignore_portrait_duplication = yes
+	ship_prefix = "lfg_empire_malwegoll_prefix"
+	species = {
+		class = "MOL"
+		portrait = "mol17"
+		name = "lfg_empire_malwegoll_species"
+		plural = "lfg_empire_malwegoll_species_plural"
+		adjective = "lfg_empire_malwegoll_species_adj"
+		name_list = "lfg_malwegoll"
+		trait = "trait_organic"
+		trait = "trait_thrifty"
+		trait = "trait_unruly"
+		trait = "trait_nonadaptive"
+		trait = "trait_charismatic"
+		trait = "trait_traditional"
+	}
+	room = "default_room"
+	authority = "auth_corporate"
+	government = gov_criminal_syndicate
+	civics = { "civic_free_traders" "civic_criminal_heritage" "civic_secret_societies_corporate" }
+	ethic = "ethic_egalitarian"
+	ethic = "ethic_xenophile"
+	ethic = "ethic_spiritualist"
+	origin = "origin_lfg_sealed_ring"
+	flag = lfg_empire_malwegoll	# common/prescripted_flags/lfg_empire_flags.txt: its story (start screen)
+	planet_name = "lfg_empire_malwegoll_planet"
+	planet_class = "pc_ocean"	# species climate; the origin starts it on a ring segment
+	system_name = "lfg_empire_malwegoll_system"
+	initializer = "lfg_sealed_ring_start"
+	graphical_culture = "molluscoid_01"
+	city_graphical_culture = "mammalian_01"
+	empire_flag = {
+		icon = { category = "toxoid" file = "toxoid_12.dds" }
+		background = { category = "backgrounds" file = "double_triangles.dds" }
+		colors = { "burgundy" "purple" "black" "burgundy" }
+	}
+	ruler = {
+		name = "lfg_empire_malwegoll_ruler"
+		ruler_title = "lfg_empire_malwegoll_ruler_title"
+		gender = female
+		portrait = "mol17"
+		texture = 2
+		attachment = 0
+		clothes = 0
+		trait = "leader_trait_spycraft"
+		leader_class = official
+	}
+}

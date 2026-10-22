@@ -49,7 +49,7 @@ class RealModTests(unittest.TestCase):
         mod = check_mod.Mod(REPO / "mod", check_mod.Report(False))
         self.assertEqual(len(mod.top("common/tradition_categories")), 10)
         self.assertEqual(len(mod.top("common/traditions")), 10 * 7)
-        self.assertEqual(set(mod.top("common/governments/civics")), {"civic_lfg_applied_biosciences", "origin_lfg_nanite_forge"})
+        self.assertEqual(set(mod.top("common/governments/civics")), {"civic_lfg_applied_biosciences", "origin_lfg_nanite_forge", "origin_lfg_sealed_ring"})
         self.assertIn("lfg_species_experimentation", mod.top("common/edicts"))
         self.assertEqual(check_mod.mod_event_ids(mod), {"lfg_species_split.1", "lfg_xenoarchaeology.1", "lfg_xenoarchaeology.2", "lfg_xenoarchaeology.3",
                                                             "lfg_resorts.1", "lfg_shellworlders.1",
@@ -58,13 +58,17 @@ class RealModTests(unittest.TestCase):
                                                             "lfg_massed_assault.1", "lfg_emberfall.1",
                                                             "lfg_nanite_forge.1", "lfg_nanite_forge.2", "lfg_nanite_forge.3", "lfg_nanite_forge.5",
                                                             "lfg_nanite_forge.4", "lfg_nanite_forge.6",
+                                                            "lfg_sealed_ring.1", "lfg_sealed_ring.2", "lfg_sealed_ring.3", "lfg_sealed_ring.4", "lfg_sealed_ring.5", "lfg_sealed_ring.6", "lfg_sealed_ring.8", "lfg_sealed_ring.9",
+                                                            "lfg_sealed_ring.10", "lfg_sealed_ring.11", "lfg_sealed_ring.12", "lfg_sealed_ring.13",
+                                                            "lfg_sealed_ring.14", "lfg_sealed_ring.15", "lfg_sealed_ring.16",
+                                                            "lfg_sealed_ring.20", "lfg_sealed_ring.21", "lfg_sealed_ring.22", "lfg_sealed_ring.23", "lfg_sealed_ring.24",
                                                             "lfg_lineage.1", "lfg_stationcraft.1", "lfg_mothership.1", "lfg_mothership.2",
                                                             "lfg_mothership.3", "lfg_mothership.4", "lfg_mothership.5",
                                                             "lfg_mothership.6", "lfg_mothership.7", "lfg_mothership.8", "lfg_mothership.9", "lfg_mothership.10", "lfg_storms.1", "lfg_storms.2", "lfg_storms.4", "lfg_storms.5", "lfg_storms.6", "lfg_storms.7", "lfg_storms.8", "lfg_dragons.1", "lfg_dragons.2", "lfg_dragons.3", "lfg_dragons.4", "lfg_dragons.5", "lfg_dragons.6", "lfg_dragons.7", "lfg_dragons.8", "lfg_dragons.10", "lfg_payback.1",
                                                             "lfg_mothership.11", "lfg_mothership.12", "lfg_mothership.13", "lfg_mothership.14",
                                                             "lfg_nanite_pulse.1"})
         self.assertEqual(len(mod.top("common/council_agendas")), 8)
-        self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress", "ap_lfg_massed_assault", "ap_lfg_nanite_armada", "ap_lfg_mothership", "ap_lfg_storm_sovereignty", "ap_lfg_legendary_dragons"})
+        self.assertEqual(set(mod.top("common/ascension_perks")), {"ap_lfg_curated_progress", "ap_lfg_massed_assault", "ap_lfg_nanite_armada", "ap_lfg_mothership", "ap_lfg_storm_sovereignty", "ap_lfg_legendary_dragons", "ap_lfg_shadow_transactions"})
         shelve = [k for k in mod.top("common/edicts") if k.startswith("lfg_shelve_")]
         self.assertEqual(len(shelve), 24 + 3)  # one per repeatable tech + megastructure capacity per research area
 
@@ -324,6 +328,10 @@ class MutationTests(unittest.TestCase):
         log = self.tmp / "modifiers.log"
         log.write_text("")
         self.assertIn("megastructure_build_speed_mult", check_mod.load_modifiers(log))
+
+    def test_dig_site_stage_event_must_exist(self):
+        self.edit("common/archaeological_site_types/lfg_archaeological_sites.txt", "event = lfg_sealed_ring.12", "event = lfg_sealed_ring.92")
+        self.assertFails("fires lfg_sealed_ring.92, which is not defined")
 
     def test_spawned_initializer_must_exist(self):
         self.edit("events/lfg_lone_tide_events.txt", "initializer = lfg_lone_tide_init", "initializer = lfg_lone_tidez_init", 4)

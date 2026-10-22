@@ -794,3 +794,435 @@ lfg_nanite_forge_science_physics_init = {
 		size = { min = 8 max = 14 }
 	}
 }
+
+# Sealed Ring origin (origin_lfg_sealed_ring): an intact ring world around a yellow star, laid out like vanilla's
+# pre-FTL Sanctuary ring (habitable, tech, seam segments every 30 degrees). The homeworld is the first habitable
+# segment; the other three start uncolonized. Their sealed sections (d_lfg_sealed_section) and the seam's Quasi-Negative
+# Mass deposit (on the Tiyanki Residue body outside the ring) are added by lfg_sealed_ring.1 (vanilla's home-system setup re-rolls deposits after this runs), which
+# also moves the system beyond the galactic rim and spawns its one neighbour (lfg_sealed_ring_neighbor_init). No
+# neighbor_system: nothing near it in the galaxy is ours. empire_cluster (on all three of the origin's systems) keeps
+# Gigastructural's Mysterious Structures (ehof_pgate_unknown) and wrecked warships (giga_valid_planet_wrecked_ship*) out.
+lfg_sealed_ring_start = {
+	class = "sc_g"
+	usage = origin
+	flags = { empire_home_system empire_cluster ring_world_built lfg_sealed_ring_system }
+
+	init_effect = {
+		generate_home_system_resources = yes
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 0
+	}
+
+	change_orbit = 45
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		orbit_angle = 30
+		orbit_distance = 0
+		starting_planet = yes
+		deposit_blockers = none
+		modifiers = none
+		flags = { ignore_startup_effect megastructure }
+		init_effect = {
+			prevent_anomaly = yes
+		}
+	}
+	planet = {
+		class = "pc_ringworld_tech"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+	planet = {
+		class = "pc_ringworld_seam"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+		flags = { megastructure lfg_sealed_ring_segment }
+	}
+	planet = {
+		class = "pc_ringworld_tech"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+	planet = {
+		class = "pc_ringworld_seam"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+		flags = { megastructure lfg_sealed_ring_segment }
+	}
+	planet = {
+		class = "pc_ringworld_tech"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+	planet = {
+		class = "pc_ringworld_seam"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	planet = {
+		class = "pc_ringworld_habitable"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+		deposit_blockers = none
+		modifiers = none
+		flags = { megastructure lfg_sealed_ring_segment }
+	}
+	planet = {
+		class = "pc_ringworld_tech"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+	planet = {
+		class = "pc_ringworld_seam"
+		name = "NAME_lfg_sealed_ring_section"
+		orbit_angle = 30
+		orbit_distance = 0
+	}
+
+	# Tiyanki Residue: a blob the Matriarch left in orbit outside the ring (vanilla's cracked-egg body, the
+	# "shattered infected planet" look). lfg_sealed_ring.1 gives it the Quasi-Negative Mass deposit and a station.
+	planet = {
+		name = "NAME_lfg_tiyanki_residue"
+		class = "pc_egg_cracked"
+		orbit_distance = 30
+		orbit_angle = 200
+		size = 6
+		has_ring = no
+		flags = { ignore_startup_effect lfg_sealed_ring_negative_mass }
+		init_effect = { prevent_anomaly = yes }
+	}
+	# A second one on the far side of the star, with +10 minerals (also set by lfg_sealed_ring.1).
+	planet = {
+		name = "NAME_lfg_tiyanki_residue"
+		class = "pc_egg_cracked"
+		orbit_distance = 0
+		orbit_angle = 180
+		size = 5
+		has_ring = no
+		flags = { ignore_startup_effect lfg_sealed_ring_minerals }
+		init_effect = { prevent_anomaly = yes }
+	}
+}
+
+# Sealed Ring origin: the ring's only neighbour (spawned beside it by lfg_sealed_ring.1, one hyperlane), where the
+# Matriarch's herd grazes (Tiyanki added by lfg_sealed_ring.1). One star and many bodies, none habitable: nine molten
+# worlds and moons, gas giants, barren and frozen rocks, two asteroid belts; deposits are the game's random ones.
+lfg_sealed_ring_neighbor_init = {
+	class = "rl_standard_stars"
+	usage = misc_system_init
+	usage_odds = 0
+	flags = { lfg_sealed_ring_neighbor empire_cluster }
+
+	asteroid_belt = {
+		type = rocky_asteroid_belt
+		radius = 45
+	}
+	asteroid_belt = {
+		type = icy_asteroid_belt
+		radius = 200
+	}
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 0
+		size = { min = 20 max = 30 }
+		has_ring = no
+	}
+
+	change_orbit = 45
+	planet = {
+		count = 5
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 40 max = 90 }
+		size = { min = 2 max = 4 }
+	}
+
+	# Molten worlds 1-4
+	planet = {
+		count = 2
+		class = pc_molten
+		orbit_distance = 12
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+	}
+	planet = {
+		class = pc_molten
+		orbit_distance = 14
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 10 max = 16 }
+		change_orbit = 8
+		moon = {
+			class = pc_molten	# molten 4
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+		}
+	}
+
+	planet = {
+		class = pc_toxic
+		orbit_distance = 18
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 10 max = 16 }
+		change_orbit = 8
+		moon = {
+			class = pc_barren
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+		}
+	}
+
+	# Molten worlds 5-7: a gas giant with two molten moons and a barren one
+	planet = {
+		class = pc_gas_giant
+		orbit_distance = 22
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 25 max = 32 }
+		change_orbit = 10
+		moon = {
+			count = 2
+			class = pc_molten
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 5 max = 9 }
+		}
+		moon = {
+			class = pc_barren
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+		}
+	}
+
+	planet = {
+		class = pc_molten
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 12 max = 18 }
+	}
+
+	planet = {
+		class = pc_barren
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+		change_orbit = 8
+		moon = {
+			count = 2
+			class = pc_barren
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 3 max = 6 }
+		}
+	}
+
+	# Molten worlds 8-9: a second gas giant's molten moons, with frozen ones further out
+	planet = {
+		class = pc_gas_giant
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 22 max = 28 }
+		change_orbit = 10
+		moon = {
+			count = 2
+			class = pc_molten
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 8 }
+		}
+		moon = {
+			count = 2
+			class = pc_frozen
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+		}
+	}
+
+	planet = {
+		class = pc_barren_cold
+		orbit_distance = 25
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+		change_orbit = 8
+		moon = {
+			class = pc_frozen
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+		}
+	}
+
+	planet = {
+		class = pc_frozen
+		orbit_distance = 22
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+	}
+
+	change_orbit = 20
+	planet = {
+		count = 5
+		class = pc_ice_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 40 max = 90 }
+		size = { min = 2 max = 4 }
+	}
+}
+
+# Sealed Ring origin: the Legendary Tiyanki Matriarch's system, beyond the rim somewhere else around the galaxy (at
+# least 300 from any Swallowed Whole ring) with no hyperlanes (spawned and placed by lfg_sealed_ring.1 for the first
+# empire with the origin, which also creates the Matriarch). Void Leap Drive reaches it from the galaxy's edge; the
+# Whale Road dig site (lfg_whale_road_digsite) opens a wormhole to it. Her feeding ground: rich in research, with a size 40 Gaia world she keeps warm. Gas giants for her
+# to circle, like vanilla's elderly_tiyanki_system.
+lfg_sealed_ring_matriarch_init = {
+	name = "NAME_lfg_matriarch_deep"
+	class = "rl_standard_stars"
+	usage = misc_system_init
+	usage_odds = 0
+	flags = { lfg_sealed_ring_matriarch guardian hostile_system empire_cluster }
+
+	planet = {
+		class = star
+		orbit_distance = 0
+		orbit_angle = 0
+		init_effect = { add_deposit = d_physics_6 }
+	}
+
+	change_orbit = 35
+	planet = {
+		count = 3
+		class = pc_asteroid
+		orbit_distance = 0
+		orbit_angle = { min = 60 max = 120 }
+		size = { min = 2 max = 4 }
+		init_effect = {
+			clear_deposits = yes
+			add_deposit = d_engineering_5
+		}
+	}
+
+	planet = {
+		class = pc_gas_giant
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 22 max = 30 }
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = d_physics_10
+		}
+		change_orbit = 10
+		moon = {
+			class = pc_frozen
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 5 max = 8 }
+			init_effect = {
+				clear_deposits = yes
+				add_deposit = d_society_8
+			}
+		}
+	}
+
+	planet = {
+		name = "NAME_lfg_matriarch_cradle"
+		class = pc_gaia
+		orbit_distance = 30
+		orbit_angle = { min = 90 max = 270 }
+		size = 40
+		has_ring = no
+		init_effect = { prevent_anomaly = yes }
+	}
+
+	planet = {
+		class = pc_toxic
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 12 max = 18 }
+		init_effect = {
+			clear_deposits = yes
+			add_deposit = d_society_10
+		}
+	}
+
+	planet = {
+		class = pc_gas_giant
+		orbit_distance = 30
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 25 max = 32 }
+		init_effect = {
+			prevent_anomaly = yes
+			clear_deposits = yes
+			add_deposit = d_engineering_10
+		}
+		change_orbit = 10
+		moon = {
+			class = pc_barren_cold
+			orbit_angle = { min = 90 max = 270 }
+			orbit_distance = 5
+			size = { min = 4 max = 7 }
+			init_effect = {
+				clear_deposits = yes
+				add_deposit = d_physics_8
+			}
+		}
+	}
+
+	# A molten world that always has the Chthonian Biomass anomaly for the first empire to survey it, unless that empire
+	# has already found one (lfg_sealed_ring.6, on_survey_planet). No deposits, like the planets vanilla rolls it on.
+	planet = {
+		name = "NAME_lfg_matriarch_chthonian"
+		class = pc_molten
+		orbit_distance = 20
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 12 max = 16 }
+		flags = { lfg_matriarch_chthonian }
+		init_effect = { clear_deposits = yes }
+	}
+
+	planet = {
+		class = pc_frozen
+		orbit_distance = 30
+		orbit_angle = { min = 90 max = 270 }
+		size = { min = 8 max = 14 }
+		init_effect = {
+			clear_deposits = yes
+			add_deposit = d_society_6
+		}
+	}
+}

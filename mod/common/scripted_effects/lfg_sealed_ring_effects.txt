@@ -1,0 +1,60 @@
+# LFG Traditions - Sealed Ring origin.
+
+# Capital colony scope (root = the country): the homeworld's starting districts: one city district (a hive's for hive
+# minds), one urban district with the ring's energy zone, and, if the empire eats food, one with its food zone (as
+# Gigastructural's ring origins set theirs up, giga_generate_starting_ringworld_districts). Everything else the game
+# gave it goes.
+lfg_sealed_ring_starting_districts = {
+	while = {
+		limit = { num_districts = { type = district_rw_city value > 1 } }
+		remove_district = district_rw_city
+	}
+	while = {
+		limit = { num_districts = { type = district_rw_hive value > 1 } }
+		remove_district = district_rw_hive
+	}
+	while = {
+		limit = { num_districts = { type = district_rw_urban_1 value > 0 } }
+		remove_district = district_rw_urban_1
+	}
+	while = {
+		limit = { num_districts = { type = district_rw_urban_2 value > 0 } }
+		remove_district = district_rw_urban_2
+	}
+	while = {
+		limit = { num_districts = { type = district_rw_urban_3 value > 0 } }
+		remove_district = district_rw_urban_3
+	}
+	add_district = district_rw_urban_1
+	add_zone = {
+		district = district_rw_urban_1
+		zone = zone_energy_ring_world
+		zone_slot = 0
+		replace = yes
+	}
+	if = {
+		limit = { owner = { country_uses_food_game_start = yes } }
+		add_district = district_rw_urban_2
+		add_zone = {
+			district = district_rw_urban_2
+			zone = zone_food_ring_world
+			zone_slot = 0
+			replace = yes
+		}
+	}
+}
+
+# Country scope: the origin starts with no ships: deletes every fleet but stations (starbase, mining and research
+# stations).
+lfg_sealed_ring_remove_starting_fleets = {
+	every_owned_fleet = {
+		limit = {
+			NOR = {
+				is_ship_class = shipclass_starbase
+				is_ship_class = shipclass_mining_station
+				is_ship_class = shipclass_research_station
+			}
+		}
+		delete_fleet = this
+	}
+}

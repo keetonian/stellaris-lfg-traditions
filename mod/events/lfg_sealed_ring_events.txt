@@ -1,0 +1,912 @@
+# LFG Traditions - Sealed Ring origin (origin_lfg_sealed_ring): an intact ring world beyond the galactic rim.
+namespace = lfg_sealed_ring
+
+# Game start (on_game_start_country):
+# - no starting ships (lfg_sealed_ring_remove_starting_fleets; stations stay);
+# - remove vanilla's homeworld blockers (Industrial Wasteland, Sprawling Slums...), set the homeworld's districts
+#   (lfg_sealed_ring_starting_districts), then seal the ring's segments (d_lfg_sealed_section: 3 on the homeworld, 7
+#   on each other habitable segment), give the homeworld Gigastructural's Great Ring mining node, and put +10 minerals
+#   and the Quasi-Negative Mass deposit (with a research station) on the two Tiyanki Residue bodies;
+# - give Negative Energy Studies (QNM only produces with it; the Urmazin Traders, met at the end of the Whale Road,
+#   buy it);
+# - move the home system beyond the rim, like Gigastructural's Away On An Island origin (ehof_incohesive.3): a random
+#   replacement system takes over its hyperlanes, then the system is moved 140-170 out from a rim system until
+#   lfg_sealed_ring_isolated holds (no galaxy system within 130); then spawn its one neighbour, 15-25 away, with a
+#   hyperlane. A plain jump drive (range 100) can't reach the galaxy from there; with Sealed Ring Drive (250) it can.
+country_event = {
+	id = lfg_sealed_ring.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_lfg_sealed_ring
+		exists = capital_scope
+	}
+
+	immediate = {
+		set_country_flag = lfg_sealed_ring_origin
+		give_technology = { tech = tech_negative_e_s message = no }
+
+		lfg_sealed_ring_remove_starting_fleets = yes
+		country_event = { id = lfg_sealed_ring.5 days = 1 }
+		capital_scope = {
+			# Vanilla's homeworld blockers (game_start.12, at empire creation, before this) go; capital_scope is the
+			# colony, which holds a settled planet's deposits.
+			clear_blockers = yes
+			lfg_sealed_ring_starting_districts = yes
+			while = {
+				count = 3
+				add_deposit = d_lfg_sealed_section
+			}
+			# Mining jobs, as Gigastructural's Great Ring homeworld gets them: its Ringworld Self-Repair System Node
+			# (5 Matter Synthesizer jobs: miners, 4 minerals each).
+			add_deposit = d_great_ring_excavated_mountain
+		}
+		capital_scope.solar_system = {
+			save_event_target_as = lfg_sealed_ring_home
+			# The other three habitable segments (flagged in lfg_sealed_ring_start: capital_scope is a colony, so
+			# comparing planets with it never matched and the homeworld got these too).
+			every_system_planet = {
+				limit = { has_planet_flag = lfg_sealed_ring_segment }
+				clear_blockers = yes
+				while = {
+					count = 7
+					add_deposit = d_lfg_sealed_section
+				}
+			}
+			# +10 minerals on the second Tiyanki Residue body, for a mining station.
+			every_system_planet = {
+				limit = { has_planet_flag = lfg_sealed_ring_minerals }
+				clear_deposits = yes
+				add_deposit = d_minerals_10
+			}
+			every_system_planet = {
+				limit = { has_planet_flag = lfg_sealed_ring_negative_mass }
+				clear_deposits = yes
+				add_deposit = d_lfg_sealed_ring_negative_mass
+				create_research_station = { owner = root }
+			}
+		}
+
+		# Hand the home system's hyperlanes to a replacement system in its place.
+		event_target:lfg_sealed_ring_home = {
+			spawn_system = {
+				initializer = random
+				min_distance >= 0
+				max_distance <= 1
+				hyperlane = no
+			}
+			last_created_system = { save_event_target_as = lfg_sealed_ring_replacement }
+			every_neighbor_system = {
+				set_star_flag = lfg_sealed_ring_old_neighbor
+				add_hyperlane = { from = this to = event_target:lfg_sealed_ring_replacement }
+			}
+		}
+		every_system = {
+			limit = { has_star_flag = lfg_sealed_ring_old_neighbor }
+			remove_hyperlane = { from = this to = event_target:lfg_sealed_ring_home }
+			remove_star_flag = lfg_sealed_ring_old_neighbor
+		}
+
+		# Beyond the rim.
+		event_target:lfg_sealed_ring_home = {
+			while = {
+				count = 100
+				if = {
+					limit = { NOT = { has_star_flag = lfg_sealed_ring_placed } }
+					random_system = {
+						limit = {
+							lfg_sealed_ring_galaxy_system = yes
+							distance_to_core_percent >= 85
+						}
+						save_event_target_as = lfg_sealed_ring_anchor
+					}
+					move_system = {
+						target = event_target:lfg_sealed_ring_anchor
+						min_distance >= 140
+						max_distance <= 170
+						hyperlane = no
+						reset_terra_incognita = yes
+					}
+					if = {
+						limit = { lfg_sealed_ring_isolated = yes }
+						set_star_flag = lfg_sealed_ring_placed
+					}
+				}
+			}
+			if = {
+				limit = { NOT = { has_star_flag = lfg_sealed_ring_placed } }
+				log = "lfg_sealed_ring.1: no isolated spot beyond the rim found; the home system stays at its last try"
+			}
+
+			set_spawn_system_batch = begin
+			spawn_system = {
+				min_distance >= 15
+				max_distance <= 25
+				initializer = lfg_sealed_ring_neighbor_init
+				hyperlane = no
+			}
+			set_spawn_system_batch = end
+		}
+		random_system = {
+			limit = { has_star_flag = lfg_sealed_ring_neighbor }
+			save_event_target_as = lfg_sealed_ring_neighbor_system
+			add_hyperlane = { from = this to = event_target:lfg_sealed_ring_home }
+		}
+
+		# The Matriarch's herd in the neighbour: two families of vanilla's garrison Tiyanki (they don't roam), placed like
+		# vanilla's displaced hatchlings (anomaly_events_cosmic_storms). We start in contact with the Tiyanki, as
+		# vanilla's Fruitful Partnership does (fruitful_start_effect: the tiyanki_encountered flag + create_tiyanki_country).
+		create_tiyanki_garrison_country = yes
+		set_country_flag = tiyanki_encountered
+		create_tiyanki_country = yes
+		establish_communications_no_message = event_target:tiyanki_country
+		establish_communications_no_message = event_target:tiyanki_garrison_country
+		event_target:lfg_sealed_ring_neighbor_system = {
+			log = "lfg_sealed_ring.1: neighbour system [This.GetName]"
+			random_system_planet = {
+				limit = { is_star = yes }
+				save_event_target_as = lfg_sealed_ring_herd_point
+			}
+		}
+		while = {
+			count = 2
+			create_fleet = {
+				name = "NAME_Tiyanki_Space_Whale"
+				effect = {
+					set_owner = event_target:tiyanki_garrison_country
+					create_ship = { design = "NAME_Tiyanki_Cow" }
+					create_ship = { design = "NAME_Tiyanki_Bull" }
+					create_ship = { design = "NAME_Tiyanki_Calf" }
+					create_ship = { design = "NAME_Tiyanki_Hatchling" }
+					set_location = {
+						target = event_target:lfg_sealed_ring_herd_point
+						distance = 40
+						angle = random
+					}
+					set_fleet_stance = passive
+					set_aggro_range_measure_from = self
+					set_aggro_range = 0
+					log = "lfg_sealed_ring.1: Tiyanki herd [This.GetName] in [This.Solar_System.GetName]"
+				}
+			}
+		}
+
+		# The Whale Road: a long dig site on one of the neighbour's molten worlds; its end opens a wormhole to the
+		# Matriarch (lfg_whale_road_digsite, lfg_sealed_ring.15).
+		event_target:lfg_sealed_ring_neighbor_system = {
+			random_system_planet = {
+				limit = {
+					is_planet_class = pc_molten
+					is_moon = no
+				}
+				create_archaeological_site = lfg_whale_road_digsite
+				log = "lfg_sealed_ring.1: Whale Road dig site on [This.GetName]"
+			}
+		}
+
+		# Only one Legendary Matriarch, however many empires have the origin: beside the first one's ring.
+		if = {
+			limit = { NOT = { has_global_flag = lfg_legendary_matriarch_spawned } }
+			set_global_flag = lfg_legendary_matriarch_spawned
+			# The Matriarch: her own system, moved 140-170 beyond a random rim system (as the ring is) until it's far from every
+			# Swallowed Whole ring (lfg_sealed_ring_matriarch_isolated): somewhere else around the galaxy.
+			event_target:lfg_sealed_ring_home = {
+				set_spawn_system_batch = begin
+				spawn_system = {
+					min_distance >= 50
+					max_distance <= 80
+					initializer = lfg_sealed_ring_matriarch_init
+					hyperlane = no
+				}
+				set_spawn_system_batch = end
+			}
+			random_system = {
+				limit = {
+					has_star_flag = lfg_sealed_ring_matriarch
+					NOT = { has_star_flag = lfg_sealed_ring_placed }
+				}
+				save_event_target_as = lfg_sealed_ring_matriarch_system
+				while = {
+					count = 100
+					if = {
+						limit = { NOT = { has_star_flag = lfg_sealed_ring_placed } }
+						if = {
+							limit = { lfg_sealed_ring_matriarch_isolated = yes }
+							set_star_flag = lfg_sealed_ring_placed
+						}
+						else = {
+							random_system = {
+								limit = {
+									lfg_sealed_ring_galaxy_system = yes
+									distance_to_core_percent >= 85
+								}
+								save_event_target_as = lfg_sealed_ring_matriarch_anchor
+							}
+							move_system = {
+								target = event_target:lfg_sealed_ring_matriarch_anchor
+								min_distance >= 140
+								max_distance <= 170
+								hyperlane = no
+								reset_terra_incognita = yes
+							}
+						}
+					}
+				}
+				if = {
+					limit = { NOT = { has_star_flag = lfg_sealed_ring_placed } }
+					log = "lfg_sealed_ring.1: no spot far from the ring found for the Matriarch; she stays at its last try"
+				}
+			}
+			# Vanilla's ancient Tiyanki (guardian_elderly_tiyanki, its power, and a bigger copy of its Progenitor design:
+			# GENERATED lfg_matriarch_* files) made legendary (lfg_legendary_matriarch). The country flag marks her for lfg_sealed_ring.4.
+			create_country = {
+				name = "NAME_lfg_legendary_matriarch"
+				type = guardian_elderly_tiyanki
+				flag = {
+					icon = { category = "zoological" file = "flag_zoological_17.dds" }
+					background = { category = "backgrounds" file = "00_solid.dds" }
+					colors = { "dark_purple" "dark_purple" "null" "null" }
+				}
+			}
+			last_created_country = {
+				set_country_flag = lfg_legendary_matriarch_country
+				add_modifier = { modifier = elderly_tiyanki_power days = -1 }
+				add_modifier = { modifier = lfg_legendary_matriarch days = -1 }
+				save_event_target_as = lfg_legendary_matriarch_country
+			}
+			event_target:lfg_sealed_ring_matriarch_system = {
+				random_system_planet = {
+					limit = { is_star = yes }
+					save_event_target_as = lfg_legendary_matriarch_start
+				}
+			}
+			event_target:lfg_legendary_matriarch_country = {
+				create_fleet = {
+					name = "NAME_lfg_legendary_matriarch"
+					settings = {
+						spawn_debris = no
+						is_boss = yes
+					}
+					effect = {
+						set_owner = event_target:lfg_legendary_matriarch_country
+						create_ship = {
+							name = "NAME_lfg_legendary_matriarch"
+							design = "NAME_lfg_legendary_matriarch"	# GENERATED: vanilla's Progenitor, model x1.75
+						}
+						set_location = {
+							target = event_target:lfg_legendary_matriarch_start
+							distance = 50
+							angle = random
+						}
+					log = "lfg_sealed_ring.1: Legendary Matriarch in [This.Solar_System.GetName]"
+						set_fleet_stance = aggressive
+						set_aggro_range_measure_from = self
+						set_aggro_range = 50
+					}
+				}
+			}
+		}
+	}
+}
+
+# A day after game start: the starting ships again, if the game added them after lfg_sealed_ring.1.
+country_event = {
+	id = lfg_sealed_ring.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_lfg_sealed_ring
+	}
+
+	immediate = {
+		lfg_sealed_ring_remove_starting_fleets = yes
+	}
+}
+
+# A day after a sealed section is cleared (d_lfg_sealed_section's on_cleared): once no segment of the ring has one
+# left, the way out (lfg_sealed_ring.3), once.
+country_event = {
+	id = lfg_sealed_ring.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_lfg_sealed_ring
+		NOT = { has_country_flag = lfg_sealed_ring_opened }
+		NOT = {
+			any_system = {
+				has_star_flag = lfg_sealed_ring_system
+				any_system_planet = { has_deposit = d_lfg_sealed_section }
+			}
+		}
+	}
+
+	immediate = {
+		set_country_flag = lfg_sealed_ring_opened
+		country_event = { id = lfg_sealed_ring.3 }
+	}
+}
+
+# The ring is open: its archives show how its builders crossed the void. 10% progress in Jump Drive (unless we have
+# it) and in Sealed Ring Drive (+150% jump drive range).
+country_event = {
+	id = lfg_sealed_ring.3
+	title = lfg_sealed_ring.3.name
+	desc = lfg_sealed_ring.3.desc
+	picture = GFX_evt_ringworld
+	show_sound = event_finding_loot
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_sealed_ring.3.a
+		if = {
+			limit = { NOT = { has_technology = tech_jump_drive_1 } }
+			add_research_option = tech_jump_drive_1
+			add_tech_progress = { tech = tech_jump_drive_1 progress = 0.1 }
+		}
+		add_research_option = tech_lfg_sealed_ring_drive
+		add_tech_progress = { tech = tech_lfg_sealed_ring_drive progress = 0.1 }
+	}
+}
+
+# on_ship_destroyed_perp (this = the killer's owner, from = the destroyed ship's owner, fromfromfrom = that ship): the
+# Legendary Matriarch is dead. Her killer may take her DNA: vanilla's harvested_tiyanki_dna flag, which makes
+# Polymelic (trait_tiyanki) available to species with leviathan genes (Biomorphosis mutation), as killing vanilla's
+# Matriarch does (distar.212).
+country_event = {
+	id = lfg_sealed_ring.4
+	title = lfg_sealed_ring.4.name
+	desc = lfg_sealed_ring.4.desc
+	picture = GFX_evt_ancient_tiyanki
+	show_sound = event_space_whale
+	is_triggered_only = yes
+
+	trigger = {
+		is_country_type = default
+		from = { has_country_flag = lfg_legendary_matriarch_country }
+		NOT = { has_country_flag = lfg_legendary_matriarch_slain }
+	}
+
+	immediate = {
+		set_country_flag = lfg_legendary_matriarch_slain
+		set_country_flag = harvested_tiyanki_dna
+		fromfromfrom = {
+			create_ambient_object = {
+				type = "elderly_tiyanki_dead_object"
+				location = this
+				effect = { save_global_event_target_as = lfg_dead_legendary_matriarch }
+			}
+		}
+	}
+
+	option = {
+		name = lfg_sealed_ring.4.a
+		custom_tooltip = lfg_sealed_ring.4.a.tt
+	}
+
+	# Reanimators can raise her (as vanilla's distar.212 offers for its Matriarch): a special project on her corpse.
+	# is_reanimator covers Reanimated Armies, Permanent Employment, Cordyceptic Drones (and Cordyceptic Symbionts, its
+	# Wilderness swap_type: same civic key) and Mechromancy.
+	option = {
+		name = lfg_sealed_ring.4.b
+		trigger = { is_reanimator = yes }
+		custom_tooltip = lfg_sealed_ring.4.a.tt
+		event_target:lfg_dead_legendary_matriarch = {
+			enable_special_project = {
+				name = "LFG_REANIMATE_LEGENDARY_MATRIARCH"
+				location = this
+				owner = root
+			}
+		}
+	}
+}
+
+# The Whale Road (lfg_whale_road_digsite): this = the excavating fleet, from = the site. Stages 1-5: the Matriarch's
+# trail, each worth a lump of research (12 / 12 / 18 / 18 / 24 months of income) and minor artifacts (vanilla's
+# medium artifact rewards, Ancient Relics only); stage 6 opens the wormhole, with
+# another medium artifact reward and 24 months of physics.
+
+fleet_event = {
+	id = lfg_sealed_ring.10
+	title = lfg_sealed_ring.10.name
+	desc = lfg_sealed_ring.10.desc
+	picture = GFX_evt_archaeology_camp
+	show_sound = event_mystic_reveal
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	immediate = {
+		from = { set_site_progress_locked = yes }
+	}
+	after = {
+		from = { set_site_progress_locked = no }
+	}
+
+	option = {
+		name = lfg_sealed_ring.10.a
+		medium_artifact_reward = yes
+		owner = {
+			add_monthly_resource_mult = {
+				resource = society_research
+				value = 12
+				min = 300
+				max = 3000
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = lfg_sealed_ring.11
+	title = lfg_sealed_ring.11.name
+	desc = lfg_sealed_ring.11.desc
+	picture = GFX_evt_tiyanki_family
+	show_sound = event_mystic_reveal
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	immediate = {
+		from = { set_site_progress_locked = yes }
+	}
+	after = {
+		from = { set_site_progress_locked = no }
+	}
+
+	option = {
+		name = lfg_sealed_ring.11.a
+		medium_artifact_reward = yes
+		owner = {
+			add_monthly_resource_mult = {
+				resource = physics_research
+				value = 12
+				min = 300
+				max = 3000
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = lfg_sealed_ring.12
+	title = lfg_sealed_ring.12.name
+	desc = lfg_sealed_ring.12.desc
+	picture = GFX_evt_ancient_records
+	show_sound = event_mystic_reveal
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	immediate = {
+		from = { set_site_progress_locked = yes }
+	}
+	after = {
+		from = { set_site_progress_locked = no }
+	}
+
+	option = {
+		name = lfg_sealed_ring.12.a
+		medium_artifact_reward = yes
+		owner = {
+			add_monthly_resource_mult = {
+				resource = engineering_research
+				value = 18
+				min = 450
+				max = 4500
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = lfg_sealed_ring.13
+	title = lfg_sealed_ring.13.name
+	desc = lfg_sealed_ring.13.desc
+	picture = GFX_evt_tiyanki_observation
+	show_sound = event_mystic_reveal
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	immediate = {
+		from = { set_site_progress_locked = yes }
+	}
+	after = {
+		from = { set_site_progress_locked = no }
+	}
+
+	option = {
+		name = lfg_sealed_ring.13.a
+		medium_artifact_reward = yes
+		owner = {
+			add_monthly_resource_mult = {
+				resource = society_research
+				value = 18
+				min = 450
+				max = 4500
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = lfg_sealed_ring.14
+	title = lfg_sealed_ring.14.name
+	desc = lfg_sealed_ring.14.desc
+	picture = GFX_evt_ancient_tiyanki
+	show_sound = event_mystic_reveal
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	immediate = {
+		from = { set_site_progress_locked = yes }
+	}
+	after = {
+		from = { set_site_progress_locked = no }
+	}
+
+	option = {
+		name = lfg_sealed_ring.14.a
+		medium_artifact_reward = yes
+		owner = {
+			add_monthly_resource_mult = {
+				resource = physics_research
+				value = 24
+				min = 600
+				max = 6000
+			}
+		}
+	}
+}
+
+# Stage 6: the end of the Whale Road. Contact with the Urmazin Traders, and a natural wormhole pair links the dig site's system and the Matriarch's (as
+# vanilla's distar.290 links the Sealed System); natural wormholes need Wormhole Stabilization: 25% of it (and the
+# research option) if missing.
+fleet_event = {
+	id = lfg_sealed_ring.15
+	title = lfg_sealed_ring.15.name
+	desc = lfg_sealed_ring.15.desc
+	picture = GFX_evt_ancient_tiyanki
+	show_sound = event_mystic_reveal
+	location = from
+	is_triggered_only = yes
+	archaeology = yes
+
+	immediate = {
+		from = { set_site_progress_locked = yes }
+	}
+	after = {
+		from = { set_site_progress_locked = no }
+	}
+
+	option = {
+		name = lfg_sealed_ring.15.a
+		medium_artifact_reward = yes
+		custom_tooltip = lfg_sealed_ring.15.urmazin_tt
+		# The Urmazin Traders: spawned now if they aren't there yet (ehof_mega_trader.100, which also gives every regular
+		# empire communications with them, as in Gigastructural's own story), in contact with us, their first-visit
+		# greeting skipped so we can trade from the diplomacy screen at once.
+		hidden_effect = {
+			owner = {
+				if = {
+					limit = { NOT = { has_global_flag = ehof_traders_spawned } }
+					if = {
+						limit = { NOT = { exists = event_target:current_system_creator } }
+						save_global_event_target_as = current_system_creator
+					}
+					country_event = { id = ehof_mega_trader.100 }
+				}
+				set_country_flag = ehof_traders_first_time
+				country_event = { id = lfg_sealed_ring.8 days = 1 }
+			}
+		}
+		owner = {
+			add_monthly_resource_mult = {
+				resource = physics_research
+				value = 24
+				min = 600
+				max = 6000
+			}
+		}
+		custom_tooltip = lfg_sealed_ring.15.a.tt
+		owner = {
+			if = {
+				limit = { NOT = { has_technology = tech_wormhole_stabilization } }
+				add_research_option = tech_wormhole_stabilization
+				add_tech_progress = { tech = tech_wormhole_stabilization progress = 0.25 }
+			}
+		}
+		hidden_effect = {
+			from.solar_system = { save_event_target_as = lfg_whale_road_entry }
+			random_system = {
+				limit = { has_star_flag = lfg_sealed_ring_matriarch }
+				save_event_target_as = lfg_whale_road_exit
+			}
+			if = {
+				limit = { exists = event_target:lfg_whale_road_exit }
+				event_target:lfg_whale_road_entry = {
+					event_target:lfg_whale_road_exit = {
+						prev = {
+							spawn_natural_wormhole = {
+								bypass_type = wormhole
+								random_pos = no
+								orbit_angle = 360
+							}
+						}
+						spawn_natural_wormhole = {
+							bypass_type = wormhole
+							random_pos = no
+							orbit_angle = 270
+						}
+						link_wormholes = prev
+					}
+				}
+			}
+			# Natural wormholes must be "seen" (bypass type wormhole: remember_instances) before ships can use them; ours
+			# appear after the system was surveyed, so the excavating empire learns them here (lfg_sealed_ring.9).
+			owner = { country_event = { id = lfg_sealed_ring.9 } }
+		}
+	}
+}
+
+# on_survey_planet (this = the surveying ship, from = the planet): the Legendary Matriarch's molten world gives its
+# surveyor vanilla's Chthonian Biomass anomaly (CHTHONIAN_PRESERVATION_CAT), unless the empire has already found one:
+# its Petrification project leads to Alloy Fossilization (tech_alloy_fossilization), and we mark the empires we gave
+# it to. Same DLC check as the anomaly's own spawn chance (has_shroud_dlc).
+ship_event = {
+	id = lfg_sealed_ring.6
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		from = {
+			has_planet_flag = lfg_matriarch_chthonian
+			has_anomaly = no
+		}
+		exists = owner
+		owner = {
+			is_country_type = default
+			has_shroud_dlc = yes
+			NOR = {
+				has_country_flag = lfg_chthonian_biomass_given
+				has_technology = tech_alloy_fossilization
+				has_tech_option = tech_alloy_fossilization
+			}
+		}
+	}
+
+	immediate = {
+		owner = { set_country_flag = lfg_chthonian_biomass_given }
+		from = {
+			add_anomaly = {
+				category = CHTHONIAN_PRESERVATION_CAT
+				target = root.owner
+			}
+		}
+	}
+}
+
+# A day after the Whale Road's end (lfg_sealed_ring.15), once the Urmazin exist: contact with them
+# (ehof_mega_trader.100 already gives it when it spawns them; this covers Urmazin that were already there).
+country_event = {
+	id = lfg_sealed_ring.8
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		exists = event_target:urmazin_country
+	}
+
+	immediate = {
+		establish_communications_no_message = event_target:urmazin_country
+	}
+}
+
+# The Whale Road's wormholes (in the neighbour and the Matriarch's system) become known to this country, as vanilla's
+# distar.3043 does for its event wormholes (add_seen_bypass_type) plus each wormhole itself (add_seen_bypass: natural
+# wormholes remember instances). Fired by lfg_sealed_ring.15; also safe to fire from the console
+# (event lfg_sealed_ring.9) on a save where the wormhole already exists.
+country_event = {
+	id = lfg_sealed_ring.9
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = encountered_first_wormhole
+		add_seen_bypass_type = wormhole
+		every_system = {
+			limit = {
+				OR = {
+					has_star_flag = lfg_sealed_ring_neighbor
+					has_star_flag = lfg_sealed_ring_matriarch
+				}
+			}
+			every_bypass_in_system = {
+				limit = { is_bypass_type = wormhole }
+				root = { add_seen_bypass = prev }
+			}
+		}
+	}
+}
+
+# LFG_REANIMATE_LEGENDARY_MATRIARCH done: the Matriarch rises, as vanilla's distar.218 raises its own (its reanimated
+# Progenitor design), plus a hidden bonus: lfg_reanimated_legendary_matriarch doubles her hull, armor and damage.
+country_event = {
+	id = lfg_sealed_ring.16
+	title = lfg_sealed_ring.16.name
+	desc = lfg_sealed_ring.16.desc
+	location = event_target:lfg_dead_legendary_matriarch
+	picture = GFX_evt_necromancy
+	show_sound = event_space_whale
+	is_triggered_only = yes
+
+	option = {
+		name = lfg_sealed_ring.16.a
+		create_fleet = {
+			name = "NAME_lfg_legendary_matriarch"
+			effect = {
+				set_owner = root
+				create_ship = {
+					name = "NAME_lfg_legendary_matriarch"
+					design = "NAME_Reanimated_Progenitor"
+					prefix = no
+					upgradable = no
+					effect = {
+						add_modifier = { modifier = lfg_reanimated_legendary_matriarch days = -1 }
+					}
+				}
+				set_location = {
+					target = event_target:lfg_dead_legendary_matriarch
+					distance = 0
+					angle = random
+				}
+				set_fleet_stance = passive
+			}
+			settings = {
+				can_upgrade = no
+				can_change_composition = no
+				can_change_leader = no
+				uses_naval_capacity = no
+				spawn_debris = no
+			}
+		}
+	}
+
+	after = {
+		if = {
+			limit = { exists = event_target:lfg_dead_legendary_matriarch }
+			event_target:lfg_dead_legendary_matriarch = { destroy_ambient_object = this }
+		}
+	}
+}
+
+# Shadow Branch Office (lfg_operation_shadow_branch; this = the operation, owner = us, target = the target empire).
+# Stage 1: contacts in place.
+espionage_operation_event = {
+	id = lfg_sealed_ring.20
+	title = lfg_sealed_ring.20.name
+	desc = lfg_sealed_ring.20.desc
+	espionage_operation = yes
+	picture = GFX_evt_smugglers_in_bar
+	show_sound = event_default
+	is_triggered_only = yes
+
+	option = { name = lfg_sealed_ring.20.a }
+}
+
+# Stage 2: the office opens on a random planet of the target that we have surveyed (by science ship or, as vanilla's
+# on_planet_surveyed notes, through intel) and that has no branch office
+# (none left: the influence comes back).
+espionage_operation_event = {
+	id = lfg_sealed_ring.21
+	title = lfg_sealed_ring.21.name
+	desc = lfg_sealed_ring.21.desc
+	espionage_operation = yes
+	picture = GFX_evt_black_market
+	show_sound = event_default
+	is_triggered_only = yes
+
+	immediate = {
+		set_espionage_operation_progress_locked = yes
+		target = {
+			random_owned_planet = {
+				limit = {
+					has_branch_office = no
+					is_surveyed = { who = root.owner status = yes }
+				}
+				save_event_target_as = lfg_shadow_branch_planet
+			}
+		}
+	}
+
+	option = {
+		name = lfg_sealed_ring.21.a
+		if = {
+			limit = { exists = event_target:lfg_shadow_branch_planet }
+			custom_tooltip = lfg_sealed_ring.21.a.tt
+			hidden_effect = {
+				event_target:lfg_shadow_branch_planet = { establish_branch_office = root.owner }
+			}
+		}
+		else = {
+			owner = { add_resource = { influence = 50 } }
+		}
+	}
+
+	after = {
+		set_espionage_operation_progress_locked = no
+	}
+}
+
+# Remove Branch Office (lfg_operation_remove_branch; this = the operation, owner = us, target = the target empire).
+# Stages 1-2: finding the office and its weak points.
+espionage_operation_event = {
+	id = lfg_sealed_ring.22
+	title = lfg_sealed_ring.22.name
+	desc = lfg_sealed_ring.22.desc
+	espionage_operation = yes
+	picture = GFX_evt_smugglers_in_bar
+	show_sound = event_default
+	is_triggered_only = yes
+
+	option = { name = lfg_sealed_ring.22.a }
+}
+
+espionage_operation_event = {
+	id = lfg_sealed_ring.23
+	title = lfg_sealed_ring.23.name
+	desc = lfg_sealed_ring.23.desc
+	espionage_operation = yes
+	picture = GFX_evt_black_market
+	show_sound = event_default
+	is_triggered_only = yes
+
+	option = { name = lfg_sealed_ring.23.a }
+}
+
+# Stage 3: a random branch office on one of the target's planets - anyone's but ours - closes (none left: the
+# influence comes back).
+espionage_operation_event = {
+	id = lfg_sealed_ring.24
+	title = lfg_sealed_ring.24.name
+	desc = lfg_sealed_ring.24.desc
+	espionage_operation = yes
+	picture = GFX_evt_black_market
+	show_sound = event_default
+	is_triggered_only = yes
+
+	immediate = {
+		set_espionage_operation_progress_locked = yes
+		target = {
+			random_owned_planet = {
+				limit = {
+					has_branch_office = yes
+					NOT = { has_branch_office = root.owner }
+				}
+				save_event_target_as = lfg_remove_branch_planet
+			}
+		}
+	}
+
+	option = {
+		name = lfg_sealed_ring.24.a
+		if = {
+			limit = { exists = event_target:lfg_remove_branch_planet }
+			custom_tooltip = lfg_sealed_ring.24.a.tt
+			hidden_effect = {
+				event_target:lfg_remove_branch_planet = { close_branch_office = yes }
+			}
+		}
+		else = {
+			owner = { add_resource = { influence = 100 } }
+		}
+	}
+
+	after = {
+		set_espionage_operation_progress_locked = no
+	}
+}

@@ -348,3 +348,25 @@ tech_lfg_draconic_feast = {
 		factor = 0
 	}
 }
+
+# Sealed Ring origin (Void Leap Drive): offered (10% progress) with Jump Drive once the ring's last Leviathan Residue is cleared
+# (lfg_sealed_ring.3). +150% jump drive range: 250 instead of 100, enough to reach the galaxy from beyond the rim.
+tech_lfg_sealed_ring_drive = {
+	icon = tech_jump_drive_1
+	cost = @giga_tier7cost1
+	area = physics
+	tier = 5
+	category = { particles }
+	is_rare = yes
+	weight = 0
+	prerequisites = { "tech_jump_drive_1" }
+	potential = {
+		has_origin = origin_lfg_sealed_ring
+	}
+	modifier = {
+		ship_ftl_jumpdrive_range_mult = 1.5
+	}
+	ai_weight = {
+		factor = 0
+	}
+}

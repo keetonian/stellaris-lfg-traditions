@@ -10,3 +10,13 @@ part = {
 		has_origin = origin_lfg_nanite_forge
 	}
 }
+
+# Sealed Ring
+part = {
+	location = 0
+	localization = "START_SCREEN_LFG_SEALED_RING"
+
+	trigger = {
+		has_origin = origin_lfg_sealed_ring
+	}
+}

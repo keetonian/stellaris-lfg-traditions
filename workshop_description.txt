@@ -1,6 +1,6 @@
 [h1]LFG Traditions[/h1]
 
-Ten new tradition trees, seven council agendas, six ascension perks, thirteen premade empires, an origin, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree appears only for empires it fits and has a [b]hook[/b]: bonuses that scale with your game state.
+Ten new tradition trees, seven council agendas, six ascension perks, fourteen premade empires, two origins, a civic, buildings, a policy and a decision for [b]Gigastructural Engineering[/b] games. Each tree fits specific empires and has a [b]hook[/b] that scales with your game state.
 
 [h2]Tradition trees[/h2]
 
@@ -35,7 +35,7 @@ Ten new tradition trees, seven council agendas, six ascension perks, thirteen pr
 [h3]Stationcraft[/h3]
 [i]Your wealth hangs in orbit.[/i] Any empire.
 [list]
-[*]Mining and research stations produce more for every colony, starbase, kilostructure and megastructure you own; jobs −35%.
+[*]Mining and research stations produce more for every colony, starbase, kilostructure and megastructure; jobs −35%.
 [*]More, cheaper and tougher starbases; faster, cheaper megastructures with less upkeep.
 [/list]
 
@@ -80,7 +80,7 @@ Ten new tradition trees, seven council agendas, six ascension perks, thirteen pr
 [/list]
 
 [h3]Tourism[/h3]
-[i]Your resort world is the galaxy's jewel.[/i] Regular empires, needs Resort Colonies. Works for Pleasure Worlds too.
+[i]Your resort world is the galaxy's jewel.[/i] Regular empires with Resort Colonies (Pleasure Worlds count).
 [list]
 [*][b]Hospitality Academies:[/b] +50% jobs from Accommodation Districts and resort specializations.
 [*][b]Package Holidays:[/b] unity and happiness grow with your Resort Workers.
@@ -109,10 +109,12 @@ Seven agendas (Galactic Paragons DLC), each lasting 10 years:
 [*][b]Storm Season[/b] (Tempest): research and stronger storm fields; less happiness.
 [/list]
 
-[h2]Nanites[/h2]
-[b]Nanite Forge[/b] (machines): a unique home system, a Starhold and a broken nanite harvester that Nanotech restores. Nanite automation, unity and trade buildings.
+[h2]Origins[/h2]
+[b]Swallowed Whole[/b] (non-machine): a leviathan spat your ring world out beyond the galaxy. Unseal it to find the way back; hunt the Matriarch.
 
-After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's specialist jobs, the [b]Nanotensile Converter[/b] makes supertensiles, and the [b]Nanite Pulse[/b] decision overloads a harvester.
+[b]Nanite Forge[/b] (machines): a broken nanite harvester that Nanotech restores, plus nanite automation, unity and trade buildings.
+
+After Nanotech: [b]Nanite Cognition Core[/b] (automates specialists), [b]Nanotensile Converter[/b] (supertensiles), [b]Nanite Pulse[/b] (overloads a harvester).
 
 [h2]Civics[/h2]
 [b]Applied Biosciences[/b] (Materialist, non-machine): Biologists trade some society for physics and engineering research.
@@ -130,12 +132,12 @@ After Nanotech: the [b]Nanite Cognition Core[/b] automates half of a planet's sp
 
 [b]Legendary Dragons[/b] (Here Be Dragons): drakes grow for decades and breathe splashing ice; one grows far beyond.
 
-[b]Curated Progress[/b] (needs [b]Gigastructural Constructs[/b]): a [b]Shelve[/b] edict per repeatable tech, keeping it out of research options.
+[b]Curated Progress[/b] (after Gigastructural Constructs): [b]Shelve[/b] edicts keep repeatables out of research.
 
 [h2]Changes to vanilla content[/h2]
 [list]
 [*][b]Synthetic Fertility[/b]: the uploading situation speeds up every year and uploads more pops.
-[*]The [b]Accommodation District[/b], resort specializations, [b]holomuseums[/b] and [b]Archaeostudies Faculty[/b] gain our trees' bonuses.
+[*]The [b]Accommodation District[/b], resort specializations, holomuseums and Archaeostudies Faculty gain tree bonuses.
 [*]Repeatable techs check their Shelve edicts.
 [*][b]Nanite harvesters[/b] double three more times on size 30+ planets.
 [*][b]Virtuality[/b] is closed to individual machines with The Great Ring or Alderson Disk origins.
@@ -145,7 +147,7 @@ Other mods changing these may conflict.
 [h2]Requirements and compatibility[/h2]
 [list]
 [*]Stellaris 4.5, [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1121692237]Gigastructural Engineering & More[/url] (load this mod after it).
-[*]Recommended: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981]A Lot of Traditions - 24 Tradition Slots[/url] (vanilla allows 7 trees).
+[*]Recommended: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3089158981]A Lot of Traditions - 24 Tradition Slots[/url].
 [*]Compatible with Expanded Stellaris Traditions and More Traditions.
 [*]Changes the checksum: everyone in multiplayer needs it.
 [*]Balance is a first draft; feedback welcome!

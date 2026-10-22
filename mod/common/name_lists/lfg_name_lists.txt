@@ -486,3 +486,39 @@ lfg_obadin = {
 		}
 	}
 }
+
+lfg_malwegoll = {
+	category = "LFG Traditions"
+	ship_names = {
+		generic = {
+			"Gullet" "Sole Supplier" "Hollow Oath" "Whispered Price" "Sealed Ledger" "Residue Rights" "Closed Market" "Dabul's Due" "Quiet Hand" "Inner Circle" "Cut of the Catch" "Belly Tithe" "Ring Concession" "Silent Partner" "Exclusive Rights" "Veiled Rate" "Black Brine" "Last Supplier" "Hush Money" "Old Debts" "Gut Feeling" "Maw Contract" "Price Fixer" "Sworn Seller" "Deepwater Deal" "Tithe of Salt" "Monopoly" "Brinekeeper" "Shadow Ledger" "Whale's Share"
+		}
+	}
+	fleet_names = {
+		random_names = {
+			"Gullet Fleet" "Monopoly Guard" "Residue Haulers" "Dabul Home Fleet" "Inner Circle Wing" "Hush Squadron" "Concession Escort" "Brine Watch"
+		}
+		sequential_name = lfg_empire_malwegoll_seq_fleet
+	}
+	army_names = {
+		generic = { sequential_name = lfg_empire_malwegoll_seq_army }
+		defense_army = { sequential_name = lfg_empire_malwegoll_seq_defense }
+		assault_army = { sequential_name = lfg_empire_malwegoll_seq_assault }
+		robotic_army = { sequential_name = lfg_empire_malwegoll_seq_assault }
+		robotic_defense_army = { sequential_name = lfg_empire_malwegoll_seq_defense }
+	}
+	planet_names = {
+		generic = {
+			names = { "Dabulan" "Gulletreach" "Brinehold" "Mawshore" "Saltbelly" "Hushwater" "Residue Flats" "Concession" "Inner Ring" "Veilmere" "Dabul Minor" "Whalefall" "Sealmark" "Deep Ledger" "Tithewater" "Malwe's Rest" "Quietshoal" "Gutlight" "Blackbrine" "Last Market" }
+		}
+	}
+	character_names = {
+		default = {
+			first_names_male = { "Gobb" "Malwe" "Dabb" "Goll" "Hessk" "Vurro" "Skabb" "Mulk" "Drell" "Quabb" }
+			first_names_female = { "Gobba" "Malwa" "Dabba" "Golla" "Hesska" "Vurra" "Skabba" "Mulka" "Drella" "Quabba" }
+			second_names = { "Dabul" "Gullet" "Brinehand" "Hushwater" "Saltmaw" "Sealkeeper" "Veilcut" "Tithegill" "Deepledger" "Quietink" }
+			regnal_first_names = { "Gobba" "Malwa" "Dabba" "Golla" "Gobb" "Malwe" "Dabb" "Goll" }
+			regnal_second_names = { "Dabul" "Gullet" "Brinehand" "Sealkeeper" }
+		}
+	}
+}

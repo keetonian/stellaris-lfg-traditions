@@ -103,3 +103,11 @@ part = {
 		has_country_flag = lfg_empire_obadin
 	}
 }
+
+part = {
+	location = 0
+	localization = "LFG_EMPIRE_MALWEGOLL_STORY"
+	trigger = {
+		has_country_flag = lfg_empire_malwegoll
+	}
+}

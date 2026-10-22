@@ -10,6 +10,7 @@ on_game_start = {
 on_game_start_country = {
 	events = {
 		lfg_nanite_forge.1	# Nanite Forge origin: broken nanite harvester + home deposits
+		lfg_sealed_ring.1	# Sealed Ring origin: sealed sections, Urmazin Traders, move beyond the rim
 	}
 }
 
@@ -109,5 +110,19 @@ on_lfg_summon_nexus_storm = {
 on_ship_destroyed_victim = {
 	events = {
 		lfg_dragons.7
+	}
+}
+
+# This = owner of the destroyed ship's killer, From = the destroyed ship's owner, FromFromFrom = the destroyed ship
+on_ship_destroyed_perp = {
+	events = {
+		lfg_sealed_ring.4	# Sealed Ring origin: the Legendary Tiyanki Matriarch is dead (Polymelic DNA)
+	}
+}
+
+# Scope = the surveying ship, From = the planet
+on_survey_planet = {
+	events = {
+		lfg_sealed_ring.6	# Swallowed Whole: the Matriarch's molten world always has Chthonian Biomass
 	}
 }

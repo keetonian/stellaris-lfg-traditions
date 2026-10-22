@@ -1,0 +1,34 @@
+# LFG Traditions - special projects.
+
+# Swallowed Whole: reanimators (is_reanimator: Reanimated Armies, Permanent Employment, Cordyceptic Drones / Symbionts,
+# Mechromancy) can raise the Legendary Tiyanki Matriarch they killed
+# (lfg_sealed_ring.4 enables it on her corpse), like vanilla's REANIMATE_TIYANKI_MATRIARCH; the result is
+# lfg_sealed_ring.16.
+special_project = {
+	key = "LFG_REANIMATE_LEGENDARY_MATRIARCH"
+	cost = 10000
+	tech_department = society_technology
+	picture = GFX_evt_necromancy
+	timelimit = 1080
+
+	event_scope = ship_event
+
+	requirements = {
+		shipclass_science_ship = 1
+		leader = scientist
+	}
+
+	abort_trigger = {
+		is_reanimator = no
+	}
+
+	on_success = {
+		owner = {
+			country_event = { id = lfg_sealed_ring.16 }
+			set_country_flag = reanimated_leviathan
+		}
+	}
+
+	on_fail = {
+	}
+}

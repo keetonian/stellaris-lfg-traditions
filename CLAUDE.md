@@ -71,7 +71,7 @@ mod/                                  # exactly what ships
                                                              #   .7 hunting (on_ship_destroyed_victim) / .8 its popup, .10 testing menu (console)
   gfx/projectiles/lfg_projectiles.txt                        # the Dragon's Breath beam; its splash blasts: gfx/models/ships/lfg_drake_breath.asset
   events/lfg_payback_events.txt                              # lfg_payback.1: Payback market tithes (monthly; economic category country_lfg_market_tithes)
-  prescripted_countries/lfg_prescripted_countries.txt        # 13 premade empires (the author's designs, new flavour)
+  prescripted_countries/lfg_prescripted_countries.txt        # 14 premade empires (the author's designs, new flavour)
   common/prescripted_flags/lfg_empire_flags.txt              #   their country flags lfg_empire_<key> -> stories
   common/name_lists/lfg_name_lists.txt                       #   their name lists (literal names)
   common/start_screen_messages/lfg_empire_start_screens.txt  #   their stories (loc: lfg_empires_l_english.yml)
@@ -111,6 +111,17 @@ mod/                                  # exactly what ships
   common/pop_jobs/lfg_jobs.txt                               # lfg_penal_supertensile_laborer, lfg_penal_matter_compactor
   common/economic_categories/lfg_economic_categories.txt     # planet_lfg_penal_laborers (the job's category)
   events/lfg_planet_events.txt                               # lfg_planet.1: strip per-planet modifiers on owner change
+  events/lfg_sealed_ring_events.txt                         # Swallowed Whole origin (origin_lfg_sealed_ring): .1 game start (residue blockers, QNM, Urmazin,
+                                                             #   move beyond the rim, Tiyanki neighbour, Legendary Matriarch), .2/.3 all residue cleared -> jump drives,
+                                                             #   .4 Matriarch killed (on_ship_destroyed_perp) -> harvested_tiyanki_dna (Polymelic),
+                                                             #   .10-.15 Whale Road dig site stages (.15: wormhole to the Matriarch), .16 reanimated Matriarch
+  common/special_projects/lfg_special_projects.txt           # LFG_REANIMATE_LEGENDARY_MATRIARCH (reanimators, after her death)
+  common/archaeological_site_types/lfg_archaeological_sites.txt # lfg_whale_road_digsite (weight 0; placed by lfg_sealed_ring.1)
+  common/ship_sizes/lfg_matriarch_ship_sizes.txt             # GENERATED (MATRIARCH_*): the Legendary Matriarch = vanilla's ancient Tiyanki,
+  common/section_templates/lfg_matriarch_section_templates.txt #   copied under lfg_legendary_matriarch keys (+ global_ship_designs/lfg_matriarch_designs.txt,
+  gfx/models/ships/lfg_matriarch.asset                       #   design NAME_lfg_legendary_matriarch) with the model scaled up (MATRIARCH_SCALE)
+  common/scripted_triggers/lfg_sealed_ring_triggers.txt      # where its systems may sit (lfg_sealed_ring_isolated / _matriarch_isolated)
+  common/scripted_effects/lfg_sealed_ring_effects.txt        # lfg_sealed_ring_starting_districts (homeworld), _remove_starting_fleets (.1, and .5 a day later)
   events/lfg_lone_tide_events.txt                            # lfg_lone_tide.1 (global `event`, on_game_start): 75% spawn
   events/lfg_emberfall_events.txt                            # lfg_emberfall.1 (on_game_start): Emberfall, always, connected
   common/solar_system_initializers/lfg_system_initializers.txt # lfg_lone_tide_init, lfg_emberfall_init (usage_odds = 0)
@@ -125,7 +136,8 @@ mod/                                  # exactly what ships
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)
   common/traits/lfg_leader_traits.txt                        # leader_trait_lfg_massed_assault (given by events/lfg_massed_assault_events.txt)
   common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy)
-  common/ascension_perks/lfg_ascension_perks.txt             # ap_lfg_curated_progress (needs Gigastructural Constructs), ap_lfg_massed_assault
+  common/ascension_perks/lfg_ascension_perks.txt             # ap_lfg_curated_progress (needs Gigastructural Constructs), ap_lfg_massed_assault, ap_lfg_shadow_transactions (Swallowed Whole + Criminal Heritage)
+  common/espionage_operation_types/lfg_operations.txt       # Shadow Transactions: lfg_operation_shadow_branch (opens a branch office, .20/.21), _remove_branch (closes one, .22-.24)
   common/edicts/lfg_shelve_edicts.txt                        # GENERATED Shelve edicts (from SHELVE in gen_overrides.py)
   common/technology/zz_lfg_repeatable_overrides.txt          # GENERATED (24 repeatables: factor 0 while shelved)
   common/inline_scripts/technology/giga_mega_repeatable.txt  # GENERATED whole-file override of Giga's inline script
@@ -187,6 +199,13 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
   - Premade empires (`prescripted_countries`): a ruler trait must fit the ruler's `leader_class` (e.g. Spark of Genius is
     a scientist trait); otherwise the game silently hides the design (error.log: "Hiding invalid prescripted empire design").
     Name lists, like loc, must be UTF-8 with BOM.
+  - `capital_scope` is the capital **colony**, not its planet: `is_same_value = root.capital_scope` never matches a
+    planet (verified: the Swallowed Whole homeworld got the other segments' blockers too), and a settled planet's
+    deposits are the colony's (clear them in capital_scope). Mark planets with flags in the initializer instead.
+  - `on_branch_office_established` runs its events on the **planet**, though vanilla's comment says colony: a
+    `colony_event` there fails with "attempted to execute an event on an unsupported scope" (verified). Use `planet_event`.
+  - Branch office influence cost: `country_branch_office_influence_cost_mult` applies **before** the 1,000 cap
+    (`BRANCH_OFFICE_INFLUENCE_MAX_COST`); with no hyperlane route the distance term is huge, so the mult does nothing.
   - Megastructure scripted actions (verified with the Lodestar's button): hook `on_started`; with no `required_progress`
     `on_completed` never ran and the action's own `cost` was never taken, so pay in the event. In `possible` (this = target), `from` / `fromfrom` didn't resolve to the megastructure
     or its owner in game; check the target's own contents instead. Same in the `on_completed` on_action's event: a trigger on
@@ -392,6 +411,7 @@ places them. Pre-FTLs: `init_effect = { generate_pre_ftls_on_planet = yes }` (va
 
 `workshop_description.txt` must explain every feature **except** the Evolutionary Predators content: the
 Inherited Genius trait and the Species Experimentation edict are easter eggs (user's decision). So is the **Lone Tide** special
-system: don't mention it (or a hidden/special system) on the Steam page either. Don't mention them,
+system: don't mention it (or a hidden/special system) on the Steam page either. The **Shadow Transactions** perk (Swallowed Whole + Criminal Heritage) is a secret
+too. Don't mention them,
 Evolutionary Predators or subspecies on the Steam page (the Shelve edicts are public); `tests/test_workshop_description.py` enforces it.
 The README (private repo) documents them normally. When features change, update the Steam page too.

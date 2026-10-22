@@ -1,0 +1,52 @@
+# LFG Traditions - Sealed Ring origin: where its home system may sit (lfg_sealed_ring.1).
+
+# System scope: a system of the galaxy proper (it has a hyperlane), not the Sealed Ring's own two.
+lfg_sealed_ring_galaxy_system = {
+	any_neighbor_system = { always = yes }
+	NOR = {
+		has_star_flag = lfg_sealed_ring_system
+		has_star_flag = lfg_sealed_ring_neighbor
+		has_star_flag = lfg_sealed_ring_matriarch
+	}
+}
+
+# System scope (the moved home system): no galaxy system within 130 (its neighbour, 15-25 away, then stays out of a
+# plain jump drive's 100 range too), and no other system at all within 40 (special systems beyond the rim, like the
+# Urmazin's or Lone Tide).
+lfg_sealed_ring_isolated = {
+	NOT = {
+		any_system = {
+			lfg_sealed_ring_galaxy_system = yes
+			distance = { source = prev type = euclidean max_distance <= 130 }
+		}
+	}
+	NOT = {
+		any_system = {
+			NOT = { has_star_flag = lfg_sealed_ring_system }
+			distance = { source = prev type = euclidean max_distance <= 40 }
+		}
+	}
+}
+
+# System scope (the Matriarch's system): beyond the rim like the ring (no galaxy system within 130), far from every
+# Swallowed Whole ring (none within 300), and no other system within 30.
+lfg_sealed_ring_matriarch_isolated = {
+	NOT = {
+		any_system = {
+			lfg_sealed_ring_galaxy_system = yes
+			distance = { source = prev type = euclidean max_distance <= 130 }
+		}
+	}
+	NOT = {
+		any_system = {
+			has_star_flag = lfg_sealed_ring_system
+			distance = { source = prev type = euclidean max_distance <= 300 }
+		}
+	}
+	NOT = {
+		any_system = {
+			NOT = { has_star_flag = lfg_sealed_ring_matriarch }
+			distance = { source = prev type = euclidean max_distance <= 30 }
+		}
+	}
+}

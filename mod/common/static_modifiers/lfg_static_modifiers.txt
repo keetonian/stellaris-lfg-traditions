@@ -288,3 +288,25 @@ lfg_market_tithe_paid = {
 lfg_lodestar_storm_pull = {
 	system_storm_influence_add = @lfg_lodestar_storm_pull
 }
+
+# Sealed Ring origin: the Legendary Tiyanki Matriarch's country, on top of vanilla's elderly_tiyanki_power (+100%
+# damage). Vanilla's Progenitor has 125,000 hull and 32,250 armor (3,000 + ten 2,925 Tiyanki plates): she has 750,000
+# hull and 161,250 armor, both regenerating, and four times its base damage, firing half again as fast.
+lfg_legendary_matriarch = {
+	icon = "gfx/interface/icons/modifiers/mod_extra_large_space_fauna_ship_hull_mult.dds"
+	ship_hull_mult = 5
+	ship_armor_mult = 4
+	ship_hull_regen_add_perc = 0.02
+	ship_armor_regen_add_perc = 0.02
+	ship_weapon_damage = 2
+	ship_fire_rate_mult = 0.5
+}
+
+# Sealed Ring origin: the reanimated Legendary Matriarch (lfg_sealed_ring.16, on the ship): twice the reanimated
+# Progenitor's hull, armor and damage. A hidden bonus: the event doesn't mention it.
+lfg_reanimated_legendary_matriarch = {
+	icon = "gfx/interface/icons/modifiers/mod_extra_large_space_fauna_ship_hull_mult.dds"
+	ship_hull_mult = 1
+	ship_armor_mult = 1
+	ship_weapon_damage = 1
+}

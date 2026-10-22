@@ -65,6 +65,9 @@ ALLOWED_FILES = [
     r"common/scripted_effects/[^/]+\.txt",
     r"common/edicts/[^/]+\.txt",
     r"common/artifact_actions/[^/]+\.txt",
+    r"common/archaeological_site_types/[^/]+\.txt",
+    r"common/special_projects/[^/]+\.txt",
+    r"common/espionage_operation_types/[^/]+\.txt",
     r"common/starbase_buildings/[^/]+\.txt",
     r"common/deposits/[^/]+\.txt",
     r"common/megastructures/[^/]+\.txt",
@@ -121,7 +124,8 @@ KEY_PREFIXES = ("tradition_lfg_", "tr_lfg_", "artifact_lfg_", "civic_lfg_", "ori
 # Folders whose top-level keys are vanilla names we add to (on_actions merge into vanilla lists).
 PREFIX_EXEMPT_FOLDERS = ("common/on_actions/", "common/section_templates/", "common/component_templates/",
                          "common/component_sets/", "common/start_screen_messages/",
-                         "common/global_ship_designs/")  # sections: ship_section_template, designs: ship_design, keyed inside
+                         "common/global_ship_designs/", "common/special_projects/")
+# (sections: ship_section_template, designs: ship_design, special projects: special_project, keyed inside)
 # Resources the game generates economic-category modifiers for (the ones our categories use; extend as needed).
 GENERATED_RESOURCES = ("energy", "minerals", "food", "alloys", "consumer_goods", "trade", "unity", "influence",
                        "physics_research", "society_research", "engineering_research")
@@ -360,10 +364,10 @@ def check_system_names(mod: Mod, loc: Dict[str, str], r: Report) -> None:
 
 
 def check_edicts(mod: Mod, loc: Dict[str, str], r: Report) -> None:
-    # Edicts are localised as edict_<key>; decisions, traits, ascension perks and minor artifact actions as <key>
-    # (vanilla conventions).
+    # Edicts are localised as edict_<key>; decisions, traits, ascension perks, minor artifact actions and
+    # archaeological sites as <key> (vanilla conventions).
     names = ([f"edict_{k}" for k in mod.top("common/edicts")] + list(mod.top("common/decisions"))
-             + list(mod.top("common/artifact_actions"))
+             + list(mod.top("common/artifact_actions")) + list(mod.top("common/archaeological_site_types"))
              + list(mod.top("common/traits")) + list(mod.top("common/ascension_perks")))
     for key in names:
         for k in (key, f"{key}_desc"):
@@ -438,6 +442,12 @@ def check_events(mod: Mod, loc: Dict[str, str], r: Report) -> None:
             i = pdx.first(e.value, "id")
             if i is not None and i.value.startswith("lfg_") and i.value not in ids:
                 r.fail(f"{rel}:{e.line}: fires {i.value}, which is not defined")
+    # Archaeological site stages: `stage = { event = lfg_... }`.
+    for rel, entries in mod.files.items():
+        if rel.startswith("common/archaeological_site_types/"):
+            for e in pdx.walk(entries):
+                if e.key == "event" and not e.is_block and e.value.startswith("lfg_") and e.value not in ids:
+                    r.fail(f"{rel}:{e.line}: fires {e.value}, which is not defined")
 
 
 def check_agendas_and_static_modifiers(mod: Mod, loc: Dict[str, str], known: Set[str], r: Report) -> None:

@@ -153,3 +153,28 @@ ap_lfg_legendary_dragons = {
 		factor = 0
 	}
 }
+
+# Shadow Transactions: Swallowed Whole (origin_lfg_sealed_ring) with Criminal Heritage, which can't take Universal
+# Transactions. No other perks needed first. Unlocks the Shadow Branch Office and Remove Branch Office espionage operations
+# (common/espionage_operation_types/lfg_operations.txt: from beyond the rim, opening branch offices normally always
+# costs the game's 1,000-influence cap); branch offices cost half (the influence - capped anyway - and their
+# buildings), +10 base intel on every empire, +1 decryption.
+ap_lfg_shadow_transactions = {
+	on_enabled = {
+		custom_tooltip = ap_lfg_shadow_transactions_tt	# unlocks lfg_operation_shadow_branch / _remove_branch
+	}
+	modifier = {
+		country_branch_office_influence_cost_mult = -0.5
+		planet_branch_offices_cost_mult = -0.5
+		add_base_country_intel = 10
+		intel_decryption_add = 1
+	}
+	potential = {
+		NOT = { has_ascension_perk = ap_lfg_shadow_transactions }
+		has_origin = origin_lfg_sealed_ring
+		has_valid_civic = civic_criminal_heritage
+	}
+	ai_weight = {
+		factor = 20
+	}
+}
