@@ -488,8 +488,9 @@ versions). Automated jobs still pay vanilla's automation upkeep. On a **Nanite W
 income + nanite expenses (`value:lfg_nanite_production`), so the conversion's own cost doesn't shrink it. The monthly
 `lfg_nanite_forge.7` re-adds a 32-day modifier (`lfg_nanite_converted_unity` / `_research`, multiplier = nanites
 converted) in its own budget line (economic category `country_lfg_nanite_conversion`: nanites upkeep, unity / research
-produced). Shares: `@lfg_nanite_conversion_*_share`. **Unverified in game:** `resource_expenses_compare` in a script
-value, and research from a country economic category.
+produced; listed in `common/country_container/zz_lfg_country_container.txt`, a generated copy of Giga's, or the budget
+ignores it). Shares: `@lfg_nanite_conversion_*_share`. Verified in game: the event and the production value (the modifier
+had multiplier 2.55 for 25.5 nanites). AI: picks Research (weight 3) or Unity (2) over Raw (1), never while short on nanites.
 
 ## Buildings: Nanite Freight (Nanite Forge origin)
 
@@ -1069,7 +1070,8 @@ Payback empire (`opinion_level`), never above 30%:
 is `has_monthly_income` for trade (`value:lfg_market_trade_income`). It shows as one **Market Tithes** budget line on
 each side: our own economic category `country_lfg_market_tithes` (its generated `_trade_upkeep_add` /
 `_trade_produces_add`, through the 32-day modifiers `lfg_market_tithe_paid` / `lfg_market_tithe_income`, re-added
-monthly, so everything lapses by itself when the conditions end). Payers get a one-time **-30 opinion** of the Payback empire
+monthly, so everything lapses by itself when the conditions end; the category is listed in the generated
+`common/country_container/zz_lfg_country_container.txt`, without which the tithes never reached either budget). Payers get a one-time **-30 opinion** of the Payback empire
 (`lfg_market_tithes`, the first time they pay; fades 1 a month). The trades themselves can't be tracked (the engine
 exposes no trade volume or fee paid), so this is the fee rate applied to the payer's trade income.
 **Unverified in game:** whether `has_monthly_income` is gross or net trade, and reading `country_trade_fee` as a value

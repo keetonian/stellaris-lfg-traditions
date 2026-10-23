@@ -12,6 +12,9 @@ lfg_monument_economy = {
 	option = {
 		name = "lfg_monument_economy_balanced"
 		policy_flags = {}
+		ai_weight = {
+			weight = 1
+		}
 	}
 
 	option = {
@@ -19,12 +22,18 @@ lfg_monument_economy = {
 		policy_flags = {
 			lfg_monuments_first
 		}
+		ai_weight = {
+			weight = 1
+		}
 	}
 
 	option = {
 		name = "lfg_monument_economy_people_first"
 		policy_flags = {
 			lfg_people_first
+		}
+		ai_weight = {
+			weight = 1
 		}
 	}
 }
@@ -40,6 +49,9 @@ lfg_nanite_conversion = {
 	option = {
 		name = "lfg_nanite_conversion_none"
 		policy_flags = {}
+		ai_weight = {
+			weight = 1
+		}
 	}
 
 	option = {
@@ -47,12 +59,26 @@ lfg_nanite_conversion = {
 		policy_flags = {
 			lfg_nanite_conversion_unity
 		}
+		ai_weight = {
+			weight = 2
+			modifier = {
+				factor = 0
+				has_deficit = nanites
+			}
+		}
 	}
 
 	option = {
 		name = "lfg_nanite_conversion_research"
 		policy_flags = {
 			lfg_nanite_conversion_research
+		}
+		ai_weight = {
+			weight = 3
+			modifier = {
+				factor = 0
+				has_deficit = nanites
+			}
 		}
 	}
 }

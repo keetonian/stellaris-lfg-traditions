@@ -110,6 +110,7 @@ mod/                                  # exactly what ships
   common/zones/lfg_zones.txt                                 # zone_lfg_penal_supertensiles, zone_lfg_penal_bulk_matter
   common/pop_jobs/lfg_jobs.txt                               # lfg_penal_supertensile_laborer, lfg_penal_matter_compactor
   common/economic_categories/lfg_economic_categories.txt     # planet_lfg_penal_laborers (the job's category)
+  common/country_container/zz_lfg_country_container.txt     # GENERATED whole-file copy of Giga's + our country categories (COUNTRY_CONTAINER_UNITS)
   events/lfg_planet_events.txt                               # lfg_planet.1: strip per-planet modifiers on owner change
   events/lfg_sealed_ring_events.txt                         # Swallowed Whole origin (origin_lfg_sealed_ring): .1 game start (residue blockers, QNM, Urmazin,
                                                              #   move beyond the rim, Tiyanki neighbour, Legendary Matriarch), .2/.3 all residue cleared -> jump drives,
@@ -211,6 +212,11 @@ workshop_description.txt   # Steam BBCode description (sent on every upload; SYN
     `on_completed` never ran and the action's own `cost` was never taken, so pay in the event. In `possible` (this = target), `from` / `fromfrom` didn't resolve to the megastructure
     or its owner in game; check the target's own contents instead. Same in the `on_completed` on_action's event: a trigger on
     `from.owner` silently stopped `lfg_storms.6`, so it finds the summoner from the target system too.
+  - A **country** economic category (`parent = country_container`) also needs a `<cat>_unit` in `common/country_container`,
+    or its `<cat>_<res>_produces_add` / `_upkeep_add` modifiers do nothing (verified: the Nanite Conversion modifier sat on the
+    country at multiplier 2.55 with no budget line). That file is one `collection` block (Giga's replaces vanilla's), so add the
+    category to `COUNTRY_CONTAINER_UNITS` in gen_overrides.py and regenerate.
+  - Policy options need an `ai_weight` (every vanilla option has one).
   - Magnitudes: civilian `_produces_add` ~0.1–0.5, `planet_stability_add` 2–5, `planet_amenities_add` is in hundreds (100–500).
 - **Supertensiles** = Giga resource `giga_sr_amb_megaconstruction`. It exists only when global flag `giga_buildcap_j` is set.
   Put supertensile modifiers in `triggered_modifier = { potential = { has_global_flag = giga_buildcap_j } ... }` with a

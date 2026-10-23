@@ -164,6 +164,12 @@ FAKE_MEGA_CAP_SCRIPT = (
     "    weight_modifier = {\r\n        modifier = {\r\n            factor = 0\r\n        }\r\n    }\r\n#}"
 )
 
+# Giga's country_container: one collection block (a copy of vanilla's plus its own units), CRLF.
+FAKE_COUNTRY_CONTAINER = (
+    "# This is probably not individually overwritable or appendable\r\ncollection =\r\n{\r\n"
+    "\tcountry_monuments_unit = {\r\n\t\tresources = {\r\n\t\t\tcategory = country_monuments\r\n\t\t}\r\n\t}\r\n}\r\n"
+)
+
 
 class GenOverridesTests(unittest.TestCase):
     def setUp(self):
@@ -318,6 +324,9 @@ class GenOverridesTests(unittest.TestCase):
         script = self.giga / gen_overrides.MEGA_CAP_SCRIPT
         script.parent.mkdir(parents=True)
         script.write_bytes(FAKE_MEGA_CAP_SCRIPT.encode())
+        container = self.giga / gen_overrides.GIGA_COUNTRY_CONTAINER[len(gen_overrides.GIGA):]
+        container.parent.mkdir(parents=True)
+        container.write_bytes(FAKE_COUNTRY_CONTAINER.encode())
 
     def generate(self):
         return gen_overrides.generate(self.game, self.giga)
@@ -444,6 +453,14 @@ class GenOverridesTests(unittest.TestCase):
                           f"\t\t\tfactor = 0\n\t\t\thas_edict = lfg_shelve_{suffix}\n\t\t}}\n"
                           "\t\tfactor = @repatableTechFactor\n", block)
         self.assertEqual(techs.count("has_edict"), len(gen_overrides.SHELVE))
+
+    def test_country_container_lists_our_categories(self):
+        text = self.generate()["mod/" + gen_overrides.COUNTRY_CONTAINER_FILE]
+        self.assertNotIn("\r", text)
+        self.assertEqual(text.count("collection ="), 1)
+        self.assertIn("\tcountry_monuments_unit = {", text)  # Giga's (and vanilla's) units are kept
+        for cat in ("country_lfg_market_tithes", "country_lfg_nanite_conversion"):
+            self.assertIn(f"\t{cat}_unit = {{\n\t\tresources = {{\n\t\t\tcategory = {cat}\n", text)
 
     def test_megastructure_capacity_script_checks_area_edict(self):
         script = self.generate()["mod/" + gen_overrides.MEGA_CAP_SCRIPT]

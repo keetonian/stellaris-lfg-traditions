@@ -554,6 +554,14 @@ REPLICATOR_NANITE_UPKEEP = (
 )
 
 # out file -> list of (vanilla source file, top-level key, anchor regex, snippet inserted after the anchor)
+# Our country economic categories (common/economic_categories/lfg_economic_categories.txt): Payback's market tithes and
+# the Nanite Forge's Nanite Conversion policy.
+GIGA_COUNTRY_CONTAINER = GIGA + "common/country_container/gigas_country_container.txt"
+COUNTRY_CONTAINER_FILE = "common/country_container/zz_lfg_country_container.txt"
+COUNTRY_CONTAINER_UNITS = "".join(
+    f"\t{cat}_unit = {{\n\t\tresources = {{\n\t\t\tcategory = {cat}\n\t\t}}\n\t}}\n"
+    for cat in ("country_lfg_market_tithes", "country_lfg_nanite_conversion"))
+
 OVERRIDES = {
     "mod/common/districts/zz_lfg_district_overrides.txt": [
         # Accommodation District: the regular-empire block that grants its resort workers, then our extra block.
@@ -643,6 +651,11 @@ OVERRIDES = {
         (NANITE_EVENTS, EVENT + "cybernetics.5054", NANITE_SKIP_FORGE_ANCHOR, NANITE_SKIP_FORGE_BLOCK),
         (NANITE_EVENTS, EVENT + "cybernetics.5054", NANITE_STEP_ANCHOR, NANITE_STEP_BLOCK),
         (NANITE_EVENTS, EVENT + "cybernetics.5051", NANITE_CLEANUP_ANCHOR, NANITE_CLEANUP_BLOCK),
+    ],
+    # Country budget lines: a country economic category only shows (and pays) once common/country_container lists it.
+    # That file is one `collection` block, replaced as a whole (Giga's copies vanilla's), so ours copies Giga's and loads last.
+    "mod/" + COUNTRY_CONTAINER_FILE: [
+        (GIGA_COUNTRY_CONTAINER, None, r"^collection =\n\{\n", COUNTRY_CONTAINER_UNITS),
     ],
     # Inline scripts can only be replaced as a whole file (same path; this mod loads after Giga). key None = whole file.
     "mod/" + MEGA_CAP_SCRIPT: [

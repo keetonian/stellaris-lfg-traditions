@@ -59,6 +59,7 @@ ALLOWED_FILES = [
     r"common/zones/[^/]+\.txt",
     r"common/pop_jobs/[^/]+\.txt",
     r"common/economic_categories/[^/]+\.txt",
+    r"common/country_container/zz_lfg_country_container\.txt",  # generated whole-file override of Giga's
     r"common/script_values/[^/]+\.txt",
     r"common/scripted_variables/[^/]+\.txt",
     r"common/scripted_triggers/[^/]+\.txt",
