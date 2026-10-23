@@ -127,7 +127,7 @@ PREFIX_EXEMPT_FOLDERS = ("common/on_actions/", "common/section_templates/", "com
                          "common/global_ship_designs/", "common/special_projects/")
 # (sections: ship_section_template, designs: ship_design, special projects: special_project, keyed inside)
 # Resources the game generates economic-category modifiers for (the ones our categories use; extend as needed).
-GENERATED_RESOURCES = ("energy", "minerals", "food", "alloys", "consumer_goods", "trade", "unity", "influence",
+GENERATED_RESOURCES = ("energy", "minerals", "food", "alloys", "consumer_goods", "trade", "unity", "influence", "nanites",
                        "physics_research", "society_research", "engineering_research")
 # Single-category values used by vanilla policies (common/policies/00_policies.txt, 4.5).
 POLICY_CATEGORIES = {"diplomacy", "economy", "military", "research", "society"}

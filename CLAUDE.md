@@ -84,7 +84,7 @@ mod/                                  # exactly what ships
   common/starbase_buildings/zz_lfg_starbase_building_overrides.txt  # GENERATED: vanilla nanite_harvester, not beside ours
   common/starbase_buildings/lfg_starbase_buildings.txt       # lfg_broken_nanite_harvester -> lfg_ancient_nanite_harvester (Nanite Forge origin; never buildable)
   common/scripted_effects/lfg_nanite_forge_effects.txt       # lfg_forge_harvester_step (steps 1-14; 8+ only once restored), lfg_restore_forge_harvester, lfg_clear_forge_harvester
-  events/lfg_nanite_forge_events.txt                         # .1 game start, .2 3-year cycle/repair, .3 repair on Nanotech, .4 removal
+  events/lfg_nanite_forge_events.txt                         # .1 game start, .2 3-year cycle/repair, .3 repair on Nanotech, .4 removal, .5 automation modifiers, .7 Nanite Conversion policy (monthly)
   common/governments/councilors/lfg_councilors.txt           # councilor_lfg_applied_biosciences (Chief Bioengineer, scientists)
   gfx/interface/icons/governments/civics/civic_lfg_*.dds     # civic icons, all one colour: art/make_civic_icons.py (new civic -> add to ICONS)
   common/script_values/lfg_script_values.txt                 # lfg_synthetic_fertility_acceleration, lfg_species_split_share
@@ -136,7 +136,7 @@ mod/                                  # exactly what ships
                                                              #   decision_lfg_purge_imperfections (Evolutionary Predators; lfg_is_imperfection)
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)
   common/traits/lfg_leader_traits.txt                        # leader_trait_lfg_massed_assault (given by events/lfg_massed_assault_events.txt)
-  common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy)
+  common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy); lfg_nanite_conversion (Nanite Forge origin -> lfg_nanite_forge.7)
   common/ascension_perks/lfg_ascension_perks.txt             # ap_lfg_curated_progress (needs Gigastructural Constructs), ap_lfg_massed_assault, ap_lfg_shadow_transactions (Swallowed Whole + Criminal Heritage)
   common/espionage_operation_types/lfg_operations.txt       # Shadow Transactions: lfg_operation_shadow_branch (opens a branch office, .20/.21), _remove_branch (closes one, .22-.24)
   common/edicts/lfg_shelve_edicts.txt                        # GENERATED Shelve edicts (from SHELVE in gen_overrides.py)

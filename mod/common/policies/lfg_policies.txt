@@ -28,3 +28,31 @@ lfg_monument_economy = {
 		}
 	}
 }
+
+# Nanite Forge origin: turn part of our nanite production into unity or research (lfg_nanite_forge.7 reads the flag
+# monthly; value:lfg_nanite_production). The first option (no conversion) is the default.
+lfg_nanite_conversion = {
+	category = economy
+	potential = {
+		has_origin = origin_lfg_nanite_forge
+	}
+
+	option = {
+		name = "lfg_nanite_conversion_none"
+		policy_flags = {}
+	}
+
+	option = {
+		name = "lfg_nanite_conversion_unity"
+		policy_flags = {
+			lfg_nanite_conversion_unity
+		}
+	}
+
+	option = {
+		name = "lfg_nanite_conversion_research"
+		policy_flags = {
+			lfg_nanite_conversion_research
+		}
+	}
+}

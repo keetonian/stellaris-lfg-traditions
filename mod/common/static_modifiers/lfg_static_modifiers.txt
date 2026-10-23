@@ -310,3 +310,18 @@ lfg_reanimated_legendary_matriarch = {
 	ship_armor_mult = 1
 	ship_weapon_damage = 1
 }
+
+# Nanite Forge origin, Nanite Conversion policy (lfg_nanite_forge.7): multiplier = the nanites converted; 32 days,
+# re-added monthly. Unity focus: that much unity. Research focus: that much of each research type.
+lfg_nanite_converted_unity = {
+	icon = "gfx/interface/icons/modifiers/mod_unity_produces_mult.dds"
+	country_lfg_nanite_conversion_nanites_upkeep_add = 1
+	country_lfg_nanite_conversion_unity_produces_add = 1
+}
+lfg_nanite_converted_research = {
+	icon = "gfx/interface/icons/modifiers/mod_country_all_tech_research_speed.dds"
+	country_lfg_nanite_conversion_nanites_upkeep_add = 1
+	country_lfg_nanite_conversion_physics_research_produces_add = 1
+	country_lfg_nanite_conversion_society_research_produces_add = 1
+	country_lfg_nanite_conversion_engineering_research_produces_add = 1
+}

@@ -351,3 +351,8 @@
  lfg_market_tithe_paid:0 "Market Tithes"
  lfg_market_tithe_paid_desc:0 "We pay the Galactic Market's host its market fee share of our trade income."
  lfg_market_tithes:0 "Market Tithes"
+ country_lfg_nanite_conversion:0 "Nanite Conversion"
+ lfg_nanite_converted_unity:0 "Nanite Conversion: Unity"
+ lfg_nanite_converted_unity_desc:0 "Part of our nanite production is shaped into unity (Nanite Conversion policy)."
+ lfg_nanite_converted_research:0 "Nanite Conversion: Research"
+ lfg_nanite_converted_research_desc:0 "Part of our nanite production is turned into research (Nanite Conversion policy)."

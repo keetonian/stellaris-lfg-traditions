@@ -112,7 +112,7 @@ Seven agendas (Galactic Paragons DLC), each lasting 10 years:
 [h2]Origins[/h2]
 [b]Swallowed Whole[/b] (non-machine): a leviathan spat your ring world out beyond the galaxy. Unseal it to find the way back; hunt the Matriarch.
 
-[b]Nanite Forge[/b] (machines): a broken nanite harvester that Nanotech restores, plus nanite automation, unity and trade buildings.
+[b]Nanite Forge[/b] (machines): a broken harvester Nanotech restores, nanite buildings, and a policy turning nanites into unity or research.
 
 After Nanotech: [b]Nanite Cognition Core[/b] (automates specialists), [b]Nanotensile Converter[/b] (supertensiles), [b]Nanite Pulse[/b] (overloads a harvester).
 

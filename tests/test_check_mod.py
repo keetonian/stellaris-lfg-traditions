@@ -57,7 +57,7 @@ class RealModTests(unittest.TestCase):
                                                             "lfg_synthetic_fertility.1", "lfg_penal.1",
                                                             "lfg_massed_assault.1", "lfg_emberfall.1",
                                                             "lfg_nanite_forge.1", "lfg_nanite_forge.2", "lfg_nanite_forge.3", "lfg_nanite_forge.5",
-                                                            "lfg_nanite_forge.4", "lfg_nanite_forge.6",
+                                                            "lfg_nanite_forge.4", "lfg_nanite_forge.6", "lfg_nanite_forge.7",
                                                             "lfg_sealed_ring.1", "lfg_sealed_ring.2", "lfg_sealed_ring.3", "lfg_sealed_ring.4", "lfg_sealed_ring.5", "lfg_sealed_ring.6", "lfg_sealed_ring.8", "lfg_sealed_ring.9",
                                                             "lfg_sealed_ring.10", "lfg_sealed_ring.11", "lfg_sealed_ring.12", "lfg_sealed_ring.13",
                                                             "lfg_sealed_ring.14", "lfg_sealed_ring.15", "lfg_sealed_ring.16",

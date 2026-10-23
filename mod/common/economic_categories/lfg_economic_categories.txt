@@ -26,3 +26,14 @@ country_lfg_market_tithes = {
 	}
 	modifier_category = country
 }
+
+# Nanite Forge origin's Nanite Conversion policy (lfg_nanite_forge.7): its own budget line
+# (country_lfg_nanite_conversion_<resource>_produces_add / _upkeep_add, via lfg_nanite_converted_*).
+country_lfg_nanite_conversion = {
+	parent = country_container
+	generate_add_modifiers = {
+		produces
+		upkeep
+	}
+	modifier_category = country
+}

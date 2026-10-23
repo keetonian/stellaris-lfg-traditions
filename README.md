@@ -482,6 +482,15 @@ the building active by the monthly `lfg_nanite_forge.5`, like the Cognition Core
 versions). Automated jobs still pay vanilla's automation upkeep. On a **Nanite World** (`pc_nanotech`) it costs **half**
 (build cost and upkeep; `@lfg_nanite_world_discount`), like the Cognition Core. It can stack with vanilla's own automation buildings.
 
+**Nanite Conversion** policy (`lfg_nanite_conversion`, economy, this origin only): **Raw Nanites** (default, no effect);
+**Unity Focus**: every month **10%** of our nanite production becomes the same amount of **unity**; **Research Focus**:
+**5%** of it becomes the same amount of **physics, society and engineering research each**. Production = net nanite
+income + nanite expenses (`value:lfg_nanite_production`), so the conversion's own cost doesn't shrink it. The monthly
+`lfg_nanite_forge.7` re-adds a 32-day modifier (`lfg_nanite_converted_unity` / `_research`, multiplier = nanites
+converted) in its own budget line (economic category `country_lfg_nanite_conversion`: nanites upkeep, unity / research
+produced). Shares: `@lfg_nanite_conversion_*_share`. **Unverified in game:** `resource_expenses_compare` in a script
+value, and research from a country economic category.
+
 ## Buildings: Nanite Freight (Nanite Forge origin)
 
 `building_lfg_nanite_freight_1` → `_2` → `_3` (**Relay**, **Network**, **Lattice**): this origin only, **one per

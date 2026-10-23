@@ -27,6 +27,7 @@ on_monthly_pulse_country = {
 		lfg_shellworlders.1	# Shellworlders: artificial world modifiers
 		lfg_penal.1	# Penitence: penal colony modifiers + inmate count
 		lfg_nanite_forge.5	# Nanite Cognition Core: specialist automation modifier
+		lfg_nanite_forge.7	# Nanite Forge origin: Nanite Conversion policy (nanites -> unity / research)
 		lfg_lineage.1	# Every Shore: monthly planet-type count
 		lfg_stationcraft.1	# Stationcraft: monthly starbase / kilostructure / megastructure counts
 		lfg_mothership.1	# Mothership: monthly nanite swarmers / interdictors

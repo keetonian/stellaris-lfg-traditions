@@ -263,3 +263,40 @@ country_event = {
 		}
 	}
 }
+
+# Monthly (on_monthly_pulse_country): Nanite Conversion policy. Turns @lfg_nanite_conversion_unity_share of our nanite
+# production into that much unity, or @lfg_nanite_conversion_research_share into that much of each research type.
+# One budget line (lfg_nanite_converted_*, 32-day modifiers re-added monthly, so they lapse by themselves).
+country_event = {
+	id = lfg_nanite_forge.7
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_origin = origin_lfg_nanite_forge
+	}
+
+	immediate = {
+		remove_modifier = lfg_nanite_converted_unity
+		remove_modifier = lfg_nanite_converted_research
+		if = {
+			limit = { has_policy_flag = lfg_nanite_conversion_unity }
+			set_variable = { which = lfg_nanite_converted value = value:lfg_nanite_production }
+			multiply_variable = { which = lfg_nanite_converted value = @lfg_nanite_conversion_unity_share }
+			if = {
+				limit = { check_variable = { which = lfg_nanite_converted value > 0 } }
+				add_modifier = { modifier = lfg_nanite_converted_unity days = 32 multiplier = lfg_nanite_converted }
+			}
+		}
+		else_if = {
+			limit = { has_policy_flag = lfg_nanite_conversion_research }
+			set_variable = { which = lfg_nanite_converted value = value:lfg_nanite_production }
+			multiply_variable = { which = lfg_nanite_converted value = @lfg_nanite_conversion_research_share }
+			if = {
+				limit = { check_variable = { which = lfg_nanite_converted value > 0 } }
+				add_modifier = { modifier = lfg_nanite_converted_research days = 32 multiplier = lfg_nanite_converted }
+			}
+		}
+		clear_variable = lfg_nanite_converted
+	}
+}

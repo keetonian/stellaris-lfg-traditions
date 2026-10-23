@@ -253,3 +253,7 @@
 # Here Be Dragons: the Dragon's Breath (generated per growth step, DRAKE_* in tools/gen_overrides.py)
 @lfg_drake_breath_cooldown = 90
 @lfg_drake_breath_range = 320	# twice the 160 first used; drakes add weapon range per growth step (DRAKE_RANGE_PER_STEP)
+
+# Nanite Forge origin - Nanite Conversion policy: share of monthly nanite production turned into unity / into each research type.
+@lfg_nanite_conversion_unity_share = 0.10
+@lfg_nanite_conversion_research_share = 0.05
