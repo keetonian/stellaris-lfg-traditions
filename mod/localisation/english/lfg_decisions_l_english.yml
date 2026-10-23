@@ -13,3 +13,7 @@
  lfg_decision_expand_cell_blocks_effect_tt:0 "Housing §G+1,500§! on this penal colony (up to §Y10§! expansions)."
  lfg_penal_cell_blocks:0 "Expanded Cell Blocks"
  lfg_penal_cell_blocks_desc:0 "Extra tiers of cells have been stacked onto this penal colony's camps."
+ decision_lfg_purge_imperfections:0 "Purge Imperfections"
+ decision_lfg_purge_imperfections_desc:0 "Only the fittest deserve to inherit the stars. Those who are not of our blood are culled, so that nothing weaker eats from the same table."
+ decision_lfg_purge_imperfections_effect_tt:0 "§RKills every pop on this planet that is not of our main species§! (its subspecies are spared)."
+ lfg_purge_imperfections_none:0 "$TRIGGER_FAIL$No other species live on this planet."

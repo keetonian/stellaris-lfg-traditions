@@ -132,7 +132,8 @@ mod/                                  # exactly what ships
   common/on_actions/lfg_on_actions.txt                       # monthly -> lfg_resorts.1 + lfg_shellworlders.1, anomaly_success -> lfg_xenoarchaeology.1,
                                                              #   colony transfer/ownerless -> lfg_planet.1
   common/decisions/lfg_decisions.txt                         # decision_lfg_expand_resort (Paradise Unbound), decision_lfg_expand_cell_blocks (Penitence finisher),
-                                                             #   decision_lfg_nanite_pulse (Nanotech; from a star) -> events/lfg_nanite_pulse_events.txt, decision_lfg_mothership_crew (2,000 pops)
+                                                             #   decision_lfg_nanite_pulse (Nanotech; from a star) -> events/lfg_nanite_pulse_events.txt, decision_lfg_mothership_crew (2,000 pops),
+                                                             #   decision_lfg_purge_imperfections (Evolutionary Predators; lfg_is_imperfection)
   common/traits/lfg_traits.txt                               # trait_lfg_inherited_genius (Evolutionary Predators only)
   common/traits/lfg_leader_traits.txt                        # leader_trait_lfg_massed_assault (given by events/lfg_massed_assault_events.txt)
   common/policies/lfg_policies.txt                           # lfg_monument_economy (unlocked by Monument Economy)

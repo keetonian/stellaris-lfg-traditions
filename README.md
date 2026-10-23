@@ -11,6 +11,7 @@ A Stellaris **4.5** mod for **Gigastructural Engineering & More (4.5)** games th
 - **Nanotensile Converter** (after finishing Nanotech, supertensiles on): turns energy and nanites into supertensiles.
 - **1 civic, Applied Biosciences** (materialist, non-machine species): Biologists research less society but some physics and engineering.
 - **1 edict, Species Experimentation** (Evolutionary Predators, after finishing Mutation): half of a secondary species dies, the rest splits into 50 subspecies, each with a random positive and a random negative trait.
+- **Purge Imperfections** decision (Evolutionary Predators, any owned planet): kills every pop there that isn't of the main species or its subspecies.
 - **Overrides** of vanilla/Gigastructural definitions (generated, see [Overrides](#overrides-of-vanilla-and-gigastructural-content)): Synthetic Fertility's situation speeds up every year, three trees extend the Accommodation District, holomuseums and the Archaeostudies Faculty, and the repeatable techs check the Shelve edicts.
 
 This is a gameplay mod (it adds `common/` files), so it **changes the game checksum**. Everyone in a multiplayer game needs it.
@@ -1023,6 +1024,13 @@ Subject one of your secondary species to brutal experiments: **half of it dies**
 
 **Unverified:** the most script-heavy part of the mod; test on a save you don't mind losing.
 
+## Decision: Purge Imperfections (Evolutionary Predators)
+
+`decision_lfg_purge_imperfections` (`common/decisions/lfg_decisions.txt`), on any owned planet of an Evolutionary
+Predators empire: **50 influence, 30 days**. Kills every pop group on the planet that isn't of the main species or a
+subspecies of it (`lfg_is_imperfection` in `lfg_species_split_triggers.txt`: `kill_pop_group` with `percentage = 1`).
+Greyed out when there are none. The AI never takes it (`ai_weight` 0). Robots and other non-main species die too.
+
 ## Species trait: Inherited Genius (Evolutionary Predators only)
 
 | Trait | Cost | Effect |
@@ -1175,6 +1183,7 @@ CI (`.github/workflows/verify.yml`) runs the tests and the checks that don't nee
   Resort Worker, Tourist) apply as described; agendas appear after finishing their tree; each anomaly researched with Anomaly Studies gives 5 minor artifacts.
 - Species Experimentation: only Evolutionary Predators who finished Mutation see it; your main species and its subspecies are never offered;
   under 100 pops it's greyed out; picking a species kills half of it, creates 50 subspecies and costs 1000 unity.
+- Purge Imperfections: only Evolutionary Predators see it; it kills every other species on the planet and spares the main species and its subspecies.
 - `~/Documents/Paradox Interactive/Stellaris/logs/error.log` has no `lfg` errors.
 
 ## Publish to the Steam Workshop

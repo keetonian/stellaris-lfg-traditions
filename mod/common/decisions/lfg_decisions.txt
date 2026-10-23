@@ -370,3 +370,42 @@ decision_lfg_dragon_tribute = {
 		weight = 0
 	}
 }
+
+# Evolutionary Predators: Purge Imperfections. Kills every pop on this planet that isn't of our main species (its
+# subspecies are spared). The AI never takes it.
+decision_lfg_purge_imperfections = {
+	owned_planets_only = yes
+	enactment_time = 30
+	sound = event_administrative_work
+	icon = decision_expel_population
+	resources = {
+		category = decisions
+		cost = {
+			influence = 50
+		}
+	}
+	potential = {
+		owner = { has_origin = origin_evolutionary_predators }
+	}
+	allow = {
+		custom_tooltip = {
+			fail_text = lfg_purge_imperfections_none
+			any_owned_pop_group = { lfg_is_imperfection = yes }
+		}
+	}
+	effect = {
+		custom_tooltip = decision_lfg_purge_imperfections_effect_tt
+		hidden_effect = {
+			every_owned_pop_group = {
+				limit = { lfg_is_imperfection = yes }
+				kill_pop_group = {
+					pop_group = this
+					percentage = 1
+				}
+			}
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}

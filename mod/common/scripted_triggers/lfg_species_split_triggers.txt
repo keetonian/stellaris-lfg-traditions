@@ -18,3 +18,13 @@ lfg_species_split_eligible = {
 		}
 	}
 }
+
+# Scope: pop group. Purge Imperfections (decision_lfg_purge_imperfections): true unless the group is of its owner's main
+# species or a subspecies of it.
+lfg_is_imperfection = {
+	NOR = {
+		is_exact_same_species = owner_species
+		is_subspecies = owner_species
+		is_same_species = owner_species
+	}
+}
