@@ -132,7 +132,12 @@ ap_lfg_storm_sovereignty = {
 # Legendary Dragons: Here Be Dragons only, once the Sky Dragon has entrusted its young to us (vanilla's dragon_breeders
 # flag, aquatics.120). Unlocks decision_lfg_legendary_dragon: anoint one Elder Dragon (lfg_drake_11) as the Legendary
 # Dragon, which keeps growing (events/lfg_dragons_events.txt). One at a time; if it dies, anoint another.
+# Its herds feed the dragons: farmers produce +50% and work +15% more efficiently.
 ap_lfg_legendary_dragons = {
+	modifier = {
+		planet_farmers_produces_mult = 0.50
+		farmer_jobs_bonus_workforce_mult = 0.15
+	}
 	on_enabled = {
 		custom_tooltip = ap_lfg_legendary_dragons_tt
 		hidden_effect = {

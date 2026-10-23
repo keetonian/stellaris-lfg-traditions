@@ -928,6 +928,8 @@ colony (`lfg_drake_starve`), with a popup (`lfg_dragons.2`).
 of your Elder Dragons (`lfg_dragons.3`; when a drake becomes an Elder while you have the perk and no Legendary,
 popup `lfg_dragons.4` points you to the decision); it becomes the **Legendary Dragon** (ship flag `lfg_legendary_dragon`, the
 Legendary Elder's design) and grows again every 4 years. **One at a time**: if it dies, anoint another.
+The perk also gives **+50% resources from Farmers** (`planet_farmers_produces_mult`) and **+15% Farmer job efficiency**
+(`farmer_jobs_bonus_workforce_mult`): the herds that feed the dragons.
 
 **Speeding growth up** (all need the perk; passive growth stays one step every 4 years):
 - **Hunting** (automatic): when a leviathan dies to a ship whose fleet has drakes (`on_ship_destroyed_victim` →
