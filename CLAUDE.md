@@ -40,7 +40,7 @@ mod/                                  # exactly what ships
   common/scripted_triggers/zz_lfg_trigger_overrides.txt      # GENERATED: Giga's war moon / planet component triggers + our hulls
   common/component_templates/lfg_components.txt              # LFG_NANITE_SWARM_HANGAR, _RESHAPER (X) (Mothership only), _SIEGE_DRIVER (T; _MAGINOT twin: max 3 on a Maginot World),
                                                              #   _FLAK_SWARM (PD) (Mothership + Maginot World), _DISASSEMBLER (W), _STORM_AUTOCANNON (L, all nanite hulls), _ARMOR (any ship), LFG_SWARMER_/_INTERDICTOR_VAULT/_FOUNDRY (aux);
-                                                             #   LFG_LM_ACCELERATOR_2, LFG_*_LM_ARMOR_6 (galvanic)
+                                                             #   LFG_LM_ACCELERATOR_2, LFG_*_LM_ARMOR_6 (galvanic); _3, LFG_LM_RESHAPING_DRIVER (X), _ARMOR_7 (+ A Celestial Armada)
   common/scripted_effects/lfg_mothership_effects.txt         # lfg_mothership_grow_reserve / _deploy / _launch_reserve / _recall
   events/lfg_mothership_events.txt                           # .1/.2 monthly reserve; .3/.4 battle -> deploy; .5 recall when no enemy;
                                                              #   .6 one per empire (on_ship_built: delete + refund an extra); .7 Disassembler nanites + vanilla cracker
@@ -77,7 +77,7 @@ mod/                                  # exactly what ships
   common/start_screen_messages/lfg_empire_start_screens.txt  #   their stories (loc: lfg_empires_l_english.yml)
   common/scripted_effects/lfg_storms_effects.txt             # lfg_spawn_nexus_storm, lfg_nexus_storm_passes, lfg_nexus_storm_penalties, lfg_storm_wrath_fleet / _damage
   common/scripted_modifiers/lfg_scripted_modifiers.txt      # custom ship modifiers of the Mothership's swarm modules (read by lfg_mothership.2)
-  common/technology/lfg_technology.txt                       # tech_lfg_swarmforge / _nanite_war_moon / _nanite_planetcraft (offered by the perk); _lm_accelerator_2 / _lm_armor_6 (galvanic civics)
+  common/technology/lfg_technology.txt                       # tech_lfg_swarmforge / _nanite_war_moon / _nanite_planetcraft (offered by the perk); _lm_accelerator_2 / _lm_armor_6 (galvanic civics), _3 / _7 (+ A Celestial Armada)
   common/buildings/lfg_buildings.txt                         # building_lfg_nanite_automation + _nanite_consensus_1-4 (origin), _nanite_cognition_core, _nanotensile_converter (Nanotech)
   common/static_modifiers/lfg_specialist_automation.txt      # GENERATED (specialist_jobs in gen_overrides.py): Cognition Core job list
   common/deposits/lfg_deposits.txt                           # d_lfg_nanite_forge_star (+22 energy), Ancient harvester's huge / vast deposits

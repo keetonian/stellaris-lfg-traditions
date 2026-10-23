@@ -700,6 +700,7 @@ weapon_component_template = {
 	}
 
 	component_set = "LFG_LM_ACCELERATOR_2"
+	upgrades_to = "LFG_LM_ACCELERATOR_3"
 	projectile_gfx = "adv_kinetic_artillery"
 	tags = {
 		weapon_type_kinetic
@@ -756,6 +757,7 @@ utility_component_template = {
 	}
 	prerequisites = { "tech_lfg_lm_armor_6" }
 	component_set = "LFG_LM_ARMOR_6"
+	upgrades_to = "LFG_SMALL_LM_ARMOR_7"
 	resources = {
 		category = ship_components
 		cost = {
@@ -798,6 +800,7 @@ utility_component_template = {
 	}
 	prerequisites = { "tech_lfg_lm_armor_6" }
 	component_set = "LFG_LM_ARMOR_6"
+	upgrades_to = "LFG_MEDIUM_LM_ARMOR_7"
 	resources = {
 		category = ship_components
 		cost = {
@@ -840,6 +843,7 @@ utility_component_template = {
 	}
 	prerequisites = { "tech_lfg_lm_armor_6" }
 	component_set = "LFG_LM_ARMOR_6"
+	upgrades_to = "LFG_LARGE_LM_ARMOR_7"
 	resources = {
 		category = ship_components
 		cost = {
@@ -848,6 +852,271 @@ utility_component_template = {
 		upkeep = {
 			energy = 1.36
 			alloys = 0.4
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# Celestial tier (galvanic empires with Gigastructural's A Celestial Armada perk): a tiny dark matter cost on each.
+# Reshaping Projectile Accelerator, level 3.
+weapon_component_template = {
+	key = "LFG_LM_ACCELERATOR_3"
+	size = large
+	icon = "GFX_ship_part_lm_accelerator"
+	icon_frame = 1
+	type = instant
+
+	damage = { min = 600 max = 1800 }
+	windup = { min = 9 max = 30 }
+	total_fire_time = 40
+	range = 150
+	accuracy = 0.92
+	power = -150
+	hull_damage = 1.0
+	armor_penetration = 0.9
+	armor_damage = 1.0
+	shield_penetration = 0.0
+	shield_damage = 3.0
+	tracking = 0.0
+	min_range = 45.0
+
+	prerequisites = { "tech_lfg_lm_accelerator_3" }
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+
+	component_set = "LFG_LM_ACCELERATOR_3"
+	projectile_gfx = "adv_kinetic_artillery"
+	tags = {
+		weapon_type_kinetic
+		l_slot
+		weapon_role_artillery
+	}
+	ai_tags = {
+		weapon_role_artillery
+		artillery
+		artillery_stealth
+	}
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 1500
+			volatile_motes = 15
+			sr_dark_matter = 3
+		}
+		upkeep = {
+			energy = 8
+			alloys = 1.6
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# The galvanic X slot: a Reshaping Projectile Accelerator scaled up to a spinal mount (vanilla MASS_ACCELERATOR_2:
+# 910-2600, 80 days, range 150, 75%, no penetration, 1.5x shield damage).
+weapon_component_template = {
+	key = "LFG_LM_RESHAPING_DRIVER"
+	size = extra_large
+	icon = "GFX_ship_part_mass_accelerator_2"
+	icon_frame = 1
+	type = instant
+
+	damage = { min = 1800 max = 5000 }
+	windup = { min = 14 max = 50 }
+	total_fire_time = 70
+	range = 170
+	accuracy = 0.85
+	power = -340
+	hull_damage = 1.0
+	armor_penetration = 0.75
+	armor_damage = 1.0
+	shield_penetration = 0.0
+	shield_damage = 2.5
+	tracking = 0.0
+
+	firing_arc = 25.0
+	min_range = 45.0
+	use_ship_main_target = no
+
+	prerequisites = { "tech_lfg_lm_accelerator_3" }
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+
+	component_set = "LFG_LM_RESHAPING_DRIVER"
+	projectile_gfx = "adv_kinetic_artillery"
+	tags = {
+		weapon_type_kinetic
+		weapon_role_artillery
+		x_slot
+	}
+	ai_tags = {
+		weapon_role_artillery
+		artillery
+		artillery_stealth
+	}
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 2500
+			volatile_motes = 20
+			sr_dark_matter = 6
+		}
+		upkeep = {
+			energy = 10
+			alloys = 2
+		}
+	}
+	target_weights = {
+		titan = 3
+		battleship = 2
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+# Galvanic armour, level 7 (level 6: 400 / 1200 / 3600 armour, 2% regen, 6% hardening). Energy fire rate stays +2%.
+utility_component_template = {
+	key = "LFG_SMALL_LM_ARMOR_7"
+	size = small
+	icon = "GFX_ship_part_lm_armor_5"
+	icon_frame = 1
+	power = 0
+	modifier = {
+		ship_armor_add = 600
+		ship_armor_regen_add_perc = 0.03
+		ship_hull_regen_add_perc = 0.03
+	}
+	ship_modifier = {
+		weapon_type_energy_weapon_fire_rate_mult = 0.02
+		ship_armor_hardening_add = 0.08
+	}
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+	prerequisites = { "tech_lfg_lm_armor_7" }
+	component_set = "LFG_LM_ARMOR_7"
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 240
+			sr_dark_matter = 1
+		}
+		upkeep = {
+			energy = 0.5
+			alloys = 0.15
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+utility_component_template = {
+	key = "LFG_MEDIUM_LM_ARMOR_7"
+	size = medium
+	icon = "GFX_ship_part_lm_armor_5"
+	icon_frame = 1
+	power = 0
+	modifier = {
+		ship_armor_add = 1800
+		ship_armor_regen_add_perc = 0.03
+		ship_hull_regen_add_perc = 0.03
+	}
+	ship_modifier = {
+		weapon_type_energy_weapon_fire_rate_mult = 0.02
+		ship_armor_hardening_add = 0.08
+	}
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+	prerequisites = { "tech_lfg_lm_armor_7" }
+	component_set = "LFG_LM_ARMOR_7"
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 600
+			sr_dark_matter = 2
+		}
+		upkeep = {
+			energy = 1
+			alloys = 0.3
+		}
+	}
+	ai_weight = {
+		weight = 0
+	}
+}
+
+utility_component_template = {
+	key = "LFG_LARGE_LM_ARMOR_7"
+	size = large
+	icon = "GFX_ship_part_lm_armor_5"
+	icon_frame = 1
+	power = 0
+	modifier = {
+		ship_armor_add = 5400
+		ship_armor_regen_add_perc = 0.03
+		ship_hull_regen_add_perc = 0.03
+	}
+	ship_modifier = {
+		weapon_type_energy_weapon_fire_rate_mult = 0.02
+		ship_armor_hardening_add = 0.08
+	}
+	potential = {
+		from = {
+			is_galvanic_empire = yes
+			country_uses_bio_ships = no
+		}
+	}
+	show_tech_unlock_if = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+	}
+	prerequisites = { "tech_lfg_lm_armor_7" }
+	component_set = "LFG_LM_ARMOR_7"
+	resources = {
+		category = ship_components
+		cost = {
+			sr_living_metal = 1500
+			sr_dark_matter = 3
+		}
+		upkeep = {
+			energy = 2
+			alloys = 0.6
 		}
 	}
 	ai_weight = {

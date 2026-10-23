@@ -119,7 +119,7 @@ After Nanotech: [b]Nanite Cognition Core[/b] (automates specialists), [b]Nanoten
 [h2]Civics[/h2]
 [b]Applied Biosciences[/b] (Materialist, non-machine): Biologists trade some society for physics and engineering research.
 
-[b]Galvanic civics:[/b] new galvanic armour and accelerator tiers.
+[b]Galvanic civics:[/b] new galvanic armour and accelerator tiers, plus an X slot with A Celestial Armada.
 
 [h2]Ascension perks[/h2]
 [b]Mothership:[/b] one system-sized carrier per empire with escorts and a fleet aura; its forge boosts the navy.

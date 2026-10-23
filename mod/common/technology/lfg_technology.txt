@@ -143,6 +143,43 @@ tech_lfg_lm_armor_6 = {
 	}
 }
 
+# Celestial galvanic tier (galvanic, non-bio empires with Gigastructural's A Celestial Armada perk).
+tech_lfg_lm_accelerator_3 = {
+	icon = tech_mass_accelerator_2
+	cost = @giga_tier6cost3
+	area = engineering
+	tier = 5
+	category = { propulsion }
+	prerequisites = { "tech_lfg_lm_accelerator_2" "tech_mass_accelerator_2" }
+	weight = @tier5weight3
+	potential = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+		has_ascension_perk = ap_celestial_printing
+	}
+	ai_weight = {
+		factor = 1
+	}
+}
+
+tech_lfg_lm_armor_7 = {
+	icon = tech_ship_armor_5
+	cost = @giga_tier6cost3
+	area = engineering
+	tier = 5
+	category = { materials }
+	prerequisites = { "tech_lfg_lm_armor_6" }
+	weight = @tier5weight3
+	potential = {
+		is_galvanic_empire = yes
+		country_uses_bio_ships = no
+		has_ascension_perk = ap_celestial_printing
+	}
+	ai_weight = {
+		factor = 1
+	}
+}
+
 # Mothership perk: upgrades the Nanite Cognition Core to the Nanite Overmind Core (100% specialist automation).
 tech_lfg_cognition_core_2 = {
 	icon = tech_nanite_transmutation

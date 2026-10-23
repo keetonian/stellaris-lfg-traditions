@@ -592,6 +592,21 @@ engineering techs (`common/technology/lfg_technology.txt`, cost `@tier5cost3`, w
   hull regeneration (1%), +2% energy weapon fire rate (same as level 5), 6% hardening (4%). Cost 160 / 400 / 1,000 living metal
   (vanilla 53 / 133 / 333).
 
+With Gigastructural's **A Celestial Armada** perk (`ap_celestial_printing`), two more techs (cost `@giga_tier6cost3`, weight
+`@tier5weight3`) add a celestial tier, each part with a small **dark matter** cost; the level-2 accelerator and level-6
+armour upgrade to it (`upgrades_to`):
+- **Celestial Accelerators** (`tech_lfg_lm_accelerator_3`, needs `tech_lfg_lm_accelerator_2` + `tech_mass_accelerator_2`):
+  - `LFG_LM_ACCELERATOR_3`, level 3 of the accelerator (large): **600-1,800** damage every 40 days, range 150, accuracy 92%,
+    90% armour penetration, 3x shield damage, power -150. Cost 1,500 living metal + 15 volatile motes + **3 dark matter**;
+    upkeep 8 energy, 1.6 alloys.
+  - `LFG_LM_RESHAPING_DRIVER`, **Celestial Reshaping Driver**, the galvanic **X slot** (vanilla Mass Accelerator 2:
+    910-2,600 / 80 days, range 150, 75%, no penetration, 1.5x shield damage): **1,800-5,000** damage every 70 days, range
+    170, accuracy 85%, 75% armour penetration, 2.5x shield damage, power -340, firing arc 25. Cost 2,500 living metal +
+    20 volatile motes + **6 dark matter**; upkeep 10 energy, 2 alloys.
+- **Celestial Galvanic Armour** (`tech_lfg_lm_armor_7`, needs `tech_lfg_lm_armor_6`) → `LFG_{SMALL,MEDIUM,LARGE}_LM_ARMOR_7`:
+  **600 / 1,800 / 5,400** armour, +3% armour and hull regeneration, **+2% energy weapon fire rate (unchanged)**, 8% hardening.
+  Cost 240 / 600 / 1,500 living metal + **1 / 2 / 3 dark matter**; upkeep 0.5 / 1 / 2 energy, 0.15 / 0.3 / 0.6 alloys.
+
 ## Ascension perk: Massed Assault
 
 **+10 ground combat width**: more armies fight at the same time. **Every general** also gets the **Massed Assault Doctrine**
