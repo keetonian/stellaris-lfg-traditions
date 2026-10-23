@@ -2,7 +2,7 @@
 
 - Megaforge and Stationcraft trees: the five tradition icons (45x45: the symbol on a lit gradient square, ember tones for
   Megaforge, violet for Stationcraft) and the tree icon (30x30: a silver symbol, like vanilla's tree icons);
-- council agendas (124x124: a mint line symbol on transparency, like vanilla's agenda icons);
+- council agendas (124x124: a mint line symbol on transparency, about 54 px across and centred, like vanilla's agenda icons);
 - the Progenitor Forge's tech and build-menu icon (52x52: an O-class star in two nanite rings).
 
 Needs Pillow; run from the repo root:
@@ -245,6 +245,24 @@ def glyph(sym, colour, size) -> Image.Image:
     return out
 
 
+AGENDA_SIZE = 124
+AGENDA_BOX = 54  # vanilla agenda symbols span ~40-58 px of the 124 px icon, centred
+
+
+def agenda(sym) -> Image.Image:
+    """A council agenda icon: the symbol cropped to its ink, fitted into AGENDA_BOX and centred, in mint."""
+    mask, d = canvas()
+    sym(d)
+    mask = mask.crop(mask.getbbox())
+    k = AGENDA_BOX / max(mask.size)
+    mask = mask.resize((max(1, round(mask.width * k)), max(1, round(mask.height * k))), Image.LANCZOS)
+    full = Image.new("L", (AGENDA_SIZE, AGENDA_SIZE), 0)
+    full.paste(mask, ((AGENDA_SIZE - mask.width) // 2, (AGENDA_SIZE - mask.height) // 2))
+    out = Image.new("RGBA", full.size, MINT + (0,))
+    out.putalpha(full)
+    return out
+
+
 MEGAFORGE = ((70, 22, 8), (25, 8, 4), (255, 150, 60))
 PROGENITOR = ((10, 30, 70), (2, 6, 20), (90, 200, 255))
 STATIONCRAFT = ((40, 20, 70), (12, 8, 30), (180, 140, 255))
@@ -264,12 +282,12 @@ ICONS = {
     TRADITIONS / "tree_icons/tradition_icon_lfg_stationcraft.dds": lambda: glyph(sym_stationcraft, SILVER, 30),
     Path("mod/gfx/interface/icons/technologies/tech_lfg_progenitor_forge.dds"): lambda: tradition(sym_progenitor, *PROGENITOR, size=52),
     Path("mod/gfx/interface/icons/megastructures/lfg_progenitor_forge.dds"): lambda: tradition(sym_progenitor, *PROGENITOR, size=52),
-    AGENDAS / "agenda_lfg_great_project.dds": lambda: glyph(sym_megaforge_ring, MINT, 124),
-    AGENDAS / "agenda_lfg_grand_expedition.dds": lambda: glyph(sym_expedition, MINT, 124),
-    AGENDAS / "agenda_lfg_harvest_tithe.dds": lambda: glyph(sym_tithe, MINT, 124),
-    AGENDAS / "agenda_lfg_gala_season.dds": lambda: glyph(sym_gala, MINT, 124),
-    AGENDAS / "agenda_lfg_grand_tour_season.dds": lambda: glyph(sym_grand_tour, MINT, 124),
-    AGENDAS / "agenda_lfg_feast_of_plenty.dds": lambda: glyph(sym_feast, MINT, 124),
+    AGENDAS / "agenda_lfg_great_project.dds": lambda: agenda(sym_megaforge_ring),
+    AGENDAS / "agenda_lfg_grand_expedition.dds": lambda: agenda(sym_expedition),
+    AGENDAS / "agenda_lfg_harvest_tithe.dds": lambda: agenda(sym_tithe),
+    AGENDAS / "agenda_lfg_gala_season.dds": lambda: agenda(sym_gala),
+    AGENDAS / "agenda_lfg_grand_tour_season.dds": lambda: agenda(sym_grand_tour),
+    AGENDAS / "agenda_lfg_feast_of_plenty.dds": lambda: agenda(sym_feast),
 }
 
 if __name__ == "__main__":

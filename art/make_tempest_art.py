@@ -18,7 +18,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 sys.path.insert(0, str(Path(__file__).parent))
-from make_glyph_icons import AGENDAS, MINT, SILVER, TRADITIONS, disc, glyph, line, ring, tradition  # noqa: E402
+from make_glyph_icons import AGENDAS, SILVER, TRADITIONS, agenda, disc, glyph, line, ring, tradition  # noqa: E402
 from make_megastructure_icons import GAME, tint  # noqa: E402
 
 TEMPEST = ((14, 30, 70), (4, 8, 26), (120, 220, 255))
@@ -144,7 +144,7 @@ ICONS = {
     TRADITIONS / "tradition_lfg_tempest_ride_the_lightning.dds": lambda: tradition(sym_ride_lightning, *TEMPEST),
     TRADITIONS / "tree_icons/tradition_icon_lfg_tempest.dds": lambda: glyph(sym_tempest, SILVER, 30),
     ARROWS: vortex_arrows,
-    AGENDAS / "agenda_lfg_storm_season.dds": lambda: glyph(sym_tempest, MINT, 124),
+    AGENDAS / "agenda_lfg_storm_season.dds": lambda: agenda(sym_tempest),
     Path("mod/gfx/interface/tiles/tradition_category_tile_lfg_tempest.dds"): lambda: tint(
         Image.open(GAME / "gfx/interface/tiles/tradition_category_tile_synchronicity.dds").convert("RGBA"), STORM_BLUE),
     Path("mod/gfx/interface/traditions/tradition_hex_bg_lfg_tempest.dds"): lambda: tint(
