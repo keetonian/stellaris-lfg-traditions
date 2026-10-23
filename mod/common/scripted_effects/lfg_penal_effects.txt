@@ -122,10 +122,10 @@ lfg_penal_idle_hands_attrition = {
 
 # Planet scope (a planet that isn't the penal colony; event_target:lfg_penal_target = the penal colony). Transportation:
 # ship @lfg_transportation_share of this planet's unemployed (at most @lfg_transportation_max) to the penal colony,
-# whether or not it has jobs or housing. Pop groups mix employed and unemployed pops, so every group sends the same
-# share of its size (the jobs they leave are refilled by the unemployed), adding up to that many pops:
-# share = min(unemployed * 10%, 300) / population. Each group moves into a new group on the penal colony based on it
-# (create_pop_group + transfer_pop_amount, as in lfg_split_species).
+# whether or not it has jobs or housing. Jobless pops are Civilians, a pop category of their own, so only civilian
+# pop groups are shipped, each the same share of its size: share = min(civilians * 10%, 300) / civilians.
+# Each group moves into a new group on the penal colony based on it (create_pop_group + transfer_pop_amount, as in
+# lfg_split_species).
 lfg_penal_ship_unemployed = {
 	export_trigger_value_to_variable = {
 		trigger = num_assigned_jobs
@@ -141,19 +141,20 @@ lfg_penal_ship_unemployed = {
 		set_variable = { which = lfg_ship_share value = @lfg_transportation_max }
 	}
 	export_trigger_value_to_variable = {
-		trigger = count_owned_pop_amount
+		trigger = num_assigned_jobs
 		parameters = {
-			limit = { always = yes }
+			job = civilian
 		}
-		variable = lfg_ship_population
+		variable = lfg_ship_civilians
 	}
 	if = {
 		limit = {
 			check_variable = { which = lfg_ship_share value > 0 }
-			check_variable = { which = lfg_ship_population value > 0 }
+			check_variable = { which = lfg_ship_civilians value > 0 }
 		}
-		divide_variable = { which = lfg_ship_share value = lfg_ship_population }
+		divide_variable = { which = lfg_ship_share value = lfg_ship_civilians }
 		every_owned_pop_group = {
+			limit = { is_pop_category = civilian }
 			export_trigger_value_to_variable = {
 				trigger = pop_group_size
 				variable = lfg_ship_amount

@@ -226,7 +226,7 @@
  tr_lfg_penitence_idle_hands:0 "Idle Hands"
  tr_lfg_penitence_idle_hands_desc:0 "An idle inmate is a wasted inmate. The more of them crowd the camps, the harder every shift is driven."
  tr_lfg_penitence_idle_hands_delayed:0 "No bed until the quota is met. No quota is ever met."
- tr_lfg_penitence_idle_hands_tt:0 "All jobs on our §Ypenal colony§! produce §G+1%§! for every §Y100§! §YCivilians§! there.\n§RNo idle hands:§! with fewer than §Y100§! Civilians there, its jobs produce §R-75%§! instead.\n§RRiots:§! crime §R+2§! there for every §Y100§! Civilians.\n§RAttrition:§! §R3%§! of the Civilians there die every month."
+ tr_lfg_penitence_idle_hands_tt:0 "All jobs on our §Ypenal colony§! produce §G+1%§! for every §Y100§! §YCivilians§! there.\n§RNo idle hands:§! with fewer than §Y100§! Civilians there, its jobs produce §R-75%§! instead.\n§RRiots:§! crime §R+6§! there for every §Y100§! Civilians.\n§RAttrition:§! §R3%§! of the Civilians there die every month."
  tr_lfg_penitence_prison_industry:0 "Prison Industry"
  tr_lfg_penitence_prison_industry_desc:0 "Every workshop, lab and office on the penal colony is staffed by inmates working double shifts."
  tr_lfg_penitence_prison_industry_delayed:0 "Made with pride. Made with very little choice."

@@ -382,7 +382,8 @@ job_<key>_add = @scaling_district_1_job }`. A job's icon is `swappable_data.defa
 modifiers.log until the game has loaded the mod, so don't use them in static modifiers checked against the snapshot.
 **Unverified in game:** the new zone, job and economic category.
 Also unverified: Transportation's shipments (`lfg_penal_ship_unemployed`: `create_pop_group` on another planet based on a
-pop group, then `transfer_pop_amount` with a variable amount). Vanilla resettlement only targets planets with open jobs,
+pop group, then `transfer_pop_amount` with a variable amount; only `is_pop_category = civilian` groups are shipped, assuming
+jobless pops sit in civilian-category groups). Vanilla resettlement only targets planets with open jobs,
 so a destination modifier can't keep pulling pops to a full planet. Also unverified: Idle Hands attrition (`lfg_penal_idle_hands_attrition`): `count_owned_pop_amount` exported in planet
 scope, variables on pop groups, and `kill_pop_group = { amount = <variable> }` (vanilla does this in refugee_events.txt).
 
